@@ -8,6 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -17,19 +22,33 @@ public abstract class BaseDAO {
 	private static Connection connection;
 	private List<InOutParam<?>> inOutParams = new ArrayList<InOutParam<?>>();
 
+	private static SingleConnectionDataSource singleConnectionDataSource;
+
 	static {
 
-		SQLServerDataSource dataSource = new SQLServerDataSource();
-		dataSource.setUser("sa");
-		dataSource.setPassword("1234");
-		dataSource.setServerName("192.168.250.176");
-		dataSource.setPortNumber(1433);
-		dataSource.setDatabaseName("CTS");
-		try {
+		// to be changed to relative path which doesn't work atm.. to me, at least
+		ApplicationContext applicationContext = new FileSystemXmlApplicationContext(
+				"D:\\cts\\CTS\\Java files\\src\\main\\webapp\\WEB-INF\\spring\\appServlet\\servlet-context.xml");
+		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
+				SingleConnectionDataSource.class);
 
-			connection = dataSource.getConnection();
-		} catch (SQLServerException e) {
-		}
+		 JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
+		 //connection from bean works, still never used, but TODO
+		 //probably the entire dao layer will need to be changed to match the jdbctemplate methods
+		 
+		 
+		 //test line
+		 jdbcTemplate.execute("insert into UserCategory (UserId, CategoryId) values (2, 3)");
+
+		
+		  SQLServerDataSource dataSource = new SQLServerDataSource();
+		  dataSource.setUser("sa"); dataSource.setPassword("1234");
+		  dataSource.setServerName("192.168.250.176");
+		  dataSource.setPortNumber(1433); dataSource.setDatabaseName("CTS");
+		  try {
+		  
+		  connection = dataSource.getConnection(); } catch (SQLServerException e) { }
+		 
 	}
 
 	public void prepareExecution(StoredProceduresNames storedProcedureName, InOutParam<?>... parameters)

@@ -1,10 +1,7 @@
 package com.cts.dao;
 
 import java.sql.SQLException;
-import com.cts.dao.BaseDAO;
-import com.cts.dao.InOutParam;
-import com.cts.dao.StoredProceduresNames;
-import com.cts.dao.UserDAOInterface;
+
 import com.cts.entities.User;
 
 public class UserDAO extends BaseDAO implements UserDAOInterface {
@@ -16,8 +13,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
 		InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
 		InOutParam<String> titleParam = new InOutParam<String>("", "Title", true);
-		InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email", false);
-		InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password", false);
+		InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
+		InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
 		InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 		try {
 
@@ -47,17 +44,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	@Override
 	public boolean createAccount(User user) {
 
-		if (user.getPassword().length() < 6) {
-			return false;
-		}
-
 		try {
 
-			InOutParam<String> firstNameParam = new InOutParam<String>(user.getFirstName(), "FirstName", false);
-			InOutParam<String> lastNameParam = new InOutParam<String>(user.getLastName(), "LastName", false);
-			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title", false);
-			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email", false);
-			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password", false);
+			InOutParam<String> firstNameParam = new InOutParam<String>(user.getFirstName(), "FirstName");
+			InOutParam<String> lastNameParam = new InOutParam<String>(user.getLastName(), "LastName");
+			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
+			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
+			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 			prepareExecution(StoredProceduresNames.CreateUser, firstNameParam, lastNameParam, titleParam, emailParam,
 					passwordParam, errorParam);
@@ -80,7 +73,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		try {
 
-			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email", false);
+			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 			prepareExecution(StoredProceduresNames.DeleteUser, emailParam);
 			execute();
 			callableStatement.close();

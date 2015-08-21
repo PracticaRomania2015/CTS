@@ -48,9 +48,12 @@ public class RegisterController {
 		return "index";
 	}
 
-	// need to change the mapping.. somehow
 
 	// Post method of the controller. the user data is hidden from the URL.
+	/**
+	 * @param user The new user to be registered
+	 * @return A json response if error or success
+	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
 	public String register(@RequestBody User user) {
@@ -73,7 +76,6 @@ public class RegisterController {
 		try {
 
 			// Checks if the fields are empty (eg: "")
-			// To be changed to a more safer and better working method
 			if (user.getEmail().trim().isEmpty() || user.getFirstName().trim().isEmpty()
 					|| user.getLastName().trim().isEmpty() || user.getPassword().trim().isEmpty()) {
 

@@ -17,12 +17,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		try {
 
-			InOutParam<String> subjectParam = new InOutParam<String>(ticket.getSubject(), "Subject", false);
-			InOutParam<String> categoryParam = new InOutParam<String>(ticket.getCategory(), "Category", false);
-			InOutParam<Timestamp> timestampParam = new InOutParam<Timestamp>(ticket.getDateTime(), "DateTime", false);
-			InOutParam<String> commentParam = new InOutParam<String>(ticket.getDescription(), "Comment", false);
-			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getUserId(), "UserId", false);
-			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getFilePath(), "FilePath", false);
+			InOutParam<String> subjectParam = new InOutParam<String>(ticket.getSubject(), "Subject");
+			InOutParam<String> categoryParam = new InOutParam<String>(ticket.getCategory(), "Category");
+			InOutParam<Timestamp> timestampParam = new InOutParam<Timestamp>(ticket.getDateTime(), "DateTime");
+			InOutParam<String> commentParam = new InOutParam<String>(ticket.getDescription(), "Comment");
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getUserId(), "UserId");
+			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getFilePath(), "FilePath");
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId", true);
 			prepareExecution(StoredProceduresNames.CreateTicket, subjectParam, categoryParam, timestampParam,
 					commentParam, userIdParam, filePathParam, ticketIdParam);
@@ -41,7 +41,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		try {
 
-			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId", false);
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId");
 			prepareExecution(StoredProceduresNames.DeleteTicket, ticketIdParam);
 			execute();
 			callableStatement.close();
