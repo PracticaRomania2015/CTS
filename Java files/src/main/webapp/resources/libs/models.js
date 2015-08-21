@@ -19,16 +19,20 @@ var LogInModel = GenericModel.extend({
 		var regexEmail = /^[A-Za-z]([a-zA-Z.])+\@gmail.com$/;
 		$("#logInMail").removeAttr("title");
 		$("#logInMail").removeClass("error");
-		if (!attrs.email || !regexEmail.test(attrs.email)) {
-			$("#logInMail").attr("title", getError("loginmail"));
+		if (!attrs.email) {
+			$("#logInMail").attr("title", getError("loginMailMandatory"));
+			$("#logInMail").addClass("error");
+			ok = true;
+		} else if (!regexEmail.test(attrs.email)) {
+			$("#logInMail").attr("title", getError("loginMailFormat"));
 			$("#logInMail").addClass("error");
 			ok = true;
 		}
-
+		
 		$("#logInPass").removeAttr("title");
 		$("#logInPass").removeClass("error");
 		if (!attrs.password) {
-			$("#logInPass").attr("title", getError("loginpassword"));
+			$("#logInPass").attr("title", getError("loginPassword"));
 			$("#logInPass").addClass("error");
 			ok = true;
 		}
@@ -53,7 +57,7 @@ var RegisterModel = GenericModel.extend({
 		$("#regFirstName").removeAttr("title");
 		$("#regFirstName").removeClass("error");
 		if (!attrs.firstName || !regexUser.test(attrs.firstName)) {
-			$("#regFirstName").attr("title", getError("name"));
+			$("#regFirstName").attr("title", getError("registerName"));
 			$("#regFirstName").addClass("error");
 			ok = true;
 		}
@@ -61,7 +65,7 @@ var RegisterModel = GenericModel.extend({
 		$("#regLastName").removeAttr("title");
 		$("#regLastName").removeClass("error");
 		if (!attrs.lastName || !regexUser.test(attrs.lastName)) {
-			$("#regLastName").attr("title", getError("name"));
+			$("#regLastName").attr("title", getError("registerName"));
 			$("#regLastName").addClass("error");
 			ok = true;
 		}
@@ -70,7 +74,7 @@ var RegisterModel = GenericModel.extend({
 		$("#regMail").removeAttr("title");
 		$("#regMail").removeClass("error");
 		if (!attrs.email || !regexEmail.test(attrs.email)) {
-			$("#regMail").attr("title", getError("email"));
+			$("#regMail").attr("title", getError("registerMail"));
 			$("#regMail").addClass("error");
 			ok = true;
 		}
@@ -79,7 +83,7 @@ var RegisterModel = GenericModel.extend({
 		$("#regPass").removeAttr("title");
 		$("#regPass").removeClass("error");
 		if (!attrs.password || !regexPass.test(attrs.password)) {
-			$("#regPass").attr("title", getError("password"));
+			$("#regPass").attr("title", getError("registerPassword"));
 			$("#regPass").addClass("error");
 			ok = true;
 		}
@@ -87,7 +91,7 @@ var RegisterModel = GenericModel.extend({
 		$("#regConfPass").removeAttr("title");
 		$("#regConfPass").removeClass("error");
 		if ($("#regPass").val() != $("#regConfPass").val()) {
-			$("#regConfPass").attr("title", "Passwords are not the same");
+			$("#regConfPass").attr("title", getError("registerSamePassword"));
 			$("#regConfPass").addClass("error");
 			ok = true;
 		}
@@ -111,8 +115,12 @@ var RecoverModel = GenericModel.extend({
 		var regexEmail = /^[A-Za-z]([a-zA-Z.])+\@gmail.com$/;
 		$("#recoveryMail").removeAttr("title");
 		$("#recoveryMail").removeClass("error");
-		if (!attrs.email || !regexEmail.test(attrs.email)) {
-			$("#recoveryMail").attr("title", getError("recovermail"));
+		if (!attrs.email) {
+			$("#recoveryMail").attr("title", getError("recoveryMailMandatory"));
+			$("#recoveryMail").addClass("error");
+			ok = true;
+		} else if (!regexEmail.test(attrs.email)) {
+			$("#recoveryMail").attr("title", getError("recoveryMailFormat"));
 			$("#recoveryMail").addClass("error");
 			ok = true;
 		}

@@ -1,6 +1,9 @@
-loginmail,&bull; Incorect email.
-loginpassword, &bull; Incorect password.
-name,&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Symbols (-')
-email,&bull; Enter a valid Google mail<br>&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Symbols (.)
-password,&bull; 8 - 20 characters<br>&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Numbers<br>&bull; Symbols (!@#$%^&*()_+)
-recovermail,&bull; Incorect email.
+loginMailMandatory,Mandatory field
+loginMailFormat,Enter a valid Google mail
+loginPassword,Mandatory field.
+registerName,&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Symbols (-')
+registerMail,&bull; Enter a valid Google mail<br>&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Symbols (.)
+registerPassword,&bull; 8 - 20 characters<br>&bull; Uppercase characters<br>&bull; Lowercase characters<br>&bull; Numbers<br>&bull; Symbols (!@#$%^&*()_+)
+registerSamePassword,Passwords are not the same.
+recoveryMailMandatory,Mandatory field
+recoveryMailFormat,Enter a valid Google mail
