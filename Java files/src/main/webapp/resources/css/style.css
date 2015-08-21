@@ -1,0 +1,216 @@
+/* =========================================================================================================================== */
+/* The cerner logo - this centers it and resizez is */
+
+#logoWrapper{
+	display: block;
+	width: 250px;
+	margin: 0 auto;
+}
+
+#logo {
+	max-width:100%;
+    max-height:100%;
+    vertical-align: middle;
+}
+
+
+/* =========================================================================================================================== */
+/* Some generic stuff */
+
+table {
+    width:100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+.button{
+	border-radius: 5px;
+	background: #0d94d2;
+	display: block;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+}
+
+.tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color: #4bb8ef;
+	border-radius:5px;
+	padding:10px;
+	font-size: 95%;
+	font-family: 'Arial';
+	color:#fff;
+}
+
+.error {
+	background-color: #fedb89!important;
+	color: #7C2B83 !important;
+	-webkit-transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
+	transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
+	border: 1px solid rgb(124, 43, 131) !important;
+}
+
+form{
+	border-radius: 0px 0px 5px 5px;
+	background: #7bc143;
+	text-align: center;
+	padding: 4% 4%;
+}
+
+
+/* =========================================================================================================================== */
+/* The log in page design - all the good stuff */
+
+#logInWrapper{
+	border-radius: 10px;
+	display: block;
+	width: 250px;
+	margin: 0 auto;
+	text-align: center;
+	padding: 1%;
+	background: #4bb8ef;
+	border: 4px solid #0d94d2;
+}
+
+#formTemplate{
+	position: relative;
+	display: block;
+	width: 250px;
+	margin: 40px auto 0px;
+}
+
+h1.frontPage{
+  	border-radius: 5px 5px 0px 0px;
+  	margin:-35px 0px 0px;
+  	background:#0d94d2;
+  	padding:10px 0;
+  	font-family:'Arial';
+  	font-size:100%;
+  	text-align:center;
+  	color:#fff;
+}
+
+#regTitle {
+    width: 100%;
+	background: #fff;
+	margin: 4% 0% 4% 0%;
+	border: 1px solid #555;
+	padding: 2% 4% 2% 4%;
+	font-family: 'Arial';
+	font-size: 95%;
+	color: #555;
+}
+
+#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
+	width: 210px;
+	background: #fff;
+	margin: 4% 0% 4% 0%;
+	border: 1px solid #555;
+	padding: 2% 4% 2% 4%;
+	font-family: 'Arial';
+	font-size: 95%;
+	color: #555;
+}
+
+
+/* =========================================================================================================================== */
+/* User page - designed the stuff */
+
+#userPanelPage{
+	width: 850px;
+	display: block;
+	margin: 0 auto;
+}
+
+#menuWrapper{
+	float:left;
+	width:25%;
+	overflow:hidden;
+	margin: 0px 10px 0px 0px;
+	border-radius: 10px;
+	display: block;
+	text-align: center;
+	padding: 1%;
+	background: #4bb8ef;
+	border: 4px solid #0d94d2;
+}
+
+#contextWrapper{
+	float:left;
+	width:67.5%;
+	overflow:hidden;
+	border-radius: 10px;
+	display: block;
+	text-align: center;
+	padding: 1%;
+	background: #4bb8ef;
+	border: 4px solid #0d94d2;
+}
+ 
+table#ticketView tr.tickets {
+    text-align: center;
+    background: #7bc143;
+    color: #fff;
+	cursor: pointer;
+}
+
+table#ticketView tr.head {
+    text-align: center;
+    background: #0d94d2;
+    color: #fff;
+}
+
+table#ticketView th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+table#ticketView td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+table#ticketView th.first, td.first {
+	width: 37.5%;
+	border-radius: 5px 0px 0px 5px;
+}
+
+table#ticketView th.last, td.last {
+	width: 25%;
+	border-radius: 0px 5px 5px 0px;
+}
+
+.searchTickets{
+	border-radius: 5px;
+	width: 35%;
+	background: #fff;
+	margin: 0px 0px 5px 0px;
+	border: 1px solid #555;
+	font-family: 'Arial';
+	font-size: 95%;
+	color: #555;
+}
+
+#ticketSearchBox  {
+	padding: 9px;
+}
+
+#ticketSearchDropBox  {
+	padding: 8px;
+}
+
+#ticketSearchButton{
+	display: inline-block;
+	width: 21%;
+}
+
+#firstPageButton, #previousPageButton, #nextPageButton, #lastPageButton {
+	display: inline-block;
+	width: 20%;
+}
