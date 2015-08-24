@@ -7,18 +7,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 public abstract class BaseDAO {
 
-	protected CallableStatement callableStatement;
+	private CallableStatement callableStatement;
 	private static Connection connection;
 	private List<InOutParam<?>> inOutParams = new ArrayList<InOutParam<?>>();
 
@@ -26,32 +22,25 @@ public abstract class BaseDAO {
 
 	static {
 
-		// to be changed to relative path which doesn't work atm.. to me, at least
+		// to be changed to relative path which doesn't work atm.. to me, at
+		// least
 		ApplicationContext applicationContext = new FileSystemXmlApplicationContext(
-				"D:\\cts\\CTS\\Java files\\src\\main\\webapp\\WEB-INF\\spring\\appServlet\\servlet-context.xml");
+				"D:\\GITHUB CTS Repository\\CTS\\Java files\\src\\main\\webapp\\WEB-INF\\spring\\appServlet\\servlet-context.xml");
 		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
 				SingleConnectionDataSource.class);
 
-		 JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
-		 //connection from bean works, still never used, but TODO
-		 //probably the entire dao layer will need to be changed to match the jdbctemplate methods
-		 
-		 
-		 //test line
-		 jdbcTemplate.execute("insert into UserCategory (UserId, CategoryId) values (2, 3)");
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
 
-		
-		  SQLServerDataSource dataSource = new SQLServerDataSource();
-		  dataSource.setUser("sa"); dataSource.setPassword("1234");
-		  dataSource.setServerName("192.168.250.176");
-		  dataSource.setPortNumber(1433); dataSource.setDatabaseName("CTS");
-		  try {
-		  
-		  connection = dataSource.getConnection(); } catch (SQLServerException e) { }
-		 
+		try {
+
+			connection = jdbcTemplate.getDataSource().getConnection();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
-	public void prepareExecution(StoredProceduresNames storedProcedureName, InOutParam<?>... parameters)
+	protected void prepareExecution(StoredProceduresNames storedProcedureName, InOutParam<?>... parameters)
 			throws SQLException {
 
 		inOutParams.clear();
@@ -66,9 +55,10 @@ public abstract class BaseDAO {
 		setParameters();
 	}
 
-	public ResultSet execute() throws SQLException {
+	protected ResultSet execute() throws SQLException {
 
 		callableStatement.execute();
+		setOutParametersAfterExecute();
 		return callableStatement.getResultSet();
 	}
 
@@ -108,6 +98,7 @@ public abstract class BaseDAO {
 					case java.sql.Types.TIMESTAMP:
 						callableStatement.setTimestamp(inOutParams.get(i).getName(),
 								(Timestamp) inOutParams.get(i).getParameter());
+						break;
 					default:
 					}
 				}
@@ -142,5 +133,53 @@ public abstract class BaseDAO {
 			}
 		}
 		return sqlCall.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void setOutParametersAfterExecute() throws SQLException {
+
+		for (int i = 0; i < inOutParams.size(); i++) {
+
+			if (inOutParams.get(i).isOutPutParam()) {
+
+				switch (inOutParams.get(i).getType()) {
+
+				case java.sql.Types.VARCHAR:
+					InOutParam<String> tempStringParam = (InOutParam<String>) inOutParams.get(i);
+					tempStringParam.setParameter(callableStatement.getString(tempStringParam.getName()));
+					break;
+				case java.sql.Types.INTEGER:
+					InOutParam<Integer> tempIntegerParam = (InOutParam<Integer>) inOutParams.get(i);
+					tempIntegerParam.setParameter(callableStatement.getInt(tempIntegerParam.getName()));
+					break;
+				case java.sql.Types.FLOAT:
+					InOutParam<Float> tempFloatParam = (InOutParam<Float>) inOutParams.get(i);
+					tempFloatParam.setParameter(callableStatement.getFloat(tempFloatParam.getName()));
+					break;
+				case java.sql.Types.DOUBLE:
+					InOutParam<Double> tempDoubleParam = (InOutParam<Double>) inOutParams.get(i);
+					tempDoubleParam.setParameter(callableStatement.getDouble(tempDoubleParam.getName()));
+					break;
+				case java.sql.Types.BOOLEAN:
+					InOutParam<Boolean> tempBooleanParam = (InOutParam<Boolean>) inOutParams.get(i);
+					tempBooleanParam.setParameter(callableStatement.getBoolean(tempBooleanParam.getName()));
+					break;
+				case java.sql.Types.TIMESTAMP:
+					InOutParam<Timestamp> tempTimestampParam = (InOutParam<Timestamp>) inOutParams.get(i);
+					tempTimestampParam.setParameter(callableStatement.getTimestamp(tempTimestampParam.getName()));
+					break;
+				default:
+				}
+			}
+		}
+	}
+
+	protected void closeCallableStatement() {
+
+		try {
+
+			callableStatement.close();
+		} catch (SQLException e) {
+		}
 	}
 }

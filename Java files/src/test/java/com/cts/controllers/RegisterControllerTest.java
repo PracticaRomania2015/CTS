@@ -79,6 +79,7 @@ public class RegisterControllerTest {
 		setUserParams(testFirstName, testLastName, testTitle, testEmail, testPassword);
 		assertEquals(generateErrorJson(8), registerController.register(testUser));
 		assertEquals(generateErrorJson(9), registerController.register(testUser));
+		testUser.setPassword(testPassword);
 		assertNotNull("error", loginController.login(testUser));
 		testUser.setPassword("a");
 		assertEquals(LoginError.getDescriptionByCode(3), loginController.login(testUser));

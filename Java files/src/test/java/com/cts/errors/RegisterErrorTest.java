@@ -56,4 +56,16 @@ public class RegisterErrorTest {
 		error = new RegisterError(-1);
 		assertEquals(RegisterError.getDescriptionByCode(-1), error.getDescription());
 	}
+	
+	@Test
+	public void testWhenGetSuccess() {
+		error = new RegisterError(8);
+		assertEquals(RegisterError.getDescriptionByCode(8), error.getDescription());
+	}
+	
+	@Test
+	public void testWhenGetExistingEmailError() {
+		error = new RegisterError(9);
+		assertEquals(RegisterError.getDescriptionByCode(9), error.getDescription());
+	}
 }

@@ -31,6 +31,11 @@ public class InOutParam<T> {
 		return parameter;
 	}
 
+	public void setParameter(T parameter) {
+
+		this.parameter = parameter;
+	}
+
 	public boolean isOutPutParam() {
 
 		return isOutputParam;

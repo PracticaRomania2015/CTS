@@ -27,11 +27,13 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			prepareExecution(StoredProceduresNames.CreateTicket, subjectParam, categoryParam, timestampParam,
 					commentParam, userIdParam, filePathParam, ticketIdParam);
 			execute();
-			ticket.setTicketId(callableStatement.getInt(ticketIdParam.getName()));
-			callableStatement.close();
+			ticket.setTicketId(ticketIdParam.getParameter());
 		} catch (SQLException e) {
 
 			return false;
+		} finally {
+
+			closeCallableStatement();
 		}
 		return true;
 	}
@@ -44,10 +46,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId");
 			prepareExecution(StoredProceduresNames.DeleteTicket, ticketIdParam);
 			execute();
-			callableStatement.close();
 		} catch (SQLException e) {
 
 			return false;
+		} finally {
+
+			closeCallableStatement();
 		}
 		return true;
 	}
@@ -68,10 +72,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				category.setParentCategoryId(resultSet.getInt(3));
 				categories.add(category);
 			}
-			callableStatement.close();
 		} catch (SQLException e) {
 
 			return null;
+		} finally {
+
+			closeCallableStatement();
 		}
 		return categories;
 	}

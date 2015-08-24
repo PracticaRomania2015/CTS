@@ -21,23 +21,24 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			prepareExecution(StoredProceduresNames.ValidateLogin, userIdParam, firstNameParam, lastNameParam,
 					titleParam, emailParam, passwordParam, errorParam);
 			execute();
-			if (callableStatement.getInt(errorParam.getName()) == 0
-					&& callableStatement.getInt(userIdParam.getName()) != 0) {
 
-				user.setUserId(callableStatement.getInt(userIdParam.getName()));
-				user.setFirstName(callableStatement.getString(firstNameParam.getName()));
-				user.setLastName(callableStatement.getString(lastNameParam.getName()));
-				user.setTitle(callableStatement.getString(titleParam.getName()));
-				callableStatement.close();
+			if (errorParam.getParameter() == 0 && userIdParam.getParameter() != 0) {
+
+				user.setUserId(userIdParam.getParameter());
+				user.setFirstName(firstNameParam.getParameter());
+				user.setLastName(lastNameParam.getParameter());
+				user.setTitle(titleParam.getParameter());
 				return true;
 			} else {
 
-				callableStatement.close();
 				return false;
 			}
 		} catch (SQLException e) {
 
 			return false;
+		} finally {
+
+			closeCallableStatement();
 		}
 	}
 
@@ -56,15 +57,16 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					passwordParam, errorParam);
 			execute();
 
-			if (callableStatement.getInt(errorParam.getName()) == 0) {
-				callableStatement.close();
+			if (errorParam.getParameter() == 0) {
 				return true;
 			} else {
-				callableStatement.close();
 				return false;
 			}
 		} catch (SQLException e) {
 			return false;
+		} finally {
+
+			closeCallableStatement();
 		}
 	}
 
@@ -76,10 +78,12 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 			prepareExecution(StoredProceduresNames.DeleteUser, emailParam);
 			execute();
-			callableStatement.close();
 		} catch (Exception e) {
 
 			return false;
+		} finally {
+
+			closeCallableStatement();
 		}
 		return true;
 	}
