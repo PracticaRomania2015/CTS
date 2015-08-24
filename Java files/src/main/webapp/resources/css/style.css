@@ -17,12 +17,6 @@
 /* =========================================================================================================================== */
 /* Some generic stuff */
 
-table {
-    width:100%;
-    border-collapse: separate;
-    border-spacing: 0 5px;
-}
-
 .button{
 	border-radius: 5px;
 	background: #0d94d2;
@@ -43,13 +37,13 @@ table {
 	background-color: #4bb8ef;
 	border-radius:5px;
 	padding:10px;
-	font-size: 95%;
+	font-size: 14px;
 	font-family: 'Arial';
 	color:#fff;
 }
 
 .error {
-	background-color: #fedb89!important;
+	background-color: #fedb89 !important;
 	color: #7C2B83 !important;
 	-webkit-transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
 	transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
@@ -58,7 +52,7 @@ table {
 
 form{
 	border-radius: 0px 0px 5px 5px;
-	background: #7bc143;
+	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
 	text-align: center;
 	padding: 4% 4%;
 }
@@ -74,8 +68,6 @@ form{
 	margin: 0 auto;
 	text-align: center;
 	padding: 1%;
-	background: #4bb8ef;
-	border: 4px solid #0d94d2;
 }
 
 #formTemplate{
@@ -91,7 +83,7 @@ h1.frontPage{
   	background:#0d94d2;
   	padding:10px 0;
   	font-family:'Arial';
-  	font-size:100%;
+  	font-size:18px;
   	text-align:center;
   	color:#fff;
 }
@@ -103,18 +95,18 @@ h1.frontPage{
 	border: 1px solid #555;
 	padding: 2% 4% 2% 4%;
 	font-family: 'Arial';
-	font-size: 95%;
+	font-size: 14px;
 	color: #555;
 }
 
 #logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
 	width: 210px;
-	background: #fff;
+	background: #f1f8ec;
 	margin: 4% 0% 4% 0%;
 	border: 1px solid #555;
 	padding: 2% 4% 2% 4%;
 	font-family: 'Arial';
-	font-size: 95%;
+	font-size: 14px;
 	color: #555;
 }
 
@@ -137,8 +129,17 @@ h1.frontPage{
 	display: block;
 	text-align: center;
 	padding: 1%;
-	background: #4bb8ef;
-	border: 4px solid #0d94d2;
+}
+
+.menuRightArrow
+{
+	display: inline-block;
+	float: right;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 8.5px 0 8.5px 14.7px;
+	border-color: transparent transparent transparent #f1f8ec;
 }
 
 #contextWrapper{
@@ -149,41 +150,6 @@ h1.frontPage{
 	display: block;
 	text-align: center;
 	padding: 1%;
-	background: #4bb8ef;
-	border: 4px solid #0d94d2;
-}
- 
-table#ticketView tr.tickets {
-    text-align: center;
-    background: #7bc143;
-    color: #fff;
-	cursor: pointer;
-}
-
-table#ticketView tr.head {
-    text-align: center;
-    background: #0d94d2;
-    color: #fff;
-}
-
-table#ticketView th {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-table#ticketView td {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-table#ticketView th.first, td.first {
-	width: 37.5%;
-	border-radius: 5px 0px 0px 5px;
-}
-
-table#ticketView th.last, td.last {
-	width: 25%;
-	border-radius: 0px 5px 5px 0px;
 }
 
 .searchTickets{
@@ -193,16 +159,18 @@ table#ticketView th.last, td.last {
 	margin: 0px 0px 5px 0px;
 	border: 1px solid #555;
 	font-family: 'Arial';
-	font-size: 95%;
+	font-size: 14px;
 	color: #555;
 }
 
 #ticketSearchBox  {
 	padding: 9px;
+	background: #f1f8ec;
 }
 
 #ticketSearchDropBox  {
 	padding: 8px;
+	background: #f1f8ec;
 }
 
 #ticketSearchButton{
@@ -210,7 +178,78 @@ table#ticketView th.last, td.last {
 	width: 21%;
 }
 
-#firstPageButton, #previousPageButton, #nextPageButton, #lastPageButton {
+.ticketView 
+{ 
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	font-family: 'Arial';
+	border-collapse: collapse;
+}
+
+.table-surf
+{
 	display: inline-block;
-	width: 20%;
+	cursor: pointer;
+}
+
+.ticketView thead th.wide-col
+{ 
+	width: 37.5%;
+}
+
+.ticketView thead th.slim-col
+{ 
+	width: 25%;
+}
+
+.ticketView thead th#rounded-tl 
+{ 
+	border-radius: 5px 0px 0px 0px;
+}
+
+.ticketView thead th#rounded-tr
+{ 
+	border-radius: 0px 5px 0px 0px;
+}
+
+.ticketView tfoot th#rounded-bot
+{
+	border-radius: 0px 0px 5px 5px;
+}
+
+.ticketView tbody tr:hover td 
+{ 
+	color: #333; 
+	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
+}
+
+.ticketView tbody
+{
+	outline: 1px solid #0d94d2;
+  	outline-offset: -1px;
+}
+
+.ticketView tbody tr 
+{
+	border-top: 1px solid #0d94d2;
+	cursor: pointer;
+}
+
+.ticketView th 
+{ 
+	font-size: 18px; 
+	text-align: center; 
+	padding: 10px;
+	background: #0d94d2;
+	font-weight: bold; 
+	color: #fff; 
+}
+
+.ticketView td 
+{ 
+	font-size: 14px; 
+	text-align: center; 
+	padding: 5px; 
+	background: #f1f8ec; 
+	color: #000;
 }

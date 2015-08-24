@@ -26,10 +26,14 @@
 	</script>
 <script type="text/template" id="userPanelPageTemplate">
 			<div id='menuWrapper'>
-				<span href='#' class='button' id='btn-asigTk'>Assigned tickets</span>
-				<span href='#' class='button' id='btn-myTk'>My tickets</span>
-				<span href='#' class='button' id='btn-subTk'>Submit a ticket</span>
-				<span href='#' class='button' id='btn-prop'>User properties</span>
+				<span href='#' class='button' id='btn-asigTk'>Assigned tickets
+					<div class="menuRightArrow"></div></span>
+				<span href='#' class='button' id='btn-myTk'>My tickets
+					<div class="menuRightArrow"></div></span>
+				<span href='#' class='button' id='btn-subTk'>Submit a ticket
+					<div class="menuRightArrow"></div></span>
+				<span href='#' class='button' id='btn-prop'>User properties
+					<div class="menuRightArrow"></div></span>
 			</div>
 			<div id='contextWrapper'></div>
 	</script>
@@ -72,29 +76,57 @@
 				<option value="Date">Date</option>
 			</select>
 			<span href="#" class="button" id="ticketSearchButton">Search</span>
-			
-			<table id="ticketView">
-				<tr class="head">
-				   	<th class="first">Subject</th>
-				   	<th>Category</th> 
-			    	<th class="last">Date</th>
-			  	</tr>
-			  	<tr class="tickets">
-			    	<td class="first">TestSubj</td>
-				    <td>TestCateg</td> 
-			    	<td class="last">DD-MM-YYYY</td>
-			  	</tr>
-			  	<tr class="head">
-			    	<th class="first">Subject</th>
-			    	<th>Category</th> 
-			    	<th class="last">Date</th>
-			  	</tr>
-			</table>
-
-			<span href="#" class="button" id="firstPageButton">First</span>
-			<span href="#" class="button" id="previousPageButton">Previous</span>
-			<span href="#" class="button" id="nextPageButton">Next</span>
-			<span href="#" class="button" id="lastPageButton">Last</span>
+			<table class="ticketView">
+    			<thead>
+					<tr>
+						<th id="rounded-tl" class="wide-col">Subject</th>
+						<th class="wide-col">Category</th>
+						<th id="rounded-tr" class="slim-col">Date</th>
+     	 			</tr>
+    			</thead>
+    			<tfoot>
+      				<tr>
+        				<th colspan="3" id="rounded-bot">
+							<div class="table-surf">&#60;&#60;</div>
+							&emsp;
+							<div class="table-surf">&#60;</div>
+							&emsp;
+							1/1
+							&emsp;
+							<div class="table-surf">&#62;</div>
+							&emsp;
+							<div class="table-surf">&#62;&#62;</div>
+						</th>
+      				</tr>
+    			</tfoot>
+    			<tbody>
+      				<tr>
+        				<td>TestSubj</td>
+						<td>TestCateg</td> 
+						<td>DD-MM-YYYY</td>
+    	  			</tr>
+      				<tr>
+        				<td>TestSubj</td>
+						<td>TestCateg</td> 
+						<td>DD-MM-YYYY</td>
+    	  			</tr>
+      				<tr>
+        				<td>TestSubj</td>
+						<td>TestCateg</td> 
+						<td>DD-MM-YYYY</td>
+    	  			</tr>
+      				<tr>
+        				<td>TestSubj</td>
+						<td>TestCateg</td> 
+						<td>DD-MM-YYYY</td>
+    	  			</tr>
+      				<tr>
+        				<td>TestSubj</td>
+						<td>TestCateg</td> 
+						<td>DD-MM-YYYY</td>
+    	  			</tr>
+	    		</tbody>
+  			</table>
 	</script>
 </head>
 <body>
