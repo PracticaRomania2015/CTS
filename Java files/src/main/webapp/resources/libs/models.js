@@ -20,11 +20,11 @@ var LogInModel = GenericModel.extend({
 		$("#logInMail").removeAttr("title");
 		$("#logInMail").removeClass("error");
 		if (!attrs.email) {
-			$("#logInMail").attr("title", getError("loginMailMandatory"));
+			$("#logInMail").attr("title", getError("mandatory"));
 			$("#logInMail").addClass("error");
 			ok = true;
 		} else if (!regexEmail.test(attrs.email)) {
-			$("#logInMail").attr("title", getError("loginMailFormat"));
+			$("#logInMail").attr("title", getError("validMail"));
 			$("#logInMail").addClass("error");
 			ok = true;
 		}
@@ -32,7 +32,7 @@ var LogInModel = GenericModel.extend({
 		$("#logInPass").removeAttr("title");
 		$("#logInPass").removeClass("error");
 		if (!attrs.password) {
-			$("#logInPass").attr("title", getError("loginPassword"));
+			$("#logInPass").attr("title", getError("mandatory"));
 			$("#logInPass").addClass("error");
 			ok = true;
 		}
@@ -116,11 +116,11 @@ var RecoverModel = GenericModel.extend({
 		$("#recoveryMail").removeAttr("title");
 		$("#recoveryMail").removeClass("error");
 		if (!attrs.email) {
-			$("#recoveryMail").attr("title", getError("recoveryMailMandatory"));
+			$("#recoveryMail").attr("title", getError("mandatory"));
 			$("#recoveryMail").addClass("error");
 			ok = true;
 		} else if (!regexEmail.test(attrs.email)) {
-			$("#recoveryMail").attr("title", getError("recoveryMailFormat"));
+			$("#recoveryMail").attr("title", getError("validMail"));
 			$("#recoveryMail").addClass("error");
 			ok = true;
 		}
@@ -138,4 +138,20 @@ var RecoverModel = GenericModel.extend({
 /* =========================================================================================================================== */
 /* User panel page models */
 
-// TO DO
+var AssignedTicketsModel = GenericModel.extend({
+
+	urlRoot : 'assignedTickets/'
+
+});
+
+var UserTicketsModel = GenericModel.extend({
+
+	urlRoot : 'userTickets/'
+
+});
+
+var CreateTicketModel = GenericModel.extend({
+
+	urlRoot : 'createTicket/'
+
+});

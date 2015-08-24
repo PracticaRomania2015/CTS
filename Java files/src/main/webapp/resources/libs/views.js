@@ -34,7 +34,7 @@ var GenericFrontPageChildView = Backbone.View.extend({
 
 var LogInView = GenericFrontPageChildView.extend({
 
-	url : window.location.href + 'login/',
+	urlRoot : 'login/',
 
 	events : {
 		'click [id="logInButton"]' : 'submit'
@@ -68,7 +68,7 @@ var LogInView = GenericFrontPageChildView.extend({
 
 var RegisterView = GenericFrontPageChildView.extend({
 
-	url : window.location.href + 'register/',
+	urlRoot : 'register/',
 
 	events : {
 		'click [id="registerButton"]' : 'submit'
@@ -94,10 +94,9 @@ var RegisterView = GenericFrontPageChildView.extend({
 				console.log(response.description);
 				if (response.description == "Success!") {
 					$('#logIn').toggle();
-					// temporary message
-					alert("Account created!");
 					$('#register').hide();
 					$('#recover').hide();
+					alert("Account created!");
 				} else {
 					alert(response.description);
 				}
@@ -115,6 +114,8 @@ var RegisterView = GenericFrontPageChildView.extend({
 
 var RecoverView = GenericFrontPageChildView.extend({
 
+	urlRoot : 'recover/',
+	
 	events : {
 		'click [id="recoveryButton"]' : 'submit'
 	},
@@ -126,10 +127,10 @@ var RecoverView = GenericFrontPageChildView.extend({
 	submit : function() {
 		console.log('Send email button pressed');
 		var user = new RecoverModel({
-			email : $("#recoveryMail").val()
+			email : $("#recoverMail").val()
 		});
 		var user = new RecoverModel({
-			email : $("#recoveryMail").val()
+			email : $("#recoverMail").val()
 		});
 		user.save({}, {
 			success : function(model, response) {
@@ -137,9 +138,9 @@ var RecoverView = GenericFrontPageChildView.extend({
 				console.log(response);
 				console.log(response.description);
 				if (response.description == "Success!") {
-					$('#logIn').hide();
+					$('#logIn').show();
 					$('#register').hide();
-					// temporary response
+					$('#recover').hide();
 					alert("Done!");
 				} else {
 					alert(response.responseText);
@@ -174,4 +175,23 @@ var GenericUserPanelPageView = Backbone.View.extend({
 /* ================================================= */
 /* Generic user panel page child view */
 
-// TO DO
+var UserTicketsView = GenericUserPanelPageView.extend({
+	
+	render : function() {
+		this.$el.append(_.template($('#userTicketsTemplate').html()));
+		return this;
+	}
+
+})
+
+/* ================================================= */
+/* Create ticket page view */
+
+var CreateTicketPageView = GenericUserPanelPageView.extend({
+	
+	render : function() {
+		this.$el.append(_.template($('#createTicketTemplate').html()));
+		return this;
+	}
+	
+});

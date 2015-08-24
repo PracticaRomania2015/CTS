@@ -24,20 +24,24 @@
 			<div id='register' style='display: none;'></div>
 			<div id='recover' style='display: none;'></div>
 	</script>
-<script type="text/template" id="userPanelPageTemplate">
+	<script type="text/template" id="userPanelPageTemplate">
 			<div id='menuWrapper'>
 				<span href='#' class='button' id='btn-asigTk'>Assigned tickets
 					<div class="menuRightArrow"></div></span>
-				<span href='#' class='button' id='btn-myTk'>My tickets
+				<span href='#' class='button' id='btn-userTk'>My tickets
 					<div class="menuRightArrow"></div></span>
 				<span href='#' class='button' id='btn-subTk'>Submit a ticket
 					<div class="menuRightArrow"></div></span>
 				<span href='#' class='button' id='btn-prop'>User properties
 					<div class="menuRightArrow"></div></span>
 			</div>
-			<div id='contextWrapper'></div>
+			<div id="contextWrapper">
+				<div id='assignedTickets' style='display: none;'></div>
+				<div id='userTickets' style='display: none;'></div>
+				<div id='createTicket' style='display: none;'></div>
+			</div>
 	</script>
-<script type="text/template" id="logInTemplate">
+	<script type="text/template" id="logInTemplate">
 			<h1 class="frontPage">Log In</h1>
 			<form>
 				<input id='logInMail' type='text' placeholder='E-mail' class="masterTooltip"/>
@@ -45,7 +49,7 @@
 				<span href="#" class="button" id="logInButton">Log In</span>
 			</form>
 	</script>
-<script type="text/template" id="registerTemplate">
+	<script type="text/template" id="registerTemplate">
 			<h1 class="frontPage">Register</h1>
 			<form>
 				<select id="regTitle">
@@ -61,14 +65,14 @@
 				<span href="#" class="button" id="registerButton">Register</span>
 			</form>
 	</script>
-<script type="text/template" id="recoverTemplate">
+	<script type="text/template" id="recoverTemplate">
 			<h1 class="frontPage">Password Recovery</h1>
 			<form>
-				<input id='recoveryMail' type='text' placeholder='E-mail' class="masterTooltip"/>
-				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
+				<input id='recoverMail' type='text' placeholder='E-mail' class="masterTooltip"/>
+				<span href="#" class="button" id="recoverButton">Send Recovery Mail</span>
 			</form>
 	</script>
-<script type="text/template" id="loggedInUserTicketView">
+	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
 			<select class="searchTickets" id="ticketSearchDropBox">
 				<option selected value="Subject">Subject</option>
@@ -76,6 +80,7 @@
 				<option value="Date">Date</option>
 			</select>
 			<span href="#" class="button" id="ticketSearchButton">Search</span>
+			
 			<table class="ticketView">
     			<thead>
 					<tr>
@@ -127,6 +132,14 @@
     	  			</tr>
 	    		</tbody>
   			</table>
+	</script>
+	<script type="text/template" id="createTicketTemplate">	
+			<h1 class="frontPage">Create Ticket</h1>
+			<form>
+				<input id='ticketName' type='text' placeholder='Name' value='Test' class="masterTooltip"/>
+				<input id='ticketContent' type='text' placeholder='Content' value='Test' class="masterTooltip"/>
+				<span href="#" class="button" id="registerButton">Submit</span>
+			</form>
 	</script>
 </head>
 <body>

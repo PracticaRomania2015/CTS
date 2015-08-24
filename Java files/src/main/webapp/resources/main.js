@@ -26,6 +26,24 @@ $(document).ready((function() {
 			model : recoverModel
 		});
 		$('div#recover').append(recoverView.render().el);
+		
+		var assignedTicketsModel = new AssignedTicketsModel({});
+		var userTicketsView = new UserTicketsView({
+			model : assignedTicketsModel
+		});
+		$('div#assignedTickets').append(userTicketsView.render().el);
+		
+		var userTicketsModel = new UserTicketsModel({});
+		var userTicketsView = new UserTicketsView({
+			model : userTicketsModel
+		});
+		$('div#myTickets').append(userTicketsView.render().el);
+		
+		var createTicketModel = new CreateTicketModel({});
+		var createTicketPageView = new CreateTicketPageView({
+			model : createTicketModel
+		});
+		$('div#createTicket').append(createTicketPageView.render().el);
 
 		$('#toggle-login').click(function() {
 			$('#logIn').toggle();
@@ -43,6 +61,30 @@ $(document).ready((function() {
 			$('#logIn').hide();
 			$('#register').hide();
 			$('#recover').toggle();
+		});
+		
+		$('#btn-asigTk').click(function() {
+			$('#assignedTickets').show();
+			$('#myTickets').hide();
+			$('#createTicket').hide();
+		});
+		
+		$('#btn-userTk').click(function() {
+			$('#assignedTickets').hide();
+			$('#myTickets').show();
+			$('#createTicket').hide();
+		});
+		
+		$('#btn-subTk').click(function() {
+			$('#assignedTickets').hide();
+			$('#myTickets').hide();
+			$('#createTicket').show();
+		});
+		
+		$('#btn-prop').click(function() {
+			$('#assignedTickets').hide();
+			$('#myTickets').hide();
+			$('#createTicket').hide();
 		});
 
 	})()
