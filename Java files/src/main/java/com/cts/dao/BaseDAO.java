@@ -13,9 +13,6 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 public abstract class BaseDAO {
 
 	protected CallableStatement callableStatement;
@@ -32,23 +29,13 @@ public abstract class BaseDAO {
 		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
 				SingleConnectionDataSource.class);
 
-		 JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
-		 //connection from bean works, still never used, but TODO
-		 //probably the entire dao layer will need to be changed to match the jdbctemplate methods
-		 
-		 
-		 //test line
-		 jdbcTemplate.execute("insert into UserCategory (UserId, CategoryId) values (2, 3)");
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
+		try {
+			connection = jdbcTemplate.getDataSource().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		
-		  SQLServerDataSource dataSource = new SQLServerDataSource();
-		  dataSource.setUser("sa"); dataSource.setPassword("1234");
-		  dataSource.setServerName("192.168.250.176");
-		  dataSource.setPortNumber(1433); dataSource.setDatabaseName("CTS");
-		  try {
-		  
-		  connection = dataSource.getConnection(); } catch (SQLServerException e) { }
-		 
 	}
 
 	public void prepareExecution(StoredProceduresNames storedProcedureName, InOutParam<?>... parameters)
