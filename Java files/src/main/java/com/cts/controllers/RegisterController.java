@@ -6,14 +6,16 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.dao.UserDAOInterface;
+
 import com.cts.dao.UserDAO;
+import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
 import com.cts.errors.RegisterError;
 import com.cts.utils.HashUtil;

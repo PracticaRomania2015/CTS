@@ -35,8 +35,6 @@ public abstract class BaseDAO {
 
 			connection = jdbcTemplate.getDataSource().getConnection();
 		} catch (SQLException e) {
-
-			e.printStackTrace();
 		}
 	}
 
