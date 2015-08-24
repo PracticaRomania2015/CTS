@@ -73,6 +73,7 @@
 			</form>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
+			<h1 class="userPage">--- a template variable set on load ---</h1>
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
 			<select class="searchTickets" id="ticketSearchDropBox">
 				<option selected value="Subject">Subject</option>
@@ -116,9 +117,9 @@
 						<td>DD-MM-YYYY</td>
     	  			</tr>
       				<tr>
-        				<td>TestSubj</td>
-						<td>TestCateg</td> 
-						<td>DD-MM-YYYY</td>
+        				<td>This should defenetly be taken</td>
+						<td>from the data set received from</td> 
+						<td>the database</td>
     	  			</tr>
       				<tr>
         				<td>TestSubj</td>
@@ -134,12 +135,20 @@
   			</table>
 	</script>
 	<script type="text/template" id="createTicketTemplate">	
-			<h1 class="frontPage">Create Ticket</h1>
-			<form>
-				<input id='ticketName' type='text' placeholder='Name' value='Test' class="masterTooltip"/>
-				<input id='ticketContent' type='text' placeholder='Content' value='Test' class="masterTooltip"/>
-				<span href="#" class="button" id="registerButton">Submit</span>
-			</form>
+			<h1 class="userPage">Create a new ticket</h1>
+			<input id='ticketSubject' type='text' placeholder='Subject' class='masterTooltip'/>
+			<select class="ticketCategories" id="ticketCategotyDropBox">
+				<option value="" disabled selected style='display:none;'>Select your category</option>
+				<option value="IT">Information Technology</option>
+				<option value="HR">Human Resources</option>
+			</select>
+			<select class="ticketCategories" id="ticketCategotyDropBox">
+				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
+				<option value="1">Subcateg 1</option>
+				<option value="2">Subcateg 2</option>
+			</select>
+			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip'></textarea>
+			<span href="#" class="button" id="submitTicketButton">Submit</span>
 	</script>
 </head>
 <body>

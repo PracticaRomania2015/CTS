@@ -57,6 +57,10 @@ form{
 	padding: 4% 4%;
 }
 
+textarea {
+   resize: none;
+}
+
 
 /* =========================================================================================================================== */
 /* The log in page design - all the good stuff */
@@ -99,7 +103,7 @@ h1.frontPage{
 	color: #555;
 }
 
-#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
+#logInMail, #logInPass, #recoverMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
 	width: 210px;
 	background: #f1f8ec;
 	margin: 4% 0% 4% 0%;
@@ -152,10 +156,44 @@ h1.frontPage{
 	padding: 1%;
 }
 
+h1.userPage{
+  	border-radius: 5px;
+  	margin: 5px 0px 0px 0px;
+  	background: #0d94d2;
+  	padding: 10px 0;
+  	font-family: 'Arial';
+  	font-size: 18px;
+  	text-align: center;
+  	color: #fff;
+}
+
+#ticketSubject, #ticketContent {
+	border-radius: 5px;
+	width: 560px;
+	background: #f1f8ec;
+	margin: 10px 0px 0px 0px;
+	border: 1px solid #555;
+	padding: 5px;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #555;
+}
+
+.ticketCategories{
+	border-radius: 5px;
+	width: 284px;
+	background: #f1f8ec;
+	margin: 10px 0px 0px 0px;
+	border: 1px solid #555;
+	padding: 4px;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #555;
+}
+
 .searchTickets{
 	border-radius: 5px;
 	width: 35%;
-	background: #fff;
 	margin: 0px 0px 5px 0px;
 	border: 1px solid #555;
 	font-family: 'Arial';
