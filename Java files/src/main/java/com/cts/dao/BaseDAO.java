@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
@@ -22,10 +23,7 @@ public abstract class BaseDAO {
 
 	static {
 
-		// to be changed to relative path which doesn't work atm.. to me, at
-		// least
-		ApplicationContext applicationContext = new FileSystemXmlApplicationContext(
-				"D:\\GITHUB CTS Repository\\CTS\\Java files\\src\\main\\webapp\\WEB-INF\\spring\\appServlet\\servlet-context.xml");
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("servlet-context.xml");
 		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
 				SingleConnectionDataSource.class);
 
