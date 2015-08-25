@@ -87,4 +87,30 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		}
 		return true;
 	}
+
+	@Override
+	public boolean checkEmailForRecoveryPassword(String email, String newPassword) {
+
+		try {
+
+			InOutParam<String> emailParam = new InOutParam<String>(email, "Email");
+			InOutParam<String> passwordParam = new InOutParam<String>(newPassword, "Password");
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			prepareExecution(StoredProceduresNames.CheckEmailForRecoveryPasswordAndUpdatePassword, emailParam, passwordParam, errorParam);
+			execute();
+			if (errorParam.getParameter() == 0) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		} catch (Exception e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+	}
 }

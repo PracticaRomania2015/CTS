@@ -36,5 +36,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.ValidateLogin";
 		}
+	},
+
+	CheckEmailForRecoveryPasswordAndUpdatePassword {
+		public String toString() {
+			return "dbo.CheckEmailForRecoveryPasswordAndUpdatePassword";
+		}
 	}
 }

@@ -17,6 +17,7 @@ public class RegisterControllerTest {
 
 	private static RegisterController registerController;
 	private static LoginController loginController;
+	private static RecoveryPasswordController recoveryPasswordController;
 	private static User testUser;
 	private static ObjectMapper objectMapper;
 	private static UserDAOInterface userDAO;
@@ -48,6 +49,7 @@ public class RegisterControllerTest {
 		userDAO = new UserDAO();
 		registerController = new RegisterController();
 		loginController = new LoginController();
+		recoveryPasswordController = new RecoveryPasswordController();
 		testUser = new User();
 		objectMapper = new ObjectMapper();
 	}
@@ -83,6 +85,7 @@ public class RegisterControllerTest {
 		assertNotNull("error", loginController.login(testUser));
 		testUser.setPassword("a");
 		assertEquals(LoginError.getDescriptionByCode(3), loginController.login(testUser));
+		assertEquals("\"A new password was send to specified email address!\"", recoveryPasswordController.recoveryPassword(testUser));
 		assertTrue(userDAO.deleteAccount(testUser));
 	}
 
