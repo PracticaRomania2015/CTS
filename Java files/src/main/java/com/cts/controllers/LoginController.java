@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.cts.utils.HashUtil;
  * Handle requests for login page.
  */
 @Controller
+@Scope("session")
 public class LoginController {
 
 	private static final Logger logger = Logger.getLogger(LoginController.class.getName());

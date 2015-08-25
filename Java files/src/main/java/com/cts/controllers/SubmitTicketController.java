@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.cts.errors.SubmitTicketError;
  * Handle requests for submit ticket page.
  */
 @Controller
+@Scope("session")
 public class SubmitTicketController {
 
 	private static final Logger logger = Logger.getLogger(SubmitTicketController.class.getName());

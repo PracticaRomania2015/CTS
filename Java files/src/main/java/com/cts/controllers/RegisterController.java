@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.cts.utils.HashUtil;
  * Handles requests for the application register page.
  */
 @Controller
+@Scope("session")
 public class RegisterController {
 
 	// Regular expression to check if the mail is in the cerner.com domain.
@@ -46,14 +48,13 @@ public class RegisterController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {
-
 		return "index";
 	}
 
-
 	// Post method of the controller. the user data is hidden from the URL.
 	/**
-	 * @param user The new user to be registered
+	 * @param user
+	 *            The new user to be registered
 	 * @return A json response if error or success
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -70,7 +71,7 @@ public class RegisterController {
 		} catch (SecurityException e1) {
 		} catch (IOException e1) {
 		}
-
+		
 		localSuccess = true;
 
 		logger.info("######## Attempting a register...");
