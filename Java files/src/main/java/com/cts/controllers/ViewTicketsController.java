@@ -2,10 +2,8 @@ package com.cts.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -26,8 +24,7 @@ import com.cts.entities.User;
 @Scope("session")
 public class ViewTicketsController {
 
-	private static final Logger logger = Logger.getLogger(LoginController.class.getName());
-	private FileHandler fileHandler;
+	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
 	/**
 	 * POST method for view tickets controller.
@@ -38,17 +35,6 @@ public class ViewTicketsController {
 	@RequestMapping(value = "/viewTickets", method = RequestMethod.POST)
 	@ResponseBody
 	public String viewTickets(@RequestBody User user) {
-
-		try {
-			// This block configure the logger with handler and formatter.
-			fileHandler = new FileHandler("logs\\ApplicationLogFile.log", true);
-			logger.addHandler(fileHandler);
-			logger.setUseParentHandlers(false);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fileHandler.setFormatter(formatter);
-		} catch (SecurityException e) {
-		} catch (IOException e) {
-		}
 
 		logger.info("Attempting to send the list of tickets ...");
 

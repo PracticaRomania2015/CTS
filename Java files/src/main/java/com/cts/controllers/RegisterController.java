@@ -1,12 +1,10 @@
 package com.cts.controllers;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -43,8 +41,7 @@ public class RegisterController {
 	private RegisterError registerError;
 
 	// Initializing the logger for this class.
-	private static final Logger logger = Logger.getLogger(RegisterController.class.getName());
-	private FileHandler fileHandler;
+	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {
@@ -60,17 +57,6 @@ public class RegisterController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
 	public String register(@RequestBody User user) {
-
-		try {
-			// This block configure the logger with handler and formatter.
-			fileHandler = new FileHandler("logs\\ApplicationLogFile.log", true);
-			logger.addHandler(fileHandler);
-			logger.setUseParentHandlers(false);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fileHandler.setFormatter(formatter);
-		} catch (SecurityException e1) {
-		} catch (IOException e1) {
-		}
 		
 		localSuccess = true;
 
