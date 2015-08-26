@@ -48,6 +48,7 @@ var LogInView = GenericFrontPageChildView.extend({
 			email : $("#logInMail").val(),
 			password : $("#logInPass").val()
 		});
+		console.log(user.toJSON());
 		user.save({}, {
 			success : function(model, response) {
 				console.log(model);
@@ -227,19 +228,27 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	
 	submit : function() {
 		console.log('Submit ticket button pressed');
-		var categoryId;
+		var category;
 		if ($("#ticketSubcategoryDropbox option:selected").val() != "Select your subcategory"){
-			categoryId = $("#ticketSubcategoryDropbox option:selected").val();
+			category = $("#ticketSubcategoryDropbox option:selected").val();
 		} else {
-			categoryId = $("#ticketCategoryDropbox option:selected").val();
+			category = $("#ticketCategoryDropbox option:selected").val();
 		}
-		/*
-		 * TO DO
+		
+		var ticketComment = new TicketComment({
+			// TO DO : Get ID from Session
+			userId: 2,
+			dateTime: new Date().getTime(),
+			comment: $("#ticketContent").val()
+		})
+
 		var ticket = new CreateTicketModel({
 			subject : $("#ticketSubject").val(),
-			category : categoryId,
-			description : $("#ticketContent").val()
+			categoryId : category,
+			comments : [ticketComment]
 		});
+		
+		console.log(ticket.toJSON());
 		ticket.save({}, {
 			success : function(model, response) {
 				console.log(model);
@@ -252,7 +261,7 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 				console.log(response);
 				console.log('error');
 			}
-		});*/
+		});
 	}
 	
 });

@@ -160,6 +160,8 @@ var CreateTicketModel = GenericModel.extend({
 
 });
 
+var TicketComment = GenericModel.extend({ });
+
 var TicketCategoriesModel = GenericModel.extend({
 
 	urlRoot : 'openSubmitTicketPage/',
