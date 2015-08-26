@@ -34,10 +34,8 @@ var GenericFrontPageChildView = Backbone.View.extend({
 
 var LogInView = GenericFrontPageChildView.extend({
 
-	urlRoot : 'login/',
-
 	events : {
-		'click [id="logInButton"]' : 'submit'
+		'click #logInButton' : 'submit'
 	},
 
 	appendTextBox : function() {
@@ -68,10 +66,8 @@ var LogInView = GenericFrontPageChildView.extend({
 
 var RegisterView = GenericFrontPageChildView.extend({
 
-	urlRoot : 'register/',
-
 	events : {
-		'click [id="registerButton"]' : 'submit'
+		'click #registerButton' : 'submit'
 	},
 
 	appendTextBox : function() {
@@ -114,10 +110,8 @@ var RegisterView = GenericFrontPageChildView.extend({
 
 var RecoverView = GenericFrontPageChildView.extend({
 
-	urlRoot : 'recover/',
-	
 	events : {
-		'click [id="recoveryButton"]' : 'submit'
+		'click #recoveryButton' : 'submit'
 	},
 
 	appendTextBox : function() {
@@ -129,22 +123,10 @@ var RecoverView = GenericFrontPageChildView.extend({
 		var user = new RecoverModel({
 			email : $("#recoverMail").val()
 		});
-		var user = new RecoverModel({
-			email : $("#recoverMail").val()
-		});
 		user.save({}, {
 			success : function(model, response) {
 				console.log(model);
-				console.log(response);
-				console.log(response.description);
-				if (response.description == "Success!") {
-					$('#logIn').show();
-					$('#register').hide();
-					$('#recover').hide();
-					alert("Done!");
-				} else {
-					alert(response.responseText);
-				}
+				alert(response);
 				console.log('success');
 			},
 			error : function(model, response) {
@@ -188,10 +170,89 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 /* Create ticket page view */
 
 var CreateTicketPageView = GenericUserPanelPageView.extend({
+
+	events : {
+		'click #submitTicketButton' : 'submit',
+		'change #ticketCategoryDropbox' : 'populateSubcategories'
+	},
 	
 	render : function() {
 		this.$el.append(_.template($('#createTicketTemplate').html()));
 		return this;
+	},
+	
+	initialize : function() {
+		var request = new TicketCategoriesModel({ });
+		request.save({}, {
+			success : function(model, response) {
+				$('#ticketCategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your category</option>').val('');
+				_.each(response, function(e) {
+					if (e.parentCategoryId == 0) {
+						$('#ticketCategoryDropbox').append(
+								$("<option></option>").attr("value",
+										e.categoryId).text(e.categoryName));
+					}
+				});
+				
+			},
+			error : function(model, response) {
+				console.log(model);
+				console.log(response);
+				console.log('error');
+			}
+		});
+	},
+	
+	populateSubcategories : function() {
+		var request = new TicketCategoriesModel({ });
+		request.save({}, {
+			success : function(model, response) {
+				var selectedCategory = $('#ticketCategoryDropbox').val();
+				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+				_.each(response, function(e) {
+					if (selectedCategory == e.parentCategoryId) {
+						$('#ticketSubcategoryDropbox').append(
+								$("<option></option>").attr("value",
+										e.categoryId).text(e.categoryName));
+					}
+				});
+			},
+			error : function(model, response) {
+				console.log(model);
+				console.log(response);
+				console.log('error');
+			}
+		})
+	},
+	
+	submit : function() {
+		console.log('Submit ticket button pressed');
+		var categoryId;
+		if ($("#ticketSubcategoryDropbox option:selected").val() != "Select your subcategory"){
+			categoryId = $("#ticketSubcategoryDropbox option:selected").val();
+		} else {
+			categoryId = $("#ticketCategoryDropbox option:selected").val();
+		}
+		/*
+		 * TO DO
+		var ticket = new CreateTicketModel({
+			subject : $("#ticketSubject").val(),
+			category : categoryId,
+			description : $("#ticketContent").val()
+		});
+		ticket.save({}, {
+			success : function(model, response) {
+				console.log(model);
+				console.log(response);
+				console.log('success');
+				alert("Message sent!");
+			},
+			error : function(model, response) {
+				console.log(model);
+				console.log(response);
+				console.log('error');
+			}
+		});*/
 	}
 	
 });

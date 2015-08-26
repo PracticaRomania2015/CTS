@@ -69,7 +69,7 @@
 			<h1 class="frontPage">Password Recovery</h1>
 			<form>
 				<input id='recoverMail' type='text' placeholder='E-mail' class="masterTooltip"/>
-				<span href="#" class="button" id="recoverButton">Send Recovery Mail</span>
+				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
 			</form>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
@@ -117,7 +117,7 @@
 						<td>DD-MM-YYYY</td>
     	  			</tr>
       				<tr>
-        				<td>This should defenetly be taken</td>
+        				<td>This should definitely be taken</td>
 						<td>from the data set received from</td> 
 						<td>the database</td>
     	  			</tr>
@@ -137,15 +137,11 @@
 	<script type="text/template" id="createTicketTemplate">	
 			<h1 class="userPage">Create a new ticket</h1>
 			<input id='ticketSubject' type='text' placeholder='Subject' class='masterTooltip'/>
-			<select class="ticketCategories" id="ticketCategotyDropBox">
+			<select class="ticketCategories" id="ticketCategoryDropbox">
 				<option value="" disabled selected style='display:none;'>Select your category</option>
-				<option value="IT">Information Technology</option>
-				<option value="HR">Human Resources</option>
 			</select>
-			<select class="ticketCategories" id="ticketCategotyDropBox">
+			<select class="ticketCategories" id="ticketSubcategoryDropbox">
 				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
-				<option value="1">Subcateg 1</option>
-				<option value="2">Subcateg 2</option>
 			</select>
 			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip'></textarea>
 			<span href="#" class="button" id="submitTicketButton">Submit</span>

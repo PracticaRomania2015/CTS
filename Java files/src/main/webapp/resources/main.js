@@ -67,24 +67,28 @@ $(document).ready((function() {
 			$('#assignedTickets').show();
 			$('#myTickets').hide();
 			$('#createTicket').hide();
+			$('#userProperties').hide();
 		});
 		
 		$('#btn-userTk').click(function() {
 			$('#assignedTickets').hide();
 			$('#myTickets').show();
 			$('#createTicket').hide();
+			$('#userProperties').hide();
 		});
 		
 		$('#btn-subTk').click(function() {
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();
 			$('#createTicket').show();
+			$('#userProperties').hide();
 		});
 		
 		$('#btn-prop').click(function() {
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();
 			$('#createTicket').hide();
+			$('#userProperties').show();
 		});
 
 	})()
