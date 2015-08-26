@@ -27,18 +27,23 @@
 	<script type="text/template" id="userPanelPageTemplate">
 			<div id='menuWrapper'>
 				<span href='#' class='button' id='btn-asigTk'>Assigned tickets
-					<div class="menuRightArrow"></div></span>
+					<div id="atn" class="menuRightArrow"></div>
+					<div id="ats" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-userTk'>My tickets
-					<div class="menuRightArrow"></div></span>
+					<div id="mtn" class="menuRightArrow"></div>
+					<div id="mts" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-subTk'>Submit a ticket
-					<div class="menuRightArrow"></div></span>
+					<div id="stn" class="menuRightArrow"></div>
+					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-prop'>User properties
-					<div class="menuRightArrow"></div></span>
+					<div id="upn" class="menuRightArrow"></div>
+					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
 			</div>
 			<div id="contextWrapper">
 				<div id='assignedTickets' style='display: none;'></div>
-				<div id='userTickets' style='display: none;'></div>
+				<div id='myTickets' style='display: none;'></div>
 				<div id='createTicket' style='display: none;'></div>
+				<div id='userProperties' style='display: none;'></div>
 			</div>
 	</script>
 	<script type="text/template" id="logInTemplate">
@@ -73,7 +78,6 @@
 			</form>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
-			<h1 class="userPage">--- a template variable set on load ---</h1>
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
 			<select class="searchTickets" id="ticketSearchDropBox">
 				<option selected value="Subject">Subject</option>

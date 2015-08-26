@@ -83,13 +83,13 @@ textarea {
 
 h1.frontPage{
   	border-radius: 5px 5px 0px 0px;
-  	margin:-35px 0px 0px;
-  	background:#0d94d2;
-  	padding:10px 0;
-  	font-family:'Arial';
-  	font-size:18px;
-  	text-align:center;
-  	color:#fff;
+  	margin: -35px 0px 0px;
+  	background: #0d94d2;
+  	padding: 10px 0;
+  	font-family: 'Arial';
+  	font-size: 18px;
+  	text-align: center;
+  	color: #fff;
 }
 
 #regTitle {
@@ -144,6 +144,17 @@ h1.frontPage{
 	border-style: solid;
 	border-width: 8.5px 0 8.5px 14.7px;
 	border-color: transparent transparent transparent #f1f8ec;
+}
+
+.menuRightArrowSelected
+{
+	display: inline-block;
+	float: right;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 8.5px 0 8.5px 14.7px;
+	border-color: transparent transparent transparent #7bc143;
 }
 
 #contextWrapper{

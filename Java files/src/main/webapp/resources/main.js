@@ -28,10 +28,10 @@ $(document).ready((function() {
 		$('div#recover').append(recoverView.render().el);
 		
 		var assignedTicketsModel = new AssignedTicketsModel({});
-		var userTicketsView = new UserTicketsView({
+		var assignedTicketsView = new AssignedTicketsView({
 			model : assignedTicketsModel
 		});
-		$('div#assignedTickets').append(userTicketsView.render().el);
+		$('div#assignedTickets').append(assignedTicketsView.render().el);
 		
 		var userTicketsModel = new UserTicketsModel({});
 		var userTicketsView = new UserTicketsView({
@@ -68,6 +68,16 @@ $(document).ready((function() {
 			$('#myTickets').hide();
 			$('#createTicket').hide();
 			$('#userProperties').hide();
+			
+			$('#ats').show();
+			$('#mts').hide();
+			$('#sts').hide();
+			$('#ups').hide();
+			
+			$('#atn').hide();
+			$('#mtn').show();
+			$('#stn').show();
+			$('#upn').show();
 		});
 		
 		$('#btn-userTk').click(function() {
@@ -75,6 +85,16 @@ $(document).ready((function() {
 			$('#myTickets').show();
 			$('#createTicket').hide();
 			$('#userProperties').hide();
+			
+			$('#ats').hide();
+			$('#mts').show();
+			$('#sts').hide();
+			$('#ups').hide();
+			
+			$('#atn').show();
+			$('#mtn').hide();
+			$('#stn').show();
+			$('#upn').show();
 		});
 		
 		$('#btn-subTk').click(function() {
@@ -82,6 +102,16 @@ $(document).ready((function() {
 			$('#myTickets').hide();
 			$('#createTicket').show();
 			$('#userProperties').hide();
+			
+			$('#ats').hide();
+			$('#mts').hide();
+			$('#sts').show();
+			$('#ups').hide();
+			
+			$('#atn').show();
+			$('#mtn').show();
+			$('#stn').hide();
+			$('#upn').show();
 		});
 		
 		$('#btn-prop').click(function() {
@@ -89,6 +119,16 @@ $(document).ready((function() {
 			$('#myTickets').hide();
 			$('#createTicket').hide();
 			$('#userProperties').show();
+			
+			$('#ats').hide();
+			$('#mts').hide();
+			$('#sts').hide();
+			$('#ups').show();
+			
+			$('#atn').show();
+			$('#mtn').show();
+			$('#stn').show();
+			$('#upn').hide();
 		});
 
 	})()

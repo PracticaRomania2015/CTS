@@ -156,16 +156,39 @@ var GenericUserPanelPageView = Backbone.View.extend({
 
 
 /* ================================================= */
-/* Generic user panel page child view */
+/* Assigned tickets page view */
+
+var AssignedTicketsView = GenericUserPanelPageView.extend({
+	
+	render : function() {
+		this.$el.append(_.template($('#userTicketsTemplate').html()));
+		//this.$el.find('#tryme').append("bla");
+		return this;
+	},
+	
+	initialize : function() {
+		this.$el.append("<h1 class='userPage'> Tickets for me to review </h1>");
+	}
+
+})
+
+
+/* ================================================= */
+/* User tickets page view */
 
 var UserTicketsView = GenericUserPanelPageView.extend({
 	
 	render : function() {
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
+	},
+	
+	initialize : function() {
+		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
 	}
 
 })
+
 
 /* ================================================= */
 /* Create ticket page view */
