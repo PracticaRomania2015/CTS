@@ -71,14 +71,14 @@ public class SubmitTicketController {
 		}
 
 		// Check if the ticket category is null or empty.
-		if (ticket.getCategory() == null || ticket.getCategory().equals("")) {
+		if (ticket.getCategoryId() == 0) {
 
-			logger.info("Ticket category is null or empty.");
+			logger.info("You must select a category for the ticket!");
 			return SubmitTicketError.getDescriptionByCode(2);
 		}
 
 		// Check if the ticket description is null or empty.
-		if (ticket.getDescription() == null || ticket.getDescription().equals("")) {
+		if (ticket.getComments().get(0).getComment() == null || ticket.getComments().get(0).getComment().equals("")) {
 
 			logger.info("Ticket description is null or empty.");
 			return SubmitTicketError.getDescriptionByCode(3);
