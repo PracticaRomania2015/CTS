@@ -3,7 +3,6 @@
 
 var GenericModel = Backbone.Model.extend({});
 
-
 /* ==== FRONT PAGE ==== */
 /* =========================================================================================================================== */
 /* Log in page models */
@@ -28,7 +27,7 @@ var LogInModel = GenericModel.extend({
 			$("#logInMail").addClass("error");
 			ok = true;
 		}
-		
+
 		$("#logInPass").removeAttr("title");
 		$("#logInPass").removeClass("error");
 		if (!attrs.password) {
@@ -87,7 +86,7 @@ var RegisterModel = GenericModel.extend({
 			$("#regPass").addClass("error");
 			ok = true;
 		}
-		
+
 		$("#regConfPass").removeAttr("title");
 		$("#regConfPass").removeClass("error");
 		if ($("#regPass").val() != $("#regConfPass").val()) {
@@ -106,7 +105,7 @@ var RegisterModel = GenericModel.extend({
 
 var RecoverModel = GenericModel.extend({
 
-	urlRoot : 'recover/',
+	urlRoot : 'recoveryPassword/',
 
 	validate : function(attrs) {
 
@@ -133,7 +132,6 @@ var RecoverModel = GenericModel.extend({
 
 });
 
-
 /* ==== USER PANEL PAGE ==== */
 /* =========================================================================================================================== */
 /* User panel page models */
@@ -152,6 +150,24 @@ var UserTicketsModel = GenericModel.extend({
 
 var CreateTicketModel = GenericModel.extend({
 
-	urlRoot : 'createTicket/'
+	urlRoot : 'submitTicket/',
+
+	validate : function(attrs) {
+
+		return false;
+
+	}
+
+});
+
+var TicketCategoriesModel = GenericModel.extend({
+
+	urlRoot : 'openSubmitTicketPage/',
+
+	validate : function(attrs) {
+
+		return false;
+
+	}
 
 });

@@ -1,26 +1,31 @@
 package com.cts.entities;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Ticket {
 
 	private int ticketId;
 	private String subject;
-	private String category;
-	private String description;
-	private String filePath;
-	private int userId;
-	private Timestamp dateTime;
+	private int categoryId;
+	private int assignedToUserId;
+	private TicketComment newTicketComment;
+	private ArrayList<TicketComment> comments;
 
 	public Ticket() {
 
 		ticketId = 0;
-		userId = 0;
-		dateTime = new Timestamp(0);
 		subject = "";
-		category = "";
-		description = "";
-		filePath = "";
+		categoryId = 0;
+		assignedToUserId = 0;
+		newTicketComment = new TicketComment();
+	}
+
+	public ArrayList<TicketComment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<TicketComment> comments) {
+		this.comments = comments;
 	}
 
 	public int getTicketId() {
@@ -31,38 +36,24 @@ public class Ticket {
 		this.ticketId = ticketId;
 	}
 
-	public int getUserId() {
-
-		return userId;
-	}
-
-	public Timestamp getDateTime() {
-
-		return dateTime;
-	}
-
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public int getAssignedToUserId() {
+		return assignedToUserId;
 	}
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setAssignedToUserId(int assignedToUserId) {
+		this.assignedToUserId = assignedToUserId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public void setDateTime(Timestamp dateTime) {
-		this.dateTime = dateTime;
+	public void setNewTicketComment(TicketComment newTicketComment) {
+		this.newTicketComment = newTicketComment;
 	}
 
 	public String getSubject() {
@@ -70,18 +61,13 @@ public class Ticket {
 		return subject;
 	}
 
-	public String getCategory() {
+	public int getCategoryId() {
 
-		return category;
+		return categoryId;
 	}
 
-	public String getDescription() {
+	public TicketComment getNewTicketComment() {
 
-		return description;
-	}
-
-	public String getFilePath() {
-
-		return filePath;
+		return newTicketComment;
 	}
 }

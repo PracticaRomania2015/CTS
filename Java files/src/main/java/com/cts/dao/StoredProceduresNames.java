@@ -42,5 +42,17 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.CheckEmailForRecoveryPasswordAndUpdatePassword";
 		}
+	},
+
+	GetTicketComments {
+		public String toString() {
+			return "dbo.GetTicketComments";
+		}
+	},
+
+	AddCommentToTicket {
+		public String toString() {
+			return "dbo.AddCommentToTicket";
+		}
 	}
 }
