@@ -32,6 +32,7 @@ public class SubmitTicketController {
 	 * @return all categories or null
 	 */
 	@RequestMapping(value = "/openSubmitTicketPage", method = RequestMethod.POST)
+	@ResponseBody
 	public String openSubmitTicketPage() {
 
 		logger.info("Attempting to get all categories from database ...");
