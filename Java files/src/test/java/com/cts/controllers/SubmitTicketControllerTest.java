@@ -130,7 +130,7 @@ public class SubmitTicketControllerTest {
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(3), submitTicketController.submitTicket(ticket));
 	}
-	
+
 	private String generateErrorJson(int errorCode) {
 
 		String errorMessageJson = "";
@@ -153,6 +153,7 @@ public class SubmitTicketControllerTest {
 		testUser.setTitle("test");
 		testUser.setPassword("test");
 		assertEquals(generateErrorJson(8), registerController.register(testUser));
+		testUser.setPassword("test");
 		assertNotNull("error", loginController.login(testUser));
 		testTicketComment.setUserId(testUser.getUserId());
 		testTicketComment.setComment(testComment);
@@ -164,8 +165,29 @@ public class SubmitTicketControllerTest {
 		String ticketJson = submitTicketController.submitTicket(ticket);
 		assertEquals(getTicketInJsonFormat(ticket), ticketJson);
 		assertEquals(getTicketInJsonFormat(ticket), ticketViewAndResponseController.viewTicketComments(ticket));
+		TicketComment newTicketComment = new TicketComment();
+		newTicketComment.setComment("test");
+		newTicketComment.setDateTime(new Timestamp(0));
+		newTicketComment.setUserId(testUser.getUserId());
+		newTicketComment.setTicketId(ticket.getTicketId());
+		ticket.setNewTicketComment(newTicketComment);
+		ticketJson = ticketViewAndResponseController.addComment(ticket);
+		assertEquals(ticketJson, ticketViewAndResponseController.viewTicketComments(ticket));
 		assertTrue(ticketDAO.deleteTicket(ticket));
 		assertTrue(userDAO.deleteAccount(testUser));
+	}
+
+	@Test
+	public void testWithBadUserId() {
+
+		testTicketComment.setComment(testComment);
+		testTicketComment.setUserId(0);
+		comments.clear();
+		comments.add(testTicketComment);
+		ticket.setSubject(testSubject);
+		ticket.setCategoryId(1);
+		ticket.setComments(comments);
+		assertEquals(SubmitTicketError.getDescriptionByCode(4), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test

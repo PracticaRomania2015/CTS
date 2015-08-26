@@ -18,6 +18,7 @@ public class Ticket {
 		categoryId = 0;
 		assignedToUserId = 0;
 		newTicketComment = new TicketComment();
+		comments = new ArrayList<TicketComment>();
 	}
 
 	public ArrayList<TicketComment> getComments() {

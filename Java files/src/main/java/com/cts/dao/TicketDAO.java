@@ -142,8 +142,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getNewTicketComment().getFilePath(),
 					"FilePath");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam, dateTimeParam, commentParam,
-					userIdParam, filePathParam, errorParam);
+			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
+					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 0) {
 
