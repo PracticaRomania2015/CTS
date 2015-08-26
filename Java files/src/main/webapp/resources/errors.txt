@@ -4,3 +4,9 @@ registerPassword,&bull; 8 - 20 characters<br>&bull; Uppercase characters<br>&bul
 registerSamePassword,Passwords are not the same.
 mandatory,Mandatory field
 validMail,Enter a valid Google mail
+
+#emailRegexp "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[Gg][Mm][Aa][Ii][Ll].[Cc][Oo][Mm]$"
+#
+#
+#
+#

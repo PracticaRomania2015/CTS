@@ -17,6 +17,7 @@ import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
 import com.cts.errors.RegisterError;
+import com.cts.utils.ConfigReader;
 import com.cts.utils.HashUtil;
 
 /**
@@ -26,7 +27,7 @@ import com.cts.utils.HashUtil;
 @Scope("session")
 public class RegisterController {
 
-	// Regular expression to check if the mail is in the cerner.com domain.
+	// Regular expression to check if the mail is in the gmail.com domain.
 	private static final String emailRegexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[Gg][Mm][Aa][Ii][Ll].[Cc][Oo][Mm]$";
 	private Pattern pattern = Pattern.compile(emailRegexp);
