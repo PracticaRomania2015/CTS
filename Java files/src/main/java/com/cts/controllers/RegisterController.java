@@ -1,11 +1,9 @@
 package com.cts.controllers;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cts.communication.RegisterError;
+import com.cts.communication.Success;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
-import com.cts.errors.RegisterError;
 import com.cts.utils.ConfigReader;
 import com.cts.utils.HashUtil;
 
@@ -28,21 +27,22 @@ import com.cts.utils.HashUtil;
 public class RegisterController {
 
 	// Regular expression to check if the mail is in the gmail.com domain.
-	private static final String emailRegexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[Gg][Mm][Aa][Ii][Ll].[Cc][Oo][Mm]$";
-	private Pattern pattern = Pattern.compile(emailRegexp);
+	private static String emailRegexp;
+	private Pattern pattern;
 
 	// Boolean variable that checks if the incoming data is passing all the
 	// local tests.
 	private boolean localSuccess;
-	private String errorMessageJson = "";
-
-	private ObjectMapper objectMapper = new ObjectMapper();
-
-	private RegisterError registerError;
+	private ConfigReader configReader;
 
 	// Initializing the logger for this class.
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
+
+	public RegisterController() {
+		configReader = new ConfigReader();
+		emailRegexp = configReader.getValueForKey("emailRegexp");
+		pattern = Pattern.compile(emailRegexp);
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {
@@ -58,7 +58,7 @@ public class RegisterController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
 	public String register(@RequestBody User user) {
-		
+
 		localSuccess = true;
 
 		logger.info("######## Attempting a register...");
@@ -71,7 +71,7 @@ public class RegisterController {
 
 				localSuccess = false;
 				logger.info("Error: One or more fields are empty");
-				return generateErrorJson(6);
+				return new RegisterError().getErrorJson(6);
 			} else {
 
 				// Checks if the email is valid
@@ -79,7 +79,7 @@ public class RegisterController {
 
 					localSuccess = false;
 					logger.info("Error: Invalid Email");
-					return generateErrorJson(5);
+					return new RegisterError().getErrorJson(5);
 				}
 			}
 
@@ -93,19 +93,19 @@ public class RegisterController {
 				if (userDAO.createAccount(user)) {
 
 					logger.info("A new account was successfully created");
-					return generateErrorJson(8);
+					return new Success().getSuccessJson(0);
 				} else {
 
 					logger.info("Error: email already exists.");
-					return generateErrorJson(9);
+					return new RegisterError().getErrorJson(9);
 				}
 			}
 			logger.info("Unknown error.");
-			return generateErrorJson(-1);
+			return new RegisterError().getErrorJson(-1);
 		} catch (NullPointerException e) {
 
 			logger.info("NullPointerException when trying to register a new account");
-			return generateErrorJson(7);
+			return new RegisterError().getErrorJson(6);
 		}
 	}
 
@@ -126,25 +126,5 @@ public class RegisterController {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @param errorCode
-	 *            The code of the error that is wanted to be generated as Json,
-	 *            ranging from 1 to 7
-	 * @return The Json of the requested error
-	 */
-	private String generateErrorJson(int errorCode) {
-
-		errorMessageJson = "";
-		registerError = new RegisterError(errorCode);
-		try {
-
-			errorMessageJson = objectMapper.writeValueAsString(registerError);
-		} catch (IOException e) {
-
-			logger.info("IOException when trying to generate the Json for DB error");
-		}
-		return errorMessageJson;
 	}
 }

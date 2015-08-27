@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cts.communication.LoginError;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
-import com.cts.errors.LoginError;
 import com.cts.utils.HashUtil;
 
 /**
@@ -45,7 +45,8 @@ public class LoginController {
 	 * Post method for the login controller.
 	 * 
 	 * @param userLoginJson
-	 * @return full user details if the login was successfully or error message otherwise
+	 * @return full user details if the login was successfully or error message
+	 *         otherwise
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -57,14 +58,14 @@ public class LoginController {
 		if (user.getEmail() == null || user.getEmail().equals("")) {
 
 			logger.info("Username is null or empty.");
-			return LoginError.getDescriptionByCode(1);
+			return new LoginError().getErrorJson(1);
 		}
 
 		// Check if the password is null or empty.
 		if (user.getPassword() == null || user.getPassword().equals("")) {
 
 			logger.info("Password is null or empty.");
-			return LoginError.getDescriptionByCode(2);
+			return new LoginError().getErrorJson(2);
 		}
 
 		// Validate the login.
@@ -76,7 +77,7 @@ public class LoginController {
 			return getUserObjectInJsonFormat(user);
 		} else {
 			logger.info("Login information is not correct.");
-			return LoginError.getDescriptionByCode(3);
+			return new LoginError().getErrorJson(3);
 		}
 	}
 }
