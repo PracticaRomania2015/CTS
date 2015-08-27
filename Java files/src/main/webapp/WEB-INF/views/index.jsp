@@ -101,7 +101,7 @@
 							&emsp;
 							<div class="table-surf">&#60;</div>
 							&emsp;
-							1/1
+							<div id="ticketPagingNumbering" style="display: inline-block;"></div>
 							&emsp;
 							<div class="table-surf">&#62;</div>
 							&emsp;
@@ -109,33 +109,7 @@
 						</th>
       				</tr>
     			</tfoot>
-    			<tbody>
-      				<tr>
-        				<td>TestSubj</td>
-						<td>TestCateg</td> 
-						<td>DD-MM-YYYY</td>
-    	  			</tr>
-      				<tr>
-        				<td>TestSubj</td>
-						<td>TestCateg</td> 
-						<td>DD-MM-YYYY</td>
-    	  			</tr>
-      				<tr>
-        				<td>This should definitely be taken</td>
-						<td>from the data set received from</td> 
-						<td>the database</td>
-    	  			</tr>
-      				<tr>
-        				<td>TestSubj</td>
-						<td>TestCateg</td> 
-						<td>DD-MM-YYYY</td>
-    	  			</tr>
-      				<tr>
-        				<td>TestSubj</td>
-						<td>TestCateg</td> 
-						<td>DD-MM-YYYY</td>
-    	  			</tr>
-	    		</tbody>
+    			<tbody id="ticketViewBody"></tbody>
   			</table>
 	</script>
 	<script type="text/template" id="createTicketTemplate">	

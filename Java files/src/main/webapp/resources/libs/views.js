@@ -162,12 +162,31 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	
 	render : function() {
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
-		//this.$el.find('#tryme').append("bla");
+		this.populateData();
 		return this;
 	},
 	
 	initialize : function() {
 		this.$el.append("<h1 class='userPage'> Tickets for me to review </h1>");
+	},
+	
+	populateData : function() {
+		// just some test variables
+		var test1 = "asigned";
+		var test2 = "categ";
+		var test3 = "date";
+		var test4 = 1;
+		var test5 = 2;
+		// how to input the actual data (hint: use each)
+		this.$el.find('tbody').append("<tr><td>" +
+				test1 +
+				"</td><td>" +
+				test2 +
+				"</td><td>" +
+				test3 +
+				"</td></tr>");
+		// don't forget to input the page numbering as well
+		this.$el.find('#ticketPagingNumbering').append(test4 + "/" + test5);
 	}
 
 })
@@ -180,11 +199,31 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	
 	render : function() {
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
+		this.populateData();
 		return this;
 	},
 	
 	initialize : function() {
 		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+	},
+	
+	populateData : function() {
+		// just some test variables
+		var test1 = "mine";
+		var test2 = "categ";
+		var test3 = "date";
+		var test4 = 1;
+		var test5 = 4;
+		// how to input the actual data (hint: use each)
+		this.$el.find('tbody').append("<tr><td>" +
+				test1 +
+				"</td><td>" +
+				test2 +
+				"</td><td>" +
+				test3 +
+				"</td></tr>");
+		// don't forget to input the page numbering as well
+		this.$el.find('#ticketPagingNumbering').append(test4 + "/" + test5);
 	}
 
 })
