@@ -51,14 +51,17 @@ var LogInView = GenericFrontPageChildView.extend({
 		console.log(user.toJSON());
 		user.save({}, {
 			success : function(model, response) {
-				console.log(model);
-				console.log(response);
-				// temporary (TODO: redirect)
-				alert("Login successfully! UserID: " + response.userId);
+				// TODO: redirect
+				if (response.userId) {
+					alert("Login successfully! UserID: " + response.userId);
+				} else {
+					alert(response);
+				}
+				console.log("SUCCESS");
 			},
 			error : function(model, response) {
-				console.log(response.responseText);
-				alert(response.responseText);
+				alert(response);
+				console.log("FAIL");
 			}
 		})
 	}
@@ -86,23 +89,20 @@ var RegisterView = GenericFrontPageChildView.extend({
 		});
 		user.save({}, {
 			success : function(model, response) {
-				console.log(model);
-				console.log(response);
-				console.log(response.description);
-				if (response.description == "Success!") {
+				if (response == "Success!") {
 					$('#logIn').toggle();
 					$('#register').hide();
 					$('#recover').hide();
 					alert("Account created!");
 				} else {
-					alert(response.description);
+					alert(response);
 				}
-				console.log('success');
+				console.log('SUCCESS');
 			},
 			error : function(model, response) {
 				console.log(model);
 				console.log(response);
-				console.log('error');
+				console.log('FAIL');
 			}
 		});
 	}
@@ -126,14 +126,13 @@ var RecoverView = GenericFrontPageChildView.extend({
 		});
 		user.save({}, {
 			success : function(model, response) {
-				console.log(model);
 				alert(response);
-				console.log('success');
+				console.log('SUCCESS');
 			},
 			error : function(model, response) {
 				console.log(model);
 				console.log(response);
-				console.log('error');
+				console.log('FAIL');
 			}
 
 		});
@@ -289,28 +288,35 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	},
 	
 	submit : function() {
-		console.log('Submit ticket button pressed');
-		var category;
+console.log('Submit ticket button pressed');
+		
+		var ticketCategoryName, ticketCategoryId;
 		if ($("#ticketSubcategoryDropbox option:selected").val() != "Select your subcategory"){
-			category = $("#ticketSubcategoryDropbox option:selected").val();
+			ticketCategoryName = $("#ticketSubcategoryDropbox option:selected").text();
+			ticketCategoryId = $("#ticketSubcategoryDropbox option:selected").val();
 		} else {
-			category = $("#ticketCategoryDropbox option:selected").val();
-		}
+			ticketCategoryName= $("#ticketCategoryDropbox option:selected").text();
+			ticketCategoryId = $("#ticketCategoryDropbox option:selected").val();
+		};
+
+		var ticketCategory = new TicketCategory({
+			categoryName: ticketCategoryName,
+			categoryId: ticketCategoryId
+		}, {validate: true});
 		
 		var ticketComment = new TicketComment({
 			// TO DO : Get ID from Session
 			userId: 2,
 			dateTime: new Date().getTime(),
 			comment: $("#ticketContent").val()
-		})
-
+		}, {validate: true});
+		
 		var ticket = new CreateTicketModel({
 			subject : $("#ticketSubject").val(),
-			categoryId : category,
+			category : ticketCategory,
 			comments : [ticketComment]
 		});
 		
-		console.log(ticket.toJSON());
 		ticket.save({}, {
 			success : function(model, response) {
 				console.log(model);
