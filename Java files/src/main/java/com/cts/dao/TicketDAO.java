@@ -17,7 +17,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<String> subjectParam = new InOutParam<String>(ticket.getSubject(), "Subject");
-			InOutParam<Integer> categoryParam = new InOutParam<Integer>(ticket.getCategoryId(), "CategoryId");
+			InOutParam<Integer> categoryParam = new InOutParam<Integer>(ticket.getCategory().getCategoryId(),
+					"CategoryId");
 			InOutParam<Timestamp> timestampParam = new InOutParam<Timestamp>(ticket.getComments().get(0).getDateTime(),
 					"DateTime");
 			InOutParam<String> commentParam = new InOutParam<String>(ticket.getComments().get(0).getComment(),

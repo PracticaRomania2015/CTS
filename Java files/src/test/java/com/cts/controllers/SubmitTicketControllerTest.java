@@ -13,6 +13,7 @@ import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
+import com.cts.entities.Category;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
 import com.cts.entities.User;
@@ -78,7 +79,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(nullSubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(1), submitTicketController.submitTicket(ticket));
 	}
@@ -90,7 +93,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(emptySubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(1), submitTicketController.submitTicket(ticket));
 	}
@@ -102,7 +107,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
-		ticket.setCategoryId(0);
+		Category category = new Category();
+		category.setCategoryId(0);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(2), submitTicketController.submitTicket(ticket));
 	}
@@ -114,7 +121,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(3), submitTicketController.submitTicket(ticket));
 	}
@@ -126,7 +135,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(3), submitTicketController.submitTicket(ticket));
 	}
@@ -160,7 +171,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		String ticketJson = submitTicketController.submitTicket(ticket);
 		assertEquals(getTicketInJsonFormat(ticket), ticketJson);
@@ -185,7 +198,9 @@ public class SubmitTicketControllerTest {
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
-		ticket.setCategoryId(1);
+		Category category = new Category();
+		category.setCategoryId(1);
+		ticket.setCategory(category);
 		ticket.setComments(comments);
 		assertEquals(SubmitTicketError.getDescriptionByCode(4), submitTicketController.submitTicket(ticket));
 	}

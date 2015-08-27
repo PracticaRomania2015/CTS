@@ -6,19 +6,37 @@ public class Ticket {
 
 	private int ticketId;
 	private String subject;
-	private int categoryId;
+	private Category category;
+	private State state;
 	private int assignedToUserId;
-	private TicketComment newTicketComment;
 	private ArrayList<TicketComment> comments;
+	private TicketComment newTicketComment;
 
 	public Ticket() {
 
 		ticketId = 0;
 		subject = "";
-		categoryId = 0;
+		category = new Category();
+		state = new State();
 		assignedToUserId = 0;
-		newTicketComment = new TicketComment();
 		comments = new ArrayList<TicketComment>();
+		newTicketComment = new TicketComment();
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public ArrayList<TicketComment> getComments() {
@@ -41,10 +59,6 @@ public class Ticket {
 		this.subject = subject;
 	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
 	public int getAssignedToUserId() {
 		return assignedToUserId;
 	}
@@ -60,11 +74,6 @@ public class Ticket {
 	public String getSubject() {
 
 		return subject;
-	}
-
-	public int getCategoryId() {
-
-		return categoryId;
 	}
 
 	public TicketComment getNewTicketComment() {

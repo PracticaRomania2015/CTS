@@ -3,11 +3,11 @@ package com.cts.entities;
 public class User {
 
 	private int userId;
-	private String email;
-	private String password;
 	private String firstName;
 	private String lastName;
 	private String title;
+	private String email;
+	private String password;
 
 	public User() {
 

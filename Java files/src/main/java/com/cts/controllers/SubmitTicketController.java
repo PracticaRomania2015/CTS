@@ -26,6 +26,7 @@ import com.cts.errors.SubmitTicketError;
 public class SubmitTicketController {
 
 	private static Logger logger = Logger.getLogger(SubmitTicketController.class.getName());
+
 	/**
 	 * GET method to get categories for the create new ticket page.
 	 * 
@@ -71,7 +72,7 @@ public class SubmitTicketController {
 		}
 
 		// Check if the ticket category is null or empty.
-		if (ticket.getCategoryId() == 0) {
+		if (ticket.getCategory().getCategoryId() == 0) {
 
 			logger.info("You must select a category for the ticket!");
 			return SubmitTicketError.getDescriptionByCode(2);
