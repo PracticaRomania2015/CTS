@@ -1,30 +1,17 @@
 package com.cts.communication;
 
-import java.io.IOException;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.cts.utils.ConfigReader;
 
-public class RegisterError implements Error {
+public class RegisterError extends Error {
 
 	private String invalidEmailError;
 	private String emptyFields;
 	private String dbError;
 	private String unknownError;
 	private String existingEmailError;
-	private ConfigReader configReader;
-	private String description;
-	private ObjectMapper objectMapper = new ObjectMapper();
-	
+
 	public RegisterError() {
-
 		initAll();
-	}
-
-	public String getDescription() {
-
-		return description;
 	}
 
 	private void initAll() {
@@ -38,21 +25,7 @@ public class RegisterError implements Error {
 	}
 
 	@Override
-	public String getErrorJson(int errorCode) {
-		
-		initDescription(errorCode);
-
-		String errorMessageJson = "";
-		
-		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
-		} catch (IOException e) {
-		}
-		return errorMessageJson;
-	}
-
-	private void initDescription(int errorCode) {
-
+	protected void initDescription(int errorCode) {
 		switch (errorCode) {
 		case 5: {
 			description = invalidEmailError;
@@ -79,7 +52,5 @@ public class RegisterError implements Error {
 		}
 		}
 	}
-	
-	
 
 }

@@ -1,28 +1,16 @@
 package com.cts.communication;
 
-import java.io.IOException;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.cts.utils.ConfigReader;
 
-public class LoginError implements Error {
+public class LoginError extends Error {
 
 	private String emptyEmailFieldError;
 	private String emptyPasswordFieldError;
 	private String invalidEmailOrPasswordError;
 	private String unknownError;
-	protected ConfigReader configReader;
-	protected String description;
-	private ObjectMapper objectMapper = new ObjectMapper();
 
 	public LoginError() {
 		initAll();
-	}
-
-	public String getDescription() {
-
-		return description;
 	}
 
 	private void initAll() {
@@ -36,22 +24,8 @@ public class LoginError implements Error {
 	}
 
 	@Override
-	public String getErrorJson(int errorCode) {
-		
-		initDescription(errorCode);
-		
-		String errorMessageJson = "";
-		
-		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
-		} catch (IOException e) {
-		}
-		return errorMessageJson;
-	}
-
-	private void initDescription(int errorCode) {
+	protected void initDescription(int errorCode) {
 		switch (errorCode) {
-
 		case 1: {
 			description = emptyEmailFieldError;
 			break;
@@ -70,6 +44,5 @@ public class LoginError implements Error {
 			break;
 		}
 		}
-		
 	}
 }
