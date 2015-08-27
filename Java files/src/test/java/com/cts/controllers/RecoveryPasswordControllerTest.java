@@ -3,6 +3,8 @@ package com.cts.controllers;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.cts.communication.RecoveryPasswordError;
 import com.cts.entities.User;
 
 public class RecoveryPasswordControllerTest {
@@ -21,7 +23,7 @@ public class RecoveryPasswordControllerTest {
 	public void testWithInvalidEmail() {
 		
 		user.setEmail("test@test.com");
-		assertNotNull("The specified email is incorrect!", recoveryPasswordController.recoveryPassword(user));
+		assertEquals(new RecoveryPasswordError().getErrorJson(1), recoveryPasswordController.recoveryPassword(user));
 	}
 
 }

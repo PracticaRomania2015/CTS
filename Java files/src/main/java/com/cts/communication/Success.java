@@ -8,36 +8,55 @@ import com.cts.utils.ConfigReader;
 
 public class Success {
 
-	private ConfigReader configReader;
+	private ConfigReader configReader = new ConfigReader();
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private String description;
-	private String success;
+	private String registerSuccess;
+	private String recoverySuccess;
 
 	public Success() {
-		initAll();
 
-		description = success;
+		initAll();
 	}
 
 	private void initAll() {
-		configReader = new ConfigReader();
 
-		success = configReader.getValueForKey("success");
-	}
-
-	public String getDescription() {
-		return description;
+		registerSuccess = configReader.getValueForKey("success");
+		recoverySuccess = configReader.getValueForKey("aNewPasswordWasSentToTheEmailSpecified");
 	}
 
 	public String getSuccessJson(int successCode) {
 
+		initDescription(successCode);
 		String successMessageJson = "";
 
 		try {
-			successMessageJson = objectMapper.writeValueAsString(this);
+			successMessageJson = objectMapper.writeValueAsString(this.description);
 		} catch (IOException e) {
 		}
 		return successMessageJson;
+	}
+
+	private void initDescription(int successCode) {
+
+		switch (successCode) {
+
+		case 1: {
+
+			description = registerSuccess;
+			break;
+		}
+		case 2: {
+
+			description = recoverySuccess;
+			break;
+		}
+		default: {
+
+			description = "";
+			break;
+		}
+		}
 	}
 }

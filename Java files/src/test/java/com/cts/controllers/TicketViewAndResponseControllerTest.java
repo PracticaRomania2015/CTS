@@ -3,6 +3,8 @@ package com.cts.controllers;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.cts.communication.TicketError;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
 
@@ -31,13 +33,13 @@ public class TicketViewAndResponseControllerTest {
 		TicketComment comment = new TicketComment();
 		comment.setComment("test");
 		ticket.setNewTicketComment(comment);
-		assertEquals("\"Database error!\"", ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketError().getErrorJson(4), ticketViewAndResponseController.addComment(ticket));
 		comment.setComment("");
-		assertEquals("\"Ticket comment cannot be null or empty!\"", ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
 		comment.setComment(null);
-		assertEquals("\"Ticket comment cannot be null or empty!\"", ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
 		ticket.setNewTicketComment(null);
-		assertEquals("\"Ticket comment cannot be null or empty!\"", ticketViewAndResponseController.addComment(ticket));
-		assertEquals("\"Ticket comment cannot be null or empty!\"", ticketViewAndResponseController.addComment(null));
+		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(null));
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cts.communication.TicketError;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
@@ -41,12 +42,13 @@ public class ViewTicketsController {
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(user);
 
-		String jsonMessage = "json error";
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			jsonMessage = objectMapper.writeValueAsString(tickets);
+
+			return objectMapper.writeValueAsString(tickets);
 		} catch (IOException e) {
+
+			return new TicketError().getErrorJson(-1);
 		}
-		return jsonMessage;
 	}
 }

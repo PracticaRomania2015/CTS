@@ -74,7 +74,15 @@ public class LoginController {
 		if (userDAO.validateLogin(user)) {
 
 			logger.info("Login succesfully!");
-			return getUserObjectInJsonFormat(user);
+			String userJson = getUserObjectInJsonFormat(user);
+			if(userJson != null){
+				
+				return userJson;
+			}
+			else{
+				
+				return new LoginError().getErrorJson(-1);
+			}
 		} else {
 			logger.info("Login information is not correct.");
 			return new LoginError().getErrorJson(3);

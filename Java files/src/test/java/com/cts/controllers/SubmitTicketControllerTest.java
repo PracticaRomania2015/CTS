@@ -12,7 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cts.communication.SubmitTicketError;
+import com.cts.communication.TicketError;
 import com.cts.communication.Success;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
@@ -84,7 +84,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(0);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(2), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(2), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class SubmitTicketControllerTest {
 		testUser.setLastName("test");
 		testUser.setTitle("test");
 		testUser.setPassword("test");
-		assertEquals(new Success().getSuccessJson(8), registerController.register(testUser));
+		assertEquals(new Success().getSuccessJson(1), registerController.register(testUser));
 		testUser.setPassword("test");
 		assertNotNull("error", loginController.login(testUser));
 		testTicketComment.setUserId(testUser.getUserId());
@@ -191,7 +191,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new SubmitTicketError().getErrorJson(4), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketError().getErrorJson(4), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test

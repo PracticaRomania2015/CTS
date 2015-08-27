@@ -29,7 +29,7 @@ public class ConfigReader {
 	public ConfigReader() {
 		//!!!!!!!!!!!!HERE!!!!!!!!!!!!
 		// going to change to relative path. again problems with it
-		this("D:\\cts\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
+		this("D:\\GITHUB CTS Repository\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
 		//!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 

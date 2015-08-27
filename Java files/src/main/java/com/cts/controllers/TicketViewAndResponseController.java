@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cts.communication.TicketError;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
@@ -54,34 +56,23 @@ public class TicketViewAndResponseController {
 		if (ticket == null || ticket.getNewTicketComment() == null || ticket.getNewTicketComment().getComment() == null
 				|| ticket.getNewTicketComment().getComment().equals("")) {
 
-			String jsonMessage = "json error";
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				jsonMessage = objectMapper.writeValueAsString("Ticket comment cannot be null or empty!");
-			} catch (IOException e) {
-			}
-			return jsonMessage;
+			return new TicketError().getErrorJson(5);
 		}
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.addCommentToTicket(ticket)) {
 
-			String jsonMessage = "json error";
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
-				jsonMessage = objectMapper.writeValueAsString(ticket);
+
+				return objectMapper.writeValueAsString(ticket);
 			} catch (IOException e) {
+
+				return new TicketError().getErrorJson(-1);
 			}
-			return jsonMessage;
 		} else {
 
-			String jsonMessage = "json error";
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				jsonMessage = objectMapper.writeValueAsString("Database error!");
-			} catch (IOException e) {
-			}
-			return jsonMessage;
+			return new TicketError().getErrorJson(4);
 		}
 	}
 }

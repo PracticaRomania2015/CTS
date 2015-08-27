@@ -8,7 +8,7 @@ import com.cts.utils.ConfigReader;
 
 public abstract class Error {
 
-	protected ConfigReader configReader;
+	protected ConfigReader configReader = new ConfigReader();
 	protected String description;
 	protected ObjectMapper objectMapper = new ObjectMapper();
 
@@ -19,14 +19,12 @@ public abstract class Error {
 		String errorMessageJson = "";
 
 		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
+			errorMessageJson = objectMapper.writeValueAsString(this.description);
 		} catch (IOException e) {
 		}
 		return errorMessageJson;
-
 	}
 
 	protected void initDescription(int errorCode) {
 	}
-
 }

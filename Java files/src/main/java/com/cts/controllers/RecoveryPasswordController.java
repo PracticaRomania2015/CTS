@@ -1,16 +1,14 @@
 package com.cts.controllers;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.cts.communication.RecoveryPasswordError;
+import com.cts.communication.Success;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
@@ -36,7 +34,6 @@ public class RecoveryPasswordController {
 	public String recoveryPassword(@RequestBody User user) {
 
 		String subject = "New password";
-		
 		logger.info("Attempting to recover the password for the following email: " + user.getEmail());
 
 		// Generate a new password
@@ -50,18 +47,11 @@ public class RecoveryPasswordController {
 				&& SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 			logger.info("The password was changed and was send via email!");
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-
-				return objectMapper.writeValueAsString("A new password was send to specified email address!");
-			} catch (IOException e) {
-
-				return "Error while trying to recover the password!";
-			}
+			return new Success().getSuccessJson(2);
 		} else {
 
 			logger.info("The specified email is incorrect!");
-			return "The specified email is incorrect!";
+			return new RecoveryPasswordError().getErrorJson(1);
 		}
 	}
 }

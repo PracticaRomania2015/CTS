@@ -93,7 +93,7 @@ public class RegisterController {
 				if (userDAO.createAccount(user)) {
 
 					logger.info("A new account was successfully created");
-					return new Success().getSuccessJson(0);
+					return new Success().getSuccessJson(1);
 				} else {
 
 					logger.info("Error: email already exists.");

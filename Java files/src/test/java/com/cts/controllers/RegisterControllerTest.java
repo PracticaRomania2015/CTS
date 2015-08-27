@@ -78,13 +78,13 @@ public class RegisterControllerTest {
 	public void registerGoodTest() {
 
 		setUserParams(testFirstName, testLastName, testTitle, testEmail, testPassword);
-		assertEquals(new Success().getSuccessJson(8), registerController.register(testUser));
+		assertEquals(new Success().getSuccessJson(1), registerController.register(testUser));
 		assertEquals(new RegisterError().getErrorJson(9), registerController.register(testUser));
 		testUser.setPassword(testPassword);
-		assertNotNull("error", loginController.login(testUser));
+		assertNotNull(new LoginError().getErrorJson(3), loginController.login(testUser));
 		testUser.setPassword("a");
 		assertEquals(new LoginError().getErrorJson(3), loginController.login(testUser));
-		assertEquals("\"A new password was send to specified email address!\"", recoveryPasswordController.recoveryPassword(testUser));
+		assertEquals(new Success().getSuccessJson(2), recoveryPasswordController.recoveryPassword(testUser));
 		assertTrue(userDAO.deleteAccount(testUser));
 	}
 
@@ -105,7 +105,7 @@ public class RegisterControllerTest {
 	public void registerWithNullParamsTest() {
 
 		setUserParams(nullFirstName, nullLastName, nullTitle, nullEmail, nullPassword);
-		assertEquals(new RegisterError().getErrorJson(7), registerController.register(testUser));
+		assertEquals(new RegisterError().getErrorJson(6), registerController.register(testUser));
 	}
 
 	@Test
