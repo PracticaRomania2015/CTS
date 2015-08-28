@@ -1,6 +1,20 @@
 $(document).ready((function() {
 	(function() {
 		
+		if(typeof(Storage) !== "undefined") {
+			if (sessionStorage.loggedUserId) {
+				$('#frontPage').hide();
+				$('#userPanelPage').show();
+			} 
+			else {
+				$('#frontPage').show();
+				$('#userPanelPage').hide();
+			}
+		}
+		else{
+			alert("To load this site you need a browser not a dumpster !")
+		}
+		
 		$('div#logoWrapper').append("<img id='logo' src='/cts/resources/img/logo.png' align='middle'>");
 		
 		var frontPageView = new GenericFrontPageView({});
@@ -63,7 +77,8 @@ $(document).ready((function() {
 			$('#recover').toggle();
 		});
 		
-		$('#btn-asigTk').click(function() {
+		$('#btn-mngTk').click(function() {
+			$('#welcomePage').hide();
 			$('#assignedTickets').show();
 			$('#myTickets').hide();
 			$('#createTicket').hide();
@@ -81,6 +96,7 @@ $(document).ready((function() {
 		});
 		
 		$('#btn-userTk').click(function() {
+			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
 			$('#myTickets').show();
 			$('#createTicket').hide();
@@ -98,6 +114,7 @@ $(document).ready((function() {
 		});
 		
 		$('#btn-subTk').click(function() {
+			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();
 			$('#createTicket').show();
@@ -115,6 +132,7 @@ $(document).ready((function() {
 		});
 		
 		$('#btn-prop').click(function() {
+			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();
 			$('#createTicket').hide();
@@ -129,6 +147,28 @@ $(document).ready((function() {
 			$('#mtn').show();
 			$('#stn').show();
 			$('#upn').hide();
+		});
+		
+		$('#btn-logOut').click(function(){
+			sessionStorage.clear();
+			$(document).find('#frontPage').show();
+			$(document).find('#userPanelPage').hide();
+			
+			$('#welcomePage').show();
+			$('#assignedTickets').hide();
+			$('#myTickets').hide();
+			$('#createTicket').hide();
+			$('#userProperties').hide();
+			
+			$('#ats').hide();
+			$('#mts').hide();
+			$('#sts').hide();
+			$('#ups').hide();
+			
+			$('#atn').show();
+			$('#mtn').show();
+			$('#stn').show();
+			$('#upn').show();
 		});
 
 	})()

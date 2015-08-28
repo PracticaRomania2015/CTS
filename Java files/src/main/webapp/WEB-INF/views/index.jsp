@@ -26,7 +26,7 @@
 	</script>
 	<script type="text/template" id="userPanelPageTemplate">
 			<div id='menuWrapper'>
-				<span href='#' class='button' id='btn-asigTk'>Assigned tickets
+				<span href='#' class='button' id='btn-mngTk'>Manage tickets
 					<div id="atn" class="menuRightArrow"></div>
 					<div id="ats" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-userTk'>My tickets
@@ -38,8 +38,12 @@
 				<span href='#' class='button' id='btn-prop'>User properties
 					<div id="upn" class="menuRightArrow"></div>
 					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='btn-logOut'>Log out</span>
 			</div>
 			<div id="contextWrapper">
+				<div id='welcomePage'>
+					<h1 class="userPage">Welcome !</h1>
+				</div>
 				<div id='assignedTickets' style='display: none;'></div>
 				<div id='myTickets' style='display: none;'></div>
 				<div id='createTicket' style='display: none;'></div>

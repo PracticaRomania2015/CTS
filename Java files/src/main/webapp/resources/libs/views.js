@@ -53,7 +53,10 @@ var LogInView = GenericFrontPageChildView.extend({
 			success : function(model, response) {
 				// TODO: session redirect
 				if (response.userId) {
-					alert("Login successfully! UserID: " + response.userId);
+					sessionStorage.loggedUserId = response.userId;
+					$(document).find('#logIn').hide();
+					$(document).find('#frontPage').hide();
+					$(document).find('#userPanelPage').show();
 				} else {
 					alert(response);
 				}
@@ -305,7 +308,7 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		
 		var ticketComment = new TicketComment({
 			// TO DO : Get userId from Session
-			userId: 2,
+			userId: sessionStorage.loggedUserId,
 			dateTime: new Date().getTime(),
 			comment: $("#ticketContent").val()
 		}, {validate: true});
