@@ -197,6 +197,14 @@ public class SubmitTicketControllerTest {
 	@Test
 	public void testGetCategories() {
 
-		assertNotNull("error", submitTicketController.openSubmitTicketPage());
+		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getCategories());
+	}
+	
+	@Test
+	public void testGetSubcategories(){
+		
+		Category category = new Category();
+		category.setCategoryId(1);
+		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getSubcategories(category));
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import com.cts.entities.Category;
+import com.cts.entities.State;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
 import com.cts.entities.ViewTicketsRequest;
@@ -126,24 +127,53 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
 					"UserId");
-			InOutParam<Boolean> isViewMyTicketsRequestParam = new InOutParam<Boolean>(
-					viewTicketsRequest.isViewMyTicketsRequest(), "IsViewMyTicketsRequest");
+			int valueForIsViewMyTicketsRequestParam = 0;
+			if (!viewTicketsRequest.isViewMyTicketsRequest()) {
+
+				valueForIsViewMyTicketsRequestParam = 1;
+			}
+			InOutParam<Integer> isViewMyTicketsRequestParam = new InOutParam<Integer>(valueForIsViewMyTicketsRequestParam,
+					"IsViewMyTicketsRequest");
 			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
 					viewTicketsRequest.getRequestedPageNumber(), "RequestedPageNumber");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(totalNumberOfPages,
-					"TotalNumberOfPages");
+					"TotalNumberOfPages", true);
+			System.out.println(userIdParam.getParameter());
+			System.out.println(isViewMyTicketsRequestParam.getParameter());
+			System.out.println(requestedPageNumberParam.getParameter());
 			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,
 					requestedPageNumberParam, totalNumberOfPagesParam);
 			ResultSet resultSet = execute();
-			while (resultSet.next()) {
+System.out.println("done");
+			if (resultSet != null) {
+				System.out.println("in if");
+				while (resultSet.next()) {
 
-				Ticket ticket = new Ticket();
-				// TODO
-				// fill ticket
-				tickets.add(ticket);
+					Ticket ticket = new Ticket();
+					ticket.setTicketId(resultSet.getInt(1));
+					ticket.setSubject(resultSet.getString(2));
+					TicketComment ticketComment = new TicketComment();
+					ticketComment.setDateTime(resultSet.getTimestamp(3));
+					ticket.getComments().add(ticketComment);
+					Category category = new Category();
+					category.setCategoryId(resultSet.getInt(4));
+					category.setCategoryName(resultSet.getString(5));
+					ticket.setCategory(category);
+					State state = new State();
+					state.setStateId(resultSet.getInt(6));
+					state.setStateName(resultSet.getString(7));
+					ticket.setState(state);
+
+					System.out.println(ticket.getTicketId() + " - " + ticket.getSubject() + " - "
+							+ ticket.getComments().get(0).getDateTime() + " - " + ticket.getCategory().getCategoryId()
+							+ " - " + ticket.getCategory().getCategoryName() + " - " + ticket.getState().getStateId()
+							+ " - " + ticket.getState().getStateName());
+
+					tickets.add(ticket);
+				}
 			}
 		} catch (SQLException e) {
-
+			
 			return null;
 		} finally {
 
