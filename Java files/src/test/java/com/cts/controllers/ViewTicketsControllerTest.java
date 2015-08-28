@@ -24,20 +24,8 @@ public class ViewTicketsControllerTest {
 		User user = new User();
 		user.setUserId(0);
 		viewTicketRequest.setUser(user);
-		viewTicketRequest.setViewMyTicketsRequest(true);
+		viewTicketRequest.setTypeOfRequest(0);
 		viewTicketRequest.setRequestedPageNumber(0);
-		assertEquals("[]", viewTicketsController.viewTickets(viewTicketRequest));
-	}
-	
-	@Test
-	public void testWithGoodUserId() {
-		
-		ViewTicketsRequest viewTicketRequest = new ViewTicketsRequest();
-		User user = new User();
-		user.setUserId(2);
-		viewTicketRequest.setUser(user);
-		viewTicketRequest.setViewMyTicketsRequest(true);
-		viewTicketRequest.setRequestedPageNumber(1);
-		assertEquals("[]", viewTicketsController.viewTickets(viewTicketRequest));
+		assertEquals("{\"totalNumberOfPages\":0,\"tickets\":null}", viewTicketsController.viewTickets(viewTicketRequest));
 	}
 }

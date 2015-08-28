@@ -57,6 +57,12 @@ public abstract class BaseDAO {
 		setOutParametersAfterExecute();
 		return callableStatement.getResultSet();
 	}
+	
+	protected ResultSet execute(boolean bothOutputParamsAndResultSet) throws SQLException{
+		
+		callableStatement.execute();
+		return callableStatement.getResultSet();
+	}
 
 	private void setParameters() throws SQLException {
 
@@ -132,7 +138,7 @@ public abstract class BaseDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setOutParametersAfterExecute() throws SQLException {
+	protected void setOutParametersAfterExecute() throws SQLException {
 
 		for (int i = 0; i < inOutParams.size(); i++) {
 

@@ -9,7 +9,7 @@
 <script type="text/javascript" src="${res}/libs/jquery.js"></script>
 <script type="text/javascript" src="${res}/libs/underscore.js"></script>
 <script type="text/javascript" src="${res}/libs/backbone.js"></script>
-<script type="text/javascript" src="${res}/libs/error.js"></script>
+<script type="text/javascript" src="${res}/libs/cfgreader.js"></script>
 <script type="text/javascript" src="${res}/libs/models.js"></script>
 <script type="text/javascript" src="${res}/libs/views.js"></script>
 <script type="text/javascript" src="${res}/main.js"></script>
