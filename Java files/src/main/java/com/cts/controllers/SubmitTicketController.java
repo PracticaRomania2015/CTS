@@ -43,7 +43,7 @@ public class SubmitTicketController {
 
 		logger.info("Success to get categories from database ...");
 
-		String jsonMessage = new TicketError().getErrorJson(5);
+		String jsonMessage = new TicketError().getErrorJson(-1);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			jsonMessage = objectMapper.writeValueAsString(categories);
@@ -68,7 +68,7 @@ public class SubmitTicketController {
 
 		logger.info("Success to get subcategories for a category from database ...");
 
-		String jsonMessage = new TicketError().getErrorJson(5);
+		String jsonMessage = new TicketError().getErrorJson(-1);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			jsonMessage = objectMapper.writeValueAsString(subcategories);

@@ -41,7 +41,6 @@ public class ViewTicketsController {
 		Integer totalNumberOfPages = new Integer(0);
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(viewTicketsRequest, totalNumberOfPages);
 
-		
 		// TODO
 		// to json : tickets + total number of pages
 		
