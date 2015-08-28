@@ -1,7 +1,6 @@
 package com.cts.controllers;
 
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.LoginError;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;

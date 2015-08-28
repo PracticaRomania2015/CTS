@@ -48,8 +48,10 @@ public class ViewTicketsController {
 			ticketsJson = objectMapper.writeValueAsString(tickets);
 		} catch (IOException e) {
 
+			logger.info("Json error when trying to map the array of tickets.");
 			return new TicketError().getErrorJson(-1);
 		}
+		logger.info("The list of tickets was successfully retrieved!");
 		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";
 	}
 }

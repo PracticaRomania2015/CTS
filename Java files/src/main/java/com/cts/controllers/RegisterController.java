@@ -2,7 +2,6 @@ package com.cts.controllers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.RegisterError;
 import com.cts.communication.Success;
 import com.cts.dao.UserDAO;
@@ -39,6 +37,7 @@ public class RegisterController {
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
 
 	public RegisterController() {
+
 		configReader = new ConfigReader();
 		emailRegexp = configReader.getValueForKey("emailRegexp");
 		pattern = Pattern.compile(emailRegexp);
@@ -46,6 +45,7 @@ public class RegisterController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {
+
 		return "index";
 	}
 

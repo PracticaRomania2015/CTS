@@ -1,6 +1,7 @@
 package com.cts.controllers;
 
 import java.io.IOException;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.TicketError;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
@@ -21,6 +21,9 @@ import com.cts.entities.Ticket;
 @Scope("session")
 public class TicketViewAndResponseController {
 
+	private static Logger logger = Logger.getLogger(LoginController.class.getName());
+	private ObjectMapper objectMapper = new ObjectMapper();
+
 	/**
 	 * POST method for the controller.
 	 * 
@@ -31,14 +34,17 @@ public class TicketViewAndResponseController {
 	@ResponseBody
 	public String viewTicketComments(@RequestBody Ticket ticket) {
 
+		logger.info("Attempting to retrieve full details and comments for a ticket.");
+
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		ticket.setComments(ticketDAO.getTicketComments(ticket));
 		String jsonMessage = "json error";
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 
 			jsonMessage = objectMapper.writeValueAsString(ticket);
 		} catch (IOException e) {
+
+			logger.info("Json error when trying to map the ticket object.");
 		}
 		return jsonMessage;
 	}
@@ -53,25 +59,30 @@ public class TicketViewAndResponseController {
 	@ResponseBody
 	public String addComment(@RequestBody Ticket ticket) {
 
+		logger.info("Attempting to add a comment for a ticket.");
+
 		if (ticket == null || ticket.getNewTicketComment() == null || ticket.getNewTicketComment().getComment() == null
 				|| ticket.getNewTicketComment().getComment().equals("")) {
 
+			logger.info("Ticket comment cannot be null error.");
 			return new TicketError().getErrorJson(5);
 		}
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.addCommentToTicket(ticket)) {
 
-			ObjectMapper objectMapper = new ObjectMapper();
 			try {
 
+				logger.info("The comment was added successfully!");
 				return objectMapper.writeValueAsString(ticket);
 			} catch (IOException e) {
 
+				logger.info("Error while trying to map the json for ticket object.");
 				return new TicketError().getErrorJson(-1);
 			}
 		} else {
 
+			logger.info("Database error while trying to add a new comment!");
 			return new TicketError().getErrorJson(4);
 		}
 	}
