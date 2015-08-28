@@ -41,16 +41,15 @@ public class ViewTicketsController {
 		Integer totalNumberOfPages = new Integer(0);
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(viewTicketsRequest, totalNumberOfPages);
 
-		// TODO
-		// to json : tickets + total number of pages
-		
+		String ticketsJson;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 
-			return objectMapper.writeValueAsString(tickets);
+			ticketsJson = objectMapper.writeValueAsString(tickets);
 		} catch (IOException e) {
 
 			return new TicketError().getErrorJson(-1);
 		}
+		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";
 	}
 }

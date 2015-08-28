@@ -3,16 +3,18 @@ package com.cts.entities;
 public class ViewTicketsRequest {
 
 	private User user;
-	private boolean isViewMyTicketsRequest; // to be changed
+	private int typeOfRequest;
 	private int requestedPageNumber;
+	private int ticketsPerPage;
 	private String textToSearch; // to be changed
 	private String searchType; // to be changed
 
 	public ViewTicketsRequest() {
 
 		user = new User();
-		isViewMyTicketsRequest = true;
+		typeOfRequest = 0;
 		requestedPageNumber = 0;
+		ticketsPerPage = 0;
 		textToSearch = "";
 		searchType = "";
 	}
@@ -25,12 +27,12 @@ public class ViewTicketsRequest {
 		this.user = user;
 	}
 
-	public boolean isViewMyTicketsRequest() {
-		return isViewMyTicketsRequest;
+	public int getTypeOfRequest() {
+		return typeOfRequest;
 	}
 
-	public void setViewMyTicketsRequest(boolean isViewMyTicketsRequest) {
-		this.isViewMyTicketsRequest = isViewMyTicketsRequest;
+	public void setTypeOfRequest(int typeOfRequest) {
+		this.typeOfRequest = typeOfRequest;
 	}
 
 	public int getRequestedPageNumber() {
@@ -55,5 +57,13 @@ public class ViewTicketsRequest {
 
 	public void setSearchType(String searchType) {
 		this.searchType = searchType;
+	}
+
+	public int getTicketsPerPage() {
+		return ticketsPerPage;
+	}
+
+	public void setTicketsPerPage(int ticketsPerPage) {
+		this.ticketsPerPage = ticketsPerPage;
 	}
 }
