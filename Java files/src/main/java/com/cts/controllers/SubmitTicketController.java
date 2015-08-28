@@ -32,21 +32,46 @@ public class SubmitTicketController {
 	 * 
 	 * @return all categories or null
 	 */
-	@RequestMapping(value = "/openSubmitTicketPage", method = RequestMethod.POST)
+	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
 	@ResponseBody
-	public String openSubmitTicketPage() {
+	public String getCategories() {
 
-		logger.info("Attempting to get all categories from database ...");
+		logger.info("Attempting to get categories from database ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		ArrayList<Category> categories = ticketDAO.getCategories();
 
-		logger.info("Success to get all categories from database ...");
+		logger.info("Success to get categories from database ...");
 
 		String jsonMessage = new TicketError().getErrorJson(5);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			jsonMessage = objectMapper.writeValueAsString(categories);
+		} catch (IOException e) {
+		}
+		return jsonMessage;
+	}
+	
+	/**
+	 * GET method to get subcategories for a category
+	 * 
+	 * @return subcategories for a category or null
+	 */
+	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
+	@ResponseBody
+	public String getSubcategories(@RequestBody Category category) {
+
+		logger.info("Attempting to get subcategories for a category from database ...");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		ArrayList<Category> subcategories = ticketDAO.getSubcategories(category);
+
+		logger.info("Success to get subcategories for a category from database ...");
+
+		String jsonMessage = new TicketError().getErrorJson(5);
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			jsonMessage = objectMapper.writeValueAsString(subcategories);
 		} catch (IOException e) {
 		}
 		return jsonMessage;

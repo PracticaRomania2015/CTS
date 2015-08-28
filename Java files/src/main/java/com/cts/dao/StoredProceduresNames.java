@@ -26,9 +26,15 @@ public enum StoredProceduresNames {
 		}
 	},
 
-	GetAllCategories {
+	GetCategories {
 		public String toString() {
-			return "dbo.GetAllCategories";
+			return "dbo.GetCategories";
+		}
+	},
+
+	GetSubcategories {
+		public String toString() {
+			return "dbo.GetSubcategories";
 		}
 	},
 
@@ -53,6 +59,12 @@ public enum StoredProceduresNames {
 	AddCommentToTicket {
 		public String toString() {
 			return "dbo.AddCommentToTicket";
+		}
+	},
+
+	GetTickets {
+		public String toString() {
+			return "dbo.GetTickets";
 		}
 	}
 }

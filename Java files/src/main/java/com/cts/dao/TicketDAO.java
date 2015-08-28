@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import com.cts.entities.Category;
-import com.cts.entities.TicketComment;
 import com.cts.entities.Ticket;
-import com.cts.entities.User;
+import com.cts.entities.TicketComment;
+import com.cts.entities.ViewTicketsRequest;
 
 public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
@@ -70,7 +70,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		ArrayList<Category> categories = new ArrayList<Category>();
 		try {
 
-			prepareExecution(StoredProceduresNames.GetAllCategories);
+			prepareExecution(StoredProceduresNames.GetCategories);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
 
@@ -91,9 +91,65 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<Ticket> getTickets(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Category> getSubcategories(Category category) {
+
+		ArrayList<Category> subcategories = new ArrayList<Category>();
+		try {
+
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
+			prepareExecution(StoredProceduresNames.GetSubcategories, categoryIdParam);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				Category subcategory = new Category();
+				subcategory.setCategoryId(resultSet.getInt(1));
+				subcategory.setCategoryName(resultSet.getString(2));
+				subcategory.setParentCategoryId(category.getCategoryId());
+				subcategories.add(subcategory);
+			}
+		} catch (SQLException e) {
+
+			return null;
+		} finally {
+
+			closeCallableStatement();
+		}
+
+		return subcategories;
+	}
+
+	@Override
+	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, Integer totalNumberOfPages) {
+
+		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+		try {
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
+					"UserId");
+			InOutParam<Boolean> isViewMyTicketsRequestParam = new InOutParam<Boolean>(
+					viewTicketsRequest.isViewMyTicketsRequest(), "IsViewMyTicketsRequest");
+			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
+					viewTicketsRequest.getRequestedPageNumber(), "RequestedPageNumber");
+			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(totalNumberOfPages,
+					"TotalNumberOfPages");
+			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,
+					requestedPageNumberParam, totalNumberOfPagesParam);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				Ticket ticket = new Ticket();
+				// TODO
+				// fill ticket
+				tickets.add(ticket);
+			}
+		} catch (SQLException e) {
+
+			return null;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return tickets;
 	}
 
 	@Override
