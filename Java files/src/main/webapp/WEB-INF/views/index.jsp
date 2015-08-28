@@ -91,12 +91,13 @@
 					<tr>
 						<th id="rounded-tl" class="wide-col">Subject</th>
 						<th class="wide-col">Category</th>
+						<th class="slim-col">Status</th>
 						<th id="rounded-tr" class="slim-col">Date</th>
      	 			</tr>
     			</thead>
     			<tfoot>
       				<tr>
-        				<th colspan="3" id="rounded-bot">
+        				<th colspan="4" id="rounded-bot">
 							<div class="table-surf">&#60;&#60;</div>
 							&emsp;
 							<div class="table-surf">&#60;</div>

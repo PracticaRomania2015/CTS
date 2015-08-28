@@ -94,7 +94,7 @@ h1.frontPage{
 
 #regTitle {
     width: 100%;
-	background: #fff;
+	background: #f1f8ec;
 	margin: 4% 0% 4% 0%;
 	border: 1px solid #555;
 	padding: 2% 4% 2% 4%;
@@ -119,14 +119,14 @@ h1.frontPage{
 /* User page - designed the stuff */
 
 #userPanelPage{
-	width: 850px;
+	width: 900px;
 	display: block;
 	margin: 0 auto;
 }
 
 #menuWrapper{
 	float:left;
-	width:25%;
+	width:20%;
 	overflow:hidden;
 	margin: 0px 10px 0px 0px;
 	border-radius: 10px;
@@ -159,7 +159,7 @@ h1.frontPage{
 
 #contextWrapper{
 	float:left;
-	width:67.5%;
+	width:72.5%;
 	overflow:hidden;
 	border-radius: 10px;
 	display: block;
@@ -180,7 +180,7 @@ h1.userPage{
 
 #ticketSubject, #ticketContent {
 	border-radius: 5px;
-	width: 560px;
+	width: 96.5%;
 	background: #f1f8ec;
 	margin: 10px 0px 0px 0px;
 	border: 1px solid #555;
@@ -192,7 +192,7 @@ h1.userPage{
 
 .ticketCategories{
 	border-radius: 5px;
-	width: 284px;
+	width: 49%;
 	background: #f1f8ec;
 	margin: 10px 0px 0px 0px;
 	border: 1px solid #555;
@@ -205,7 +205,7 @@ h1.userPage{
 .searchTickets{
 	border-radius: 5px;
 	width: 35%;
-	margin: 0px 0px 5px 0px;
+	margin: 10px 0px 10px 0px;
 	border: 1px solid #555;
 	font-family: 'Arial';
 	font-size: 14px;
@@ -243,12 +243,12 @@ h1.userPage{
 
 .ticketView thead th.wide-col
 { 
-	width: 37.5%;
+	width: 30%;
 }
 
 .ticketView thead th.slim-col
 { 
-	width: 25%;
+	width: 20%;
 }
 
 .ticketView thead th#rounded-tl 
