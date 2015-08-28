@@ -169,9 +169,10 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		// just some test variables
 		var test1 = "asigned";
 		var test2 = "categ";
-		var test3 = "date";
-		var test4 = 1;
-		var test5 = 2;
+		var test3 = "submited";
+		var test4 = "date";
+		var testpg1 = 1;
+		var testpg2 = 2;
 		// how to input the actual data (hint: use each)
 		this.$el.find('tbody').append("<tr><td>" +
 				test1 +
@@ -179,9 +180,11 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 				test2 +
 				"</td><td>" +
 				test3 +
+				"</td><td>" +
+				test4 +
 				"</td></tr>");
 		// don't forget to input the page numbering as well
-		this.$el.find('#ticketPagingNumbering').append(test4 + "/" + test5);
+		this.$el.find('#ticketPagingNumbering').append(testpg1 + "/" + testpg2);
 	}
 
 })
@@ -206,9 +209,10 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		// just some test variables
 		var test1 = "mine";
 		var test2 = "categ";
-		var test3 = "date";
-		var test4 = 1;
-		var test5 = 4;
+		var test3 = "submited";
+		var test4 = "date";
+		var testpg1 = 1;
+		var testpg2 = 4;
 		// how to input the actual data (hint: use each)
 		this.$el.find('tbody').append("<tr><td>" +
 				test1 +
@@ -216,9 +220,11 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 				test2 +
 				"</td><td>" +
 				test3 +
+				"</td><td>" +
+				test4 +
 				"</td></tr>");
 		// don't forget to input the page numbering as well
-		this.$el.find('#ticketPagingNumbering').append(test4 + "/" + test5);
+		this.$el.find('#ticketPagingNumbering').append(testpg1 + "/" + testpg2);
 	}
 
 })
