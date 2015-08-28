@@ -43,27 +43,26 @@ var LogInView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		console.log('Log in button pressed');
+		
 		var user = new LogInModel({
 			email : $("#logInMail").val(),
 			password : $("#logInPass").val()
 		});
-		console.log(user.toJSON());
+		
 		user.save({}, {
 			success : function(model, response) {
-				// TODO: redirect
+				// TODO: session redirect
 				if (response.userId) {
 					alert("Login successfully! UserID: " + response.userId);
 				} else {
 					alert(response);
 				}
-				console.log("SUCCESS");
 			},
 			error : function(model, response) {
 				alert(response);
-				console.log("FAIL");
 			}
-		})
+		});
+		
 	}
 
 });
@@ -79,7 +78,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		console.log('Register button pressed');
+		
 		var user = new RegisterModel({
 			title : $("#regTitle").attr("selected", "selected").val(),
 			firstName : $("#regFirstName").val(),
@@ -87,6 +86,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 			email : $("#regMail").val(),
 			password : $("#regPass").val()
 		});
+		
 		user.save({}, {
 			success : function(model, response) {
 				if (response == "Success!") {
@@ -97,14 +97,12 @@ var RegisterView = GenericFrontPageChildView.extend({
 				} else {
 					alert(response);
 				}
-				console.log('SUCCESS');
 			},
 			error : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('FAIL');
 			}
 		});
+		
 	}
 
 });
@@ -120,22 +118,20 @@ var RecoverView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		console.log('Send email button pressed');
+		
 		var user = new RecoverModel({
 			email : $("#recoverMail").val()
 		});
+		
 		user.save({}, {
 			success : function(model, response) {
 				alert(response);
-				console.log('SUCCESS');
 			},
 			error : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('FAIL');
 			}
-
 		});
+		
 	}
 });
 
@@ -244,8 +240,10 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	},
 	
 	initialize : function() {
-		var request = new TicketCategoriesModel({ });
-		request.save({}, {
+		
+		var categories = new GetCategoriesModel({ });
+		
+		categories.save({}, {
 			success : function(model, response) {
 				$('#ticketCategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your category</option>').val('');
 				_.each(response, function(e) {
@@ -258,16 +256,17 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 				
 			},
 			error : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('error');
 			}
 		});
+		
 	},
 	
 	populateSubcategories : function() {
-		var request = new TicketCategoriesModel({ });
-		request.save({}, {
+		
+		var categories = new GetCategoriesModel({ });
+		
+		categories.save({}, {
 			success : function(model, response) {
 				var selectedCategory = $('#ticketCategoryDropbox').val();
 				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
@@ -280,15 +279,13 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 				});
 			},
 			error : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('error');
 			}
-		})
+		});
+		
 	},
 	
 	submit : function() {
-console.log('Submit ticket button pressed');
 		
 		var ticketCategoryName, ticketCategoryId;
 		if ($("#ticketSubcategoryDropbox option:selected").val() != "Select your subcategory"){
@@ -298,14 +295,14 @@ console.log('Submit ticket button pressed');
 			ticketCategoryName= $("#ticketCategoryDropbox option:selected").text();
 			ticketCategoryId = $("#ticketCategoryDropbox option:selected").val();
 		};
-
+		
 		var ticketCategory = new TicketCategory({
 			categoryName: ticketCategoryName,
 			categoryId: ticketCategoryId
 		}, {validate: true});
 		
 		var ticketComment = new TicketComment({
-			// TO DO : Get ID from Session
+			// TO DO : Get userId from Session
 			userId: 2,
 			dateTime: new Date().getTime(),
 			comment: $("#ticketContent").val()
@@ -319,17 +316,14 @@ console.log('Submit ticket button pressed');
 		
 		ticket.save({}, {
 			success : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('success');
-				alert("Message sent!");
+				alert("Ticket submitted!");
 			},
 			error : function(model, response) {
-				console.log(model);
 				console.log(response);
-				console.log('error');
 			}
 		});
+		
 	}
 	
 });

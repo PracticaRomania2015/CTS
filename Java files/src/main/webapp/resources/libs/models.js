@@ -109,24 +109,19 @@ var RecoverModel = GenericModel.extend({
 
 	validate : function(attrs) {
 
-		var ok = false;
-
 		var regexEmail = /^[A-Za-z]([a-zA-Z.])+\@gmail.com$/;
 		$("#recoveryMail").removeAttr("title");
 		$("#recoveryMail").removeClass("error");
 		if (!attrs.email) {
 			$("#recoveryMail").attr("title", getError("mandatory"));
 			$("#recoveryMail").addClass("error");
-			ok = true;
+			return true;
 		} else if (!regexEmail.test(attrs.email)) {
 			$("#recoveryMail").attr("title", getError("validMail"));
 			$("#recoveryMail").addClass("error");
-			ok = true;
-		}
-
-		if (ok) {
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -136,15 +131,31 @@ var RecoverModel = GenericModel.extend({
 /* =========================================================================================================================== */
 /* User panel page models */
 
+/* ================================================= */
+/* Assigned tickets page models */
+
 var AssignedTicketsModel = GenericModel.extend({
 
 	urlRoot : 'assignedTickets/'
 
 });
 
+/* ================================================= */
+/* User tickets page models */
+
 var UserTicketsModel = GenericModel.extend({
 
 	urlRoot : 'userTickets/'
+
+});
+
+
+/* ================================================= */
+/* Create ticket page models */
+
+var GetCategoriesModel = GenericModel.extend({
+
+	urlRoot : 'openSubmitTicketPage/'
 
 });
 
@@ -153,10 +164,8 @@ var CreateTicketModel = GenericModel.extend({
 	urlRoot : 'submitTicket/',
 
 	validate : function(attrs) {
-
-		console.log("DBG [CreateTicketModel]");
 		
-		/*var ok = false;
+		var ok = false;
 		
 		var regexSubject = /^[A-Za-z0-9!@%*()-+:<>?]{1,50}$/;
 		$("#ticketSubject").removeAttr("title");
@@ -169,35 +178,19 @@ var CreateTicketModel = GenericModel.extend({
 			$("#ticketSubject").attr("title", getError("ticketSubject"));
 			$("#ticketSubject").addClass("error");
 			ok = true;
-		}*/
+		}
 		
-		//console.log(attrs.category.isValid());
-		//var category = new TicketCategory(attrs.category);
-
-		/*$.each((attrs.category).attributes, function(key, element) {
-		    alert('key: ' + key + '\n' + 'value: ' + element);
-		});*/
-		
-		//console.log($.isEmptyObject((attrs.category).attributes));
-		
-		/*if(!(attrs.category).attributes){
+		if((attrs.category).validationError){
 			ok = true;
-			console.log((attrs.category).attributes);
-			console.log("here");
-		}*/
+		}
 		
-		//console.log(attrs.comments[0].isValid());
-		//var comments = new TicketComment(attrs.comments[0]);
-		//console.log(attrs.comments[0]);
-		//console.log(comments);
-		/*if(!(attrs.comments[0]).attributes){
+		if((attrs.comments[0]).validationError){
 			ok = true;
-			console.log("here2");
 		}
 		
 		if (ok) {
 			return true;
-		}*/
+		}
 		return false;
 
 	}
@@ -207,21 +200,14 @@ var CreateTicketModel = GenericModel.extend({
 var TicketCategory = GenericModel.extend({ 
 	
 	validate : function(attrs) {
-
-		console.log("DBG [TicketCategory]");
-		
-		/*var ok = false;
 		
 		$("#ticketCategoryDropbox").removeAttr("title");
 		$("#ticketCategoryDropbox").removeClass("error");
 		if ($("#ticketCategoryDropbox option:selected").val() == "Select your category"){
 			$("#ticketCategoryDropbox").addClass("error");
-			ok = true;
+			return true;
 		}
 		
-		if (ok) {
-			return true;
-		}*/
 		return false;
 		
 	}
@@ -231,39 +217,19 @@ var TicketCategory = GenericModel.extend({
 var TicketComment = GenericModel.extend({
 	
 	validate : function(attrs) {
-
-		console.log("DBG [TicketComment]");
-		
-		/*var ok = false;
 		
 		$("#ticketContent").removeAttr("title");
 		$("#ticketContent").removeClass("error");
 		if (!attrs.comment) {
 			$("#ticketContent").attr("title", getError("mandatory"));
 			$("#ticketContent").addClass("error");
-			ok = true;
-			console.log(attrs.comment);
+			return true;
 		} else if (attrs.comment.length > 250) {
 			$("#ticketContent").attr("title", getError("ticketComment"));
 			$("#ticketContent").addClass("error");
-			ok = true;
+			return true;
 		}
 		
-		if (ok) {
-			return true;
-		}*/
-		return false;
-
-	}
-
-});
-
-var TicketCategoriesModel = GenericModel.extend({
-
-	urlRoot : 'openSubmitTicketPage/',
-
-	validate : function(attrs) {
-
 		return false;
 
 	}
