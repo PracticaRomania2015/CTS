@@ -173,14 +173,13 @@ var CreateTicketModel = GenericModel.extend({
 		
 		var ok = false;
 		
-		var regexSubject = /^[A-Za-z0-9!@%*()-+:<>?]{1,50}$/;
 		$("#ticketSubject").removeAttr("title");
 		$("#ticketSubject").removeClass("error");
 		if (!attrs.subject) {
 			$("#ticketSubject").attr("title", getError("mandatory"));
 			$("#ticketSubject").addClass("error");
 			ok = true;
-		} else if (!regexSubject.test(attrs.subject)) {
+		} else if (attrs.subject.length > 50) {
 			$("#ticketSubject").attr("title", getError("ticketSubject"));
 			$("#ticketSubject").addClass("error");
 			ok = true;
