@@ -1,8 +1,8 @@
 package com.cts.communication;
 
-import com.cts.utils.ConfigReader;
+import java.io.IOException;
 
-public class TicketError extends Error {
+public class TicketError implements Error {
 
 	private String emptyTicketSubjectFieldError;
 	private String ticketCategoryNotSelectedError;
@@ -10,6 +10,7 @@ public class TicketError extends Error {
 	private String emptyTicketCommentFieldError;
 	private String databaseError;
 	private String unknownError;
+	private String description;
 
 	public TicketError() {
 
@@ -18,7 +19,6 @@ public class TicketError extends Error {
 
 	private void initAll() {
 
-		configReader = new ConfigReader();
 		emptyTicketSubjectFieldError = configReader.getValueForKey("emptyTicketSubjectFieldError");
 		ticketCategoryNotSelectedError = configReader.getValueForKey("ticketCategoryNotSelectedError");
 		emptyTicketDescriptionFieldError = configReader.getValueForKey("emptyTicketDescriptionFieldError");
@@ -28,7 +28,7 @@ public class TicketError extends Error {
 	}
 
 	@Override
-	protected void initDescription(int errorCode) {
+	public void initDescription(int errorCode) {
 
 		switch (errorCode) {
 
@@ -63,5 +63,22 @@ public class TicketError extends Error {
 			break;
 		}
 		}
+	}
+
+	@Override
+	public String getErrorJson(int errorCode) {
+		initDescription(errorCode);
+
+		String errorMessageJson = "";
+
+		try {
+			errorMessageJson = objectMapper.writeValueAsString(this);
+		} catch (IOException e) {
+		}
+		return errorMessageJson;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }

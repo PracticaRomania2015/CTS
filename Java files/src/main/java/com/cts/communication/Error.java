@@ -1,30 +1,16 @@
 package com.cts.communication;
 
-import java.io.IOException;
-
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.cts.utils.ConfigReader;
 
-public abstract class Error {
+public interface Error {
 
-	protected ConfigReader configReader = new ConfigReader();
-	protected String description;
-	protected ObjectMapper objectMapper = new ObjectMapper();
+	public ConfigReader configReader = new ConfigReader();
+	public ObjectMapper objectMapper = new ObjectMapper();
 
-	public String getErrorJson(int errorCode) {
+	public String getErrorJson(int errorCode);
 
-		initDescription(errorCode);
+	public void initDescription(int errorCode);
 
-		String errorMessageJson = "";
-
-		try {
-			errorMessageJson = objectMapper.writeValueAsString(this.description);
-		} catch (IOException e) {
-		}
-		return errorMessageJson;
-	}
-
-	protected void initDescription(int errorCode) {
-	}
 }

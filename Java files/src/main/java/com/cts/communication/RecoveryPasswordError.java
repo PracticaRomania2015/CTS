@@ -1,9 +1,12 @@
 package com.cts.communication;
 
-public class RecoveryPasswordError extends Error {
+import java.io.IOException;
+
+public class RecoveryPasswordError implements Error {
 
 	private String incorrectSpecifiedEmailForRecoverError;
 	private String unknownError;
+	private String description;
 
 	public RecoveryPasswordError() {
 
@@ -17,7 +20,7 @@ public class RecoveryPasswordError extends Error {
 	}
 
 	@Override
-	protected void initDescription(int errorCode) {
+	public void initDescription(int errorCode) {
 
 		switch (errorCode) {
 		case 1: {
@@ -29,5 +32,22 @@ public class RecoveryPasswordError extends Error {
 			break;
 		}
 		}
+	}
+
+	@Override
+	public String getErrorJson(int errorCode) {
+		initDescription(errorCode);
+
+		String errorMessageJson = "";
+
+		try {
+			errorMessageJson = objectMapper.writeValueAsString(this);
+		} catch (IOException e) {
+		}
+		return errorMessageJson;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }
