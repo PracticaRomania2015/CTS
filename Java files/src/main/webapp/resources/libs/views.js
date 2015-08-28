@@ -247,11 +247,8 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				$('#ticketCategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your category</option>').val('');
 				_.each(response, function(e) {
-					if (e.parentCategoryId == 0) {
-						$('#ticketCategoryDropbox').append(
-								$("<option></option>").attr("value",
-										e.categoryId).text(e.categoryName));
-					}
+						$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+					
 				});
 				
 			},
@@ -264,18 +261,17 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	
 	populateSubcategories : function() {
 		
-		var categories = new GetCategoriesModel({ });
+		var categories = new GetSubcategoriesModel({
+			categoryId : $("#ticketCategoryDropbox option:selected").val(),
+			categoryName : $("#ticketCategoryDropbox option:selected").text()
+		});
 		
 		categories.save({}, {
 			success : function(model, response) {
 				var selectedCategory = $('#ticketCategoryDropbox').val();
 				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
 				_.each(response, function(e) {
-					if (selectedCategory == e.parentCategoryId) {
-						$('#ticketSubcategoryDropbox').append(
-								$("<option></option>").attr("value",
-										e.categoryId).text(e.categoryName));
-					}
+					$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 				});
 			},
 			error : function(model, response) {

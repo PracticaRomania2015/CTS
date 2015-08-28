@@ -155,7 +155,13 @@ var UserTicketsModel = GenericModel.extend({
 
 var GetCategoriesModel = GenericModel.extend({
 
-	urlRoot : 'openSubmitTicketPage/'
+	urlRoot : 'getCategories/'
+
+});
+
+var GetSubcategoriesModel = GenericModel.extend({
+
+	urlRoot : 'getSubCategories/'
 
 });
 
