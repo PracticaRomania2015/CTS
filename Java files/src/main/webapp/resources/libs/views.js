@@ -53,7 +53,9 @@ var LogInView = GenericFrontPageChildView.extend({
 			success : function(model, response) {
 				// TODO: session redirect
 				if (response.userId) {
+					//console.log(response);
 					sessionStorage.loggedUserId = response.userId;
+					sessionStorage.loggedUserFullName = response.title + " " + response.firstName + " " + response.lastName;
 					$(document).find('#logIn').hide();
 					$(document).find('#frontPage').hide();
 					$(document).find('#userPanelPage').show();
@@ -147,6 +149,9 @@ var GenericUserPanelPageView = Backbone.View.extend({
 
 	render : function() {
 		this.$el.append(_.template($('#userPanelPageTemplate').html()));
+		this.$el.find('#welcomeMessage').replaceWith("<h2 class='userPage'>Hello " + 
+				sessionStorage.loggedUserFullName + " !</h2><h2 class='userPage'>" + 
+				"CTS v0.1_alpha</h2>")
 		return this;
 	}
 

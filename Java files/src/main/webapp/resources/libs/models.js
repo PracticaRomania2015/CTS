@@ -132,23 +132,13 @@ var RecoverModel = GenericModel.extend({
 /* User panel page models */
 
 /* ================================================= */
-/* Assigned tickets page models */
+/* View tickets model */
 
-var AssignedTicketsModel = GenericModel.extend({
+var ViewTicketsModel = GenericModel.extend({
 
 	urlRoot : 'assignedTickets/'
 
 });
-
-/* ================================================= */
-/* User tickets page models */
-
-var UserTicketsModel = GenericModel.extend({
-
-	urlRoot : 'userTickets/'
-
-});
-
 
 /* ================================================= */
 /* Create ticket page models */

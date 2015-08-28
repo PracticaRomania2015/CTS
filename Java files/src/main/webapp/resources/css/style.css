@@ -178,6 +178,14 @@ h1.userPage{
   	color: #fff;
 }
 
+h2.userPage{
+  	margin: 20px 0px 0px 0px;
+  	font-family: 'Arial';
+  	font-size: 32px;
+  	text-align: center;
+  	color: #0d94d2;
+}
+
 #ticketSubject, #ticketContent {
 	border-radius: 5px;
 	width: 96.5%;

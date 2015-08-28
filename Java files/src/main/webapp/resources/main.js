@@ -41,15 +41,15 @@ $(document).ready((function() {
 		});
 		$('div#recover').append(recoverView.render().el);
 		
-		var assignedTicketsModel = new AssignedTicketsModel({});
+		var viewTicketsModel = new ViewTicketsModel({});
 		var assignedTicketsView = new AssignedTicketsView({
-			model : assignedTicketsModel
+			model : viewTicketsModel
 		});
 		$('div#assignedTickets').append(assignedTicketsView.render().el);
 		
-		var userTicketsModel = new UserTicketsModel({});
+		var viewTicketsModel = new ViewTicketsModel({});
 		var userTicketsView = new UserTicketsView({
-			model : userTicketsModel
+			model : viewTicketsModel
 		});
 		$('div#myTickets').append(userTicketsView.render().el);
 		

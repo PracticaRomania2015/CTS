@@ -43,6 +43,7 @@
 			<div id="contextWrapper">
 				<div id='welcomePage'>
 					<h1 class="userPage">Welcome !</h1>
+					<h1 id="welcomeMessage"></h1>
 				</div>
 				<div id='assignedTickets' style='display: none;'></div>
 				<div id='myTickets' style='display: none;'></div>
