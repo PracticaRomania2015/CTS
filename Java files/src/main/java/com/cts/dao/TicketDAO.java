@@ -96,12 +96,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		ArrayList<Category> subcategories = new ArrayList<Category>();
 		try {
-
+			
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
 			prepareExecution(StoredProceduresNames.GetSubcategories, categoryIdParam);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-
+				
 				Category subcategory = new Category();
 				subcategory.setCategoryId(resultSet.getInt(1));
 				subcategory.setCategoryName(resultSet.getString(2));
@@ -109,7 +109,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				subcategories.add(subcategory);
 			}
 		} catch (SQLException e) {
-
+			
 			return null;
 		} finally {
 
