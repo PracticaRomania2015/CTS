@@ -164,7 +164,8 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
 		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
 		'click #nextPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") + 1, "", "" ); },
-		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); }
+		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); },
+		'click .openTicketComments' : 'viewTicketComments'
 	},
 	
 	render : function() {
@@ -172,6 +173,11 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
+	},
+	
+	viewTicketComments : function (clicked) { 
+		var clickedTicketId = $(clicked.currentTarget).attr('id');
+		console.log(clickedTicketId);
 	},
 	
 	viewData : function( pgNr, srcTxt, srcTp ) {
@@ -205,7 +211,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	addTicket : function( id, subj, categ, status, date ) {
-		this.$el.find('tbody').append("<tr id='tkId" + id + "'><td>" +
+		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td>" +
 				subj + "</td><td>" +
 				categ + "</td><td>" +
 				status + "</td><td>" +
@@ -244,7 +250,8 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
 		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
 		'click #nextPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") + 1, "", "" ); },
-		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); }
+		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); },
+		'click .openTicketComments' : 'viewTicketComments'
 	},
 	
 	render : function() {
@@ -252,6 +259,11 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
+	},
+	
+	viewTicketComments : function (clicked) { 
+		var clickedTicketId = $(clicked.currentTarget).attr('id');
+		console.log(clickedTicketId);
 	},
 	
 	viewData : function( pgNr, srcTxt, srcTp ) {
@@ -285,7 +297,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	addTicket : function( id, subj, categ, status, date ) {
-		this.$el.find('tbody').append("<tr id='tkId" + id + "'><td>" +
+		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td>" +
 				subj + "</td><td>" +
 				categ + "</td><td>" +
 				status + "</td><td>" +
