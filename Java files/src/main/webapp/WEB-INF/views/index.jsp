@@ -103,15 +103,15 @@
     			<tfoot>
       				<tr>
         				<th colspan="4" id="rounded-bot">
-							<div class="table-surf">&#60;&#60;</div>
+							<div class="table-surf" id="firstPageReqBtn">&#60;&#60;</div>
 							&emsp;
-							<div class="table-surf">&#60;</div>
+							<div class="table-surf" id="prevPageReqBtn">&#60;</div>
 							&emsp;
 							<div id="ticketPagingNumbering" style="display: inline-block;"></div>
 							&emsp;
-							<div class="table-surf">&#62;</div>
+							<div class="table-surf" id="nextPageReqBtn">&#62;</div>
 							&emsp;
-							<div class="table-surf">&#62;&#62;</div>
+							<div class="table-surf" id="lastPageReqBtn">&#62;&#62;</div>
 						</th>
       				</tr>
     			</tfoot>
