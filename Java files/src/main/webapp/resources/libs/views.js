@@ -210,7 +210,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		
 		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
 		this.model.set("typeOfRequest", 0);
-		this.model.set("requestedPageNumber", 0);
+		this.model.set("requestedPageNumber", 1);
 		this.model.set("ticketsPerPage", 1);
 		this.model.set("textToSearch", "");
 		this.model.set("searchType", "");
