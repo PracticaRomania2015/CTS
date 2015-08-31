@@ -23,45 +23,51 @@ $(document).ready((function() {
 		var userPanelPageView = new GenericUserPanelPageView({});
 		$('div#userPanelPage').append(userPanelPageView.render().el);
 
+		var logInView, registerView, recoverView, assignedTicketsView, userTicketsView, createTicketPageView;
+		
 		$('#toggle-login').click(function() {
-			var logInModel = new LogInModel({});
-			var logInView = new LogInView({
-				model : logInModel
-			});
-			$('div#logIn').append(logInView.render().el);
+			if(!logInView){
+				logInView = new LogInView({
+					model : new LogInModel({})
+				});
+				$('div#logIn').append(logInView.render().el);
+			};
 			$('#logIn').toggle();
 			$('#register').hide();
 			$('#recover').hide();
 		});
 
 		$('#toggle-signup').click(function() {
-			var registerModel = new RegisterModel({});
-			var registerView = new RegisterView({
-				model : registerModel
-			});
-			$('div#register').append(registerView.render().el);
+			if(!registerView){
+				registerView = new RegisterView({
+					model : new RegisterModel({})
+				});
+				$('div#register').append(registerView.render().el);
+			};
 			$('#logIn').hide();
 			$('#register').toggle();
 			$('#recover').hide();
 		});
 
 		$('#toggle-recover').click(function() {
-			var recoverModel = new RecoverModel({});
-			var recoverView = new RecoverView({
-				model : recoverModel
-			});
-			$('div#recover').append(recoverView.render().el);
+			if(!recoverView){
+				recoverView = new RecoverView({
+					model : new RecoverModel({})
+				});
+				$('div#recover').append(recoverView.render().el);
+			}
 			$('#logIn').hide();
 			$('#register').hide();
 			$('#recover').toggle();
 		});
 		
 		$('#btn-mngTk').click(function() {
-			var viewTicketsModel = new ViewTicketsModel({});
-			var assignedTicketsView = new AssignedTicketsView({
-				model : viewTicketsModel
-			});
-			$('div#assignedTickets').append(assignedTicketsView.render().el);
+			if(!assignedTicketsView){
+				assignedTicketsView = new AssignedTicketsView({
+					model : new ViewTicketsModel({})
+				});
+				$('div#assignedTickets').append(assignedTicketsView.render().el);
+			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').show();
 			$('#myTickets').hide();
@@ -80,11 +86,12 @@ $(document).ready((function() {
 		});
 		
 		$('#btn-userTk').click(function() {
-			var viewTicketsModel = new ViewTicketsModel({});
-			var userTicketsView = new UserTicketsView({
-				model : viewTicketsModel
-			});
-			$('div#myTickets').append(userTicketsView.render().el);
+			if(!userTicketsView){
+				userTicketsView = new UserTicketsView({
+					model : new ViewTicketsModel({})
+				});
+				$('div#myTickets').append(userTicketsView.render().el);
+			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
 			$('#myTickets').show();
@@ -103,11 +110,12 @@ $(document).ready((function() {
 		});
 		
 		$('#btn-subTk').click(function() {
-			var createTicketModel = new CreateTicketModel({});
-			var createTicketPageView = new CreateTicketPageView({
-				model : createTicketModel
-			});
-			$('div#createTicket').append(createTicketPageView.render().el);
+			if(!createTicketPageView){
+				createTicketPageView = new CreateTicketPageView({
+					model : new CreateTicketModel({})
+				});
+				$('div#createTicket').append(createTicketPageView.render().el);
+			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();

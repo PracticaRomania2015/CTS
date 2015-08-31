@@ -1,20 +1,21 @@
 package com.cts.communication;
 
-public class RegisterError extends Error {
+import java.io.IOException;
+
+public class RegisterError implements Error {
 
 	private String invalidEmailError;
 	private String emptyFields;
 	private String dbError;
 	private String unknownError;
 	private String existingEmailError;
+	private String description;
 
 	public RegisterError() {
-
 		initAll();
 	}
 
 	private void initAll() {
-
 		invalidEmailError = configReader.getValueForKey("invalidEmailError");
 		emptyFields = configReader.getValueForKey("emptyFields");
 		dbError = configReader.getValueForKey("dbError");
@@ -23,7 +24,7 @@ public class RegisterError extends Error {
 	}
 
 	@Override
-	protected void initDescription(int errorCode) {
+	public void initDescription(int errorCode) {
 
 		switch (errorCode) {
 
@@ -54,4 +55,22 @@ public class RegisterError extends Error {
 		}
 		}
 	}
+
+	@Override
+	public String getErrorJson(int errorCode) {
+		initDescription(errorCode);
+
+		String errorMessageJson = "";
+
+		try {
+			errorMessageJson = objectMapper.writeValueAsString(this);
+		} catch (IOException e) {
+		}
+		return errorMessageJson;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 }

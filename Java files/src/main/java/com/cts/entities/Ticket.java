@@ -10,7 +10,6 @@ public class Ticket {
 	private State state;
 	private int assignedToUserId;
 	private ArrayList<TicketComment> comments;
-	private TicketComment newTicketComment;
 
 	public Ticket() {
 
@@ -20,7 +19,6 @@ public class Ticket {
 		state = new State();
 		assignedToUserId = 0;
 		comments = new ArrayList<TicketComment>();
-		newTicketComment = new TicketComment();
 	}
 
 	public Category getCategory() {
@@ -67,17 +65,8 @@ public class Ticket {
 		this.assignedToUserId = assignedToUserId;
 	}
 
-	public void setNewTicketComment(TicketComment newTicketComment) {
-		this.newTicketComment = newTicketComment;
-	}
-
 	public String getSubject() {
 
 		return subject;
-	}
-
-	public TicketComment getNewTicketComment() {
-
-		return newTicketComment;
 	}
 }

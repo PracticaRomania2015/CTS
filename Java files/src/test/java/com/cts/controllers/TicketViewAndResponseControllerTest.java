@@ -32,13 +32,17 @@ public class TicketViewAndResponseControllerTest {
 		Ticket ticket = new Ticket();
 		TicketComment comment = new TicketComment();
 		comment.setComment("test");
-		ticket.setNewTicketComment(comment);
+		ticket.getComments().add(comment);
 		assertEquals(new TicketError().getErrorJson(4), ticketViewAndResponseController.addComment(ticket));
+		ticket = new Ticket();
+		comment = new TicketComment();
 		comment.setComment("");
+		ticket.getComments().add(comment);
 		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
+		ticket = new Ticket();
+		comment = new TicketComment();
 		comment.setComment(null);
-		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
-		ticket.setNewTicketComment(null);
+		ticket.getComments().add(comment);
 		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
 		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(null));
 	}

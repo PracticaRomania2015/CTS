@@ -172,7 +172,7 @@ public class SubmitTicketControllerTest {
 		newTicketComment.setDateTime(new Timestamp(0));
 		newTicketComment.setUserId(testUser.getUserId());
 		newTicketComment.setTicketId(ticket.getTicketId());
-		ticket.setNewTicketComment(newTicketComment);
+		ticket.getComments().add(newTicketComment);
 		ticketJson = ticketViewAndResponseController.addComment(ticket);
 		assertEquals(ticketJson, ticketViewAndResponseController.viewTicketComments(ticket));
 		assertTrue(ticketDAO.deleteTicket(ticket));

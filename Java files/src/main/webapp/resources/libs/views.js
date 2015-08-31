@@ -58,7 +58,7 @@ var LogInView = GenericFrontPageChildView.extend({
 					$(document).find('#frontPage').hide();
 					$(document).find('#userPanelPage').show();
 				} else {
-					alert(response);
+					alert(response.description);
 				}
 			},
 			error : function(model, response) {
@@ -92,13 +92,13 @@ var RegisterView = GenericFrontPageChildView.extend({
 		
 		user.save({}, {
 			success : function(model, response) {
-				if (response == "Success!") {
+				if (response.description == "Success!") {
 					$('#logIn').toggle();
 					$('#register').hide();
 					$('#recover').hide();
 					alert("Account created!");
 				} else {
-					alert(response);
+					alert(response.description);
 				}
 			},
 			error : function(model, response) {
@@ -128,7 +128,7 @@ var RecoverView = GenericFrontPageChildView.extend({
 		
 		user.save({}, {
 			success : function(model, response) {
-				alert(response);
+				alert(response.description);
 			},
 			error : function(model, response) {
 				console.log(response);

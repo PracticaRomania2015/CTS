@@ -160,7 +160,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			totalNumberOfPages = totalNumberOfPagesParam.getParameter();
 
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
 			return null;
 		} finally {
 
@@ -205,26 +205,23 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketCommentIdParam = new InOutParam<Integer>(0, "CommentId", true);
-			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getNewTicketComment().getTicketId(),
-					"TicketId");
-			InOutParam<Timestamp> dateTimeParam = new InOutParam<Timestamp>(ticket.getNewTicketComment().getDateTime(),
-					"DateTime");
-			InOutParam<String> commentParam = new InOutParam<String>(ticket.getNewTicketComment().getComment(),
-					"Comment");
-			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getNewTicketComment().getUserId(),
-					"UserId");
-			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getNewTicketComment().getFilePath(),
-					"FilePath");
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(
+					ticket.getComments().get(ticket.getComments().size() - 1).getTicketId(), "TicketId");
+			InOutParam<Timestamp> dateTimeParam = new InOutParam<Timestamp>(
+					ticket.getComments().get(ticket.getComments().size() - 1).getDateTime(), "DateTime");
+			InOutParam<String> commentParam = new InOutParam<String>(
+					ticket.getComments().get(ticket.getComments().size() - 1).getComment(), "Comment");
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(
+					ticket.getComments().get(ticket.getComments().size() - 1).getUserId(), "UserId");
+			InOutParam<String> filePathParam = new InOutParam<String>(
+					ticket.getComments().get(ticket.getComments().size() - 1).getFilePath(), "FilePath");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
 					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 0) {
 
-				ArrayList<TicketComment> ticketComments = ticket.getComments();
-				ticket.getNewTicketComment().setCommentId(ticketCommentIdParam.getParameter());
-				ticketComments.add(ticket.getNewTicketComment());
-				ticket.setComments(ticketComments);
+				ticket.getComments().get(ticket.getComments().size() - 1).setCommentId(ticketCommentIdParam.getParameter());
 				return true;
 			} else {
 

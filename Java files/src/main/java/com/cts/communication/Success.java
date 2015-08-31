@@ -12,6 +12,7 @@ public class Success {
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private String description;
+
 	private String registerSuccess;
 	private String recoverySuccess;
 
@@ -32,7 +33,7 @@ public class Success {
 		String successMessageJson = "";
 
 		try {
-			successMessageJson = objectMapper.writeValueAsString(this.description);
+			successMessageJson = objectMapper.writeValueAsString(this);
 		} catch (IOException e) {
 		}
 		return successMessageJson;
@@ -58,5 +59,9 @@ public class Success {
 			break;
 		}
 		}
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 }

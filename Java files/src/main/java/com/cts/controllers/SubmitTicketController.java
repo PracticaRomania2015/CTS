@@ -26,6 +26,7 @@ import com.cts.entities.Ticket;
 public class SubmitTicketController {
 
 	private static Logger logger = Logger.getLogger(SubmitTicketController.class.getName());
+	private ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
 	 * GET method to get categories for the create new ticket page.
@@ -44,14 +45,13 @@ public class SubmitTicketController {
 		logger.info("Success to get categories from database ...");
 
 		String jsonMessage = new TicketError().getErrorJson(-1);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			jsonMessage = objectMapper.writeValueAsString(categories);
 		} catch (IOException e) {
 		}
 		return jsonMessage;
 	}
-	
+
 	/**
 	 * GET method to get subcategories for a category
 	 * 
@@ -69,7 +69,6 @@ public class SubmitTicketController {
 		logger.info("Success to get subcategories for a category from database ...");
 
 		String jsonMessage = new TicketError().getErrorJson(-1);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			jsonMessage = objectMapper.writeValueAsString(subcategories);
 		} catch (IOException e) {
@@ -116,7 +115,6 @@ public class SubmitTicketController {
 
 			logger.info("Ticket submitted succesfully!");
 			String jsonMessage = new TicketError().getErrorJson(5);
-			ObjectMapper objectMapper = new ObjectMapper();
 			try {
 				jsonMessage = objectMapper.writeValueAsString(ticket);
 			} catch (IOException e) {
