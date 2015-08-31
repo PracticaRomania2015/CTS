@@ -27,6 +27,6 @@ public class ViewTicketsControllerTest {
 		viewTicketRequest.setTypeOfRequest(0);
 		viewTicketRequest.setRequestedPageNumber(1);
 		viewTicketRequest.setTicketsPerPage(1);
-		assertEquals("{\"totalNumberOfPages\":0,\"tickets\":[]}", viewTicketsController.viewTickets(viewTicketRequest));
+		assertEquals("{\"totalNumberOfPages\":1,\"tickets\":[]}", viewTicketsController.viewTickets(viewTicketRequest));
 	}
 }
