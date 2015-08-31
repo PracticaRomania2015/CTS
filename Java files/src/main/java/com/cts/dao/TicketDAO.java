@@ -205,8 +205,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketCommentIdParam = new InOutParam<Integer>(0, "CommentId", true);
-			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(
-					ticket.getComments().get(ticket.getComments().size() - 1).getTicketId(), "TicketId");
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Timestamp> dateTimeParam = new InOutParam<Timestamp>(
 					ticket.getComments().get(ticket.getComments().size() - 1).getDateTime(), "DateTime");
 			InOutParam<String> commentParam = new InOutParam<String>(
@@ -219,6 +218,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
 					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
 			execute();
+			System.out.println(ticketIdParam.getParameter());
+			System.out.println(userIdParam.getParameter());
 			if (errorParam.getParameter() == 0) {
 
 				ticket.getComments().get(ticket.getComments().size() - 1)

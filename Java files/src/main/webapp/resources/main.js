@@ -23,7 +23,7 @@ $(document).ready((function() {
 		var userPanelPageView = new GenericUserPanelPageView({});
 		$('div#userPanelPage').append(userPanelPageView.render().el);
 
-		var logInView, registerView, recoverView, assignedTicketsView, userTicketsView, createTicketPageView;
+		var logInView, registerView, recoverView, assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
 		
 		$('#toggle-login').click(function() {
 			if(!logInView){
@@ -145,6 +145,14 @@ $(document).ready((function() {
 			$('#assignedTickets').hide();
 			$('#myTickets').hide();
 			$('#createTicket').hide();
+			
+			if(!respondToTicketPageView){
+				respondToTicketPageView = new RespondToTicketPageView({
+					model : new RespondToTicketModel({})
+				});
+				$('div#userProperties').append(respondToTicketPageView.render().el);
+			};
+			
 			$('#userProperties').show();
 			
 			$('#ats').hide();
