@@ -91,6 +91,12 @@ $(document).ready((function() {
 					model : new ViewTicketsModel({})
 				});
 				$('div#myTickets').append(userTicketsView.render().el);
+			} else {
+				userTicketsView.remove();
+				userTicketsView = new UserTicketsView({
+					model : new ViewTicketsModel({})
+				});
+				$('div#myTickets').append(userTicketsView.render().el);
 			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').hide();

@@ -371,6 +371,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		ticket.save({}, {
 			success : function(model, response) {
+				$('#ticketComments').empty();
+				console.log("INIT");
 				_.each(response.comments, function(e) {
 					$('#ticketComments').append($("<div class='ticketInput'></div>").append(e.comment));
 				});
@@ -407,9 +409,13 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			},
 			error : function(model, response) {
 				console.log(response);
-			}
-		})
-		
+			},
+			wait: true
+		});
+		//TODO: fix refresh
+		this.initialize();
+		this.initialize();
+		$("#ticketResponse").val('');
 	}
 		
 });
