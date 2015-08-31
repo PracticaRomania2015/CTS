@@ -50,7 +50,6 @@ public class ViewTicketsController {
 			logger.info("Json error when trying to map the array of tickets.");
 			return new TicketError().getErrorJson(-1);
 		}
-		System.out.println("{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}");
 		logger.info("The list of tickets was successfully retrieved!");
 		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";
 	}
