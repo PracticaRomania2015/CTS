@@ -12,7 +12,7 @@ public interface TicketDAOInterface {
 
 	public boolean deleteTicket(Ticket ticket);
 
-	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, Integer totalNumberOfPages);
+	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, StringBuilder totalNumberOfPages);
 
 	public ArrayList<Category> getCategories();
 

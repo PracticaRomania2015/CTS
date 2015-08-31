@@ -120,7 +120,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, Integer totalNumberOfPages) {
+	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, StringBuilder totalNumberOfPages) {
 
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		try {
@@ -157,10 +157,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				tickets.add(ticket);
 			}
 			setOutParametersAfterExecute();
-			totalNumberOfPages = totalNumberOfPagesParam.getParameter();
+			totalNumberOfPages.append(totalNumberOfPagesParam.getParameter());
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			return null;
 		} finally {
 
@@ -221,7 +221,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			execute();
 			if (errorParam.getParameter() == 0) {
 
-				ticket.getComments().get(ticket.getComments().size() - 1).setCommentId(ticketCommentIdParam.getParameter());
+				ticket.getComments().get(ticket.getComments().size() - 1)
+						.setCommentId(ticketCommentIdParam.getParameter());
 				return true;
 			} else {
 

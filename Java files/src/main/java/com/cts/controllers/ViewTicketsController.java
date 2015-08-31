@@ -38,9 +38,8 @@ public class ViewTicketsController {
 		logger.info("Attempting to send the list of tickets ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		Integer totalNumberOfPages = new Integer(0);
+		StringBuilder totalNumberOfPages = new StringBuilder();
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(viewTicketsRequest, totalNumberOfPages);
-
 		String ticketsJson;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
@@ -51,6 +50,7 @@ public class ViewTicketsController {
 			logger.info("Json error when trying to map the array of tickets.");
 			return new TicketError().getErrorJson(-1);
 		}
+		System.out.println("{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}");
 		logger.info("The list of tickets was successfully retrieved!");
 		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";
 	}
