@@ -91,8 +91,7 @@ $(document).ready((function() {
 					model : new ViewTicketsModel({})
 				});
 				$('div#myTickets').append(userTicketsView.render().el);
-			}
-			else{
+			} else {
 				userTicketsView.remove();
 				userTicketsView = new UserTicketsView({
 					model : new ViewTicketsModel({})
