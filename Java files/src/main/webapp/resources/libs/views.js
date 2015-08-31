@@ -158,37 +158,77 @@ var GenericUserPanelPageView = Backbone.View.extend({
 /* Assigned tickets page view */
 
 var AssignedTicketsView = GenericUserPanelPageView.extend({
+
+	events : {
+		'click #firstPageReqBtn' : function () { this.viewData( 1, "", "" ); },
+		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
+		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
+		'click #nextPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") + 1, "", "" ); },
+		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); }
+	},
 	
 	render : function() {
+		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
-		this.populateData();
 		return this;
 	},
 	
-	initialize : function() {
-		this.$el.append("<h1 class='userPage'> Tickets for me to review </h1>");
+	viewData : function( pgNr, srcTxt, srcTp ) {
+		
+		if( pgNr > this.model.get("totalNumberOfPages") ){
+			pgNr = this.model.get("totalNumberOfPages");
+		}
+		else if( pgNr < 1 ){
+			pgNr = 1;
+		}
+		
+		this.model.unset('tickets');
+		this.model.unset('totalNumberOfPages');
+		
+		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
+		this.model.set("typeOfRequest", 1);
+		this.model.set("requestedPageNumber", pgNr);
+		this.model.set("ticketsPerPage", 10);
+		this.model.set("textToSearch", srcTxt);
+		this.model.set("searchType", srcTp);
+		var currentView = this;
+		
+		this.model.save({ }, {
+			success : function(model, response) {
+				currentView.populateData(pgNr, response.totalNumberOfPages, response.tickets);
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
 	},
 	
-	populateData : function() {
-		// just some test variables
-		var test1 = "asigned";
-		var test2 = "categ";
-		var test3 = "submited";
-		var test4 = "date";
-		var testpg1 = 1;
-		var testpg2 = 2;
-		// how to input the actual data (hint: use each)
-		this.$el.find('tbody').append("<tr><td>" +
-				test1 +
-				"</td><td>" +
-				test2 +
-				"</td><td>" +
-				test3 +
-				"</td><td>" +
-				test4 +
-				"</td></tr>");
-		// don't forget to input the page numbering as well
-		this.$el.find('#ticketPagingNumbering').append(testpg1 + "/" + testpg2);
+	addTicket : function( id, subj, categ, status, date ) {
+		this.$el.find('tbody').append("<tr id='tkId" + id + "'><td>" +
+				subj + "</td><td>" +
+				categ + "</td><td>" +
+				status + "</td><td>" +
+				date + "</td></tr>");
+	},
+	
+	populateData : function( currentPage, totalPages, tkArray ) {
+		function addZero(i) {
+		    if (i < 10) {
+		        i = "0" + i;
+		    }
+		    return i;
+		}
+		
+		var currentView = this;
+		this.$el.find('tbody').empty();
+		_.each(tkArray, function(e) {
+			var currentTkDate = new Date(e.comments[0].dateTime);
+			var displayDate = currentTkDate.toLocaleDateString() +
+							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, displayDate);
+		});
+		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}
 
 })
@@ -198,57 +238,77 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 /* User tickets page view */
 
 var UserTicketsView = GenericUserPanelPageView.extend({
+
+	events : {
+		'click #firstPageReqBtn' : function () { this.viewData( 1, "", "" ); },
+		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
+		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
+		'click #nextPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") + 1, "", "" ); },
+		'click #prevPageReqBtn' : function () { this.viewData( this.model.get("requestedPageNumber") - 1, "", "" ); }
+	},
 	
 	render : function() {
+		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
-		this.populateData();
 		return this;
 	},
 	
-	initialize : function() {
-		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+	viewData : function( pgNr, srcTxt, srcTp ) {
+		
+		if( pgNr > this.model.get("totalNumberOfPages") ){
+			pgNr = this.model.get("totalNumberOfPages");
+		}
+		else if( pgNr < 1 ){
+			pgNr = 1;
+		}
+		
+		this.model.unset('tickets');
+		this.model.unset('totalNumberOfPages');
 		
 		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
 		this.model.set("typeOfRequest", 0);
-		this.model.set("requestedPageNumber", 1);
-		this.model.set("ticketsPerPage", 1);
-		this.model.set("textToSearch", "");
-		this.model.set("searchType", "");
-		
-		console.log(this.model.toJSON());//"{userId: " + sessionStorage.loggedUserId + "}"
+		this.model.set("requestedPageNumber", pgNr);
+		this.model.set("ticketsPerPage", 10);
+		this.model.set("textToSearch", srcTxt);
+		this.model.set("searchType", srcTp);
+		var currentView = this;
 		
 		this.model.save({ }, {
 			success : function(model, response) {
-				console.log("success");
-				console.log(response);
+				currentView.populateData(pgNr, response.totalNumberOfPages, response.tickets);
 			},
 			error : function(model, response) {
-				console.log("fayul");
 				console.log(response);
 			}
 		});
 	},
 	
-	populateData : function() {
-		// just some test variables
-		var test1 = "mine";
-		var test2 = "categ";
-		var test3 = "submited";
-		var test4 = "date";
-		var testpg1 = 1;
-		var testpg2 = 4;
-		// how to input the actual data (hint: use each)
-		this.$el.find('tbody').append("<tr><td>" +
-				test1 +
-				"</td><td>" +
-				test2 +
-				"</td><td>" +
-				test3 +
-				"</td><td>" +
-				test4 +
-				"</td></tr>");
-		// don't forget to input the page numbering as well
-		this.$el.find('#ticketPagingNumbering').append(testpg1 + "/" + testpg2);
+	addTicket : function( id, subj, categ, status, date ) {
+		this.$el.find('tbody').append("<tr id='tkId" + id + "'><td>" +
+				subj + "</td><td>" +
+				categ + "</td><td>" +
+				status + "</td><td>" +
+				date + "</td></tr>");
+	},
+	
+	populateData : function( currentPage, totalPages, tkArray ) {
+		function addZero(i) {
+		    if (i < 10) {
+		        i = "0" + i;
+		    }
+		    return i;
+		}
+		
+		var currentView = this;
+		this.$el.find('tbody').empty();
+		_.each(tkArray, function(e) {
+			var currentTkDate = new Date(e.comments[0].dateTime);
+			var displayDate = currentTkDate.toLocaleDateString() +
+							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, displayDate);
+		});
+		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}
 
 })
