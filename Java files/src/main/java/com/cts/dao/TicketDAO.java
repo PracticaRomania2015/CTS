@@ -96,12 +96,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		ArrayList<Category> subcategories = new ArrayList<Category>();
 		try {
-			
+
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
 			prepareExecution(StoredProceduresNames.GetSubcategories, categoryIdParam);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-				
+
 				Category subcategory = new Category();
 				subcategory.setCategoryId(resultSet.getInt(1));
 				subcategory.setCategoryName(resultSet.getString(2));
@@ -109,7 +109,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				subcategories.add(subcategory);
 			}
 		} catch (SQLException e) {
-			
+
 			return null;
 		} finally {
 
@@ -205,8 +205,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketCommentIdParam = new InOutParam<Integer>(0, "CommentId", true);
-			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(
-					ticket.getComments().get(ticket.getComments().size() - 1).getTicketId(), "TicketId");
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Timestamp> dateTimeParam = new InOutParam<Timestamp>(
 					ticket.getComments().get(ticket.getComments().size() - 1).getDateTime(), "DateTime");
 			InOutParam<String> commentParam = new InOutParam<String>(
@@ -219,6 +218,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
 					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
 			execute();
+			System.out.println(ticketIdParam.getParameter());
+			System.out.println(userIdParam.getParameter());
 			if (errorParam.getParameter() == 0) {
 
 				ticket.getComments().get(ticket.getComments().size() - 1)
@@ -230,7 +231,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			}
 
 		} catch (SQLException e) {
-			
+
 			return false;
 		} finally {
 
