@@ -186,7 +186,7 @@ h2.userPage{
   	color: #0d94d2;
 }
 
-#ticketSubject, #ticketContent {
+.ticketInput {
 	border-radius: 5px;
 	width: 96.5%;
 	background: #f1f8ec;

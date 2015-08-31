@@ -230,7 +230,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			}
 
 		} catch (SQLException e) {
-
+			
 			return false;
 		} finally {
 

@@ -353,3 +353,63 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	}
 	
 });
+
+/* ================================================= */
+/* Respond to ticket page view */
+
+var RespondToTicketPageView = GenericUserPanelPageView.extend({
+
+	events : {
+		'click #respondToTicketButton' : 'submit'
+	},
+	
+	initialize : function() {
+		
+		var ticket = new GetTicket({
+			ticketId : 164
+		});
+		
+		ticket.save({}, {
+			success : function(model, response) {
+				_.each(response.comments, function(e) {
+					$('#ticketComments').append($("<div class='ticketInput'></div>").append(e.comment));
+				});
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+		
+	},
+	
+	
+	render : function() {
+		this.$el.append(_.template($('#respondToTicketTemplate').html()));
+		return this;
+	},
+	
+	submit : function() {
+		
+		var ticketComment = new TicketComment({
+			userId: sessionStorage.loggedUserId,
+			dateTime: new Date().getTime(),
+			comment: $("#ticketResponse").val()
+		});
+		
+		var resp = new RespondToTicketModel({
+			ticketId : 164,
+			comments : [ticketComment]
+		});
+		
+		resp.save({}, {
+			success : function(model, response) {
+				console.log(response);
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		})
+		
+	}
+		
+});

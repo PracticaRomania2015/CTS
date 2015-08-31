@@ -230,3 +230,25 @@ var TicketComment = GenericModel.extend({
 	}
 
 });
+
+/* ================================================= */
+/* Respond to ticket page model */
+
+var RespondToTicketModel = GenericModel.extend({
+	
+	urlRoot: 'addComment/',
+	
+	validate : function(attrs) {
+		
+		return false;
+
+	}
+
+});
+
+var GetTicket = GenericModel.extend({
+	
+	urlRoot: 'viewTicket/'
+
+});
+
