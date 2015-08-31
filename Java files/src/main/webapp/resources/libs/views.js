@@ -207,6 +207,26 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	
 	initialize : function() {
 		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+		
+		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
+		this.model.set("typeOfRequest", 0);
+		this.model.set("requestedPageNumber", 0);
+		this.model.set("ticketsPerPage", 1);
+		this.model.set("textToSearch", "");
+		this.model.set("searchType", "");
+		
+		console.log(this.model.toJSON());//"{userId: " + sessionStorage.loggedUserId + "}"
+		
+		this.model.save({ }, {
+			success : function(model, response) {
+				console.log("success");
+				console.log(response);
+			},
+			error : function(model, response) {
+				console.log("fayul");
+				console.log(response);
+			}
+		});
 	},
 	
 	populateData : function() {

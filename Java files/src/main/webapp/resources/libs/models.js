@@ -136,7 +136,7 @@ var RecoverModel = GenericModel.extend({
 
 var ViewTicketsModel = GenericModel.extend({
 
-	urlRoot : 'assignedTickets/'
+	urlRoot : 'viewTickets/'
 
 });
 
