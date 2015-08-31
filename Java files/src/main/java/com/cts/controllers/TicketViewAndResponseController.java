@@ -61,8 +61,9 @@ public class TicketViewAndResponseController {
 
 		logger.info("Attempting to add a comment for a ticket.");
 
-		if (ticket == null || ticket.getNewTicketComment() == null || ticket.getNewTicketComment().getComment() == null
-				|| ticket.getNewTicketComment().getComment().equals("")) {
+		if (ticket == null || ticket.getComments().get(ticket.getComments().size() - 1).getComment() == null
+				|| ticket.getComments().get(ticket.getComments().size() - 1).getComment() == null
+				|| ticket.getComments().get(ticket.getComments().size() - 1).getComment().equals("")) {
 
 			logger.info("Ticket comment cannot be null error.");
 			return new TicketError().getErrorJson(5);
