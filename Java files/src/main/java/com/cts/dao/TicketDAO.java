@@ -218,8 +218,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
 					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
 			execute();
-			System.out.println(ticketIdParam.getParameter());
-			System.out.println(userIdParam.getParameter());
 			if (errorParam.getParameter() == 0) {
 
 				ticket.getComments().get(ticket.getComments().size() - 1)
