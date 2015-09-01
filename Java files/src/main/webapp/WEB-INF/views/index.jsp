@@ -133,9 +133,9 @@
 			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" class="button" id="submitTicketButton">Submit</span>
 	</script>
-	<script type="text/template" id="respondToTicketTemplate">	
-			<h1 class="userPage">%TicketName% - %TicketStatus%</h1>
-			<div id="ticketComments" class="ticketInput"></div>	
+	<script type="text/template" id="respondToTicketTemplate">
+			<h1 id="ticketTitle" class="userPage"></h1>
+			<div id="ticketComments" class="ticketInput ticketCommentBorder"></div>	
 			<textarea id='ticketResponse' rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" class="button" id="respondToTicketButton">Submit</span>
 	</script>

@@ -198,6 +198,14 @@ h2.userPage{
 	color: #555;
 }
 
+.ticketComments {
+	margin: 5px auto !important;
+}
+
+.ticketCommentBorder {
+	margin: 10px auto 0px !important;
+}
+
 .ticketCategories{
 	border-radius: 5px;
 	width: 49%;

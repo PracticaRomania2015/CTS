@@ -176,8 +176,19 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	viewTicketComments : function (clicked) { 
-		var clickedTicketId = $(clicked.currentTarget).attr('id');
-		console.log($(clicked.currentTarget));
+		var respondToTicketPageView = new RespondToTicketPageView({
+			model : new RespondToTicketModel({
+				ticketId : $(clicked.currentTarget).attr('id'),
+				subject : $(clicked.currentTarget).find('td:nth-child(1)').text(),
+				category : $(clicked.currentTarget).find('td:nth-child(2)').text()
+			})
+		});
+		$('div#selectedTicket').empty();
+		$('div#selectedTicket').append(respondToTicketPageView.render().el);
+		
+		$('#assignedTickets').hide();
+		$('#myTickets').hide();
+		$('#selectedTicket').show();
 	},
 	
 	viewData : function( pgNr, srcTxt, srcTp ) {
@@ -277,6 +288,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 				category : $(clicked.currentTarget).find('td:nth-child(2)').text()
 			})
 		});
+		$('div#selectedTicket').empty();
 		$('div#selectedTicket').append(respondToTicketPageView.render().el);
 		
 		$('#assignedTickets').hide();
@@ -463,7 +475,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				$('#ticketComments').empty();
 				_.each(response.comments, function(e) {
-					$('#ticketComments').append($("<div class='ticketInput'></div>").append(e.comment));
+					$('#ticketComments').append($("<div class='ticketInput ticketComments'></div>").append(e.comment));
 				});
 			},
 			error : function(model, response) {
@@ -475,8 +487,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 	
 	render : function() {
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));
-		//console.log($('#selectedTicket'));
-		//$('.userPage').text('test');
+		this.$el.find('#ticketTitle').append(this.model.get("subject")).append(" - ").append(this.model.get("category"));
 		return this;
 	},
 	
