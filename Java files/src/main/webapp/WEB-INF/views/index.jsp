@@ -50,6 +50,8 @@
 				<div id='myTickets' style='display: none;'></div>
 				<div id='createTicket' style='display: none;'></div>
 				<div id='userProperties' style='display: none;'></div>
+
+				<div id='selectedTicket' style='display: none;'></div>
 			</div>
 	</script>
 	<script type="text/template" id="logInTemplate">
@@ -68,11 +70,11 @@
 					<option value="Mrs">Mrs.</option>
 					<option value="Ms">Ms.</option>
 				</select>
-				<input id='regFirstName' type='text' placeholder='First Name' value='Test' class="masterTooltip"/>
-				<input id='regLastName' type='text' placeholder='Last Name' value='Test' class="masterTooltip"/>
-				<input id='regMail' type='text' placeholder='E-mail' value='test@gmail.com' class="masterTooltip"/>
-				<input id='regPass' type='password' placeholder='Password' value='testpassword' class="masterTooltip"/>
-				<input id='regConfPass' type='password' placeholder='Confirm Password' value='testpassword' class="masterTooltip"/>
+				<input id='regFirstName' type='text' placeholder='First Name' class="masterTooltip"/>
+				<input id='regLastName' type='text' placeholder='Last Name' class="masterTooltip"/>
+				<input id='regMail' type='text' placeholder='E-mail' class="masterTooltip"/>
+				<input id='regPass' type='password' placeholder='Password' class="masterTooltip"/>
+				<input id='regConfPass' type='password' placeholder='Confirm Password' class="masterTooltip"/>
 				<span href="#" class="button" id="registerButton">Register</span>
 			</form>
 	</script>

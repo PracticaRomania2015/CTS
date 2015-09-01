@@ -177,7 +177,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	
 	viewTicketComments : function (clicked) { 
 		var clickedTicketId = $(clicked.currentTarget).attr('id');
-		console.log(clickedTicketId);
+		console.log($(clicked.currentTarget));
 	},
 	
 	viewData : function( pgNr, srcTxt, srcTp ) {
@@ -262,8 +262,26 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	viewTicketComments : function (clicked) { 
-		var clickedTicketId = $(clicked.currentTarget).attr('id');
-		console.log(clickedTicketId);
+		/*var clickedTicketId = $(clicked.currentTarget).attr('id');
+		var clickedTicketSubject = $(clicked.currentTarget).find('td:nth-child(1)').text();
+		var clickedTicketCategory = $(clicked.currentTarget).find('td:nth-child(2)').text();
+		var clickedTicketStatus = $(clicked.currentTarget).find('td:nth-child(3)').text();*/
+		/*var clickedTicket = new GenericModel.extend({
+			
+		});*/
+		
+		var respondToTicketPageView = new RespondToTicketPageView({
+			model : new RespondToTicketModel({
+				ticketId : $(clicked.currentTarget).attr('id'),
+				subject : $(clicked.currentTarget).find('td:nth-child(1)').text(),
+				category : $(clicked.currentTarget).find('td:nth-child(2)').text()
+			})
+		});
+		$('div#selectedTicket').append(respondToTicketPageView.render().el);
+		
+		$('#assignedTickets').hide();
+		$('#myTickets').hide();
+		$('#selectedTicket').show();
 	},
 	
 	viewData : function( pgNr, srcTxt, srcTp ) {
@@ -438,13 +456,12 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 	initialize : function() {
 		
 		var ticket = new GetTicket({
-			ticketId : 164
+			ticketId : this.model.get("ticketId")
 		});
 		
 		ticket.save({}, {
 			success : function(model, response) {
 				$('#ticketComments').empty();
-				console.log("INIT");
 				_.each(response.comments, function(e) {
 					$('#ticketComments').append($("<div class='ticketInput'></div>").append(e.comment));
 				});
@@ -456,9 +473,10 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 	},
 	
-	
 	render : function() {
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));
+		//console.log($('#selectedTicket'));
+		//$('.userPage').text('test');
 		return this;
 	},
 	
@@ -471,9 +489,11 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		});
 		
 		var resp = new RespondToTicketModel({
-			ticketId : 164,
+			ticketId : this.model.get("ticketId"),
 			comments : [ticketComment]
 		});
+		
+		//console.log(resp.toJSON());
 		
 		resp.save({}, {
 			success : function(model, response) {
