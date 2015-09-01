@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Mircea.Iordache
- * @version 1.0
+ * @version 1.618
  */
 public class ConfigReader {
 
@@ -27,32 +27,32 @@ public class ConfigReader {
 	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
 
 	public ConfigReader() {
-		//!!!!!!!!!!!!HERE!!!!!!!!!!!!
+		// !!!!!!!!!!!!HERE!!!!!!!!!!!!
 		// going to change to relative path. again problems with it
 		this("D:\\GITHUB CTS Repository\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
 		//!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
 	public ConfigReader(String path) {
-			try {
-				fileReader = new FileReader(path);
-				bufferedReader = new BufferedReader(fileReader);
-			} catch (FileNotFoundException e) {
-				logger.info("File " + path + "not found.");
-			}
+		try {
+			fileReader = new FileReader(path);
+			bufferedReader = new BufferedReader(fileReader);
+		} catch (FileNotFoundException e) {
+			logger.info("File " + path + "not found.");
+		}
 
-			if (fileReader != null && bufferedReader != null) {
-				populateMap();
-			} else {
-				return;
-			}
+		if (fileReader != null && bufferedReader != null) {
+			populateMap();
+		} else {
+			return;
+		}
 	}
 
 	private void populateMap() {
 		try {
 			for (String line; (line = bufferedReader.readLine()) != null;) {
 				if (!line.isEmpty() && isBackEndConfigLine(line)) {
-					
+
 					String[] toBeInserted = splitToKeyAndValue(line.substring(1, line.length()));
 
 					stuff.put(toBeInserted[0], toBeInserted[1]);
@@ -67,7 +67,14 @@ public class ConfigReader {
 	}
 
 	private String[] splitToKeyAndValue(String line) {
-		return line.split(",");
+		String[] splitted = line.split(",", 2);
+		if (splitted.length > 2) {
+			for (int i = 2; i < splitted.length; i++) {
+				System.out.println(splitted[i]);
+				splitted[1] += splitted[i];
+			}
+		}
+		return splitted;
 	}
 
 	private boolean isBackEndConfigLine(String line) {

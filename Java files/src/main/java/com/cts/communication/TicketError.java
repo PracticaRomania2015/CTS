@@ -2,6 +2,8 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import com.cts.utils.ConfigReader;
+
 public class TicketError implements Error {
 
 	private String emptyTicketSubjectFieldError;
@@ -12,12 +14,15 @@ public class TicketError implements Error {
 	private String unknownError;
 	private String description;
 
+	private ConfigReader configReader;
+
 	public TicketError() {
 
 		initAll();
 	}
 
 	private void initAll() {
+		configReader = new ConfigReader();
 
 		emptyTicketSubjectFieldError = configReader.getValueForKey("emptyTicketSubjectFieldError");
 		ticketCategoryNotSelectedError = configReader.getValueForKey("ticketCategoryNotSelectedError");

@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import com.cts.utils.ConfigReader;
+
 @JsonSerialize
 public class LoginError implements Error {
 
@@ -14,11 +16,14 @@ public class LoginError implements Error {
 
 	private String description;
 
+	private ConfigReader configReader;
+
 	public LoginError() {
 		initAll();
 	}
 
 	private void initAll() {
+		configReader = new ConfigReader();
 
 		emptyEmailFieldError = configReader.getValueForKey("emptyEmailFieldError");
 		emptyPasswordFieldError = configReader.getValueForKey("emptyPasswordFieldError");

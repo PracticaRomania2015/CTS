@@ -2,11 +2,15 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import com.cts.utils.ConfigReader;
+
 public class RecoveryPasswordError implements Error {
 
 	private String incorrectSpecifiedEmailForRecoverError;
 	private String unknownError;
 	private String description;
+
+	private ConfigReader configReader;
 
 	public RecoveryPasswordError() {
 
@@ -14,6 +18,7 @@ public class RecoveryPasswordError implements Error {
 	}
 
 	private void initAll() {
+		configReader = new ConfigReader();
 
 		incorrectSpecifiedEmailForRecoverError = configReader.getValueForKey("incorrectSpecifiedEmailForRecoverError");
 		unknownError = configReader.getValueForKey("unknownError");

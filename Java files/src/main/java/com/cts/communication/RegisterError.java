@@ -2,6 +2,8 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import com.cts.utils.ConfigReader;
+
 public class RegisterError implements Error {
 
 	private String invalidEmailError;
@@ -11,11 +13,15 @@ public class RegisterError implements Error {
 	private String existingEmailError;
 	private String description;
 
+	private ConfigReader configReader;
+
 	public RegisterError() {
 		initAll();
 	}
 
 	private void initAll() {
+		configReader = new ConfigReader();
+		
 		invalidEmailError = configReader.getValueForKey("invalidEmailError");
 		emptyFields = configReader.getValueForKey("emptyFields");
 		dbError = configReader.getValueForKey("dbError");

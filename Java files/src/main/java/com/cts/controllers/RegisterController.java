@@ -118,7 +118,7 @@ public class RegisterController {
 	private boolean isValidEmail(String email) {
 
 		Matcher matcher = pattern.matcher(email);
-
+		
 		logger.info(matcher.matches() + " for " + email);
 
 		if (!matcher.matches()) {
