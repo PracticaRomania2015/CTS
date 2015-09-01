@@ -169,7 +169,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	render : function() {
-		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
+		this.$el.append("<h1 class='userPage'> Tickets assigned to me </h1>");
 		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
