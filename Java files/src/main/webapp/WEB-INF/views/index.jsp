@@ -125,14 +125,14 @@
 	<script type="text/template" id="createTicketTemplate">	
 			<h1 class="userPage">Create a new ticket</h1>
 			<input id='ticketSubject' type='text' placeholder='Subject' class='masterTooltip ticketInput'/>
-			<select class="ticketCategories" id="ticketCategoryDropbox">
+			<select id="ticketCategoryDropbox" class="ticketCategories">
 				<option value="" disabled selected style='display:none;'>Select your category</option>
 			</select>
-			<select class="ticketCategories" id="ticketSubcategoryDropbox">
+			<select disabled id="ticketSubcategoryDropbox" class="ticketCategories" style="color: #808080">
 				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
 			</select>
 			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
-			<span href="#" class="button" id="submitTicketButton">Submit</span>
+			<span href="#" id="submitTicketButton" class="button">Submit</span>
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
 			<h1 id="ticketTitle" class="userPage"></h1>

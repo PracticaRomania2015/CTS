@@ -394,9 +394,16 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				var selectedCategory = $('#ticketCategoryDropbox').val();
 				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
-				_.each(response, function(e) {
-					$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-				});
+				if ($.isEmptyObject(response)) {
+					$('#ticketSubcategoryDropbox').attr("disabled", true);
+					$('#ticketSubcategoryDropbox').css("color", "#808080");
+				} else {
+					_.each(response, function(e) {
+						$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+					});
+					$('#ticketSubcategoryDropbox').attr("disabled", false);
+					$('#ticketSubcategoryDropbox').removeAttr("style")
+				}
 			},
 			error : function(model, response) {
 				console.log(response);
