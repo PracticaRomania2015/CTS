@@ -160,6 +160,7 @@ var GenericUserPanelPageView = Backbone.View.extend({
 var AssignedTicketsView = GenericUserPanelPageView.extend({
 
 	events : {
+		'change #ticketsPerPage' : function () { this.viewData( 1, "", "" ); },
 		'click #firstPageReqBtn' : function () { this.viewData( 1, "", "" ); },
 		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
 		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
@@ -169,7 +170,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	render : function() {
-		this.$el.append("<h1 class='userPage'> Tickets assigned to me </h1>");
+		this.$el.append("<h1 class='userPage'> Tickets managed by me </h1>");
 		this.viewData( 1, "", "" );
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
@@ -206,7 +207,12 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
 		this.model.set("typeOfRequest", 1);
 		this.model.set("requestedPageNumber", pgNr);
-		this.model.set("ticketsPerPage", 10);
+		if ( !this.$el.find('#ticketsPerPage').val() ){
+			this.model.set("ticketsPerPage", 10);
+		}
+		else{
+			this.model.set("ticketsPerPage", this.$el.find('#ticketsPerPage').val());
+		}
 		this.model.set("textToSearch", srcTxt);
 		this.model.set("searchType", srcTp);
 		var currentView = this;
@@ -221,12 +227,13 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		});
 	},
 	
-	addTicket : function( id, subj, categ, status, date ) {
-		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td>" +
-				subj + "</td><td>" +
-				categ + "</td><td>" +
-				status + "</td><td>" +
-				date + "</td></tr>");
+	addTicket : function( id, subj, categ, status, ansDate, subDate ) {
+		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td><div class='columnOverflow'>" +
+				subj + "</div></td><td><div class='columnOverflow'>" +
+				categ + "</div></td><td><div class='columnOverflow'>" +
+				status + "</div></td><td><div class='columnOverflow'>" +
+				ansDate + "</div></td><td><div class='columnOverflow'>" +
+				subDate + "</div></td></tr>");
 	},
 	
 	populateData : function( currentPage, totalPages, tkArray ) {
@@ -243,7 +250,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 			var currentTkDate = new Date(e.comments[0].dateTime);
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
-			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, displayDate);
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName,"bla" , displayDate);
 		});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}
@@ -257,6 +264,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 var UserTicketsView = GenericUserPanelPageView.extend({
 
 	events : {
+		'change #ticketsPerPage' : function () { this.viewData( 1, "", "" ); },
 		'click #firstPageReqBtn' : function () { this.viewData( 1, "", "" ); },
 		'click #ticketSearchButton' : function () { this.viewData( 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val() ); },
 		'click #lastPageReqBtn' : function () { this.viewData( this.model.get("totalNumberOfPages"), "", "" ); },
@@ -311,7 +319,12 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		this.model.set("user", {"userId": Number(sessionStorage.loggedUserId)});
 		this.model.set("typeOfRequest", 0);
 		this.model.set("requestedPageNumber", pgNr);
-		this.model.set("ticketsPerPage", 10);
+		if ( !this.$el.find('#ticketsPerPage').val() ){
+			this.model.set("ticketsPerPage", 10);
+		}
+		else{
+			this.model.set("ticketsPerPage", this.$el.find('#ticketsPerPage').val());
+		}
 		this.model.set("textToSearch", srcTxt);
 		this.model.set("searchType", srcTp);
 		var currentView = this;
@@ -326,12 +339,13 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		});
 	},
 	
-	addTicket : function( id, subj, categ, status, date ) {
-		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td>" +
-				subj + "</td><td>" +
-				categ + "</td><td>" +
-				status + "</td><td>" +
-				date + "</td></tr>");
+	addTicket : function( id, subj, categ, status, ansDate, subDate ) {
+		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td><div class='columnOverflow'>" +
+				subj + "</div></td><td><div class='columnOverflow'>" +
+				categ + "</div></td><td><div class='columnOverflow'>" +
+				status + "</div></td><td><div class='columnOverflow'>" +
+				ansDate + "</div></td><td><div class='columnOverflow'>" +
+				subDate + "</div></td></tr>");
 	},
 	
 	populateData : function( currentPage, totalPages, tkArray ) {
@@ -348,7 +362,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 			var currentTkDate = new Date(e.comments[0].dateTime);
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
-			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, displayDate);
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName,"bla" ,displayDate);
 		});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}

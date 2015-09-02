@@ -100,12 +100,13 @@
 						<th id="rounded-tl" class="wide-col">Subject</th>
 						<th class="wide-col">Category</th>
 						<th class="slim-col">Status</th>
-						<th id="rounded-tr" class="slim-col">Date</th>
+						<th class="slim-col">AnsDate</th>
+						<th id="rounded-tr" class="slim-col">SubDate</th>
      	 			</tr>
     			</thead>
     			<tfoot>
       				<tr>
-        				<th colspan="4" id="rounded-bot">
+        				<th colspan="5" id="rounded-bot">
 							<div class="table-surf" id="firstPageReqBtn">&#60;&#60;</div>
 							&emsp;
 							<div class="table-surf" id="prevPageReqBtn">&#60;</div>
@@ -115,6 +116,15 @@
 							<div class="table-surf" id="nextPageReqBtn">&#62;</div>
 							&emsp;
 							<div class="table-surf" id="lastPageReqBtn">&#62;&#62;</div>
+							<div id="tkPerPgDisplay">
+								Tk/Pg
+								<select class="ticketsPerPage" id="ticketsPerPage">
+									<option selected disabled value=""></option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+								</select>
+							</div>
 						</th>
       				</tr>
     			</tfoot>
