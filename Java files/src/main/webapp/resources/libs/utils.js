@@ -5,7 +5,7 @@ function getValue(key) {
 		lines = data.split('\n');
 		$.each(lines, function() {
 			if (key.trim() == this.split(',')[0].trim()){
-				out =  this.split(',')[1];
+				out =  this.substr(this.split(',')[0].trim().length + 1, this.length);
 			}
 		});
 	});
