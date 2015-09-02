@@ -103,7 +103,7 @@ h1.frontPage{
 	color: #555;
 }
 
-#logInMail, #logInPass, #recoverMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
+#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
 	width: 210px;
 	background: #f1f8ec;
 	margin: 4% 0% 4% 0%;
