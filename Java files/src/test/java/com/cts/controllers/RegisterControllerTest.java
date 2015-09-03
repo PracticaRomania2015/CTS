@@ -62,18 +62,6 @@ public class RegisterControllerTest {
 		testUser.setPassword(password);
 	}
 
-//	private String generateErrorJson(int errorCode) {
-//
-//		String errorMessageJson = "";
-//		RegisterError registerError = new RegisterError(errorCode);
-//		try {
-//
-//			errorMessageJson = objectMapper.writeValueAsString(registerError);
-//		} catch (IOException e) {
-//		}
-//		return errorMessageJson;
-//	}
-
 	@Test
 	public void registerGoodTest() {
 

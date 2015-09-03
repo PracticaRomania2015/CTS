@@ -8,7 +8,7 @@ public class TicketComment {
 	private int ticketId;
 	private Timestamp dateTime;
 	private String comment;
-	private int userId;
+	private User user;
 	private String filePath;
 
 	public TicketComment() {
@@ -17,7 +17,7 @@ public class TicketComment {
 		ticketId = 0;
 		dateTime = new Timestamp(0);
 		comment = "";
-		userId = 0;
+		user = new User();
 		filePath = "";
 	}
 
@@ -53,12 +53,12 @@ public class TicketComment {
 		this.comment = comment;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getFilePath() {

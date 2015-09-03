@@ -16,7 +16,7 @@ public class User {
 		password = "";
 		firstName = "";
 		lastName = "";
-		title = "Mr.";
+		title = "";
 	}
 
 	public String getEmail() {

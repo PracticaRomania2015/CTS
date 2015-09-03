@@ -8,6 +8,7 @@ import com.cts.entities.Category;
 import com.cts.entities.State;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
+import com.cts.entities.User;
 import com.cts.entities.ViewTicketsRequest;
 
 public class TicketDAO extends BaseDAO implements TicketDAOInterface {
@@ -24,7 +25,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					"DateTime");
 			InOutParam<String> commentParam = new InOutParam<String>(ticket.getComments().get(0).getComment(),
 					"Comment");
-			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getComments().get(0).getUserId(),
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getComments().get(0).getUser().getUserId(),
 					"UserId");
 			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getComments().get(0).getFilePath(),
 					"FilePath");
@@ -36,7 +37,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			ticket.setTicketId(ticketIdParam.getParameter());
 			ticket.getComments().get(0).setTicketId(ticketIdParam.getParameter());
 			ticket.getComments().get(0).setCommentId(commentIdParam.getParameter());
-			ticket.getComments().get(0).setUserId(userIdParam.getParameter());
+			ticket.getComments().get(0).getUser().setUserId(userIdParam.getParameter());
 		} catch (SQLException e) {
 
 			return false;
@@ -143,9 +144,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				Ticket ticket = new Ticket();
 				ticket.setTicketId(resultSet.getInt(1));
 				ticket.setSubject(resultSet.getString(2));
-				TicketComment ticketComment = new TicketComment();
-				ticketComment.setDateTime(resultSet.getTimestamp(3));
-				ticket.getComments().add(ticketComment);
+				TicketComment firstTicketComment = new TicketComment();
+				firstTicketComment.setDateTime(resultSet.getTimestamp(3));
+				ticket.getComments().add(firstTicketComment);
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt(4));
 				category.setCategoryName(resultSet.getString(5));
@@ -154,6 +155,13 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				state.setStateId(resultSet.getInt(6));
 				state.setStateName(resultSet.getString(7));
 				ticket.setState(state);
+				User assignedUser = new User();
+				assignedUser.setFirstName(resultSet.getString(8));
+				assignedUser.setLastName(resultSet.getString(9));
+				ticket.setAssignedToUser(assignedUser);
+				TicketComment lastTicketComment = new TicketComment();
+				lastTicketComment.setDateTime(resultSet.getTimestamp(10));
+				ticket.getComments().add(lastTicketComment);
 				tickets.add(ticket);
 			}
 			setOutParametersAfterExecute();
@@ -185,8 +193,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				ticketComment.setTicketId(ticket.getTicketId());
 				ticketComment.setDateTime(resultSet.getTimestamp(2));
 				ticketComment.setComment(resultSet.getString(3));
-				ticketComment.setUserId(resultSet.getInt(4));
-				ticketComment.setFilePath(resultSet.getString(5));
+				User user = new User();
+				user.setUserId(resultSet.getInt(4));
+				user.setFirstName(resultSet.getString(5));
+				user.setLastName(resultSet.getString(6));
+				ticketComment.setUser(user);
+				ticketComment.setFilePath(resultSet.getString(7));
 				ticketComments.add(ticketComment);
 			}
 		} catch (SQLException e) {
@@ -211,7 +223,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> commentParam = new InOutParam<String>(
 					ticket.getComments().get(ticket.getComments().size() - 1).getComment(), "Comment");
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(
-					ticket.getComments().get(ticket.getComments().size() - 1).getUserId(), "UserId");
+					ticket.getComments().get(ticket.getComments().size() - 1).getUser().getUserId(), "UserId");
 			InOutParam<String> filePathParam = new InOutParam<String>(
 					ticket.getComments().get(ticket.getComments().size() - 1).getFilePath(), "FilePath");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);

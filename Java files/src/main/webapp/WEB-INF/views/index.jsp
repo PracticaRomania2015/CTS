@@ -10,20 +10,21 @@
 <script type="text/javascript" src="${res}/libs/jquery.js"></script>
 <script type="text/javascript" src="${res}/libs/underscore.js"></script>
 <script type="text/javascript" src="${res}/libs/backbone.js"></script>
-<script type="text/javascript" src="${res}/libs/cfgreader.js"></script>
+<script type="text/javascript" src="${res}/libs/utils.js"></script>
 <script type="text/javascript" src="${res}/libs/models.js"></script>
 <script type="text/javascript" src="${res}/libs/views.js"></script>
 <script type="text/javascript" src="${res}/main.js"></script>
-<script type="text/javascript" src="${res}/libs/formError.js"></script>
+
+
 <script type="text/template" id="frontPageTemplate">
 			<div id='logInWrapper'>
 				<span class='button' id='toggle-login'>Log In</span>
 				<span class='button' id='toggle-signup'>Register</span>
-				<span class='button' id='toggle-recover'>Recovery</span>
+				<span class='button' id='toggle-recovery'>Recovery</span>
 			</div>
 			<div id='logIn' style='display: none;'></div>
 			<div id='register' style='display: none;'></div>
-			<div id='recover' style='display: none;'></div>
+			<div id='recovery' style='display: none;'></div>
 	</script>
 	<script type="text/template" id="userPanelPageTemplate">
 			<div id='menuWrapper'>
@@ -78,10 +79,10 @@
 				<span href="#" class="button" id="registerButton">Register</span>
 			</form>
 	</script>
-	<script type="text/template" id="recoverTemplate">
+	<script type="text/template" id="recoveryTemplate">
 			<h1 class="frontPage">Password Recovery</h1>
 			<form>
-				<input id='recoverMail' type='text' placeholder='E-mail' class="masterTooltip"/>
+				<input id='recoveryMail' type='text' placeholder='E-mail' class="masterTooltip"/>
 				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
 			</form>
 	</script>
@@ -134,14 +135,14 @@
 	<script type="text/template" id="createTicketTemplate">	
 			<h1 class="userPage">Create a new ticket</h1>
 			<input id='ticketSubject' type='text' placeholder='Subject' class='masterTooltip ticketInput'/>
-			<select class="ticketCategories" id="ticketCategoryDropbox">
+			<select id="ticketCategoryDropbox" class="ticketCategories">
 				<option value="" disabled selected style='display:none;'>Select your category</option>
 			</select>
-			<select class="ticketCategories" id="ticketSubcategoryDropbox">
+			<select disabled id="ticketSubcategoryDropbox" class="ticketCategories" style="color: #808080">
 				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
 			</select>
 			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
-			<span href="#" class="button" id="submitTicketButton">Submit</span>
+			<span href="#" id="submitTicketButton" class="button">Submit</span>
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
 			<h1 id="ticketTitle" class="userPage"></h1>

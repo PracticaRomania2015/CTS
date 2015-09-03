@@ -8,7 +8,7 @@ public class Ticket {
 	private String subject;
 	private Category category;
 	private State state;
-	private int assignedToUserId;
+	private User assignedToUser;
 	private ArrayList<TicketComment> comments;
 
 	public Ticket() {
@@ -17,8 +17,18 @@ public class Ticket {
 		subject = "";
 		category = new Category();
 		state = new State();
-		assignedToUserId = 0;
+		assignedToUser = new User();
 		comments = new ArrayList<TicketComment>();
+	}
+
+	public User getAssignedToUser() {
+
+		return assignedToUser;
+	}
+
+	public void setAssignedToUser(User assignedToUser) {
+
+		this.assignedToUser = assignedToUser;
 	}
 
 	public Category getCategory() {
@@ -55,14 +65,6 @@ public class Ticket {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public int getAssignedToUserId() {
-		return assignedToUserId;
-	}
-
-	public void setAssignedToUserId(int assignedToUserId) {
-		this.assignedToUserId = assignedToUserId;
 	}
 
 	public String getSubject() {

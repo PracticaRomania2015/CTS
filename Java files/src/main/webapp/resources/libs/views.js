@@ -51,7 +51,6 @@ var LogInView = GenericFrontPageChildView.extend({
 		
 		user.save({}, {
 			success : function(model, response) {
-				// TODO: session redirect
 				if (response.userId) {
 					sessionStorage.loggedUserId = response.userId;
 					$(document).find('#logIn').hide();
@@ -95,7 +94,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 				if (response.description == "Success!") {
 					$('#logIn').toggle();
 					$('#register').hide();
-					$('#recover').hide();
+					$('#recovery').hide();
 					alert("Account created!");
 				} else {
 					alert(response.description);
@@ -110,20 +109,20 @@ var RegisterView = GenericFrontPageChildView.extend({
 
 });
 
-var RecoverView = GenericFrontPageChildView.extend({
+var RecoveryView = GenericFrontPageChildView.extend({
 
 	events : {
 		'click #recoveryButton' : 'submit'
 	},
 
 	appendTextBox : function() {
-		this.$el.append(_.template($('#recoverTemplate').html()));
+		this.$el.append(_.template($('#recoveryTemplate').html()));
 	},
 
 	submit : function() {
 		
-		var user = new RecoverModel({
-			email : $("#recoverMail").val()
+		var user = new RecoveryModel({
+			email : $("#recoveryMail").val()
 		});
 		
 		user.save({}, {
@@ -184,8 +183,8 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 				category : $(clicked.currentTarget).find('td:nth-child(2)').text()
 			})
 		});
-		$('div#selectedTicket').empty();
-		$('div#selectedTicket').append(respondToTicketPageView.render().el);
+		$('#selectedTicket').empty();
+		$('#selectedTicket').append(respondToTicketPageView.render().el);
 		
 		$('#assignedTickets').hide();
 		$('#myTickets').hide();
@@ -287,14 +286,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		return this;
 	},
 	
-	viewTicketComments : function (clicked) { 
-		/*var clickedTicketId = $(clicked.currentTarget).attr('id');
-		var clickedTicketSubject = $(clicked.currentTarget).find('td:nth-child(1)').text();
-		var clickedTicketCategory = $(clicked.currentTarget).find('td:nth-child(2)').text();
-		var clickedTicketStatus = $(clicked.currentTarget).find('td:nth-child(3)').text();*/
-		/*var clickedTicket = new GenericModel.extend({
-			
-		});*/
+	viewTicketComments : function (clicked) {
 		
 		var respondToTicketPageView = new RespondToTicketPageView({
 			model : new RespondToTicketModel({
@@ -303,8 +295,8 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 				category : $(clicked.currentTarget).find('td:nth-child(2)').text()
 			})
 		});
-		$('div#selectedTicket').empty();
-		$('div#selectedTicket').append(respondToTicketPageView.render().el);
+		$('#selectedTicket').empty();
+		$('#selectedTicket').append(respondToTicketPageView.render().el);
 		
 		$('#assignedTickets').hide();
 		$('#myTickets').hide();
@@ -430,9 +422,16 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				var selectedCategory = $('#ticketCategoryDropbox').val();
 				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
-				_.each(response, function(e) {
-					$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-				});
+				if ($.isEmptyObject(response)) {
+					$('#ticketSubcategoryDropbox').attr("disabled", true);
+					$('#ticketSubcategoryDropbox').css("color", "#808080");
+				} else {
+					_.each(response, function(e) {
+						$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+					});
+					$('#ticketSubcategoryDropbox').attr("disabled", false);
+					$('#ticketSubcategoryDropbox').removeAttr("style")
+				}
 			},
 			error : function(model, response) {
 				console.log(response);
@@ -458,7 +457,6 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		}, {validate: true});
 		
 		var ticketComment = new TicketComment({
-			// TO DO : Get userId from Session
 			userId: sessionStorage.loggedUserId,
 			dateTime: new Date().getTime(),
 			comment: $("#ticketContent").val()
@@ -531,8 +529,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			ticketId : this.model.get("ticketId"),
 			comments : [ticketComment]
 		});
-		
-		//console.log(resp.toJSON());
 		
 		resp.save({}, {
 			success : function(model, response) {

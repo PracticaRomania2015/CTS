@@ -103,7 +103,7 @@ var RegisterModel = GenericModel.extend({
 
 });
 
-var RecoverModel = GenericModel.extend({
+var RecoveryModel = GenericModel.extend({
 
 	urlRoot : 'recoveryPassword/',
 

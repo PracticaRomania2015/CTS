@@ -15,26 +15,27 @@ $(document).ready((function() {
 			alert("To load this site you need a browser not a dumpster !")
 		}
 		
-		$('div#logoWrapper').append("<img id='logo' src='/cts/resources/img/logo.png' align='middle'>");
+		$('#logoWrapper').append("<img id='logo' src='/cts/resources/img/logo.png' align='middle'>");
 		
 		var frontPageView = new GenericFrontPageView({});
-		$('div#frontPage').append(frontPageView.render().el);
+		$('#frontPage').append(frontPageView.render().el);
 		
 		var userPanelPageView = new GenericUserPanelPageView({});
-		$('div#userPanelPage').append(userPanelPageView.render().el);
+		$('#userPanelPage').append(userPanelPageView.render().el);
 
-		var logInView, registerView, recoverView, assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
+		var logInView, registerView, recoveryView, assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
 		
 		$('#toggle-login').click(function() {
 			if(!logInView){
 				logInView = new LogInView({
 					model : new LogInModel({})
 				});
-				$('div#logIn').append(logInView.render().el);
+				$('#logIn').append(logInView.render().el);
+				handleErrorStyle();
 			};
 			$('#logIn').toggle();
 			$('#register').hide();
-			$('#recover').hide();
+			$('#recovery').hide();
 		});
 
 		$('#toggle-signup').click(function() {
@@ -42,23 +43,25 @@ $(document).ready((function() {
 				registerView = new RegisterView({
 					model : new RegisterModel({})
 				});
-				$('div#register').append(registerView.render().el);
+				$('#register').append(registerView.render().el);
+				handleErrorStyle();
 			};
 			$('#logIn').hide();
 			$('#register').toggle();
-			$('#recover').hide();
+			$('#recovery').hide();
 		});
 
-		$('#toggle-recover').click(function() {
-			if(!recoverView){
-				recoverView = new RecoverView({
-					model : new RecoverModel({})
+		$('#toggle-recovery').click(function() {
+			if(!recoveryView){
+				recoveryView = new RecoveryView({
+					model : new RecoveryModel({})
 				});
-				$('div#recover').append(recoverView.render().el);
+				$('#recovery').append(recoveryView.render().el);
+				handleErrorStyle();
 			}
 			$('#logIn').hide();
 			$('#register').hide();
-			$('#recover').toggle();
+			$('#recovery').toggle();
 		});
 		
 		$('#btn-mngTk').click(function() {
@@ -67,12 +70,16 @@ $(document).ready((function() {
 					model : new ViewTicketsModel({})
 				});
 				$('div#assignedTickets').append(assignedTicketsView.render().el);
+				$('#assignedTickets').append(assignedTicketsView.render().el);
+				handleErrorStyle();
 			} else {
 				assignedTicketsView.remove();
 				assignedTicketsView = new AssignedTicketsView({
 					model : new ViewTicketsModel({})
 				});
 				$('div#assignedTickets').append(assignedTicketsView.render().el);
+				$('#assignedTickets').append(assignedTicketsView.render().el);
+				handleErrorStyle();
 			};
 			$('#welcomePage').hide();
 			$('#myTickets').hide();
@@ -97,13 +104,15 @@ $(document).ready((function() {
 				userTicketsView = new UserTicketsView({
 					model : new ViewTicketsModel({})
 				});
-				$('div#myTickets').append(userTicketsView.render().el);
+				$('#myTickets').append(userTicketsView.render().el);
+				handleErrorStyle();
 			} else {
 				userTicketsView.remove();
 				userTicketsView = new UserTicketsView({
 					model : new ViewTicketsModel({})
 				});
-				$('div#myTickets').append(userTicketsView.render().el);
+				$('#myTickets').append(userTicketsView.render().el);
+				handleErrorStyle();
 			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').hide();
@@ -128,7 +137,8 @@ $(document).ready((function() {
 				createTicketPageView = new CreateTicketPageView({
 					model : new CreateTicketModel({})
 				});
-				$('div#createTicket').append(createTicketPageView.render().el);
+				$('#createTicket').append(createTicketPageView.render().el);
+				handleErrorStyle();
 			};
 			$('#welcomePage').hide();
 			$('#assignedTickets').hide();

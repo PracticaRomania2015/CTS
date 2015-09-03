@@ -29,8 +29,8 @@ public class ConfigReader {
 	public ConfigReader() {
 		// !!!!!!!!!!!!HERE!!!!!!!!!!!!
 		// going to change to relative path. again problems with it
-		this("D:\\GITHUB CTS Repository\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
-		//!!!!!!!!!!!!!!!!!!!!!!!!!
+		this("C:\\Users\\AS043881\\Documents\\GitHub\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
+		// !!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
 	public ConfigReader(String path) {
@@ -67,14 +67,7 @@ public class ConfigReader {
 	}
 
 	private String[] splitToKeyAndValue(String line) {
-		String[] splitted = line.split(",", 2);
-		if (splitted.length > 2) {
-			for (int i = 2; i < splitted.length; i++) {
-				System.out.println(splitted[i]);
-				splitted[1] += splitted[i];
-			}
-		}
-		return splitted;
+		return line.split(",", 2);
 	}
 
 	private boolean isBackEndConfigLine(String line) {
