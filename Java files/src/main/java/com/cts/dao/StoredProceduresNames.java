@@ -66,5 +66,23 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetTickets";
 		}
+	},
+
+	AssignTicketToAdmin {
+		public String toString() {
+			return "dbo.AssignTicketToAdmin";
+		}
+	},
+
+	CloseTicket {
+		public String toString() {
+			return "dbo.CloseTicket";
+		}
+	},
+
+	GetAdminsForCategory {
+		public String toString() {
+			return "dbo.GetAdminsForCategory";
+		}
 	}
 }

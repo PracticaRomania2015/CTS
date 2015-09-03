@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
+import com.cts.entities.User;
 import com.cts.entities.ViewTicketsRequest;
 
 public interface TicketDAOInterface {
@@ -21,4 +22,10 @@ public interface TicketDAOInterface {
 	public ArrayList<TicketComment> getTicketComments(Ticket ticket);
 
 	public boolean addCommentToTicket(Ticket ticket);
+
+	public boolean assignTicket(Ticket ticket);
+	
+	public boolean closeTicket(Ticket ticket);
+	
+	public ArrayList<User> getAdminsForCategory(Category category);
 }

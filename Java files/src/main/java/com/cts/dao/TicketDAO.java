@@ -248,4 +248,22 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			closeCallableStatement();
 		}
 	}
+
+	@Override
+	public boolean assignTicket(Ticket ticket) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean closeTicket(Ticket ticket) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<User> getAdminsForCategory(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
