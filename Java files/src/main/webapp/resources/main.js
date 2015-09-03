@@ -69,7 +69,6 @@ $(document).ready((function() {
 				assignedTicketsView = new AssignedTicketsView({
 					model : new ViewTicketsModel({})
 				});
-				$('div#assignedTickets').append(assignedTicketsView.render().el);
 				$('#assignedTickets').append(assignedTicketsView.render().el);
 				handleErrorStyle();
 			} else {
@@ -77,7 +76,6 @@ $(document).ready((function() {
 				assignedTicketsView = new AssignedTicketsView({
 					model : new ViewTicketsModel({})
 				});
-				$('div#assignedTickets').append(assignedTicketsView.render().el);
 				$('#assignedTickets').append(assignedTicketsView.render().el);
 				handleErrorStyle();
 			};
