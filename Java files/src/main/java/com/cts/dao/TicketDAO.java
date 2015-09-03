@@ -144,9 +144,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				Ticket ticket = new Ticket();
 				ticket.setTicketId(resultSet.getInt(1));
 				ticket.setSubject(resultSet.getString(2));
-				TicketComment ticketComment = new TicketComment();
-				ticketComment.setDateTime(resultSet.getTimestamp(3));
-				ticket.getComments().add(ticketComment);
+				TicketComment firstTicketComment = new TicketComment();
+				firstTicketComment.setDateTime(resultSet.getTimestamp(3));
+				ticket.getComments().add(firstTicketComment);
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt(4));
 				category.setCategoryName(resultSet.getString(5));
@@ -159,6 +159,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				assignedUser.setFirstName(resultSet.getString(8));
 				assignedUser.setLastName(resultSet.getString(9));
 				ticket.setAssignedToUser(assignedUser);
+				TicketComment lastTicketComment = new TicketComment();
+				lastTicketComment.setDateTime(resultSet.getTimestamp(10));
+				ticket.getComments().add(lastTicketComment);
 				tickets.add(ticket);
 			}
 			setOutParametersAfterExecute();
