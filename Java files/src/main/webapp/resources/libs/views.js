@@ -227,11 +227,11 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		});
 	},
 	
-	addTicket : function( id, subj, categ, status, ansDate, subDate ) {
+	addTicket : function( id, subj, categ, status, userName, ansDate, subDate ) {
 		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td><div class='columnOverflow'>" +
 				subj + "</div></td><td><div class='columnOverflow'>" +
 				categ + "</div></td><td><div class='columnOverflow'>" +
-				status + "</div></td><td><div class='columnOverflow'>" +
+				status + " " + userName + "</div></td><td><div class='columnOverflow'>" + 
 				ansDate + "</div></td><td><div class='columnOverflow'>" +
 				subDate + "</div></td></tr>");
 	},
@@ -250,7 +250,14 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 			var currentTkDate = new Date(e.comments[0].dateTime);
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
-			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName,"bla" , displayDate);
+			var asignedToUser;
+			if ( e.state.stateName == "Active" || e.state.stateName == "Closed" ){
+				asignedToUser = "";
+			}
+			else{
+				asignedToUser = e.assignedToUserId; // change this 
+			}
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, asignedToUser, "bla",displayDate);
 		});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}
@@ -339,11 +346,11 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		});
 	},
 	
-	addTicket : function( id, subj, categ, status, ansDate, subDate ) {
+	addTicket : function( id, subj, categ, status, userName, ansDate, subDate ) {
 		this.$el.find('tbody').append("<tr class='openTicketComments' id='" + id + "'><td><div class='columnOverflow'>" +
 				subj + "</div></td><td><div class='columnOverflow'>" +
 				categ + "</div></td><td><div class='columnOverflow'>" +
-				status + "</div></td><td><div class='columnOverflow'>" +
+				status + " " + userName + "</div></td><td><div class='columnOverflow'>" + 
 				ansDate + "</div></td><td><div class='columnOverflow'>" +
 				subDate + "</div></td></tr>");
 	},
@@ -362,7 +369,14 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 			var currentTkDate = new Date(e.comments[0].dateTime);
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
-			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName,"bla" ,displayDate);
+			var asignedToUser;
+			if ( e.state.stateName == "Active" || e.state.stateName == "Closed" ){
+				asignedToUser = "";
+			}
+			else{
+				asignedToUser = e.assignedToUserId; // change this 
+			}
+			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, asignedToUser, "bla",displayDate);
 		});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + "/" + totalPages);
 	}

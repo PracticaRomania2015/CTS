@@ -98,8 +98,8 @@
     			<thead>
 					<tr>
 						<th id="rounded-tl" class="wide-col">Subject</th>
-						<th class="wide-col">Category</th>
-						<th class="slim-col">Status</th>
+						<th class="slim-col">Category</th>
+						<th class="wide-col">Status</th>
 						<th class="slim-col">AnsDate</th>
 						<th id="rounded-tr" class="slim-col">SubDate</th>
      	 			</tr>
