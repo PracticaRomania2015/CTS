@@ -3,15 +3,12 @@ package com.cts.controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.cts.communication.TicketError;
 import com.cts.communication.Success;
 import com.cts.dao.TicketDAO;
@@ -73,7 +70,9 @@ public class SubmitTicketControllerTest {
 		testTicketComment = new TicketComment();
 		testTicketComment.setDateTime(new Timestamp(0));
 		testTicketComment.setFilePath(testFilePath);
-		testTicketComment.setUserId(0);
+		User user = new User();
+		user.setUserId(0);
+		testTicketComment.setUser(user);
 	}
 
 	@Test
@@ -158,7 +157,10 @@ public class SubmitTicketControllerTest {
 		assertEquals(new Success().getSuccessJson(1), registerController.register(testUser));
 		testUser.setPassword("test");
 		assertNotNull("error", loginController.login(testUser));
-		testTicketComment.setUserId(testUser.getUserId());
+		testUser.setEmail("");
+		testUser.setPassword("");
+		testUser.setTitle("");
+		testTicketComment.setUser(testUser);
 		testTicketComment.setComment(testComment);
 		comments.clear();
 		comments.add(testTicketComment);
@@ -173,7 +175,7 @@ public class SubmitTicketControllerTest {
 		TicketComment newTicketComment = new TicketComment();
 		newTicketComment.setComment("test");
 		newTicketComment.setDateTime(new Timestamp(0));
-		newTicketComment.setUserId(testUser.getUserId());
+		newTicketComment.setUser(testUser);
 		newTicketComment.setTicketId(ticket.getTicketId());
 		ticket.getComments().add(newTicketComment);
 		ticketJson = ticketViewAndResponseController.addComment(ticket);
@@ -183,7 +185,8 @@ public class SubmitTicketControllerTest {
 		viewTicketsRequest.setTypeOfRequest(0);
 		viewTicketsRequest.setRequestedPageNumber(1);
 		viewTicketsRequest.setTicketsPerPage(1);
-		assertNotNull("{\"totalNumberOfPages\":1,\"tickets\":[]}", viewTicketsController.viewTickets(viewTicketsRequest));
+		assertNotNull("{\"totalNumberOfPages\":1,\"tickets\":[]}",
+				viewTicketsController.viewTickets(viewTicketsRequest));
 		assertTrue(ticketDAO.deleteTicket(ticket));
 		assertTrue(userDAO.deleteAccount(testUser));
 	}
@@ -192,7 +195,9 @@ public class SubmitTicketControllerTest {
 	public void testWithBadUserId() {
 
 		testTicketComment.setComment(testComment);
-		testTicketComment.setUserId(0);
+		User user = new User();
+		user.setUserId(0);
+		testTicketComment.setUser(user);
 		comments.clear();
 		comments.add(testTicketComment);
 		ticket.setSubject(testSubject);
@@ -208,10 +213,10 @@ public class SubmitTicketControllerTest {
 
 		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getCategories());
 	}
-	
+
 	@Test
-	public void testGetSubcategories(){
-		
+	public void testGetSubcategories() {
+
 		Category category = new Category();
 		category.setCategoryId(1);
 		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getSubcategories(category));

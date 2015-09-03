@@ -75,8 +75,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		try {
 
-			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
-			prepareExecution(StoredProceduresNames.DeleteUser, emailParam);
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
+			prepareExecution(StoredProceduresNames.DeleteUser, userIdParam);
 			execute();
 		} catch (Exception e) {
 
