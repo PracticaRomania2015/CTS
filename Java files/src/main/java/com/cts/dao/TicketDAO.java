@@ -158,9 +158,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				User assignedUser = new User();
 				assignedUser.setFirstName(resultSet.getString(8));
 				assignedUser.setLastName(resultSet.getString(9));
+				assignedUser.setUserId(resultSet.getInt(10));
 				ticket.setAssignedToUser(assignedUser);
 				TicketComment lastTicketComment = new TicketComment();
-				lastTicketComment.setDateTime(resultSet.getTimestamp(10));
+				lastTicketComment.setDateTime(resultSet.getTimestamp(11));
 				ticket.getComments().add(lastTicketComment);
 				tickets.add(ticket);
 			}
