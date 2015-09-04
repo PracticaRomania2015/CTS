@@ -24,7 +24,8 @@ public class ConfigReader {
 	
 	public ConfigReader() {
 		prop = new Properties();
-		filePath = "config_en.properties";
+		filePath = ConfigReader.class.getClassLoader().getResource("config_en.properties").getPath().toString();
+		//filePath = "config_en.properties";
 		try {
 			input = new FileInputStream(filePath);
 			prop.load(input);
@@ -37,7 +38,7 @@ public class ConfigReader {
 	public String getValueForKey(String key) {
 		String returnedValue = prop.getProperty(key);
 		logger.info("Got value: [" + returnedValue + "] for the key: [" + key +"]");
-		return prop.getProperty(returnedValue);
+		return returnedValue;
 	}
 
 }
