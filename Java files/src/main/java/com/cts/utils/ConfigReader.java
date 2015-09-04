@@ -3,12 +3,10 @@
  */
 package com.cts.utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -18,65 +16,28 @@ import org.apache.log4j.Logger;
  */
 public class ConfigReader {
 
-	private FileReader fileReader;
-	private BufferedReader bufferedReader;
-	private static Map<String, String> stuff = new HashMap<String, String>();
-
-	private static final char BACK_END_CONFIG_LINE_CHARACTER = '#';
-
+	Properties prop = null;
+	InputStream input = null;
+	String filePath = null;
+	
 	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
-
+	
 	public ConfigReader() {
-		this(ConfigReader.class.getClassLoader().getResource("config.cfg").getPath());
-	}
-
-	public ConfigReader(String path) {
+		prop = new Properties();
+		filePath = "config_en.properties";
 		try {
-			fileReader = new FileReader(path);
-			bufferedReader = new BufferedReader(fileReader);
-		} catch (FileNotFoundException e) {
-			logger.info("File " + path + "not found.");
-		}
-
-		if (fileReader != null && bufferedReader != null) {
-			populateMap();
-		} else {
-			return;
-		}
-	}
-
-	private void populateMap() {
-		try {
-			for (String line; (line = bufferedReader.readLine()) != null;) {
-				if (!line.isEmpty() && isBackEndConfigLine(line)) {
-
-					String[] toBeInserted = splitToKeyAndValue(line.substring(1, line.length()));
-
-					stuff.put(toBeInserted[0], toBeInserted[1]);
-
-				} else {
-					continue;
-				}
-			}
+			input = new FileInputStream(filePath);
+			prop.load(input);
 		} catch (IOException e) {
-			logger.info("Buffered Reader going ham, this probably will never be shown");
+			logger.error("File " + filePath + "not found.");
+			e.printStackTrace();
 		}
 	}
-
-	private String[] splitToKeyAndValue(String line) {
-		return line.split(",", 2);
-	}
-
-	private boolean isBackEndConfigLine(String line) {
-		if (line.charAt(0) == BACK_END_CONFIG_LINE_CHARACTER) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 	public String getValueForKey(String key) {
-		return stuff.get(key);
+		String returnedValue = prop.getProperty(key);
+		logger.info("Got value: [" + returnedValue + "] for the key: [" + key +"]");
+		return prop.getProperty(returnedValue);
 	}
 
 }
