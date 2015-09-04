@@ -27,10 +27,7 @@ public class ConfigReader {
 	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
 
 	public ConfigReader() {
-		// !!!!!!!!!!!!HERE!!!!!!!!!!!!
-		// going to change to relative path. again problems with it
-		this("C:\\Users\\AS043881\\Documents\\GitHub\\CTS\\Java files\\src\\main\\webapp\\resources\\config.cfg");
-		// !!!!!!!!!!!!!!!!!!!!!!!!!
+		this(ConfigReader.class.getClassLoader().getResource("config.cfg").getPath());
 	}
 
 	public ConfigReader(String path) {
