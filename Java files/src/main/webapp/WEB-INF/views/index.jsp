@@ -11,8 +11,33 @@
 <script type="text/javascript" src="${res}/libs/underscore.js"></script>
 <script type="text/javascript" src="${res}/libs/backbone.js"></script>
 <script type="text/javascript" src="${res}/libs/utils.js"></script>
-<script type="text/javascript" src="${res}/libs/models.js"></script>
-<script type="text/javascript" src="${res}/libs/views.js"></script>
+<!-- <script type="text/javascript" src="${res}/libs/models.js"></script> -->
+<script type="text/javascript" src="${res}/libs/models/frontPageModels/logInModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/frontPageModels/registerModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/frontPageModels/recoveryModel.js"></script>
+
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/viewTicketsModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getCategoriesModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getSubcategoriesModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/createTicketModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/validateCategory.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/ticketComment.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/respondToTicketModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getTicketContentModel.js"></script>
+
+<script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/frontPageViews/registerView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/frontPageViews/recoveryView.js"></script>
+
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/genericUserPanelPageView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/assignedTicketsView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/userTicketsView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/createTicketPageView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/respondToTicketPageView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/assignedTicketsView.js"></script>
+
 <script type="text/javascript" src="${res}/main.js"></script>
 
 
