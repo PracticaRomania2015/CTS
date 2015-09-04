@@ -53,7 +53,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		try {
 
-			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId");
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			prepareExecution(StoredProceduresNames.DeleteTicket, ticketIdParam);
 			execute();
 		} catch (SQLException e) {
@@ -251,19 +251,65 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 	@Override
 	public boolean assignTicket(Ticket ticket) {
-		// TODO Auto-generated method stub
-		return false;
+
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getAssignedToUser().getUserId(), "UserId");
+			prepareExecution(StoredProceduresNames.AssignTicketToAdmin, ticketIdParam, userIdParam);
+			execute();
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
 	}
 
 	@Override
 	public boolean closeTicket(Ticket ticket) {
-		// TODO Auto-generated method stub
-		return false;
+
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam);
+			execute();
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
 	}
 
 	@Override
 	public ArrayList<User> getAdminsForCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<User> admins = new ArrayList<User>();
+		try {
+
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
+			prepareExecution(StoredProceduresNames.DeleteTicket, categoryIdParam);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				User admin = new User();
+				admin.setUserId(resultSet.getInt(1));
+				admin.setFirstName(resultSet.getString(2));
+				admin.setLastName(resultSet.getString(3));
+				admins.add(admin);
+			}
+		} catch (SQLException e) {
+
+			return admins;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return admins;
 	}
 }
