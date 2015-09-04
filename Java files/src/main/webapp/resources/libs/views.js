@@ -250,11 +250,11 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
 			var asignedToUser;
-			if ( e.state.stateName == "Active" || e.state.stateName == "Closed" ){
+			if ( e.assignedToUser.userId == "0" ){
 				asignedToUser = "";
 			}
 			else{
-				asignedToUser = e.assignedToUserId; // change this 
+				asignedToUser = " - " + e.assignedToUser.firstName + " " + e.assignedToUser.lastName;
 			}
 			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, asignedToUser, "bla",displayDate);
 		});
@@ -362,11 +362,11 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 			var displayDate = currentTkDate.toLocaleDateString() +
 							  " " + addZero(currentTkDate.getHours()) + ":" + addZero(currentTkDate.getMinutes());
 			var asignedToUser;
-			if ( e.state.stateName == "Active" || e.state.stateName == "Closed" ){
+			if ( e.assignedToUser.userId == "0" ){
 				asignedToUser = "";
 			}
 			else{
-				asignedToUser = e.assignedToUserId; // change this 
+				asignedToUser = " - " + e.assignedToUser.firstName + " " + e.assignedToUser.lastName;
 			}
 			currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, asignedToUser, "bla",displayDate);
 		});
