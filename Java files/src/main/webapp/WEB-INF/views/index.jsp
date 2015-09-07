@@ -126,8 +126,8 @@
 						<th id="rounded-tl" class="wide-col">Subject</th>
 						<th class="slim-col">Category</th>
 						<th class="wide-col">Status</th>
-						<th class="slim-col">AnsDate</th>
-						<th id="rounded-tr" class="slim-col">SubDate</th>
+						<th class="slim-col">Answer Date</th>
+						<th id="rounded-tr" class="slim-col">Submit Date</th>
      	 			</tr>
     			</thead>
     			<tfoot>
@@ -143,7 +143,7 @@
 							&emsp;
 							<div class="table-surf" id="lastPageReqBtn">&#62;&#62;</div>
 							<div id="tkPerPgDisplay">
-								Tk/Pg
+								Tickets/Page
 								<select class="ticketsPerPage" id="ticketsPerPage">
 									<option selected disabled value=""></option>
 									<option value="10">10</option>
