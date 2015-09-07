@@ -15,22 +15,18 @@ public class TicketResponse implements ResponseMessage {
 	private String unknownError;
 	private String description;
 
-	private ConfigReader configReader;
-
 	public TicketResponse() {
 
 		initAll();
 	}
 
 	private void initAll() {
-		configReader = new ConfigReader();
-		
-		ticketEmptySubjectField = configReader.getValueForKey("ticketEmptySubjectField");
-		ticketNoCategorySelected = configReader.getValueForKey("ticketNoCategorySelected");
-		ticketEmptyDescriptionField = configReader.getValueForKey("ticketEmptyDescriptionField");
-		ticketEmptyCommentField = configReader.getValueForKey("ticketEmptyCommentField");
-		dbError = configReader.getValueForKey("dbError");
-		unknownError = configReader.getValueForKey("unknownError");
+		ticketEmptySubjectField = ConfigReader.getInstance().getValueForKey("ticketEmptySubjectField");
+		ticketNoCategorySelected = ConfigReader.getInstance().getValueForKey("ticketNoCategorySelected");
+		ticketEmptyDescriptionField = ConfigReader.getInstance().getValueForKey("ticketEmptyDescriptionField");
+		ticketEmptyCommentField = ConfigReader.getInstance().getValueForKey("ticketEmptyCommentField");
+		dbError = ConfigReader.getInstance().getValueForKey("dbError");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {

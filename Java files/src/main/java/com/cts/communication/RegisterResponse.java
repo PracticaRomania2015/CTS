@@ -17,24 +17,20 @@ public class RegisterResponse implements ResponseMessage {
 	private String unknownError;
 	private String description;
 
-	private ConfigReader configReader;
-
 	public RegisterResponse() {
 		initAll();
 	}
 
 	private void initAll() {
-		configReader = new ConfigReader();
-		
-		registerSuccess = configReader.getValueForKey("registerSuccess");
-		invalidEmailFormat = configReader.getValueForKey("invalidEmailFormat");
-		registerEmptyTitle = configReader.getValueForKey("registerEmptyTitle");
-		registerEmptyFirstNameField = configReader.getValueForKey("registerEmptyFirstNameField");
-		registerEmptyLastNameField = configReader.getValueForKey("registerEmptyLastNameField");
-		invalidEmailFormat = configReader.getValueForKey("invalidEmailError");
-		registerExistingEmail = configReader.getValueForKey("registerExistingEmail");
-		dbError = configReader.getValueForKey("dbError");
-		unknownError = configReader.getValueForKey("unknownError");
+		registerSuccess = ConfigReader.getInstance().getValueForKey("registerSuccess");
+		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailFormat");
+		registerEmptyTitle = ConfigReader.getInstance().getValueForKey("registerEmptyTitle");
+		registerEmptyFirstNameField = ConfigReader.getInstance().getValueForKey("registerEmptyFirstNameField");
+		registerEmptyLastNameField = ConfigReader.getInstance().getValueForKey("registerEmptyLastNameField");
+		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailError");
+		registerExistingEmail = ConfigReader.getInstance().getValueForKey("registerExistingEmail");
+		dbError = ConfigReader.getInstance().getValueForKey("dbError");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {

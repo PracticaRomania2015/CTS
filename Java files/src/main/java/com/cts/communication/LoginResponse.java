@@ -18,19 +18,15 @@ public class LoginResponse implements ResponseMessage {
 
 	private String description;
 
-	private ConfigReader configReader;
-
 	public LoginResponse() {
 		initAll();
 	}
 
 	private void initAll() {
-		configReader = new ConfigReader();
-		
-		emptyEmailField = configReader.getValueForKey("emptyEmailField");
-		emptyPasswordField = configReader.getValueForKey("emptyPasswordField");
-		loginInvalidCredentials = configReader.getValueForKey("loginInvalidCredentials");
-		unknownError = configReader.getValueForKey("unknownError");
+		emptyEmailField = ConfigReader.getInstance().getValueForKey("emptyEmailField");
+		emptyPasswordField = ConfigReader.getInstance().getValueForKey("emptyPasswordField");
+		loginInvalidCredentials = ConfigReader.getInstance().getValueForKey("loginInvalidCredentials");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {

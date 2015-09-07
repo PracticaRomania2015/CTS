@@ -12,20 +12,16 @@ public class RecoveryResponse implements ResponseMessage {
 	private String unknownError;
 	private String description;
 
-	private ConfigReader configReader;
-
 	public RecoveryResponse() {
 
 		initAll();
 	}
 
 	private void initAll() {
-		configReader = new ConfigReader();
-		
-		recoverySuccess = configReader.getValueForKey("recoverySuccess");
+		recoverySuccess = ConfigReader.getInstance().getValueForKey("recoverySuccess");
 
-		recoveryIncorrectEmail = configReader.getValueForKey("recoveryIncorrectEmail");
-		unknownError = configReader.getValueForKey("unknownError");
+		recoveryIncorrectEmail = ConfigReader.getInstance().getValueForKey("recoveryIncorrectEmail");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {

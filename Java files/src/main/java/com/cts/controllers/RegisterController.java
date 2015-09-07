@@ -32,15 +32,12 @@ public class RegisterController {
 	// Boolean variable that checks if the incoming data is passing all the
 	// local tests.
 	private boolean localSuccess;
-	private ConfigReader configReader;
 
 	// Initializing the logger for this class.
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
 
 	public RegisterController() {
-
-		configReader = new ConfigReader();
-		emailRegexp = configReader.getValueForKey("emailRegexp");
+		emailRegexp = ConfigReader.getInstance().getValueForKey("emailRegexp");
 		pattern = Pattern.compile(emailRegexp);
 	}
 
