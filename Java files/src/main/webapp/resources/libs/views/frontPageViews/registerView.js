@@ -12,7 +12,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		
+
 		var user = new RegisterModel({
 			title : $("#regTitle").attr("selected", "selected").val(),
 			firstName : $("#regFirstName").val(),
@@ -20,7 +20,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 			email : $("#regMail").val(),
 			password : $("#regPass").val()
 		});
-		
+
 		user.save({}, {
 			success : function(model, response) {
 				if (response.description == "Success!") {
@@ -36,7 +36,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 				console.log(response);
 			}
 		});
-		
+
 	}
 
 });

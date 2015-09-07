@@ -12,12 +12,12 @@ var LogInView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		
+
 		var user = new LogInModel({
 			email : $("#logInMail").val(),
 			password : $("#logInPass").val()
 		});
-		
+
 		user.save({}, {
 			success : function(model, response) {
 				console.log(response);
@@ -35,7 +35,7 @@ var LogInView = GenericFrontPageChildView.extend({
 				alert(response);
 			}
 		});
-		
+
 	}
 
 });

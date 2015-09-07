@@ -12,11 +12,11 @@ var RecoveryView = GenericFrontPageChildView.extend({
 	},
 
 	submit : function() {
-		
+
 		var user = new RecoveryModel({
 			email : $("#recoveryMail").val()
 		});
-		
+
 		user.save({}, {
 			success : function(model, response) {
 				alert(response.description);
@@ -25,6 +25,6 @@ var RecoveryView = GenericFrontPageChildView.extend({
 				console.log(response);
 			}
 		});
-		
+
 	}
 });
