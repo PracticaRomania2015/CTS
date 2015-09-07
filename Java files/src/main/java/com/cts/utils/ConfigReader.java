@@ -37,10 +37,6 @@ public class ConfigReader {
 	
 	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
 	
-	private void CheckForChanges() {
-		return;
-	}
-	
 	protected ConfigReader() {
 		prop = new Properties();
 		try {
