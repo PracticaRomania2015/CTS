@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/4/2015 12:09:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/7/2015 8:55:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -10,6 +10,8 @@ ALTER PROCEDURE [dbo].[GetTickets]
 	@IsViewMyTicketsRequest INT,
 	@RequestedPageNumber INT,
 	@TicketsPerPage INT,
+	@TextToSearch varchar(50),
+	@SearchType varchar(50),
 	@TotalNumberOfPages INT OUTPUT
 
 AS
@@ -31,7 +33,10 @@ BEGIN
 			INNER JOIN State ON Ticket.StateId = State.StateId
 			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
-			WHERE TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)
+			WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+				OR (@SearchType = 'Date' AND CONVERT(VARCHAR(25), DateTime, 126) like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)) 
 			GROUP BY Ticket.TicketId
 		)CountId
 
@@ -62,7 +67,10 @@ BEGIN
 		INNER JOIN State ON Ticket.StateId = State.StateId
 		INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 		LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
-		WHERE TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)
+		WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Date' AND CONVERT(VARCHAR(25), DateTime, 126) like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)) 
 		GROUP BY Ticket.TicketId
 		ORDER BY MIN(TicketComment.DateTime) DESC) t ORDER BY t.DateTime ASC) tt ORDER BY tt.DateTime DESC
 
@@ -81,6 +89,10 @@ BEGIN
 			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 			INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND UserCategory.CategoryId = Ticket.CategoryId
 			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+			WHERE (@TextToSearch = '')
+				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
+				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
+				OR (@SearchType = 'Date' AND CONVERT(VARCHAR(25), DateTime, 126) like ('%' + @TextToSearch + '%')) 
 			GROUP BY TicketComment.TicketId	
 		)CountId;
 
@@ -112,6 +124,10 @@ BEGIN
 		INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 		INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND UserCategory.CategoryId = Ticket.CategoryId
 		LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+		WHERE (@TextToSearch = '')
+			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
+			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
+			OR (@SearchType = 'Date' AND CONVERT(VARCHAR(25), DateTime, 126) like ('%' + @TextToSearch + '%')) 
 		GROUP BY Ticket.TicketId
 		ORDER BY min(TicketComment.DateTime) DESC) t ORDER BY t.DateTime ASC) tt ORDER BY tt.DateTime DESC
 

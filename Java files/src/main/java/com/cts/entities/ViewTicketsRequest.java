@@ -6,8 +6,8 @@ public class ViewTicketsRequest {
 	private int typeOfRequest;
 	private int requestedPageNumber;
 	private int ticketsPerPage;
-	private String textToSearch; // to be changed
-	private String searchType; // to be changed
+	private String textToSearch;
+	private String searchType;
 
 	public ViewTicketsRequest() {
 

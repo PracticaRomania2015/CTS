@@ -134,9 +134,14 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					viewTicketsRequest.getRequestedPageNumber(), "RequestedPageNumber");
 			InOutParam<Integer> ticketsPerPageParam = new InOutParam<Integer>(viewTicketsRequest.getTicketsPerPage(),
 					"TicketsPerPage");
+			InOutParam<String> textToSearchParam = new InOutParam<String>(viewTicketsRequest.getTextToSearch(),
+					"TextToSearch");
+			InOutParam<String> searchTypeParam = new InOutParam<String>(viewTicketsRequest.getSearchType(),
+					"SearchType");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
 			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,
-					requestedPageNumberParam, ticketsPerPageParam, totalNumberOfPagesParam);
+					requestedPageNumberParam, ticketsPerPageParam, textToSearchParam, searchTypeParam,
+					totalNumberOfPagesParam);
 			ResultSet resultSet = execute(true);
 
 			while (resultSet.next()) {
