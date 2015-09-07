@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.TicketError;
+
+import com.cts.communication.ResponseValues;
+import com.cts.communication.TicketResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
@@ -48,7 +50,7 @@ public class ViewTicketsController {
 		} catch (IOException e) {
 
 			logger.info("Json error when trying to map the array of tickets.");
-			return new TicketError().getErrorJson(-1);
+			return new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		}
 		logger.info("The list of tickets was successfully retrieved!");
 		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";

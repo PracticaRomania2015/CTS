@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.RecoveryPasswordError;
-import com.cts.communication.Success;
+
+import com.cts.communication.RecoveryResponse;
+import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
@@ -21,7 +22,7 @@ import com.cts.utils.SendEmail;
  */
 @Controller
 @Scope("session")
-public class RecoveryPasswordController {
+public class RecoveryController {
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
@@ -47,11 +48,11 @@ public class RecoveryPasswordController {
 				&& SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 			logger.info("The password was changed and was send via email!");
-			return new Success().getSuccessJson(2);
+			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYSUCCESS);
 		} else {
 
 			logger.info("The specified email is incorrect!");
-			return new RecoveryPasswordError().getErrorJson(1);
+			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYINCORRECTEMAIL);
 		}
 	}
 }

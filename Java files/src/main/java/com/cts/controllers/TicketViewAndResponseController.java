@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.TicketError;
+
+import com.cts.communication.ResponseValues;
+import com.cts.communication.TicketResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
@@ -66,7 +68,7 @@ public class TicketViewAndResponseController {
 				|| ticket.getComments().get(ticket.getComments().size() - 1).getComment().equals("")) {
 
 			logger.info("Ticket comment cannot be null error.");
-			return new TicketError().getErrorJson(5);
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD);
 		}
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
@@ -79,12 +81,37 @@ public class TicketViewAndResponseController {
 			} catch (IOException e) {
 
 				logger.info("Error while trying to map the json for ticket object.");
-				return new TicketError().getErrorJson(-1);
+				return new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 			}
 		} else {
 
 			logger.info("Database error while trying to add a new comment!");
-			return new TicketError().getErrorJson(4);
+			return new TicketResponse().getMessageJson(ResponseValues.DBERROR);
+		}
+	}
+	
+	/**
+	 * POST method to assign admin to ticket.
+	 * 
+	 * @return ticket assigned success or error message
+	 */
+	@RequestMapping(value = "/assignTicket", method = RequestMethod.POST)
+	@ResponseBody
+	public String assignTicket(@RequestBody Ticket ticketToAssign) {
+
+		logger.info("Attempting to assign user to ticket ...");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		if (ticketDAO.addCommentToTicket(ticketToAssign)) {
+			
+			logger.info("Ticket assigned to user successfully");
+			return new TicketResponse().getMessageJson(ResponseValues.SUCCESS);
+			
+		} else {
+			
+			logger.info("Database error while trying to assign user to ticket!");
+			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+			
 		}
 	}
 }

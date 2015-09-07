@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.LoginError;
+import com.cts.communication.LoginResponse;
+import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
@@ -21,6 +22,8 @@ import com.cts.utils.HashUtil;
 @Controller
 @Scope("session")
 public class LoginController {
+	
+	//private ResponseValues responseValues;
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
@@ -54,16 +57,16 @@ public class LoginController {
 
 		// Check if the username is null or empty.
 		if (user.getEmail() == null || user.getEmail().equals("")) {
-
+			
 			logger.info("Username is null or empty.");
-			return new LoginError().getErrorJson(1);
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
 		}
 
 		// Check if the password is null or empty.
 		if (user.getPassword() == null || user.getPassword().equals("")) {
-
+			
 			logger.info("Password is null or empty.");
-			return new LoginError().getErrorJson(2);
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
 		}
 
 		// Validate the login.
@@ -73,17 +76,16 @@ public class LoginController {
 
 			logger.info("Login succesfully!");
 			String userJson = getUserObjectInJsonFormat(user);
-			if(userJson != null){
-				
+			if(userJson != null){				
 				return userJson;
 			}
 			else{
-				
-				return new LoginError().getErrorJson(-1);
+				return new LoginResponse().getMessageJson(ResponseValues.UNKNOWN);
 			}
 		} else {
+			
 			logger.info("Login information is not correct.");
-			return new LoginError().getErrorJson(3);
+			return new LoginResponse().getMessageJson(ResponseValues.LOGININVALIDCREDENTIALS);
 		}
 	}
 }

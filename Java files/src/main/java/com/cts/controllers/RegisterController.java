@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.RegisterError;
-import com.cts.communication.Success;
+
+import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.User;
@@ -62,51 +63,85 @@ public class RegisterController {
 		localSuccess = true;
 
 		logger.info("######## Attempting a register...");
-
 		try {
-
 			// Checks if the fields are empty (eg: "")
-			if (user.getEmail().trim().isEmpty() || user.getFirstName().trim().isEmpty()
-					|| user.getLastName().trim().isEmpty() || user.getPassword().trim().isEmpty()) {
+			if (user.getEmail().trim().isEmpty()) {
 
 				localSuccess = false;
-				logger.info("Error: One or more fields are empty");
-				return new RegisterError().getErrorJson(6);
+				logger.info("Error: Email field is empty!");
+				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
+			}
+		} catch (NullPointerException e) {
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
+		}
+		try {
+			if (user.getFirstName().trim().isEmpty()) {
+
+				localSuccess = false;
+				logger.info("Error: First Name field is empty!");
+				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD);
+
+			}
+		} catch (NullPointerException e) {
+			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD);
+		}
+		try {
+			if (user.getLastName().trim().isEmpty()) {
+				localSuccess = false;
+				logger.info("Error: Last Name field is empty!");
+				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
+
+			}
+		} catch (NullPointerException e) {
+			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
+		}
+		try {
+			if (user.getPassword().trim().isEmpty()) {
+				localSuccess = false;
+				logger.info("Error: Password field is empty!");
+				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
+
+			}
+		} catch (NullPointerException e) {
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
+		}
+		try {
+			if (user.getTitle().trim().isEmpty()) {
+				localSuccess = false;
+				logger.info("Error: A title option must be selected!");
+				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
+
+			}
+		} catch (NullPointerException e) {
+			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
+		}
+		// Checks if the email is valid
+		if (!isValidEmail(user.getEmail())) {
+
+			localSuccess = false;
+			logger.info("Error: Invalid Email");
+			return new RegisterResponse().getMessageJson(ResponseValues.INVALIDEMAILFORMAT);
+		}
+
+		// If the data passes the local tests, the database is called
+		if (localSuccess) {
+
+			// hash the password
+			user.setPassword(HashUtil.getHash((user.getPassword())));
+			UserDAOInterface userDAO = new UserDAO();
+
+			if (userDAO.createAccount(user)) {
+
+				logger.info("A new account was successfully created");
+				return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
 			} else {
 
-				// Checks if the email is valid
-				if (!isValidEmail(user.getEmail())) {
-
-					localSuccess = false;
-					logger.info("Error: Invalid Email");
-					return new RegisterError().getErrorJson(5);
-				}
+				logger.info("Error: email already exists.");
+				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
 			}
-
-			// If the data passes the local tests, the database is called
-			if (localSuccess) {
-
-				// hash the password
-				user.setPassword(HashUtil.getHash((user.getPassword())));
-				UserDAOInterface userDAO = new UserDAO();
-
-				if (userDAO.createAccount(user)) {
-
-					logger.info("A new account was successfully created");
-					return new Success().getSuccessJson(1);
-				} else {
-
-					logger.info("Error: email already exists.");
-					return new RegisterError().getErrorJson(9);
-				}
-			}
-			logger.info("Unknown error.");
-			return new RegisterError().getErrorJson(-1);
-		} catch (NullPointerException e) {
-
-			logger.info("NullPointerException when trying to register a new account");
-			return new RegisterError().getErrorJson(6);
 		}
+		logger.info("Unknown error.");
+		return new RegisterResponse().getMessageJson(ResponseValues.UNKNOWN);
 	}
 
 	/**
@@ -118,7 +153,7 @@ public class RegisterController {
 	private boolean isValidEmail(String email) {
 
 		Matcher matcher = pattern.matcher(email);
-		
+
 		logger.info(matcher.matches() + " for " + email);
 
 		if (!matcher.matches()) {

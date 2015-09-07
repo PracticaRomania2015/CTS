@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.TicketError;
+import com.cts.communication.ResponseValues;
+import com.cts.communication.TicketResponse;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
 
@@ -33,17 +34,17 @@ public class TicketViewAndResponseControllerTest {
 		TicketComment comment = new TicketComment();
 		comment.setComment("test");
 		ticket.getComments().add(comment);
-		assertEquals(new TicketError().getErrorJson(4), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.addComment(ticket));
 		ticket = new Ticket();
 		comment = new TicketComment();
 		comment.setComment("");
 		ticket.getComments().add(comment);
-		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(ticket));
 		ticket = new Ticket();
 		comment = new TicketComment();
 		comment.setComment(null);
 		ticket.getComments().add(comment);
-		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(ticket));
-		assertEquals(new TicketError().getErrorJson(5), ticketViewAndResponseController.addComment(null));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(null));
 	}
 }

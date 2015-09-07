@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import com.cts.communication.TicketError;
-import com.cts.communication.Success;
+
+import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseValues;
+import com.cts.communication.TicketResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.dao.UserDAO;
@@ -86,7 +88,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECTFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -100,7 +102,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(1), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECTFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -114,7 +116,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(0);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(2), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETNOCATEGORYSELECTED), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -128,7 +130,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -142,7 +144,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(3), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -154,7 +156,7 @@ public class SubmitTicketControllerTest {
 		testUser.setLastName("test");
 		testUser.setTitle("test");
 		testUser.setPassword("test");
-		assertEquals(new Success().getSuccessJson(1), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS), registerController.register(testUser));
 		testUser.setPassword("test");
 		assertNotNull("error", loginController.login(testUser));
 		testUser.setEmail("");
@@ -205,13 +207,13 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketError().getErrorJson(4), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
 	public void testGetCategories() {
 
-		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getCategories());
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getCategories());
 	}
 
 	@Test
@@ -219,8 +221,8 @@ public class SubmitTicketControllerTest {
 
 		Category category = new Category();
 		category.setCategoryId(1);
-		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getSubcategories(category));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getSubcategories(category));
 		category.setCategoryId(2);
-		assertNotNull(new TicketError().getErrorJson(-1), submitTicketController.getSubcategories(category));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getSubcategories(category));
 	}
 }

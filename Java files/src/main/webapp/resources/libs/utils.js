@@ -6,6 +6,7 @@ function getValue(key) {
 		$.each(lines, function() {
 			if (key.trim() == this.split(',')[0].trim()){
 				out =  this.substr(this.split(',')[0].trim().length + 1, this.length);
+				return false;
 			}
 		});
 	});

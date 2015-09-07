@@ -5,7 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.LoginError;
+import com.cts.communication.LoginResponse;
+import com.cts.communication.ResponseValues;
 import com.cts.entities.User;
 
 public class LoginControllerTest {
@@ -33,7 +34,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(nullEmail);
 		testUser.setPassword(testPassword);
-		assertEquals(new LoginError().getErrorJson(1), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), loginController.login(testUser));
 	}
 
 	@Test
@@ -41,7 +42,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(emptyEmail);
 		testUser.setPassword(testPassword);
-		assertEquals(new LoginError().getErrorJson(1), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), loginController.login(testUser));
 	}
 
 	@Test
@@ -49,7 +50,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(testEmail);
 		testUser.setPassword(nullPassword);
-		assertEquals(new LoginError().getErrorJson(2), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), loginController.login(testUser));
 	}
 
 	@Test
@@ -57,7 +58,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(testEmail);
 		testUser.setPassword(emptyPassword);
-		assertEquals(new LoginError().getErrorJson(2), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), loginController.login(testUser));
 	}
 
 	@Test
