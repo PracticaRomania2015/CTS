@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/4/2015 12:08:49 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/8/2015 12:06:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,14 +17,35 @@ AS
 BEGIN
 
 	SET NOCOUNT ON;
+	DECLARE @Action varchar(1000)
+	DECLARE @DateTime datetime
 
 	IF NOT EXISTS (SELECT UserId FROM [User] WHERE Email = @Email)
 	BEGIN
 		INSERT INTO [User] (FirstName, LastName, Title, Email, Password)
 		VALUES (@FirstName, @LastName, @Title, @Email, @Password)
 		SELECT @Error = 0
+
+
+		-- add history event
+		SELECT @Action = 'A new account was successfully created. [' + @Email + ']'
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = NULL,
+		@Action = @Action, 
+		@DateTime = @DateTime
 	END
 	ELSE
 		SELECT @Error = 1
 
+
+		-- add history event
+		SELECT @Action = 'Failed to create a new account. Email already exists. [' + @Email + ']'
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = NULL,
+		@Action = @Action, 
+		@DateTime = @DateTime
 END

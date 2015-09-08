@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/4/2015 12:08:42 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/8/2015 12:04:30 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -19,6 +19,7 @@ AS
 BEGIN
 
 	SET NOCOUNT ON;
+	DECLARE @Action varchar(1000)
 
 	IF (@UserId != 0)
 	BEGIN
@@ -36,12 +37,28 @@ BEGIN
 
 		SELECT TOP 1 @CommentId = CommentId FROM TicketComment ORDER BY CommentId DESC
 
+		-- add a new history event
+		SELECT @Action = 'Create a new ticket'
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = @UserId,
+		@Action = @Action, 
+		@DateTime = @DateTime
+
 	END
 	ELSE
 	BEGIN
 		
 		INSERT INTO TicketComment(TicketId, DateTime, Comment, UserId, FilePath)
 		VALUES (@TicketId, @DateTime, @Comment, @UserId, @FilePath)
+
+		-- add a new history event
+		SELECT @Action = 'Failed to create a new ticket caused by UserId = 0.'
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = NULL,
+		@Action = @Action, 
+		@DateTime = @DateTime
 
 	END
 END

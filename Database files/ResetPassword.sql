@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/4/2015 12:09:53 PM ******/
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/8/2015 12:04:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -14,6 +14,9 @@ AS
 BEGIN
 
 	SET NOCOUNT ON;
+	DECLARE @Action varchar(1000)
+	DECLARE @DateTime datetime
+
 	SELECT @Error = 1
 	SELECT top 1 @Error = 0 FROM [User] WHERE Email = @Email
 
@@ -22,6 +25,25 @@ BEGIN
 		UPDATE [User]
 		SET Password = @Password
 		WHERE Email = @Email
-	END
 
+		-- add history event
+		SELECT @Action = 'The password was successfully reseted for the account ' + @Email
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = NULL,
+		@Action = @Action, 
+		@DateTime = @DateTime
+	END
+	ELSE
+	BEGIN
+		-- add history event
+		SELECT @Action = 'Failed to reset the password for the account ' + @Email
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = NULL,
+		@Action = @Action, 
+		@DateTime = @DateTime
+	END
 END

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/7/2015 8:55:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/8/2015 12:04:57 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -19,6 +19,8 @@ BEGIN
 	
 	DECLARE @TotalNumberOfTickets INT
 	DECLARE @TicketTo INT
+	DECLARE @Action varchar(1000)
+	DECLARE @DateTime datetime
 
 	IF @IsViewMyTicketsRequest = 0
 	BEGIN
@@ -74,6 +76,14 @@ BEGIN
 		GROUP BY Ticket.TicketId
 		ORDER BY MIN(TicketComment.DateTime) DESC) t ORDER BY t.DateTime ASC) tt ORDER BY tt.DateTime DESC
 
+		-- add history event
+		SELECT @Action = 'Requested personal tickets; the stored procedure was successfully executed.'
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = @UserId,
+		@Action = @Action, 
+		@DateTime = @DateTime
 	END
 	ELSE
 	BEGIN
@@ -131,5 +141,13 @@ BEGIN
 		GROUP BY Ticket.TicketId
 		ORDER BY min(TicketComment.DateTime) DESC) t ORDER BY t.DateTime ASC) tt ORDER BY tt.DateTime DESC
 
+		-- add history event
+		SELECT @Action = 'Requested assigned tickets; the stored procedure was successfully executed.'
+		SELECT @DateTime = SYSDATETIME()
+
+		EXEC dbo.AddHistoryEvent 
+		@UserId = @UserId,
+		@Action = @Action, 
+		@DateTime = @DateTime
 	END
 END
