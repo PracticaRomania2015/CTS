@@ -23,6 +23,11 @@ public abstract class BaseDAO {
 
 	static {
 
+		makeConnection();
+	}
+
+	private static void makeConnection() {
+
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("servlet-context.xml");
 		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
 				SingleConnectionDataSource.class);
@@ -39,6 +44,11 @@ public abstract class BaseDAO {
 	protected void prepareExecution(StoredProceduresNames storedProcedureName, InOutParam<?>... parameters)
 			throws SQLException {
 
+		// if the connection is not valid then remake the connection
+		if (!connection.isValid(0)) {
+
+			makeConnection();
+		}
 		inOutParams.clear();
 		if (parameters != null) {
 
@@ -57,9 +67,9 @@ public abstract class BaseDAO {
 		setOutParametersAfterExecute();
 		return callableStatement.getResultSet();
 	}
-	
-	protected ResultSet execute(boolean bothOutputParamsAndResultSet) throws SQLException{
-		
+
+	protected ResultSet execute(boolean bothOutputParamsAndResultSet) throws SQLException {
+
 		callableStatement.execute();
 		return callableStatement.getResultSet();
 	}
