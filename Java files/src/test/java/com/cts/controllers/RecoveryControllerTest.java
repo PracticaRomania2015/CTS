@@ -24,7 +24,7 @@ public class RecoveryControllerTest {
 	public void testWithInvalidEmail() {
 		
 		user.setEmail("test@test.com");
-		assertEquals(new RecoveryResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), recoveryController.recoveryPassword(user));
+		assertEquals(new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYINCORRECTEMAIL), recoveryController.recoveryPassword(user));
 	}
 
 }

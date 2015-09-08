@@ -23,8 +23,10 @@ import com.cts.utils.HashUtil;
  */
 @Controller
 @Scope("session")
-public class RegisterController {
+public class RegisterController implements java.io.Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	// Regular expression to check if the mail is in the gmail.com domain.
 	private static String emailRegexp;
 	private Pattern pattern;
@@ -128,11 +130,11 @@ public class RegisterController {
 			UserDAOInterface userDAO = new UserDAO();
 
 			if (userDAO.createAccount(user)) {
-
+				
 				logger.info("A new account was successfully created");
 				return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
 			} else {
-
+				
 				logger.info("Error: email already exists.");
 				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
 			}
@@ -148,7 +150,7 @@ public class RegisterController {
 	 *         any other domain.
 	 */
 	private boolean isValidEmail(String email) {
-
+		
 		Matcher matcher = pattern.matcher(email);
 
 		logger.info(matcher.matches() + " for " + email);

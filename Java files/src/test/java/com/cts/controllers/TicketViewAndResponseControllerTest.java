@@ -24,7 +24,7 @@ public class TicketViewAndResponseControllerTest {
 
 		Ticket ticket = new Ticket();
 		ticket.setTicketId(1);
-		assertNotNull("json error", ticketViewAndResponseController.viewTicketComments(ticket));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketViewAndResponseController.viewTicketComments(ticket));
 	}
 
 	@Test
@@ -46,5 +46,11 @@ public class TicketViewAndResponseControllerTest {
 		ticket.getComments().add(comment);
 		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(ticket));
 		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(null));
+	}
+	
+	@Test
+	public void testAssignAdminToTicket() {
+		
+		Ticket ticket = new Ticket();
 	}
 }

@@ -1,6 +1,8 @@
 package com.cts.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
@@ -14,7 +16,9 @@ import com.cts.communication.ResponseValues;
 import com.cts.communication.TicketResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
+import com.cts.entities.Category;
 import com.cts.entities.Ticket;
+import com.cts.entities.User;
 
 /**
  * Handle requests for view and response to tickets page.
@@ -40,7 +44,7 @@ public class TicketViewAndResponseController {
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		ticket.setComments(ticketDAO.getTicketComments(ticket));
-		String jsonMessage = "json error";
+		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
 
 			jsonMessage = objectMapper.writeValueAsString(ticket);
@@ -68,7 +72,7 @@ public class TicketViewAndResponseController {
 				|| ticket.getComments().get(ticket.getComments().size() - 1).getComment().equals("")) {
 
 			logger.info("Ticket comment cannot be null error.");
-			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD);
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD);
 		}
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
@@ -93,25 +97,87 @@ public class TicketViewAndResponseController {
 	/**
 	 * POST method to assign admin to ticket.
 	 * 
-	 * @return ticket assigned success or error message
+	 * @return success or error message if admin was assigned to ticket
 	 */
-	@RequestMapping(value = "/assignTicket", method = RequestMethod.POST)
+	@RequestMapping(value = "/assignAdminToTicket", method = RequestMethod.POST)
 	@ResponseBody
-	public String assignTicket(@RequestBody Ticket ticketToAssign) {
+	public String assignTicket(@RequestBody Ticket ticket) {
+		
+		if (ticket == null) {
 
-		logger.info("Attempting to assign user to ticket ...");
+			logger.info("Ticket cannot be null error.");
+			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+		}
+
+		logger.info("Attempting to assign admin to ticket ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		if (ticketDAO.addCommentToTicket(ticketToAssign)) {
+		if (ticketDAO.addCommentToTicket(ticket)) {
 			
-			logger.info("Ticket assigned to user successfully");
+			logger.info("Ticket assigned to admin successfully!");
 			return new TicketResponse().getMessageJson(ResponseValues.SUCCESS);
 			
 		} else {
 			
-			logger.info("Database error while trying to assign user to ticket!");
-			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+			logger.info("Database error while trying to assign admin to ticket!");
+			return new TicketResponse().getMessageJson(ResponseValues.DBERROR);
 			
 		}
+	}
+	
+	/**
+	 * POST method to close ticket.
+	 * 
+	 * @return success or error message if ticket was closed
+	 */
+	@RequestMapping(value = "/closeTicket", method = RequestMethod.POST)
+	@ResponseBody
+	public String closeTicket(@RequestBody Ticket ticket) {
+
+		if (ticket == null) {
+
+			logger.info("Ticket cannot be null error.");
+			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
+		logger.info("Attempting to close ticket ...");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		if (ticketDAO.closeTicket(ticket)) {
+			
+			logger.info("Ticket closed successfully!");
+			return new TicketResponse().getMessageJson(ResponseValues.SUCCESS);
+			
+		} else {
+			
+			logger.info("Database error while trying to close ticket!");
+			return new TicketResponse().getMessageJson(ResponseValues.DBERROR);
+			
+		}
+	}
+	
+	/**
+	 * POST method for the controller.
+	 * 
+	 * @param ticket
+	 * @return ticket object with comments or error message.
+	 */
+	@RequestMapping(value = "/getAdminsForCategory", method = RequestMethod.POST)
+	@ResponseBody
+	public String getAdminsForCategory(@RequestBody Category category) {
+
+		logger.info("Attempting to retrieve admins for category.");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		ArrayList<User> admins = ticketDAO.getAdminsForCategory(category);
+
+		logger.info("Success to get admins for category from database ...");
+
+		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
+		try {
+			jsonMessage = objectMapper.writeValueAsString(admins);
+		} catch (IOException e) {
+		}
+		return jsonMessage;
 	}
 }

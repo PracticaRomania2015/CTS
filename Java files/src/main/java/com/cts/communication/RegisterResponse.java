@@ -27,7 +27,6 @@ public class RegisterResponse implements ResponseMessage {
 		registerEmptyTitle = ConfigReader.getInstance().getValueForKey("registerEmptyTitle");
 		registerEmptyFirstNameField = ConfigReader.getInstance().getValueForKey("registerEmptyFirstNameField");
 		registerEmptyLastNameField = ConfigReader.getInstance().getValueForKey("registerEmptyLastNameField");
-		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailError");
 		registerExistingEmail = ConfigReader.getInstance().getValueForKey("registerExistingEmail");
 		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
@@ -43,6 +42,7 @@ public class RegisterResponse implements ResponseMessage {
 
 	@Override
 	public void initDescription(ResponseValues responseValue) {
+		
 		switch (responseValue) {
 			case REGISTERSUCCESS: {
 				description = registerSuccess;

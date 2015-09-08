@@ -32,13 +32,22 @@ public class ConfigReader {
 	private static ConfigReader instance = null;
 	private static Properties prop = null;
 	private static InputStream input = null;
-	private static String filePath = ConfigReader.class.getClassLoader().getResource("config_en.properties").getPath().toString();
+	private static String filePath = null;
+	private static String fileName = "config_en.properties";
 	private static long initialModDate = 0;
 	
 	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
 	
 	protected ConfigReader() {
 		prop = new Properties();
+		
+		
+		if (ConfigReader.class.getClassLoader().getResource(fileName) != null){
+			filePath = ConfigReader.class.getClassLoader().getResource(fileName).getPath().toString();
+		} else {
+			filePath = new File(fileName).getAbsolutePath().toString();
+		}
+
 		try {
 			input = new FileInputStream(filePath);
 			prop.load(input);

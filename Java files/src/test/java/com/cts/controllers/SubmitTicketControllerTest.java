@@ -130,7 +130,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
@@ -144,7 +144,7 @@ public class SubmitTicketControllerTest {
 		category.setCategoryId(1);
 		ticket.setCategory(category);
 		ticket.setComments(comments);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), submitTicketController.submitTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD), submitTicketController.submitTicket(ticket));
 	}
 
 	@Test
