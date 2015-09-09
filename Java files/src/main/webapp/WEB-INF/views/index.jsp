@@ -84,7 +84,7 @@
 	</script>
 	<script type="text/template" id="logInTemplate">
 			<h1 class="frontPage">Log In</h1>
-			<form>
+			<form class='frontPageForms'>
 				<input id='logInMail' type='text' placeholder='E-mail' class="masterTooltip"/>
 				<input id='logInPass' type='password' placeholder='Password' class="masterTooltip"/>
 				<span href="#" class="button" id="logInButton">Log In</span>
@@ -92,7 +92,7 @@
 	</script>
 	<script type="text/template" id="registerTemplate">
 			<h1 class="frontPage">Register</h1>
-			<form>
+			<form class='frontPageForms'>
 				<select id="regTitle">
 					<option selected value="Mr"> Mr.</option>
 					<option value="Mrs">Mrs.</option>
@@ -109,7 +109,7 @@
 	<script type="text/template" id="recoveryTemplate">
 <div id='frontPageContainer'>
 			<h1 class="frontPage">Password Recovery</h1>
-			<form>
+			<form class='frontPageForms'>
 				<input id='recoveryMail' type='text' placeholder='E-mail' class="masterTooltip"/>
 				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
 			</form>

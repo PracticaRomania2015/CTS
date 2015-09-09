@@ -17,19 +17,6 @@
 /* =========================================================================================================================== */
 /* Some generic stuff */
 
-.button{
-	border-radius: 5px;
-	background: #0d94d2;
-	display: block;
-	margin: 5px 0px 5px 0px;
-	padding: 10px;
-	font-family: 'Arial';
-	text-align: center;
-	text-decoration: none;
-	color: #fff;
-	cursor: pointer;
-}
-
 select option[disabled] {
     display: none;
 }
@@ -51,14 +38,7 @@ select option[disabled] {
 	color: #7C2B83 !important;
 	-webkit-transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
 	transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
-	border: 1px solid rgb(124, 43, 131) !important;
-}
-
-form{
-	border-radius: 0px 0px 5px 5px;
-	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
-	text-align: center;
-	padding: 4% 4%;
+	border: 1px solid #7C2B83 !important;
 }
 
 textarea {
@@ -68,7 +48,6 @@ textarea {
 td div.columnOverflow { 
 	overflow: hidden; 
 }
-
 
 /* =========================================================================================================================== */
 /* The log in page design - all the good stuff */
@@ -89,6 +68,19 @@ td div.columnOverflow {
 	margin: 40px auto 0px;
 }
 
+#toggle-login, #toggle-signup, #toggle-recovery, #logInButton, #registerButton, #recoveryButton {
+	border-radius: 5px;
+	background: #0d94d2;
+	display: block;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+}
+
 h1.frontPage{
   	border-radius: 5px 5px 0px 0px;
   	margin: -35px 0px 0px;
@@ -100,28 +92,34 @@ h1.frontPage{
   	color: #fff;
 }
 
+.frontPageForms{
+	border-radius: 0px 0px 5px 5px;
+	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
+	text-align: center;
+	padding: 4% 4%;
+}
+
 #regTitle {
-    width: 100%;
+    width: 230px;
 	background: #f1f8ec;
-	margin: 4% 0% 4% 0%;
+	margin: 8px 0px;
 	border: 1px solid #555;
-	padding: 2% 4% 2% 4%;
+	padding: 5px 10px 5px 5px;
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
 }
 
 #logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
-	width: 210px;
+	width: 208px;
 	background: #f1f8ec;
-	margin: 4% 0% 4% 0%;
+	margin: 8px 0px;
 	border: 1px solid #555;
-	padding: 2% 4% 2% 4%;
+	padding: 6px 10px 6px 10px;
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
 }
-
 
 /* =========================================================================================================================== */
 /* User page - designed the stuff */
