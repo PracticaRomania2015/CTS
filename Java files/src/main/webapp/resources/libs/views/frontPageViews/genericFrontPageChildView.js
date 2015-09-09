@@ -8,7 +8,7 @@ var GenericFrontPageChildView = Backbone.View.extend({
 	id : "frontPageContainer",
 	
 	render : function() {
-		this.appendTextBox();
+		this.appendData();
 		return this;
 	}
 

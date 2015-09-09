@@ -51,37 +51,6 @@
 			<div id='frontPageContainer' style='display: none;'></div>
 			</div>
 	</script>
-	<script type="text/template" id="userPanelPageTemplate">
-			<div id='mainContainer'>
-			<div id='menuWrapper'>
-				<span href='#' class='button' id='btn-mngTk'>Manage tickets
-					<div id="atn" class="menuRightArrow"></div>
-					<div id="ats" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='btn-userTk'>My tickets
-					<div id="mtn" class="menuRightArrow"></div>
-					<div id="mts" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='btn-subTk'>Submit a ticket
-					<div id="stn" class="menuRightArrow"></div>
-					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='btn-prop'>User properties
-					<div id="upn" class="menuRightArrow"></div>
-					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='btn-logOut'>Log out</span>
-			</div>
-			<div id="contextWrapper">
-				<div id='welcomePage'>
-					<h1 class="userPage">Welcome !</h1>
-					<h1 id="welcomeMessage"></h1>
-				</div>
-				<div id='userPanelPageContainer'></div>
-				<div id='assignedTickets' style='display: none;'></div>
-				<div id='myTickets' style='display: none;'></div>
-				<div id='createTicket' style='display: none;'></div>
-				<div id='userProperties' style='display: none;'></div>
-				<div id='selectedTicket' style='display: none;'></div>
-			</div>
-			</div>
-	</script>
 	<script type="text/template" id="logInTemplate">
 			<h1 class="frontPage">Log In</h1>
 			<form class='frontPageForms'>
@@ -107,13 +76,38 @@
 			</form>
 	</script>
 	<script type="text/template" id="recoveryTemplate">
-<div id='frontPageContainer'>
+			<div id='frontPageContainer'>
 			<h1 class="frontPage">Password Recovery</h1>
 			<form class='frontPageForms'>
 				<input id='recoveryMail' type='text' placeholder='E-mail' class="masterTooltip"/>
 				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
 			</form>
-</div>
+			</div>
+	</script>
+	<script type="text/template" id="userPanelPageTemplate">
+			<div id='mainContainer'>
+			<div id='menuWrapper'>
+				<span href='#' class='button' id='btn-mngTk'>Manage tickets
+					<div id="atn" class="menuRightArrow"></div>
+					<div id="ats" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='btn-userTk'>My tickets
+					<div id="mtn" class="menuRightArrow"></div>
+					<div id="mts" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='btn-subTk'>Submit a ticket
+					<div id="stn" class="menuRightArrow"></div>
+					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='btn-prop'>User properties
+					<div id="upn" class="menuRightArrow"></div>
+					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='btn-logOut'>Log out</span>
+			</div>
+			<div id="contextWrapper">
+				<div id='userPanelPageContainer'>
+					<h1 class="userPage">Welcome !</h1>
+					<h1 id="welcomeMessage"></h1>
+				</div>
+			</div>
+			</div>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>

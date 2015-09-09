@@ -7,7 +7,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 		'click #registerButton' : 'submit'
 	},
 
-	appendTextBox : function() {
+	appendData : function() {
 		this.$el.append(_.template($('#registerTemplate').html()));
 	},
 

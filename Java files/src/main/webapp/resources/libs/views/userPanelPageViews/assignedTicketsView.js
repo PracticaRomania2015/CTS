@@ -26,7 +26,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		'click .openTicketComments' : 'viewTicketComments'
 	},
 
-	render : function() {
+	appendData : function() {
 		this.$el.append("<h1 class='userPage'> Tickets managed by me </h1>");
 		this.viewData(1, "", "");
 		this.$el.append(_.template($('#userTicketsTemplate').html()));

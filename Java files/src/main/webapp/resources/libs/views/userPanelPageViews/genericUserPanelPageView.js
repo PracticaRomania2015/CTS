@@ -3,10 +3,12 @@
 
 var GenericUserPanelPageView = Backbone.View.extend({
 
+	tagName : "div",
+	
+	id : "userPanelPageContainer",
+	
 	render : function() {
-		this.$el.append(_.template($('#userPanelPageTemplate').html()));
-		this.$el.find('#welcomeMessage').replaceWith(
-				"<h2 class='userPage'>Welcome to CTS v0.1_alpha</h2>")
+		this.appendData();
 		return this;
 	}
 

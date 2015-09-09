@@ -7,7 +7,7 @@ var RecoveryView = GenericFrontPageChildView.extend({
 		'click #recoveryButton' : 'submit'
 	},
 
-	appendTextBox : function() {
+	appendData : function() {
 		this.$el.append(_.template($('#recoveryTemplate').html()));
 	},
 

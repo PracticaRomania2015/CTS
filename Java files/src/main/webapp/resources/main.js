@@ -1,5 +1,7 @@
 $(document).ready((function() {
 	
+	// ========================= Generate page by current state =========================
+	
 		if(typeof(Storage) !== "undefined") {
 			if (sessionStorage.loggedUserId) {
 				$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
@@ -13,14 +15,10 @@ $(document).ready((function() {
 		}
 		
 		$('#logoWrapper').append("<img id='logo' src='/cts/resources/img/logo.png' align='middle'>");
-		
-		var frontPageView = new GenericFrontPageView({});
-		$('#frontPage').append(frontPageView.render().el);
-		
-		var userPanelPageView = new GenericUserPanelPageView({});
-		$('#userPanelPage').append(userPanelPageView.render().el);
 
-		var logInView, registerView, recoveryView, assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
+	// ========================= Generate log in page child views based on button clicks =========================
+		
+		var logInView, registerView, recoveryView;
 		
 		$('#toggle-login').click(function() {
 			registerView = recoveryView = null;
@@ -64,8 +62,12 @@ $(document).ready((function() {
 			};
 		});
 		
+	// ========================= Generate user panel page based on button clicks =========================
+		
+		var assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
+		
 		$('#btn-mngTk').click(function() {
-			if(!assignedTicketsView){
+/*			if(!assignedTicketsView){
 				assignedTicketsView = new AssignedTicketsView({
 					model : new ViewTicketsModel({})
 				});
@@ -78,14 +80,14 @@ $(document).ready((function() {
 				});
 				$('#assignedTickets').append(assignedTicketsView.render().el);
 				handleErrorStyle();
-			};
+			};*/
 			//TODO set other views to null
 			if(!assignedTicketsView){
 				assignedTicketsView = new AssignedTicketsView({
 					model: new ViewTicketsModel({})
 				});
 				$('#userPanelPageContainer').replaceWith(assignedTicketsView.render().el);
-				handlErrorStyle();
+				handleErrorStyle();
 			}
 			$('#welcomePage').hide();
 			$('#myTickets').hide();
@@ -105,7 +107,7 @@ $(document).ready((function() {
 			$('#upn').show();
 		});
 		
-		$('#btn-userTk').click(function() {
+		/*$('#btn-userTk').click(function() {
 			if(!userTicketsView){
 				userTicketsView = new UserTicketsView({
 					model : new ViewTicketsModel({})
@@ -204,5 +206,5 @@ $(document).ready((function() {
 			$('#mtn').show();
 			$('#stn').show();
 			$('#upn').show();
-		});
+		});*/
 }));

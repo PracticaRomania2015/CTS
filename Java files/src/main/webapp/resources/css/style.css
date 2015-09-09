@@ -124,7 +124,7 @@ h1.frontPage{
 /* =========================================================================================================================== */
 /* User page - designed the stuff */
 
-#userPanelPage{
+#mainContainer{
 	width: 1225px;
 	display: block;
 	margin: 0 auto;
@@ -171,6 +171,19 @@ h1.frontPage{
 	border-style: solid;
 	border-width: 8.5px 0 8.5px 14.7px;
 	border-color: transparent transparent transparent #7bc143;
+}
+
+#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut, #ticketSearchButton {
+	border-radius: 5px;
+	background: #0d94d2;
+	display: block;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
 }
 
 h1.userPage{

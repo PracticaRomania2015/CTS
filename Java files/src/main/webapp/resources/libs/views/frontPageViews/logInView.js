@@ -7,7 +7,7 @@ var LogInView = GenericFrontPageChildView.extend({
 		'click #logInButton' : 'submit'
 	},
 
-	appendTextBox : function() {
+	appendData : function() {
 		this.$el.append(_.template($('#logInTemplate').html()));
 	},
 
