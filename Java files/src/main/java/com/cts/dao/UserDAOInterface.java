@@ -11,7 +11,7 @@ public interface UserDAOInterface {
 
 	public boolean deleteAccount(User user);
 
-	public boolean checkEmailForRecoveryPassword(String email, String newPassword);
+	public boolean resetPassword(String email, String newPassword);
 
 	public boolean updateUserPersonalData(UserForUpdate user);
 }

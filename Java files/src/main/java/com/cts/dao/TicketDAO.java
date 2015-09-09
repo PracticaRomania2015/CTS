@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import com.cts.entities.Category;
+import com.cts.entities.Priority;
 import com.cts.entities.State;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
@@ -29,10 +30,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					"UserId");
 			InOutParam<String> filePathParam = new InOutParam<String>(ticket.getComments().get(0).getFilePath(),
 					"FilePath");
+			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(ticket.getPriority().getPriorityId(),
+					"PriorityId");
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId", true);
 			InOutParam<Integer> commentIdParam = new InOutParam<Integer>(0, "CommentId", true);
 			prepareExecution(StoredProceduresNames.CreateTicket, subjectParam, categoryParam, timestampParam,
-					commentParam, userIdParam, filePathParam, ticketIdParam, commentIdParam);
+					commentParam, userIdParam, filePathParam, priorityIdParam, ticketIdParam, commentIdParam);
 			execute();
 			ticket.setTicketId(ticketIdParam.getParameter());
 			ticket.getComments().get(0).setTicketId(ticketIdParam.getParameter());
@@ -291,7 +294,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
-			prepareExecution(StoredProceduresNames.DeleteTicket, categoryIdParam);
+			prepareExecution(StoredProceduresNames.GetAdminsForCategory, categoryIdParam);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
 
@@ -307,5 +310,53 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			closeCallableStatement();
 		}
 		return admins;
+	}
+
+	@Override
+	public boolean changeTicketPriority(Ticket ticket) {
+
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(ticket.getPriority().getPriorityId(),
+					"PriorityId");
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error");
+			prepareExecution(StoredProceduresNames.ChangeTicketPriority, ticketIdParam, priorityIdParam, errorParam);
+			execute();
+			if (errorParam.getParameter() == 1) {
+
+				return false;
+			}
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
+	}
+
+	@Override
+	public ArrayList<Priority> getPriorities() {
+
+		ArrayList<Priority> priorities = new ArrayList<Priority>();
+		try {
+
+			prepareExecution(StoredProceduresNames.GetPriorities);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				Priority priority = new Priority();
+				priority.setPriorityId(resultSet.getInt(1));
+				priority.setPriorityName(resultSet.getString(2));
+				priorities.add(priority);
+			}
+		} catch (SQLException e) {
+		} finally {
+
+			closeCallableStatement();
+		}
+		return priorities;
 	}
 }

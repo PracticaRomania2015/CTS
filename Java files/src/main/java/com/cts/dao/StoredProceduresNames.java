@@ -90,5 +90,17 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.UpdateUser";
 		}
+	},
+
+	ChangeTicketPriority {
+		public String toString() {
+			return "dbo.ChangeTicketPriority";
+		}
+	},
+
+	GetPriorities {
+		public String toString() {
+			return "dbo.GetPriorities";
+		}
 	}
 }

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/8/2015 12:04:30 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/9/2015 9:53:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -12,6 +12,7 @@ ALTER PROCEDURE [dbo].[CreateTicket]
 	@Comment varchar(250),
 	@UserId int,
 	@FilePath varchar(100),
+	@PriorityId int,
 	@TicketId int OUTPUT,
 	@CommentId int OUTPUT
 
@@ -24,11 +25,17 @@ BEGIN
 	IF (@UserId != 0)
 	BEGIN
 
+		-- *****
+		-- to be modified
+		-- *****
+		SELECT @PriorityId = 2
+		-- *****
+
 		DECLARE @StateId int
 		SELECT @StateId = StateId FROM State WHERE StateName = 'Active'
 
-		INSERT INTO Ticket(Subject, CategoryId, StateId)
-		VALUES (@Subject, @CategoryId, @StateId)
+		INSERT INTO Ticket(Subject, CategoryId, StateId, PriorityId)
+		VALUES (@Subject, @CategoryId, @StateId, @PriorityId)
 
 		SELECT TOP 1 @TicketId = TicketId FROM Ticket ORDER BY TicketId DESC
 

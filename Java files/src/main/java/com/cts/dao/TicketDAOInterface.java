@@ -2,6 +2,7 @@ package com.cts.dao;
 
 import java.util.ArrayList;
 import com.cts.entities.Category;
+import com.cts.entities.Priority;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
 import com.cts.entities.User;
@@ -28,4 +29,8 @@ public interface TicketDAOInterface {
 	public boolean closeTicket(Ticket ticket);
 
 	public ArrayList<User> getAdminsForCategory(Category category);
+
+	public boolean changeTicketPriority(Ticket ticket);
+
+	public ArrayList<Priority> getPriorities();
 }

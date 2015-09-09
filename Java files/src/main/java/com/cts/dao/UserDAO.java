@@ -90,7 +90,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public boolean checkEmailForRecoveryPassword(String email, String newPassword) {
+	public boolean resetPassword(String email, String newPassword) {
 
 		try {
 
@@ -127,7 +127,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> newPasswordParam = new InOutParam<String>(user.getPassword(), "NewPassword");
 			InOutParam<String> oldPasswordParam = new InOutParam<String>(user.getOldPassword(), "OldPassword");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.CreateUser, userIdParam, firstNameParam, lastNameParam, titleParam,
+			prepareExecution(StoredProceduresNames.UpdateUser, userIdParam, firstNameParam, lastNameParam, titleParam,
 					newPasswordParam, oldPasswordParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 0) {
