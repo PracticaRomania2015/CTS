@@ -115,7 +115,7 @@ public class SubmitTicketController {
 		if (ticketDAO.createTicket(ticket)) {
 
 			logger.info("Ticket submitted succesfully!");
-			String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD);
+			String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 			try {
 				jsonMessage = objectMapper.writeValueAsString(ticket);
 			} catch (IOException e) {

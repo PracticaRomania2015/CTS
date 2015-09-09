@@ -189,6 +189,7 @@ public class SubmitTicketControllerTest {
 		viewTicketsRequest.setTicketsPerPage(1);
 		assertNotNull("{\"totalNumberOfPages\":1,\"tickets\":[]}",
 				viewTicketsController.viewTickets(viewTicketsRequest));
+		assertTrue(ticketDAO.closeTicket(ticket));
 		assertTrue(ticketDAO.deleteTicket(ticket));
 		assertTrue(userDAO.deleteAccount(testUser));
 	}

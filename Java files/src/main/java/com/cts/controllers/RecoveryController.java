@@ -1,7 +1,6 @@
 package com.cts.controllers;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,6 @@ import com.cts.utils.SendEmail;
  * Handle requests for recovery password page.
  */
 @Controller
-@Scope("session")
 public class RecoveryController {
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -44,7 +42,7 @@ public class RecoveryController {
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
 		UserDAOInterface userDAO = new UserDAO();
-		if (userDAO.checkEmailForRecoveryPassword(user.getEmail(), HashUtil.getHash(newPassword))
+		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword))
 				&& SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 			logger.info("The password was changed and was send via email!");

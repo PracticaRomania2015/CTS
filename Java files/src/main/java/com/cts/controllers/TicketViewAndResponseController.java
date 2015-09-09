@@ -112,7 +112,7 @@ public class TicketViewAndResponseController {
 		logger.info("Attempting to assign admin to ticket ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		if (ticketDAO.addCommentToTicket(ticket)) {
+		if (ticketDAO.assignTicket(ticket)) {
 			
 			logger.info("Ticket assigned to admin successfully!");
 			return new TicketResponse().getMessageJson(ResponseValues.SUCCESS);

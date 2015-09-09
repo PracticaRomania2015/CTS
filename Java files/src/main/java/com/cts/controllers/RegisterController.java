@@ -2,8 +2,8 @@ package com.cts.controllers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +22,7 @@ import com.cts.utils.HashUtil;
  * Handles requests for the application register page.
  */
 @Controller
-@Scope("session")
-public class RegisterController implements java.io.Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class RegisterController{
 	
 	// Regular expression to check if the mail is in the gmail.com domain.
 	private static String emailRegexp;
