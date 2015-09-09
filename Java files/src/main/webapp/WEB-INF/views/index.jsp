@@ -42,16 +42,17 @@
 
 
 <script type="text/template" id="frontPageTemplate">
+			<div id='mainContainer'>
 			<div id='logInWrapper'>
 				<span class='button' id='toggle-login'>Log In</span>
 				<span class='button' id='toggle-signup'>Register</span>
 				<span class='button' id='toggle-recovery'>Recovery</span>
 			</div>
-			<div id='logIn' style='display: none;'></div>
-			<div id='register' style='display: none;'></div>
-			<div id='recovery' style='display: none;'></div>
+			<div id='frontPageContainer' style='display: none;'></div>
+			</div>
 	</script>
 	<script type="text/template" id="userPanelPageTemplate">
+			<div id='mainContainer'>
 			<div id='menuWrapper'>
 				<span href='#' class='button' id='btn-mngTk'>Manage tickets
 					<div id="atn" class="menuRightArrow"></div>
@@ -72,12 +73,13 @@
 					<h1 class="userPage">Welcome !</h1>
 					<h1 id="welcomeMessage"></h1>
 				</div>
+				<div id='userPanelPageContainer'></div>
 				<div id='assignedTickets' style='display: none;'></div>
 				<div id='myTickets' style='display: none;'></div>
 				<div id='createTicket' style='display: none;'></div>
 				<div id='userProperties' style='display: none;'></div>
-
 				<div id='selectedTicket' style='display: none;'></div>
+			</div>
 			</div>
 	</script>
 	<script type="text/template" id="logInTemplate">
@@ -105,11 +107,13 @@
 			</form>
 	</script>
 	<script type="text/template" id="recoveryTemplate">
+<div id='frontPageContainer'>
 			<h1 class="frontPage">Password Recovery</h1>
 			<form>
 				<input id='recoveryMail' type='text' placeholder='E-mail' class="masterTooltip"/>
 				<span href="#" class="button" id="recoveryButton">Send Recovery Mail</span>
 			</form>
+</div>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
@@ -178,8 +182,6 @@
 </head>
 <body>
 	<div id="logoWrapper"></div>
-	
-	<div id="frontPage"></div>
-	<div id="userPanelPage"></div>
+	<div id="mainContainer"></div>
 </body>
 </html>

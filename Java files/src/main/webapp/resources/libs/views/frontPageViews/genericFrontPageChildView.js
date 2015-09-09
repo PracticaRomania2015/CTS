@@ -3,10 +3,10 @@
 
 var GenericFrontPageChildView = Backbone.View.extend({
 
-	id : "formTemplate",
-
-	tagName : 'div',
-
+	tagName : "div",
+	
+	id : "frontPageContainer",
+	
 	render : function() {
 		this.appendTextBox();
 		return this;
