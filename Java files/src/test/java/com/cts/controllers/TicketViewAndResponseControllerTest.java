@@ -1,35 +1,25 @@
 package com.cts.controllers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.RegisterResponse;
 import com.cts.communication.ResponseValues;
 import com.cts.communication.TicketResponse;
-import com.cts.dao.TicketDAO;
-import com.cts.dao.TicketDAOInterface;
-import com.cts.dao.UserDAO;
-import com.cts.dao.UserDAOInterface;
 import com.cts.entities.Category;
 import com.cts.entities.Ticket;
 import com.cts.entities.TicketComment;
-import com.cts.entities.User;
 
 public class TicketViewAndResponseControllerTest {
 
 	private static TicketViewAndResponseController ticketViewAndResponseController;
-	private static RegisterController registerController;
-	private static UserDAOInterface userDAO;
-	private static TicketDAOInterface ticketDAO;
 
 	@BeforeClass
 	public static void beforeClass() {
 
 		ticketViewAndResponseController = new TicketViewAndResponseController();
-		registerController = new RegisterController();
-		userDAO = new UserDAO();
-		ticketDAO = new TicketDAO();
 	}
 
 	@Test
@@ -62,23 +52,34 @@ public class TicketViewAndResponseControllerTest {
 	}
 	
 	@Test
-	public void testAssignAdminToTicket() {
+	public void testAssignTicketWithNullTicket() {
 		
-		User testUser = new User();
-		testUser.setFirstName("test");
-		testUser.setEmail("testtesttest@gmail.com");
-		testUser.setLastName("test");
-		testUser.setTitle("Mr.");
-		testUser.setPassword("testtest");
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS), registerController.register(testUser));
-		assertTrue(userDAO.validateLogin(testUser));
-		Ticket ticket = new Ticket();
-		ticket.setAssignedToUser(testUser);
-		assertTrue(ticketDAO.assignTicket(ticket));
-		assertTrue(ticketDAO.deleteTicket(ticket));
-		assertTrue(userDAO.deleteAccount(testUser));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketViewAndResponseController.assignTicket(null));
 	}
 	
+	@Test
+	public void testAssignTicketWithBadInfo() {
+		
+		Ticket ticket = new Ticket();
+		ticket.setTicketId(-1);
+		ticket.getAssignedToUser().setUserId(-1);
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.assignTicket(ticket));
+	}
+	
+	@Test
+	public void testCloseTicketWithNullTicket() {
+		
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketViewAndResponseController.closeTicket(null));
+	}
+	
+	@Test
+	public void testCloseTicketWithBadInfo() {
+		
+		Ticket ticket = new Ticket();
+		ticket.setTicketId(-1);
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.closeTicket(ticket));
+	}
+		
 	@Test
 	public void testGetAdminsForCategory() {
 		

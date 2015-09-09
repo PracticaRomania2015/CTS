@@ -43,9 +43,11 @@ public class TicketResponse implements ResponseMessage {
 		switch (responseValue) {
 			case SUCCESS: {
 				responseType = "success";
+				break;
 			}
 			case ERROR: {
 				responseType = "error";
+				break;
 			}
 			case TICKETEMPTYSUBJECTFIELD: {
 				description = ticketEmptySubjectField;

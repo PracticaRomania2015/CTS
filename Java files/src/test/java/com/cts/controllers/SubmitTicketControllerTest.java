@@ -3,9 +3,11 @@ package com.cts.controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -189,7 +191,9 @@ public class SubmitTicketControllerTest {
 		viewTicketsRequest.setTicketsPerPage(1);
 		assertNotNull("{\"totalNumberOfPages\":1,\"tickets\":[]}",
 				viewTicketsController.viewTickets(viewTicketsRequest));
-		assertTrue(ticketDAO.closeTicket(ticket));
+		ticket.setAssignedToUser(testUser);
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.SUCCESS), ticketViewAndResponseController.assignTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.SUCCESS), ticketViewAndResponseController.closeTicket(ticket));
 		assertTrue(ticketDAO.deleteTicket(ticket));
 		assertTrue(userDAO.deleteAccount(testUser));
 	}
