@@ -25,6 +25,7 @@ var LogInView = GenericFrontPageChildView.extend({
 					console.log(response.userId);
 					sessionStorage.loggedUserId = response.userId;
 					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+					userPanelPageFunctionality();
 				} else {
 					alert(response.description);
 				}

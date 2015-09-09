@@ -12,6 +12,9 @@
 <script type="text/javascript" src="${res}/libs/backbone.js"></script>
 <script type="text/javascript" src="${res}/libs/utils.js"></script>
 <!-- <script type="text/javascript" src="${res}/libs/models.js"></script> -->
+
+<script type="text/javascript" src="${res}/libs/functionality.js"></script>
+
 <script type="text/javascript" src="${res}/libs/models/frontPageModels/logInModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/frontPageModels/registerModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/frontPageModels/recoveryModel.js"></script>
@@ -25,7 +28,6 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/respondToTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getTicketContentModel.js"></script>
 
-<script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/registerView.js"></script>

@@ -5,9 +5,11 @@ $(document).ready((function() {
 		if(typeof(Storage) !== "undefined") {
 			if (sessionStorage.loggedUserId) {
 				$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+				userPanelPageFunctionality();
 			} 
 			else {
 				$('#mainContainer').replaceWith(_.template($('#frontPageTemplate').html()));
+				frontPageFunctionality();
 			}
 		}
 		else{
@@ -18,95 +20,77 @@ $(document).ready((function() {
 
 	// ========================= Generate log in page child views based on button clicks =========================
 		
-		var logInView, registerView, recoveryView;
-		
-		$('#toggle-login').click(function() {
-			registerView = recoveryView = null;
-			if(!logInView){
-				logInView = new LogInView({
-					model : new LogInModel({})
-				});	
-				$('#frontPageContainer').replaceWith(logInView.render().el);
-				handleErrorStyle();
-			}else{
-				$('#frontPageContainer').empty();
-				logInView = null;
-			};
-		});
-
-		$('#toggle-signup').click(function() {
-			logInView = recoveryView = null;
-			if(!registerView){
-				registerView = new RegisterView({
-					model : new RegisterModel({})
-				});
-				$('#frontPageContainer').replaceWith(registerView.render().el);
-				handleErrorStyle();
-			}else{
-				$('#frontPageContainer').empty();
-				registerView = null;
-			};
-		});
-
-		$('#toggle-recovery').click(function() {
-			logInView = registerView = null;
-			if(!recoveryView){
-				recoveryView = new RecoveryView({
-					model : new RecoveryModel({})
-				});
-				$('#frontPageContainer').replaceWith(recoveryView.render().el);
-				handleErrorStyle();
-			}else{
-				$('#frontPageContainer').empty();
-				recoveryView = null;
-			};
-		});
-		
+//		function frontPageFunctionality(){
+//		
+//			var logInView, registerView, recoveryView;
+//			
+//			$('#toggle-login').click(function() {
+//				registerView = recoveryView = null;
+//				if(!logInView){
+//					logInView = new LogInView({
+//						model : new LogInModel({})
+//					});	
+//					$('#frontPageContainer').replaceWith(logInView.render().el);
+//					handleErrorStyle();
+//				}else{
+//					$('#frontPageContainer').empty();
+//					logInView = null;
+//				};
+//			});
+//	
+//			$('#toggle-signup').click(function() {
+//				logInView = recoveryView = null;
+//				if(!registerView){
+//					registerView = new RegisterView({
+//						model : new RegisterModel({})
+//					});
+//					$('#frontPageContainer').replaceWith(registerView.render().el);
+//					handleErrorStyle();
+//				}else{
+//					$('#frontPageContainer').empty();
+//					registerView = null;
+//				};
+//			});
+//	
+//			$('#toggle-recovery').click(function() {
+//				logInView = registerView = null;
+//				if(!recoveryView){
+//					recoveryView = new RecoveryView({
+//						model : new RecoveryModel({})
+//					});
+//					$('#frontPageContainer').replaceWith(recoveryView.render().el);
+//					handleErrorStyle();
+//				}else{
+//					$('#frontPageContainer').empty();
+//					recoveryView = null;
+//				};
+//			});
+//		}
 	// ========================= Generate user panel page based on button clicks =========================
-		
-		var assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
-		
-		$('#btn-mngTk').click(function() {
-/*			if(!assignedTicketsView){
-				assignedTicketsView = new AssignedTicketsView({
-					model : new ViewTicketsModel({})
-				});
-				$('#assignedTickets').append(assignedTicketsView.render().el);
-				handleErrorStyle();
-			} else {
-				assignedTicketsView.remove();
-				assignedTicketsView = new AssignedTicketsView({
-					model : new ViewTicketsModel({})
-				});
-				$('#assignedTickets').append(assignedTicketsView.render().el);
-				handleErrorStyle();
-			};*/
-			//TODO set other views to null
-			if(!assignedTicketsView){
-				assignedTicketsView = new AssignedTicketsView({
-					model: new ViewTicketsModel({})
-				});
-				$('#userPanelPageContainer').replaceWith(assignedTicketsView.render().el);
-				handleErrorStyle();
-			}
-			$('#welcomePage').hide();
-			$('#myTickets').hide();
-			$('#createTicket').hide();
-			$('#userProperties').hide();
-			$('#selectedTicket').hide();
-			$('#assignedTickets').show();
-			
-			$('#ats').show();
-			$('#mts').hide();
-			$('#sts').hide();
-			$('#ups').hide();
-			
-			$('#atn').hide();
-			$('#mtn').show();
-			$('#stn').show();
-			$('#upn').show();
-		});
-		
+//		function userPanelPageFunctionality(){
+//			var assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
+//			
+//			$('#btn-mngTk').click(function() {
+//	
+//				if(!assignedTicketsView){
+//					assignedTicketsView = new AssignedTicketsView({
+//						model: new ViewTicketsModel({})
+//					});
+//					$('#userPanelPageContainer').replaceWith(assignedTicketsView.render().el);
+//					handleErrorStyle();
+//				}
+//				
+//				$('#ats').show();
+//				$('#mts').hide();
+//				$('#sts').hide();
+//				$('#ups').hide();
+//				
+//				$('#atn').hide();
+//				$('#mtn').show();
+//				$('#stn').show();
+//				$('#upn').show();
+//			});
+//		}
 		/*$('#btn-userTk').click(function() {
 			if(!userTicketsView){
 				userTicketsView = new UserTicketsView({
