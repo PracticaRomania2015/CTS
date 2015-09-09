@@ -83,8 +83,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				categories.add(category);
 			}
 		} catch (SQLException e) {
-
-			return null;
 		} finally {
 
 			closeCallableStatement();
@@ -110,8 +108,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				subcategories.add(subcategory);
 			}
 		} catch (SQLException e) {
-
-			return null;
 		} finally {
 
 			closeCallableStatement();
@@ -174,8 +170,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			totalNumberOfPages.append(totalNumberOfPagesParam.getParameter());
 
 		} catch (SQLException e) {
-
-			return null;
 		} finally {
 
 			closeCallableStatement();
@@ -208,8 +202,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				ticketComments.add(ticketComment);
 			}
 		} catch (SQLException e) {
-
-			return null;
 		} finally {
 
 			closeCallableStatement();
@@ -310,8 +302,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				admins.add(admin);
 			}
 		} catch (SQLException e) {
-
-			return admins;
 		} finally {
 
 			closeCallableStatement();

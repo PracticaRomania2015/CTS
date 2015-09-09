@@ -3,6 +3,7 @@ package com.cts.dao;
 import java.sql.SQLException;
 
 import com.cts.entities.User;
+import com.cts.entities.UserForUpdate;
 
 public class UserDAO extends BaseDAO implements UserDAOInterface {
 
@@ -97,6 +98,37 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> passwordParam = new InOutParam<String>(newPassword, "Password");
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 			prepareExecution(StoredProceduresNames.ResetPassword, emailParam, passwordParam, errorParam);
+			execute();
+			if (errorParam.getParameter() == 0) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		} catch (Exception e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+	}
+
+	@Override
+	public boolean updateUserPersonalData(UserForUpdate user) {
+
+		try {
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
+			InOutParam<String> firstNameParam = new InOutParam<String>(user.getFirstName(), "FirstName");
+			InOutParam<String> lastNameParam = new InOutParam<String>(user.getLastName(), "LastName");
+			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
+			InOutParam<String> newPasswordParam = new InOutParam<String>(user.getPassword(), "NewPassword");
+			InOutParam<String> oldPasswordParam = new InOutParam<String>(user.getOldPassword(), "OldPassword");
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			prepareExecution(StoredProceduresNames.CreateUser, userIdParam, firstNameParam, lastNameParam, titleParam,
+					newPasswordParam, oldPasswordParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 0) {
 

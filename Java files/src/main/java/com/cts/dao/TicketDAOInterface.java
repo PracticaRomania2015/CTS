@@ -24,8 +24,8 @@ public interface TicketDAOInterface {
 	public boolean addCommentToTicket(Ticket ticket);
 
 	public boolean assignTicket(Ticket ticket);
-	
+
 	public boolean closeTicket(Ticket ticket);
-	
+
 	public ArrayList<User> getAdminsForCategory(Category category);
 }

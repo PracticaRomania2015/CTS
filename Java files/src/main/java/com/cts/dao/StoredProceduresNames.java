@@ -84,5 +84,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetAdminsForCategory";
 		}
+	},
+
+	UpdateUser {
+		public String toString() {
+			return "dbo.UpdateUser";
+		}
 	}
 }
