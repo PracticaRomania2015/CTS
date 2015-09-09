@@ -275,8 +275,13 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
-			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam);
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam, errorParam);
 			execute();
+			if (errorParam.getParameter() == 1) {
+
+				return false;
+			}
 		} catch (SQLException e) {
 
 			return false;
@@ -320,7 +325,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(ticket.getPriority().getPriorityId(),
 					"PriorityId");
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error");
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 			prepareExecution(StoredProceduresNames.ChangeTicketPriority, ticketIdParam, priorityIdParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 1) {
