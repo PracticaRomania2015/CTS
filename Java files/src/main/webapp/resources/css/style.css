@@ -68,7 +68,7 @@ td div.columnOverflow {
 	margin: 40px auto 0px;
 }
 
-#toggle-login, #toggle-signup, #toggle-recovery, #logInButton, #registerButton, #recoveryButton {
+#toggle-login, #toggle-signup, #toggle-recovery, #logInButton, #registerButton, #recoveryButton, #submitTicketButton, #respondToTicketButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;

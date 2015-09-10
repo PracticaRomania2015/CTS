@@ -8,7 +8,7 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		'change #ticketCategoryDropbox' : 'populateSubcategories'
 	},
 	
-	render : function() {
+	appendData : function() {
 		this.$el.append(_.template($('#createTicketTemplate').html()));
 		return this;
 	},

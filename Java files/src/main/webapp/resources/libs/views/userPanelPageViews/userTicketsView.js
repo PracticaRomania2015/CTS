@@ -26,7 +26,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		'click .openTicketComments' : 'viewTicketComments'
 	},
 
-	render : function() {
+	appendData : function() {
 		this.$el.append("<h1 class='userPage'> Tickets submitted by me </h1>");
 		this.viewData(1, "", "");
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
@@ -44,12 +44,9 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 						.text()
 			})
 		});
-		$('#selectedTicket').empty();
-		$('#selectedTicket').append(respondToTicketPageView.render().el);
-
-		$('#assignedTickets').hide();
-		$('#myTickets').hide();
-		$('#selectedTicket').show();
+		
+		$('#userPanelPageContainer').replaceWith(respondToTicketPageView.render().el);
+		setUserTicketsViewToNull();
 	},
 
 	viewData : function(pgNr, srcTxt, srcTp) {
@@ -87,6 +84,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 				console.log(response);
 			}
 		});
+		
 	},
 
 	addTicket : function(id, subj, categ, status, userName, ansDate, subDate) {

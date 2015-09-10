@@ -29,7 +29,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	},
 
-	render : function() {
+	appendData : function() {
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));
 		this.$el.find('#ticketTitle').append(this.model.get("subject")).append(
 				" - ").append(this.model.get("category"));
@@ -54,16 +54,15 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		});
 
 		resp.save({}, {
+			async: false,
 			success : function(model, response) {
 				console.log(response);
 			},
 			error : function(model, response) {
 				console.log(response);
-			},
-			wait : true
+			}
 		});
-		// TODO: fix refresh
-		this.initialize();
+		
 		this.initialize();
 		$("#ticketResponse").val('');
 	}

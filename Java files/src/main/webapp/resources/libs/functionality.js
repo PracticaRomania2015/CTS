@@ -48,13 +48,15 @@ function frontPageFunctionality() {
 	});
 }
 
+var assignedTicketsView, userTicketsView;
+
 function userPanelPageFunctionality() {
-	
-	var assignedTicketsView, userTicketsView, createTicketPageView, respondToTicketPageView;
+
+	var createTicketPageView, respondToTicketPageView;
 
 	$('#btn-mngTk').click(
 			function() {
-
+				userTicketsView = createTicketPageView = null;
 				if (!assignedTicketsView) {
 					assignedTicketsView = new AssignedTicketsView({
 						model : new ViewTicketsModel({})
@@ -74,4 +76,99 @@ function userPanelPageFunctionality() {
 				$('#stn').show();
 				$('#upn').show();
 			});
+
+	$('#btn-userTk').click(
+			function() {
+				assignedTicketsView = createTicketPageView = null;
+				if (!userTicketsView) {
+					userTicketsView = new UserTicketsView({
+						model : new ViewTicketsModel({})
+					});
+					$('#userPanelPageContainer').replaceWith(
+							userTicketsView.render().el);
+					handleErrorStyle();
+				}
+
+				$('#ats').hide();
+				$('#mts').show();
+				$('#sts').hide();
+				$('#ups').hide();
+
+				$('#atn').show();
+				$('#mtn').hide();
+				$('#stn').show();
+				$('#upn').show();
+			});
+
+	$('#btn-subTk').click(
+			function() {
+				assignedTicketsView = userTicketsView = null;
+				if (!createTicketPageView) {
+					createTicketPageView = new CreateTicketPageView({
+						model : new CreateTicketModel({})
+					});
+					$('#userPanelPageContainer').replaceWith(
+							createTicketPageView.render().el);
+					handleErrorStyle();
+				}
+
+				$('#ats').hide();
+				$('#mts').hide();
+				$('#sts').show();
+				$('#ups').hide();
+
+				$('#atn').show();
+				$('#mtn').show();
+				$('#stn').hide();
+				$('#upn').show();
+			});
+
+	$('#btn-prop')
+			.click(
+					function() {
+						assignedTicketsView = userTicketsView = createTicketPageView = null;
+
+						// TODO to create view for this & change from here
+
+						$('#userPanelPageContainer').replaceWith(
+								"<div id='userPanelPageContainer'></div>");
+
+						$('#ats').hide();
+						$('#mts').hide();
+						$('#sts').hide();
+						$('#ups').show();
+
+						$('#atn').show();
+						$('#mtn').show();
+						$('#stn').show();
+						$('#upn').hide();
+					});
+
+	$('#btn-logOut').click(
+			function() {
+				sessionStorage.clear();
+
+				$('#mainContainer').replaceWith(
+						_.template($('#frontPageTemplate').html()));
+				frontPageFunctionality();
+
+				$('#ats').hide();
+				$('#mts').hide();
+				$('#sts').hide();
+				$('#ups').hide();
+
+				$('#atn').show();
+				$('#mtn').show();
+				$('#stn').show();
+				$('#upn').show();
+			});
+
+}
+
+function setAssignedTicketsViewToNull() {
+	assignedTicketsView = null;
+}
+
+function setUserTicketsViewToNull() {
+	userTicketsView = null;
 }

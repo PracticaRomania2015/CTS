@@ -43,12 +43,9 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 						.text()
 			})
 		});
-		$('#selectedTicket').empty();
-		$('#selectedTicket').append(respondToTicketPageView.render().el);
-
-		$('#assignedTickets').hide();
-		$('#myTickets').hide();
-		$('#selectedTicket').show();
+	
+		$('#userPanelPageContainer').replaceWith(respondToTicketPageView.render().el);
+		setAssignedTicketsViewToNull();
 	},
 
 	viewData : function(pgNr, srcTxt, srcTp) {
