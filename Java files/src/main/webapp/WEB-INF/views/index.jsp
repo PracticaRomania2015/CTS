@@ -171,7 +171,7 @@
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
 			<h1 id="ticketTitle" class="userPage"></h1>
-			<div id="ticketComments" class="ticketInput"></div>	
+			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
 			<textarea id='ticketResponse' rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" class="button" id="respondToTicketButton">Submit</span>
 	</script>

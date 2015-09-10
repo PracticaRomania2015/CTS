@@ -1,58 +1,56 @@
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
-
-#logoWrapper{
+#logoWrapper {
 	display: block;
 	width: 250px;
 	margin: 0 auto;
 }
 
 #logo {
-	max-width:100%;
-    max-height:100%;
-    vertical-align: middle;
+	max-width: 100%;
+	max-height: 100%;
+	vertical-align: middle;
 }
-
 
 /* =========================================================================================================================== */
 /* Some generic stuff */
-
 select option[disabled] {
-    display: none;
+	display: none;
 }
 
 .tooltip {
-	display:none;
-	position:absolute;
-	border:1px solid #333;
+	display: none;
+	position: absolute;
+	border: 1px solid #333;
 	background-color: #4bb8ef;
-	border-radius:5px;
-	padding:10px;
+	border-radius: 5px;
+	padding: 10px;
 	font-size: 14px;
 	font-family: 'Arial';
-	color:#fff;
+	color: #fff;
 }
 
 .error {
 	background-color: #fedb89 !important;
 	color: #7C2B83 !important;
-	-webkit-transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
-	transition: opacity .1s ease,color .1s ease,background .1s ease,box-shadow .1s ease;
+	-webkit-transition: opacity .1s ease, color .1s ease, background .1s
+		ease, box-shadow .1s ease;
+	transition: opacity .1s ease, color .1s ease, background .1s ease,
+		box-shadow .1s ease;
 	border: 1px solid #7C2B83 !important;
 }
 
 textarea {
-   resize: none;
+	resize: none;
 }
 
-td div.columnOverflow { 
-	overflow: hidden; 
+td div.columnOverflow {
+	overflow: hidden;
 }
 
 /* =========================================================================================================================== */
 /* The log in page design - all the good stuff */
-
-#logInWrapper{
+#logInWrapper {
 	border-radius: 10px;
 	display: block;
 	width: 250px;
@@ -61,14 +59,16 @@ td div.columnOverflow {
 	padding: 1%;
 }
 
-#frontPageContainer{
+#frontPageContainer {
 	position: relative;
 	display: block;
 	width: 250px;
 	margin: 40px auto 0px;
 }
 
-#toggle-login, #toggle-signup, #toggle-recovery, #logInButton, #registerButton, #recoveryButton, #submitTicketButton, #respondToTicketButton {
+#toggle-login, #toggle-signup, #toggle-recovery, #logInButton,
+	#registerButton, #recoveryButton, #submitTicketButton,
+	#respondToTicketButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -81,26 +81,26 @@ td div.columnOverflow {
 	cursor: pointer;
 }
 
-h1.frontPage{
-  	border-radius: 5px 5px 0px 0px;
-  	margin: -35px 0px 0px;
-  	background: #0d94d2;
-  	padding: 10px 0;
-  	font-family: 'Arial';
-  	font-size: 18px;
-  	text-align: center;
-  	color: #fff;
+h1.frontPage {
+	border-radius: 5px 5px 0px 0px;
+	margin: -35px 0px 0px;
+	background: #0d94d2;
+	padding: 10px 0;
+	font-family: 'Arial';
+	font-size: 18px;
+	text-align: center;
+	color: #fff;
 }
 
-.frontPageForms{
+.frontPageForms {
 	border-radius: 0px 0px 5px 5px;
-	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
+	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 	text-align: center;
 	padding: 4% 4%;
 }
 
 #regTitle {
-    width: 230px;
+	width: 230px;
 	background: #f1f8ec;
 	margin: 8px 0px;
 	border: 1px solid #555;
@@ -110,7 +110,8 @@ h1.frontPage{
 	color: #555;
 }
 
-#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName, #regMail, #regPass, #regConfPass {
+#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName,
+	#regMail, #regPass, #regConfPass {
 	width: 208px;
 	background: #f1f8ec;
 	margin: 8px 0px;
@@ -123,17 +124,16 @@ h1.frontPage{
 
 /* =========================================================================================================================== */
 /* User page - designed the stuff */
-
-#mainContainer{
+#mainContainer {
 	width: 1225px;
 	display: block;
 	margin: 0 auto;
 }
 
-#menuWrapper{
-	float:left;
-	width:15.5%;
-	overflow:hidden;
+#menuWrapper {
+	float: left;
+	width: 15.5%;
+	overflow: hidden;
 	margin: 0px 5px 0px 0px;
 	border-radius: 10px;
 	display: block;
@@ -141,18 +141,17 @@ h1.frontPage{
 	padding: 1%;
 }
 
-#contextWrapper{
-	float:left;
-	width:80%;
-	overflow:hidden;
+#contextWrapper {
+	float: left;
+	width: 80%;
+	overflow: hidden;
 	border-radius: 10px;
 	display: block;
 	text-align: center;
 	padding: 1%;
 }
 
-.menuRightArrow
-{
+.menuRightArrow {
 	display: inline-block;
 	float: right;
 	width: 0;
@@ -162,8 +161,7 @@ h1.frontPage{
 	border-color: transparent transparent transparent #f1f8ec;
 }
 
-.menuRightArrowSelected
-{
+.menuRightArrowSelected {
 	display: inline-block;
 	float: right;
 	width: 0;
@@ -200,23 +198,23 @@ h1.frontPage{
 	cursor: pointer;
 }
 
-h1.userPage{
-  	border-radius: 5px;
-  	margin: 5px 0px 0px 0px;
-  	background: #0d94d2;
-  	padding: 10px 0;
-  	font-family: 'Arial';
-  	font-size: 18px;
-  	text-align: center;
-  	color: #fff;
+h1.userPage {
+	border-radius: 5px;
+	margin: 5px 0px 0px 0px;
+	background: #0d94d2;
+	padding: 10px 0;
+	font-family: 'Arial';
+	font-size: 18px;
+	text-align: center;
+	color: #fff;
 }
 
-h2.userPage{
-  	margin: 20px 0px 0px 0px;
-  	font-family: 'Arial';
-  	font-size: 32px;
-  	text-align: center;
-  	color: #0d94d2;
+h2.userPage {
+	margin: 20px 0px 0px 0px;
+	font-family: 'Arial';
+	font-size: 32px;
+	text-align: center;
+	color: #0d94d2;
 }
 
 .ticketInput {
@@ -229,10 +227,6 @@ h2.userPage{
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
-}
-
-.ticketComments {
-	margin: 5px auto !important;
 }
 
 .ticketCategories {
@@ -283,8 +277,7 @@ h2.userPage{
 	padding: 8px;
 }
 
-.ticketView 
-{ 
+.ticketView {
 	table-layout: fixed;
 	width: 100%;
 	margin: 0px 0px 5px 0px;
@@ -292,70 +285,144 @@ h2.userPage{
 	border-collapse: collapse;
 }
 
-.table-surf
-{
+.table-surf {
 	display: inline-block;
 	cursor: pointer;
 }
 
-.ticketView thead th.wide-col
-{ 
+.ticketView thead th.wide-col {
 	width: 27.5%;
 }
 
-.ticketView thead th.slim-col
-{ 
+.ticketView thead th.slim-col {
 	width: 15%;
 }
 
-.ticketView thead th#rounded-tl 
-{ 
+.ticketView thead th#rounded-tl {
 	border-radius: 5px 0px 0px 0px;
 }
 
-.ticketView thead th#rounded-tr
-{ 
+.ticketView thead th#rounded-tr {
 	border-radius: 0px 5px 0px 0px;
 }
 
-.ticketView tfoot th#rounded-bot
-{
+.ticketView tfoot th#rounded-bot {
 	border-radius: 0px 0px 5px 5px;
 }
 
-.ticketView tbody tr:hover td 
-{ 
-	color: #333; 
-	background: linear-gradient(to bottom, #7bc143 0%,#b6d81c 48%,#7bc143 100%);
+.ticketView tbody tr:hover td {
+	color: #333;
+	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 }
 
-.ticketView tbody
-{
+.ticketView tbody {
 	outline: 1px solid #0d94d2;
-  	outline-offset: -1px;
+	outline-offset: -1px;
 }
 
-.ticketView tbody tr 
-{
+.ticketView tbody tr {
 	border-top: 1px solid #0d94d2;
 	cursor: pointer;
 }
 
-.ticketView th 
-{ 
-	font-size: 18px; 
-	text-align: center; 
+.ticketView th {
+	font-size: 18px;
+	text-align: center;
 	padding: 10px;
 	background: #0d94d2;
-	font-weight: bold; 
-	color: #fff; 
+	font-weight: bold;
+	color: #fff;
 }
 
-.ticketView td 
-{ 
-	font-size: 14px; 
-	text-align: center; 
-	padding: 5px; 
-	background: #f1f8ec; 
+.ticketView td {
+	font-size: 14px;
+	text-align: center;
+	padding: 5px;
+	background: #f1f8ec;
 	color: #000;
+}
+
+#ticketCommentsWrapper {
+	margin: 5px auto !important;
+	padding-top: 60px !important;
+	padding-bottom: 10px !important;
+}
+
+.commentWrapper {
+	border-radius: 5px 5px 0px 0px;
+}
+
+.userNameLeft {
+	border-radius: 5px 5px 0px 0px;
+	background-color: #7BC143;
+	text-align: center;
+	width: 100px;
+	padding: 10px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: 15px;
+	margin-right: auto;
+	margin-top: -40px;
+}
+
+.commentBlockLeft {
+	border-radius: 0px 5px 5px 5px;
+	background-color: #dddddd;
+	text-align: left;
+	padding: 10px 20px 10px 20px;
+	margin-left: 15px;
+	margin-right: 15px;
+	width: 75%;
+	margin-bottom: 10px;
+}
+
+.commentDateLeft {
+	margin-left: auto;
+	margin-top: 5px;
+	text-align: right;
+}
+
+.userNameRight {
+	border-radius: 5px 5px 0px 0px;
+	background-color: #4bb8ef;
+	text-align: center;
+	width: 100px;
+	padding: 10px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: auto;
+	margin-right: 15px;
+	margin-top: -40px;
+}
+
+.secondUserNameRight {
+	border-radius: 5px 5px 0px 0px;
+	background-color: #4bb8ef;
+	text-align: center;
+	width: 100px;
+	padding: 10px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: auto;
+	margin-right: 15px;
+}
+
+.commentBlockRight {
+	border-radius: 5px 0px 5px 5px;
+	text-align: right;
+	padding: 10px 20px 10px 20px;
+	margin-right: 15px;
+	margin-left: auto;
+	background-color: #dddddd;
+	width: 75%;
+	margin-bottom: 10px;
+}
+
+.commentDateRight {
+	margin-right: auto;
+	margin-top: 5px;
+	text-align: left;
 }
