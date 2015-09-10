@@ -106,7 +106,7 @@
 			<div id="contextWrapper">
 				<div id='userPanelPageContainer'>
 					<h1 class="userPage">Welcome !</h1>
-					<h1 id="welcomeMessage"></h1>
+					<h2 class="userPage">CTS Version: 0.01_ALPHA</h1>
 				</div>
 			</div>
 			</div>
@@ -116,7 +116,7 @@
 			<select class="searchTickets" id="ticketSearchDropBox">
 				<option selected value="Subject">Subject</option>
 				<option value="Category">Category</option>
-				<option value="Date">Date</option>
+				<option value="Status">Status</option>
 			</select>
 			<span href="#" class="button" id="ticketSearchButton">Search</span>
 			
@@ -142,9 +142,9 @@
 							<div class="table-surf" id="nextPageReqBtn">&#62;</div>
 							&emsp;
 							<div class="table-surf" id="lastPageReqBtn">&#62;&#62;</div>
-							<div id="tkPerPgDisplay">
+							<div id="tkPerPgDiv">
 								Tickets/Page
-								<select class="ticketsPerPage" id="ticketsPerPage">
+								<select id="ticketsPerPage">
 									<option selected disabled value=""></option>
 									<option value="10">10</option>
 									<option value="25">25</option>
@@ -171,7 +171,7 @@
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
 			<h1 id="ticketTitle" class="userPage"></h1>
-			<div id="ticketComments" class="ticketInput ticketCommentBorder"></div>	
+			<div id="ticketComments" class="ticketInput"></div>	
 			<textarea id='ticketResponse' rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" class="button" id="respondToTicketButton">Submit</span>
 	</script>

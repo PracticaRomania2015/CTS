@@ -173,10 +173,24 @@ h1.frontPage{
 	border-color: transparent transparent transparent #7bc143;
 }
 
-#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut, #ticketSearchButton {
+#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+}
+
+#ticketSearchButton {
+	width: 150px;
+	border-radius: 5px;
+	background: #0d94d2;
+	display: inline-block;
 	margin: 5px 0px 5px 0px;
 	padding: 10px;
 	font-family: 'Arial';
@@ -221,13 +235,9 @@ h2.userPage{
 	margin: 5px auto !important;
 }
 
-.ticketCommentBorder {
-	margin: 10px auto 0px !important;
-}
-
-.ticketCategories{
+.ticketCategories {
 	border-radius: 5px;
-	width: 48.7%;
+	width: 250px;
 	background: #f1f8ec;
 	margin: 10px 0px 0px 0px;
 	border: 1px solid #555;
@@ -237,12 +247,12 @@ h2.userPage{
 	color: #555;
 }
 
-#tkPerPgDisplay{
+#tkPerPgDiv {
 	display: inline-block;
 	float: right;
 }
 
-.ticketsPerPage{
+#ticketsPerPage {
 	border-radius: 5px;
 	width: 50px;
 	background: #f1f8ec;
@@ -254,29 +264,23 @@ h2.userPage{
 	color: #555;
 }
 
-.searchTickets{
+.searchTickets {
 	border-radius: 5px;
-	width: 35%;
-	margin: 10px 0px 10px 0px;
 	border: 1px solid #555;
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
+	background: #f1f8ec;
 }
 
-#ticketSearchBox  {
+#ticketSearchBox {
+	width: 300px;
 	padding: 9px;
-	background: #f1f8ec;
 }
 
-#ticketSearchDropBox  {
+#ticketSearchDropBox {
+	width: 150px;
 	padding: 8px;
-	background: #f1f8ec;
-}
-
-#ticketSearchButton{
-	display: inline-block;
-	width: 21%;
 }
 
 .ticketView 
