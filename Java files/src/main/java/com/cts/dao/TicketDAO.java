@@ -80,9 +80,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				Category category = new Category();
-				category.setCategoryId(resultSet.getInt(1));
-				category.setCategoryName(resultSet.getString(2));
-				category.setParentCategoryId(resultSet.getInt(3));
+				category.setCategoryId(resultSet.getInt("CategoryId"));
+				category.setCategoryName(resultSet.getString("CategoryName"));
+				category.setParentCategoryId(resultSet.getInt("ParentCategoryId"));
 				categories.add(category);
 			}
 		} catch (SQLException e) {
@@ -105,8 +105,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				Category subcategory = new Category();
-				subcategory.setCategoryId(resultSet.getInt(1));
-				subcategory.setCategoryName(resultSet.getString(2));
+				subcategory.setCategoryId(resultSet.getInt("CategoryId"));
+				subcategory.setCategoryName(resultSet.getString("CategoryName"));
 				subcategory.setParentCategoryId(category.getCategoryId());
 				subcategories.add(subcategory);
 			}
@@ -146,27 +146,31 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				Ticket ticket = new Ticket();
-				ticket.setTicketId(resultSet.getInt(1));
-				ticket.setSubject(resultSet.getString(2));
+				ticket.setTicketId(resultSet.getInt("TicketId"));
+				ticket.setSubject(resultSet.getString("Subject"));
 				TicketComment firstTicketComment = new TicketComment();
-				firstTicketComment.setDateTime(resultSet.getTimestamp(3));
+				firstTicketComment.setDateTime(resultSet.getTimestamp("DateTime"));
 				ticket.getComments().add(firstTicketComment);
 				Category category = new Category();
-				category.setCategoryId(resultSet.getInt(4));
-				category.setCategoryName(resultSet.getString(5));
+				category.setCategoryId(resultSet.getInt("CategoryId"));
+				category.setCategoryName(resultSet.getString("CategoryName"));
 				ticket.setCategory(category);
 				State state = new State();
-				state.setStateId(resultSet.getInt(6));
-				state.setStateName(resultSet.getString(7));
+				state.setStateId(resultSet.getInt("StateId"));
+				state.setStateName(resultSet.getString("StateName"));
 				ticket.setState(state);
 				User assignedUser = new User();
-				assignedUser.setFirstName(resultSet.getString(8));
-				assignedUser.setLastName(resultSet.getString(9));
-				assignedUser.setUserId(resultSet.getInt(10));
+				assignedUser.setFirstName(resultSet.getString("FirstName"));
+				assignedUser.setLastName(resultSet.getString("LastName"));
+				assignedUser.setUserId(resultSet.getInt("AssignedToUserId"));
 				ticket.setAssignedToUser(assignedUser);
 				TicketComment lastTicketComment = new TicketComment();
-				lastTicketComment.setDateTime(resultSet.getTimestamp(11));
+				lastTicketComment.setDateTime(resultSet.getTimestamp("LastDateTime"));
 				ticket.getComments().add(lastTicketComment);
+				Priority priority = new Priority();
+				priority.setPriorityId(resultSet.getInt("PriorityId"));
+				priority.setPriorityName(resultSet.getString("PriorityName"));
+				ticket.setPriority(priority);
 				tickets.add(ticket);
 			}
 			setOutParametersAfterExecute();
@@ -192,16 +196,16 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				TicketComment ticketComment = new TicketComment();
-				ticketComment.setCommentId(resultSet.getInt(1));
+				ticketComment.setCommentId(resultSet.getInt("CommentId"));
 				ticketComment.setTicketId(ticket.getTicketId());
-				ticketComment.setDateTime(resultSet.getTimestamp(2));
-				ticketComment.setComment(resultSet.getString(3));
+				ticketComment.setDateTime(resultSet.getTimestamp("DateTime"));
+				ticketComment.setComment(resultSet.getString("Comment"));
 				User user = new User();
-				user.setUserId(resultSet.getInt(4));
-				user.setFirstName(resultSet.getString(5));
-				user.setLastName(resultSet.getString(6));
+				user.setUserId(resultSet.getInt("UserId"));
+				user.setFirstName(resultSet.getString("FirstName"));
+				user.setLastName(resultSet.getString("LastName"));
 				ticketComment.setUser(user);
-				ticketComment.setFilePath(resultSet.getString(7));
+				ticketComment.setFilePath(resultSet.getString("FilePath"));
 				ticketComments.add(ticketComment);
 			}
 		} catch (SQLException e) {
@@ -304,9 +308,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				User admin = new User();
-				admin.setUserId(resultSet.getInt(1));
-				admin.setFirstName(resultSet.getString(2));
-				admin.setLastName(resultSet.getString(3));
+				admin.setUserId(resultSet.getInt("UserId"));
+				admin.setFirstName(resultSet.getString("FirstName"));
+				admin.setLastName(resultSet.getString("LastName"));
 				admins.add(admin);
 			}
 		} catch (SQLException e) {
@@ -353,8 +357,8 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			while (resultSet.next()) {
 
 				Priority priority = new Priority();
-				priority.setPriorityId(resultSet.getInt(1));
-				priority.setPriorityName(resultSet.getString(2));
+				priority.setPriorityId(resultSet.getInt("PriorityId"));
+				priority.setPriorityName(resultSet.getString("PriorityName"));
 				priorities.add(priority);
 			}
 		} catch (SQLException e) {

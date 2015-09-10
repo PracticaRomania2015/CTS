@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/8/2015 12:04:57 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/10/2015 8:38:13 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -29,12 +29,13 @@ BEGIN
 
 		SELECT @TotalNumberOfTickets = COUNT(*) FROM
 		(
-			SELECT Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime
+			SELECT Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Ticket.PriorityId) as PriorityId, MAX(Priority.PriorityName) as PriorityName
 			FROM Ticket
 			INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 			INNER JOIN State ON Ticket.StateId = State.StateId
 			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+			INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
 			WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
@@ -63,12 +64,13 @@ BEGIN
 			SELECT @TicketsPerPage = @TicketsPerPage - (@TicketTo - @TotalNumberOfTickets)
 		END
 
-		SELECT * FROM (SELECT TOP (@TicketsPerPage) * FROM (SELECT TOP (@TicketTo) Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime
+		SELECT * FROM (SELECT TOP (@TicketsPerPage) * FROM (SELECT TOP (@TicketTo) Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Ticket.PriorityId) as PriorityId, MAX(Priority.PriorityName) as PriorityName
 		FROM Ticket
 		INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 		INNER JOIN State ON Ticket.StateId = State.StateId
 		INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 		LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+		INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
 		WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
@@ -92,13 +94,14 @@ BEGIN
 
 		SELECT @TotalNumberOfTickets = COUNT(*) FROM
 		(
-			SELECT TicketComment.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime
+			SELECT TicketComment.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Ticket.PriorityId) as PriorityId, MAX(Priority.PriorityName) as PriorityName
 			FROM Ticket
 			INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 			INNER JOIN State ON Ticket.StateId = State.StateId
 			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 			INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND UserCategory.CategoryId = Ticket.CategoryId
 			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+			INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
 			WHERE (@TextToSearch = '')
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
@@ -127,13 +130,14 @@ BEGIN
 			SELECT @TicketsPerPage = @TicketsPerPage - (@TicketTo - @TotalNumberOfTickets)
 		END
 
-		SELECT * FROM (SELECT TOP (@TicketsPerPage) * FROM (SELECT TOP (@TicketTo) Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime
+		SELECT * FROM (SELECT TOP (@TicketsPerPage) * FROM (SELECT TOP (@TicketTo) Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryId) AS CategoryId, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateId) AS StateId, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Ticket.AssignedToUserId) as AssignedToUserId, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Ticket.PriorityId) as PriorityId, MAX(Priority.PriorityName) as PriorityName
 		FROM Ticket
 		INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 		INNER JOIN State ON Ticket.StateId = State.StateId
 		INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 		INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND UserCategory.CategoryId = Ticket.CategoryId
 		LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+		INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
 		WHERE (@TextToSearch = '')
 			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
 			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
