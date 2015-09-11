@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/11/2015 12:30:56 PM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/11/2015 1:26:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -22,7 +22,7 @@ BEGIN
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @UserId = UserId, @FirstName = FirstName, @LastName = LastName, @Title = Title, @Error = 0
+	SELECT @UserId = UserId, @FirstName = FirstName, @LastName = LastName, @Title = Title, @IsAdmin = IsAdmin, @Error = 0
 	FROM [User]
 	WHERE Email = @Email AND Password = @Password
 

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/8/2015 12:05:34 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/11/2015 1:31:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -14,7 +14,8 @@ BEGIN
 	SET NOCOUNT ON;
 	SELECT [User].UserId, FirstName, LastName
 	FROM [User]
-	INNER JOIN UserCategory ON [User].UserId = UserCategory.UserId AND CategoryId = @CategoryId
+	INNER JOIN Category ON Category.CategoryId = @CategoryId
+	INNER JOIN UserCategory ON [User].UserId = UserCategory.UserId AND (UserCategory.CategoryId = @CategoryId OR UserCategory.CategoryId = Category.ParentCategoryId)
 	ORDER BY FirstName, LastName, UserId
 
 	-- add history event
