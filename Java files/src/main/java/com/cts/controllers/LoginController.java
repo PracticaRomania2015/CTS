@@ -22,8 +22,6 @@ import com.cts.utils.HashUtil;
  */
 @Controller
 public class LoginController {
-	
-	//private ResponseValues responseValues;
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
@@ -50,8 +48,7 @@ public class LoginController {
 	 *         otherwise
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public String login(@RequestBody User user) {
+	public @ResponseBody String login(@RequestBody User user) {
 
 		logger.info("Attempting a login ...");
 
@@ -76,10 +73,9 @@ public class LoginController {
 
 			logger.info("Login succesfully!");
 			String userJson = getUserObjectInJsonFormat(user);
-			if(userJson != null){				
+			if (userJson != null) {	
 				return userJson;
-			}
-			else{
+			} else {
 				return new LoginResponse().getMessageJson(ResponseValues.UNKNOWN);
 			}
 		} else {

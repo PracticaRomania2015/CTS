@@ -20,9 +20,7 @@ var LogInView = GenericFrontPageChildView.extend({
 		
 		user.save({}, {
 			success : function(model, response) {
-				console.log(response);
 				if (response.userId) {
-					console.log(response.userId);
 					sessionStorage.loggedUserId = response.userId;
 					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 					userPanelPageFunctionality();

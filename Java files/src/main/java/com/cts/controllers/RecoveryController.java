@@ -29,8 +29,7 @@ public class RecoveryController {
 	 * @return message that will be displayed on ui.
 	 */
 	@RequestMapping(value = "/recoveryPassword", method = RequestMethod.POST)
-	@ResponseBody
-	public String recoveryPassword(@RequestBody User user) {
+	public @ResponseBody String recoveryPassword(@RequestBody User user) {
 
 		String subject = "New password";
 		logger.info("Attempting to recover the password for the following email: " + user.getEmail());

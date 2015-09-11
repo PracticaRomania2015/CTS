@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import com.cts.entities.User;
  * Handle requests for view and response to tickets page.
  */
 @Controller
-@Scope("session")
 public class TicketViewAndResponseController {
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -37,13 +35,16 @@ public class TicketViewAndResponseController {
 	 * @return ticket object with comments or error message.
 	 */
 	@RequestMapping(value = "/viewTicket", method = RequestMethod.POST)
-	@ResponseBody
-	public String viewTicketComments(@RequestBody Ticket ticket) {
+	public @ResponseBody String viewTicket(@RequestBody Ticket ticket) {
 
 		logger.info("Attempting to retrieve full details and comments for a ticket.");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		ticket.setComments(ticketDAO.getTicketComments(ticket));
+		if (ticketDAO.getFullTicket(ticket)){
+			
+			logger.info("Full ticket received successfully from db.");
+		}
+		
 		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
 
@@ -62,8 +63,7 @@ public class TicketViewAndResponseController {
 	 * @return ticket object with the new comment submitted or error message.
 	 */
 	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
-	@ResponseBody
-	public String addComment(@RequestBody Ticket ticket) {
+	public @ResponseBody String addComment(@RequestBody Ticket ticket) {
 
 		logger.info("Attempting to add a comment for a ticket.");
 
@@ -100,8 +100,7 @@ public class TicketViewAndResponseController {
 	 * @return success or error message if admin was assigned to ticket
 	 */
 	@RequestMapping(value = "/assignAdminToTicket", method = RequestMethod.POST)
-	@ResponseBody
-	public String assignTicket(@RequestBody Ticket ticket) {
+	public @ResponseBody String assignTicket(@RequestBody Ticket ticket) {
 		
 		if (ticket == null) {
 
@@ -131,8 +130,7 @@ public class TicketViewAndResponseController {
 	 * @return success or error message if ticket was closed
 	 */
 	@RequestMapping(value = "/closeTicket", method = RequestMethod.POST)
-	@ResponseBody
-	public String closeTicket(@RequestBody Ticket ticket) {
+	public @ResponseBody String closeTicket(@RequestBody Ticket ticket) {
 
 		if (ticket == null) {
 
@@ -163,8 +161,7 @@ public class TicketViewAndResponseController {
 	 * @return ticket object with comments or error message.
 	 */
 	@RequestMapping(value = "/getAdminsForCategory", method = RequestMethod.POST)
-	@ResponseBody
-	public String getAdminsForCategory(@RequestBody Category category) {
+	public @ResponseBody String getAdminsForCategory(@RequestBody Category category) {
 
 		logger.info("Attempting to retrieve admins for category.");
 

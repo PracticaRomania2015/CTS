@@ -175,7 +175,7 @@ public class SubmitTicketControllerTest {
 		ticket.setComments(comments);
 		String ticketJson = submitTicketController.submitTicket(ticket);
 		assertEquals(getTicketInJsonFormat(ticket), ticketJson);
-		assertEquals(getTicketInJsonFormat(ticket), ticketViewAndResponseController.viewTicketComments(ticket));
+		assertEquals(getTicketInJsonFormat(ticket), ticketViewAndResponseController.viewTicket(ticket));
 		TicketComment newTicketComment = new TicketComment();
 		newTicketComment.setComment("test");
 		newTicketComment.setDateTime(new Timestamp(0));
@@ -183,7 +183,7 @@ public class SubmitTicketControllerTest {
 		newTicketComment.setTicketId(ticket.getTicketId());
 		ticket.getComments().add(newTicketComment);
 		ticketJson = ticketViewAndResponseController.addComment(ticket);
-		assertEquals(ticketJson, ticketViewAndResponseController.viewTicketComments(ticket));
+		assertEquals(ticketJson, ticketViewAndResponseController.viewTicket(ticket));
 		ViewTicketsRequest viewTicketsRequest = new ViewTicketsRequest();
 		viewTicketsRequest.setUser(testUser);
 		viewTicketsRequest.setTypeOfRequest(0);
@@ -218,7 +218,9 @@ public class SubmitTicketControllerTest {
 	@Test
 	public void testGetCategories() {
 
-		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getCategories());
+		User user = new User();
+		user.setUserId(0);
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getCategories(user));
 	}
 
 	@Test

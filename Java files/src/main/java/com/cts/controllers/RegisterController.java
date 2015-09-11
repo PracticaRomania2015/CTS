@@ -36,6 +36,7 @@ public class RegisterController{
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
 
 	public RegisterController() {
+		
 		emailRegexp = ConfigReader.getInstance().getValueForKey("emailRegexp");
 		pattern = Pattern.compile(emailRegexp);
 	}
@@ -53,13 +54,13 @@ public class RegisterController{
 	 * @return A json response if error or success
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	@ResponseBody
-	public String register(@RequestBody User user) {
+	public @ResponseBody String register(@RequestBody User user) {
 
 		localSuccess = true;
 
 		logger.info("######## Attempting a register...");
 		try {
+			
 			// Checks if the fields are empty (eg: "")
 			if (user.getEmail().trim().isEmpty()) {
 
@@ -68,9 +69,11 @@ public class RegisterController{
 				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
 			}
 		} catch (NullPointerException e) {
+			
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
 		}
 		try {
+			
 			if (user.getFirstName().trim().isEmpty()) {
 
 				localSuccess = false;
@@ -79,36 +82,45 @@ public class RegisterController{
 
 			}
 		} catch (NullPointerException e) {
+			
 			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD);
 		}
 		try {
+			
 			if (user.getLastName().trim().isEmpty()) {
+				
 				localSuccess = false;
 				logger.info("Error: Last Name field is empty!");
 				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
 
 			}
 		} catch (NullPointerException e) {
+			
 			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
 		}
 		try {
+			
 			if (user.getPassword().trim().isEmpty()) {
+				
 				localSuccess = false;
 				logger.info("Error: Password field is empty!");
 				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
 
 			}
 		} catch (NullPointerException e) {
+			
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
 		}
 		try {
 			if (user.getTitle().trim().isEmpty()) {
+				
 				localSuccess = false;
 				logger.info("Error: A title option must be selected!");
 				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
 
 			}
 		} catch (NullPointerException e) {
+			
 			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
 		}
 		// Checks if the email is valid
@@ -149,9 +161,7 @@ public class RegisterController{
 	private boolean isValidEmail(String email) {
 		
 		Matcher matcher = pattern.matcher(email);
-
 		logger.info(matcher.matches() + " for " + email);
-
 		if (!matcher.matches()) {
 
 			return false;

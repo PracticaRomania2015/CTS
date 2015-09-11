@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +17,12 @@ import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Category;
 import com.cts.entities.Ticket;
+import com.cts.entities.User;
 
 /**
  * Handle requests for submit ticket page.
  */
 @Controller
-@Scope("session")
 public class SubmitTicketController {
 
 	private static Logger logger = Logger.getLogger(SubmitTicketController.class.getName());
@@ -35,13 +34,12 @@ public class SubmitTicketController {
 	 * @return all categories or null
 	 */
 	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
-	@ResponseBody
-	public String getCategories() {
+	public @ResponseBody String getCategories(@RequestBody User user) {
 
 		logger.info("Attempting to get categories from database ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		ArrayList<Category> categories = ticketDAO.getCategories();
+		ArrayList<Category> categories = ticketDAO.getCategories(user);
 
 		logger.info("Success to get categories from database ...");
 
@@ -59,8 +57,7 @@ public class SubmitTicketController {
 	 * @return subcategories for a category or null
 	 */
 	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
-	@ResponseBody
-	public String getSubcategories(@RequestBody Category category) {
+	public @ResponseBody String getSubcategories(@RequestBody Category category) {
 
 		logger.info("Attempting to get subcategories for a category from database ...");
 
@@ -84,8 +81,7 @@ public class SubmitTicketController {
 	 * @return submit ticket page or ticket submitted successfully page.
 	 */
 	@RequestMapping(value = "/submitTicket", method = RequestMethod.POST)
-	@ResponseBody
-	public String submitTicket(@RequestBody Ticket ticket) {
+	public @ResponseBody String submitTicket(@RequestBody Ticket ticket) {
 
 		logger.info("Attempting a ticket submission ...");
 

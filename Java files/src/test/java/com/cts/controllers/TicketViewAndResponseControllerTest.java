@@ -27,7 +27,7 @@ public class TicketViewAndResponseControllerTest {
 
 		Ticket ticket = new Ticket();
 		ticket.setTicketId(1);
-		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketViewAndResponseController.viewTicketComments(ticket));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketViewAndResponseController.viewTicket(ticket));
 	}
 
 	@Test
