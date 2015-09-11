@@ -54,28 +54,32 @@ function userPanelPageFunctionality() {
 
 	var createTicketPageView, respondToTicketPageView;
 
-	$('#btn-mngTk').click(
-			function() {
-				userTicketsView = createTicketPageView = null;
-				if (!assignedTicketsView) {
-					assignedTicketsView = new AssignedTicketsView({
-						model : new ViewTicketsModel({})
-					});
-					$('#userPanelPageContainer').replaceWith(
-							assignedTicketsView.render().el);
-					handleErrorStyle();
-				}
+	if (sessionStorage.loggedUserRights == "1") {
+		$('#btn-mngTk').click(
+				function() {
+					userTicketsView = createTicketPageView = null;
+					if (!assignedTicketsView) {
+						assignedTicketsView = new AssignedTicketsView({
+							model : new ViewTicketsModel({})
+						});
+						$('#userPanelPageContainer').replaceWith(
+								assignedTicketsView.render().el);
+						handleErrorStyle();
+					}
 
-				$('#ats').show();
-				$('#mts').hide();
-				$('#sts').hide();
-				$('#ups').hide();
+					$('#ats').show();
+					$('#mts').hide();
+					$('#sts').hide();
+					$('#ups').hide();
 
-				$('#atn').hide();
-				$('#mtn').show();
-				$('#stn').show();
-				$('#upn').show();
-			});
+					$('#atn').hide();
+					$('#mtn').show();
+					$('#stn').show();
+					$('#upn').show();
+				});
+	} else {
+		$('#btn-mngTk').remove();
+	}
 
 	$('#btn-userTk').click(
 			function() {
