@@ -41,7 +41,6 @@ public class TicketViewAndResponseController {
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.getFullTicket(ticket)){
-			
 			logger.info("Full ticket received successfully from db.");
 		}
 		

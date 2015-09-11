@@ -117,14 +117,12 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 								+ ":"
 								+ addZero(currentAnswerTkDate.getMinutes());
 					}
-					var asignedToUser;
-					if (e.state.stateName == "Active"
-							|| e.state.stateName == "Closed") {
-						asignedToUser = "";
+					if (e.assignedToUser.firstName == null || e.assignedToUser.lastName == null){
+						asignedToUser = " - Unassigned";
 					} else {
-						asignedToUser = e.assignedToUser.firstName + " "
-								+ e.assignedToUser.lastName;
+						asignedToUser = " - Assigned to " + e.assignedToUser.firstName;
 					}
+					
 					currentView.addTicket(e.ticketId, e.subject,
 							e.category.categoryName, e.state.stateName,
 							asignedToUser, answerDate, submitDate);

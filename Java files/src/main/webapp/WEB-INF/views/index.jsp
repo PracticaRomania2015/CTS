@@ -28,6 +28,7 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/respondToTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getTicketContentModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getAdminForCategory.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignAdminToTicketModel.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>

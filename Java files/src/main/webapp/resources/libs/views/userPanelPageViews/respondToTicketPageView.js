@@ -5,7 +5,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	events : {
 		'click #respondToTicketButton' : 'submit',
-		'change #ticketAdminsDropBox' : 'reasignAdmin'
+		'change #ticketAdminsDropBox' : 'reassignAdmin'
 	},
 
 	initialize : function() {
@@ -13,8 +13,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			ticketId : this.model.get("ticketId")
 		});
 		
-		var lastLeftCommentUserId =0;
-		var lastRightCommentUserId =0;
+		var lastLeftCommentUserId = 0;
+		var lastRightCommentUserId = 0;
 		var loggedUserId = Number(sessionStorage.loggedUserId);
 		
 		ticket.save({}, {
@@ -119,9 +119,30 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	},
 	
-	reasignAdmin : function() {
+	reassignAdmin : function() {
+		
+		var tmpUser = new Backbone.Model({
+			userId : $("#ticketAdminsDropBox option:selected").val()
+		})
+		
+		var reassignAdminToTicket = new AssignAdminToTicket({
+			assignedToUser : tmpUser,
+			ticketId : this.model.get("ticketId")
+		});
+		console.log(reassignAdminToTicket.toJSON());
+		
+		reassignAdminToTicket.save({}, {
+			success : function(model, response) {
+				console.log(response);
+				console.log("Ticket reassigned!");
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+		
 		//TODO: asignarea efectiva a adminilor
-		console.log("assign admin SP must be called");
+		//console.log("assign admin SP must be called");
 	},
 
 	appendData : function() {
