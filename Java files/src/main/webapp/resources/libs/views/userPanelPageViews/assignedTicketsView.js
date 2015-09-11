@@ -5,23 +5,22 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 
 	events : {
 		'change #ticketsPerPage' : function() {
-			this.viewData(1, "", "");
+			this.viewData(1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click #firstPageReqBtn' : function() {
-			this.viewData(1, "", "");
+			this.viewData(1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click #ticketSearchButton' : function() {
-			this.viewData(1, $('#ticketSearchBox').val(), $(
-					'#ticketSearchDropBox').val());
+			this.viewData(1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click #lastPageReqBtn' : function() {
-			this.viewData(this.model.get("totalNumberOfPages"), "", "");
+			this.viewData(this.model.get("totalNumberOfPages"), $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click #nextPageReqBtn' : function() {
-			this.viewData(this.model.get("requestedPageNumber") + 1, "", "");
+			this.viewData(this.model.get("requestedPageNumber") + 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click #prevPageReqBtn' : function() {
-			this.viewData(this.model.get("requestedPageNumber") - 1, "", "");
+			this.viewData(this.model.get("requestedPageNumber") - 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click .openTicketComments' : 'viewTicketComments'
 	},
