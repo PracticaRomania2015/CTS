@@ -5,6 +5,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	events : {
 		'click #respondToTicketButton' : 'submit',
+		'click #closeTheTicketButton' : 'close',
 		'change #ticketAdminsDropBox' : 'reassignAdmin'
 	},
 
@@ -32,6 +33,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						$('#ticketAdminsDropBox').remove();
 						$('#respondToTicketButton').remove();
 						$('#ticketResponse').remove();
+						$('#closeTheTicketButton').remove();
 					}
 					
 					if (loggedUserId == e.user.userId) {
@@ -91,8 +93,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 				})
 				
 				var ticketOwnerId = response.comments[0].user.userId;
-				/*console.log(response.comments[0].user.userId);
-				console.log(sessionStorage.loggedUserId);*/
 				categoryAdmins.save({},{
 					success : function(model,response){
 						
@@ -191,6 +191,27 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		//TODO: asignarea efectiva a adminilor
 		//console.log("assign admin SP must be called");
 	},
+	
+	close : function(){
+			var close = new CloseTicketModel({
+				ticketId : this.model.get("ticketId")
+			})
+			
+			this.submit();
+			
+			close.save({},{
+				async: false,
+				success : function(model, response){
+					console.log(response);
+				},
+				error : function(model, response){
+					console.log(response);
+				}
+			});
+			
+			this.initialize();
+			
+		},
 
 	appendData : function() {
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));

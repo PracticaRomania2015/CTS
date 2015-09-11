@@ -29,6 +29,7 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getTicketContentModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getAdminForCategory.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignAdminToTicketModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/closeTicketModel.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
@@ -177,6 +178,7 @@
 			<textarea id='ticketResponse' rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 			<select id="ticketAdminsDropBox"></select>
 			<span href="#" class="button" id="respondToTicketButton">Submit</span>
+			<span href="#" class="button" id="closeTheTicketButton">Close</span>
 	</script>
 </head>
 <body>

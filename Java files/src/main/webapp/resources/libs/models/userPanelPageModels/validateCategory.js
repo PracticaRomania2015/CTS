@@ -8,7 +8,7 @@ var ValidateCategory = Backbone.Model.extend({
 		
 		$("#ticketCategoryDropbox").removeAttr("title");
 		$("#ticketCategoryDropbox").removeClass("error");
-		if ($("#ticketCategoryDropbox option:selected").val() == "Select your category"){
+		if ($("#ticketCategoryDropbox option:selected").val() == ""){
 			$("#ticketCategoryDropbox").addClass("error");
 			return true;
 		}
