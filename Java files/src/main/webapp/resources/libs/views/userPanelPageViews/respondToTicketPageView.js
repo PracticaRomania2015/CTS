@@ -30,10 +30,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
 					
 					if(response.state.stateName == "Closed"){
-						$('#ticketAdminsDropBox').remove();
-						$('#respondToTicketButton').remove();
-						$('#ticketResponse').remove();
-						$('#closeTheTicketButton').remove();
+						$('#ticketResponseWrapper').remove();
+
 					}
 					
 					if (loggedUserId == e.user.userId) {

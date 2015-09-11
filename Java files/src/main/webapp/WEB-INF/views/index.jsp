@@ -175,10 +175,18 @@
 	<script type="text/template" id="respondToTicketTemplate">
 			<h1 id="ticketTitle" class="userPage"></h1>
 			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
-			<textarea id='ticketResponse' rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
-			<select id="ticketAdminsDropBox"></select>
-			<span href="#" class="button" id="respondToTicketButton">Submit</span>
-			<span href="#" class="button" id="closeTheTicketButton">Close</span>
+			<div id="ticketResponseWrapper">
+				<div id="responseText">
+					<textarea id='' rows='15' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
+				</div>
+				<div id="responseButtons">
+					<label id="assignationLabel">Assign ticket to</label>
+					<select id="ticketAdminsDropBox"></select>
+					<input type="file" class="browseFile" />
+					<span href="#" class="button" id="respondToTicketButton">Submit</span>
+					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
+				</div>
+			</div>
 	</script>
 </head>
 <body>

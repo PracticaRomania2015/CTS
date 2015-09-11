@@ -428,3 +428,49 @@ h2.userPage {
 	margin-top: 5px;
 	text-align: left;
 }
+
+#ticketResponseWrapper{
+	background-color: red;
+}
+
+#responseText{
+	width: 60%;
+	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#responseButtons{
+	float: right;
+	width :30%;
+	margin-right: 40px;
+	margin-top: 20px;
+}
+#ticketAdminsDropBox{
+	width: 150px;
+	padding: 8px;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+
+#respondToTicketButton{
+	float: left;
+	width: 40%;
+}
+
+#closeTheTicketButton{
+	float: right;
+	width: 40%;
+	
+}
+
+#assignationLabel{
+	font-family: Arial;
+	color: #4bb8ef;
+}
+
+.browseFile{
+	margin: 20px;
+	margin-bottom: 40px;
+}
