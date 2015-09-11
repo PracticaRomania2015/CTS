@@ -16,7 +16,7 @@ public interface TicketDAOInterface {
 
 	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, StringBuilder totalNumberOfPages);
 
-	public ArrayList<Category> getCategories();
+	public ArrayList<Category> getCategories(User user);
 
 	public ArrayList<Category> getSubcategories(Category category);
 
