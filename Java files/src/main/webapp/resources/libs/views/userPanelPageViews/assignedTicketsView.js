@@ -36,11 +36,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	viewTicketComments : function(clicked) {
 		var respondToTicketPageView = new RespondToTicketPageView({
 			model : new RespondToTicketModel({
-				ticketId : $(clicked.currentTarget).attr('id'),
-				subject : $(clicked.currentTarget).find('td:nth-child(1)')
-						.text(),
-				category : $(clicked.currentTarget).find('td:nth-child(2)')
-						.text()
+				ticketId : $(clicked.currentTarget).attr('id')
 			})
 		});
 	
@@ -99,13 +95,6 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 
 	populateData : function(currentPage, totalPages, tkArray) {
-		function addZero(i) {
-			if (i < 10) {
-				i = "0" + i;
-			}
-			return i;
-		}
-
 		var currentView = this;
 		this.$el.find('tbody').empty();
 		_.each(tkArray,

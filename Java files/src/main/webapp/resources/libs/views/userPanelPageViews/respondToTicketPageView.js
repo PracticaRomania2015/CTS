@@ -4,28 +4,19 @@
 var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	events : {
-		'click #respondToTicketButton' : 'submit'
+		'click #respondToTicketButton' : 'submit',
+		'change #ticketAdminsDropBox' : 'reasignAdmin'
 	},
 
 	initialize : function() {
-
-		function addZero(i) {
-			if (i < 10) {
-				i = "0" + i;
-			}
-			return i;
-		}
-
 		var ticket = new GetTicketContentModel({
 			ticketId : this.model.get("ticketId")
 		});
-
+		
 		var lastLeftCommentUserId =0;
 		var lastRightCommentUserId =0;
-		
-		
 		var loggedUserId = Number(sessionStorage.loggedUserId);
-
+		
 		ticket.save({}, {
 			success : function(model, response) {
 				$('#ticketCommentsWrapper').empty();
@@ -34,7 +25,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					var hour = addZero(date.getHours());
 					var minute = addZero(date.getMinutes());
 					var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
-					
 					
 					if (loggedUserId == e.user.userId) {
 						if(lastLeftCommentUserId == loggedUserId){
@@ -82,11 +72,45 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 								lastRightCommentUserId =e.user.userId;
 						}
 							
-					}
-
-
-
+					}	
 				});
+				console.log(response);
+				$('#ticketTitle').append(response.subject + " - " + response.category.categoryName);
+
+				var assignedToId = response.assignedToUser.userId;
+		
+				var categoryAdmins = new getAdminForCategory({
+					categoryId : response.category.categoryId
+				})
+				
+				categoryAdmins.save({},{
+					success : function(model,response){
+						if (assignedToId == 0)
+						{
+							$('#ticketAdminsDropBox').append("<option value=0>Unassign ticket</option>");
+						}
+						else
+						{
+							$('#ticketAdminsDropBox').append("<option value=0 selected>Unassign ticket</option>");
+						}
+						_.each(response, function(e) {
+							if (assignedToId == e.userId)
+							{
+								$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
+							}
+							else
+							{
+								$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
+							}
+						});
+						
+					},
+					error : function(model,response){
+						console.log(response);
+					}
+				})
+				
+				
 			},
 			error : function(model, response) {
 				console.log(response);
@@ -94,13 +118,14 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		});
 
 	},
+	
+	reasignAdmin : function() {
+		//TODO: asignarea efectiva a adminilor
+		console.log("assign admin SP must be called");
+	},
 
 	appendData : function() {
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));
-		this.$el.find('#ticketTitle').append(this.model.get("subject")).append(
-				" - ").append(this.model.get("category"));
-
-		// append assignation stuff 
 		return this;
 	},
 

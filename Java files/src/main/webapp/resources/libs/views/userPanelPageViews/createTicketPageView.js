@@ -15,11 +15,13 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	
 	initialize : function() {
 		
-		var categories = new GetCategoriesModel({ });
+		var categories = new GetCategoriesModel({
+			userId : sessionStorage.loggedUserId
+		});
 		
 		categories.save({}, {
 			success : function(model, response) {
-				$('#ticketCategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your category</option>').val('');
+				console.log(response);
 				_.each(response, function(e) {
 						$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 					

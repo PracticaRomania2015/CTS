@@ -375,6 +375,7 @@ h2.userPage {
 	margin-right: 15px;
 	width: 75%;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 .commentDateLeft {
@@ -419,6 +420,7 @@ h2.userPage {
 	background-color: #dddddd;
 	width: 75%;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 .commentDateRight {

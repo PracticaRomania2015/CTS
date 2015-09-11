@@ -172,3 +172,10 @@ function setAssignedTicketsViewToNull() {
 function setUserTicketsViewToNull() {
 	userTicketsView = null;
 }
+
+function addZero(i) {
+	if (i < 10) {
+		i = "0" + i;
+	}
+	return i;
+}
