@@ -17,6 +17,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		var lastRightCommentUserId = 0;
 		var loggedUserId = Number(sessionStorage.loggedUserId);
 		
+		
+		
 		ticket.save({}, {
 			success : function(model, response) {
 				$('#ticketCommentsWrapper').empty();
@@ -25,6 +27,12 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					var hour = addZero(date.getHours());
 					var minute = addZero(date.getMinutes());
 					var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
+					
+					if(response.state.stateName == "Closed"){
+						$('#ticketAdminsDropBox').remove();
+						$('#respondToTicketButton').remove();
+						$('#ticketResponse').remove();
+					}
 					
 					if (loggedUserId == e.user.userId) {
 						if(lastLeftCommentUserId == loggedUserId){
@@ -74,8 +82,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							
 					}	
 				});
-				console.log(response);
-				$('#ticketTitle').append(response.subject + " - " + response.category.categoryName);
+				$('#ticketTitle').empty().append(response.subject + " - " + response.category.categoryName);
 
 				var assignedToId = response.assignedToUser.userId;
 		
@@ -83,38 +90,73 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					categoryId : response.category.categoryId
 				})
 				
+				var ticketOwnerId = response.comments[0].user.userId;
+				/*console.log(response.comments[0].user.userId);
+				console.log(sessionStorage.loggedUserId);*/
 				categoryAdmins.save({},{
 					success : function(model,response){
-						if (assignedToId == 0)
-						{
-							$('#ticketAdminsDropBox').append("<option value=0>Unassign ticket</option>");
-						}
-						else
-						{
-							$('#ticketAdminsDropBox').append("<option value=0 selected>Unassign ticket</option>");
-						}
-						_.each(response, function(e) {
+						
+						var assignedUserName;
+						_.each(response,function(e) {
 							if (assignedToId == e.userId)
 							{
-								$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
-							}
-							else
-							{
-								$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
+								assignedUserName = e.firstName;
 							}
 						});
 						
+						if (sessionStorage.loggedUserRights == 1)
+
+						{
+							if (ticketOwnerId == sessionStorage.loggedUserId)
+							{
+								if (assignedToId == 0){
+									$('#ticketAdminsDropBox').replaceWith("<div>Currently unassigned</div>");
+								}
+								else
+								{
+									$('#ticketAdminsDropBox').replaceWith("<div>" + assignedUserName + "</div>");
+								}
+							}
+							else
+							{
+								if (assignedToId == 0)
+								{
+									$('#ticketAdminsDropBox').append("<option value=0>Unassign ticket</option>");
+								}
+								else
+								{
+									$('#ticketAdminsDropBox').append("<option value=0 selected>Unassign ticket</option>");
+								}
+								_.each(response, function(e) {
+									if (assignedToId == e.userId)
+									{
+										$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
+									}
+									else
+									{
+										$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
+									}
+								});
+							}
+						}
+						else
+						{	
+							if (assignedToId == 0){
+								$('#ticketAdminsDropBox').replaceWith("<div>Currently unassigned</div>");
+							}
+							else
+							{
+								$('#ticketAdminsDropBox').replaceWith("<div>" + assignedUserName + "</div>");
+							}
+						}
+
 					},
 					error : function(model,response){
 						console.log(response);
 					}
 				})
 				
-				if(response.state.stateName == "Closed"){
-					$('#ticketAdminsDropBox').remove();
-					$('#respondToTicketButton').remove();
-					$('#ticketResponse').remove();
-				}
+				
 				
 			},
 			error : function(model, response) {
