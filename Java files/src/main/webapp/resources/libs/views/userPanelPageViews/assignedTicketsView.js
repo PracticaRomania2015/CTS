@@ -117,14 +117,14 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 								+ addZero(currentAnswerTkDate.getMinutes());
 					}
 					if (e.assignedToUser.firstName == null || e.assignedToUser.lastName == null){
-						asignedToUser = " - Unassigned";
+						assignedToUser = " - Unassigned";
 					} else {
-						asignedToUser = " - Assigned to " + e.assignedToUser.firstName;
+						assignedToUser = " - Assigned to " + e.assignedToUser.firstName;
 					}
 					
 					currentView.addTicket(e.ticketId, e.subject,
 							e.category.categoryName, e.state.stateName,
-							asignedToUser, answerDate, submitDate);
+							e.state.stateName == "Closed" ? "" : assignedToUser, answerDate, submitDate);
 				});
 		this.$el.find('#ticketPagingNumbering').empty().append(
 				currentPage + "/" + totalPages);
