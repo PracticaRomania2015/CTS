@@ -8,6 +8,7 @@ public class User {
 	private String title;
 	private String email;
 	private String password;
+	private int isAdmin;
 
 	public User() {
 
@@ -17,6 +18,15 @@ public class User {
 		firstName = "";
 		lastName = "";
 		title = "";
+		isAdmin = 0;
+	}
+
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	public String getEmail() {
