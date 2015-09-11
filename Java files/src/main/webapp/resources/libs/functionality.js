@@ -151,7 +151,9 @@ function userPanelPageFunctionality() {
 	$('#btn-logOut').click(
 			function() {
 				sessionStorage.clear();
-
+				
+				assignedTicketsView = userTicketsView = createTicketPageView = null;
+				
 				$('#mainContainer').replaceWith(
 						_.template($('#frontPageTemplate').html()));
 				frontPageFunctionality();

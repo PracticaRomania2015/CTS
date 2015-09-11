@@ -110,6 +110,11 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					}
 				})
 				
+				if(response.state.stateName == "Closed"){
+					$('#ticketAdminsDropBox').remove();
+					$('#respondToTicketButton').remove();
+					$('#ticketResponse').remove();
+				}
 				
 			},
 			error : function(model, response) {
