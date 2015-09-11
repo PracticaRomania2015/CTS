@@ -110,11 +110,11 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							if (ticketOwnerId == sessionStorage.loggedUserId)
 							{
 								if (assignedToId == 0){
-									$('#ticketAdminsDropBox').replaceWith("<div>Currently unassigned</div>");
+									$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>Currently unassigned</div>");
 								}
 								else
 								{
-									$('#ticketAdminsDropBox').replaceWith("<div>" + assignedUserName + "</div>");
+									$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>" + assignedUserName + "</div>");
 								}
 							}
 							else
@@ -142,11 +142,11 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						else
 						{	
 							if (assignedToId == 0){
-								$('#ticketAdminsDropBox').replaceWith("<div>Currently unassigned</div>");
+								$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>Currently unassigned</div>");
 							}
 							else
 							{
-								$('#ticketAdminsDropBox').replaceWith("<div>" + assignedUserName + "</div>");
+								$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>" + assignedUserName + "</div>");
 							}
 						}
 
