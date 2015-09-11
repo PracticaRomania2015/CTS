@@ -50,9 +50,9 @@ public enum StoredProceduresNames {
 		}
 	},
 
-	GetTicketComments {
+	GetFullTicket {
 		public String toString() {
-			return "dbo.GetTicketComments";
+			return "dbo.GetFullTicket";
 		}
 	},
 

@@ -186,14 +186,26 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<TicketComment> getTicketComments(Ticket ticket) {
+	public boolean getFullTicket(Ticket ticket) {
 
 		ArrayList<TicketComment> ticketComments = new ArrayList<TicketComment>();
 		try {
 
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
-			prepareExecution(StoredProceduresNames.GetTicketComments, ticketIdParam);
-			ResultSet resultSet = execute();
+			InOutParam<String> subjectParam = new InOutParam<String>("", "Subject", true);
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(0, "CategoryId", true);
+			InOutParam<String> categoryNameParam = new InOutParam<String>("", "CategoryName", true);
+			InOutParam<Integer> stateIdParam = new InOutParam<Integer>(0, "StateId", true);
+			InOutParam<String> stateNameParam = new InOutParam<String>("", "StateName", true);
+			InOutParam<Integer> assignedUserIdParam = new InOutParam<Integer>(0, "AssignedUserId", true);
+			InOutParam<String> assignedUserFirstNameParam = new InOutParam<String>("", "AssignedUserFirstName", true);
+			InOutParam<String> assignedUserLastNameParam = new InOutParam<String>("", "AssignedUserLastName", true);
+			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(0, "PriorityId", true);
+			InOutParam<String> priorityNameParam = new InOutParam<String>("", "PriorityName", true);
+			prepareExecution(StoredProceduresNames.GetFullTicket, ticketIdParam, subjectParam, categoryIdParam,
+					categoryNameParam, stateIdParam, stateNameParam, assignedUserIdParam, assignedUserFirstNameParam,
+					assignedUserLastNameParam, priorityIdParam, priorityNameParam);
+			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
 
 				TicketComment ticketComment = new TicketComment();
@@ -209,12 +221,26 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				ticketComment.setFilePath(resultSet.getString("FilePath"));
 				ticketComments.add(ticketComment);
 			}
+			ticket.setComments(ticketComments);
+			setOutParametersAfterExecute();
+			ticket.setSubject(subjectParam.getParameter());
+			ticket.getCategory().setCategoryId(categoryIdParam.getParameter());
+			ticket.getCategory().setCategoryName(categoryNameParam.getParameter());
+			ticket.getState().setStateId(stateIdParam.getParameter());
+			ticket.getState().setStateName(stateNameParam.getParameter());
+			ticket.getAssignedToUser().setUserId(assignedUserIdParam.getParameter());
+			ticket.getAssignedToUser().setFirstName(assignedUserFirstNameParam.getParameter());
+			ticket.getAssignedToUser().setLastName(assignedUserLastNameParam.getParameter());
+			ticket.getPriority().setPriorityId(priorityIdParam.getParameter());
+			ticket.getPriority().setPriorityName(priorityNameParam.getParameter());
 		} catch (SQLException e) {
+
+			return false;
 		} finally {
 
 			closeCallableStatement();
 		}
-		return ticketComments;
+		return true;
 	}
 
 	@Override

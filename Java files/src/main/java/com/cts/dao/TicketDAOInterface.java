@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.Priority;
 import com.cts.entities.Ticket;
-import com.cts.entities.TicketComment;
 import com.cts.entities.User;
 import com.cts.entities.ViewTicketsRequest;
 
@@ -20,7 +19,7 @@ public interface TicketDAOInterface {
 
 	public ArrayList<Category> getSubcategories(Category category);
 
-	public ArrayList<TicketComment> getTicketComments(Ticket ticket);
+	public boolean getFullTicket(Ticket ticket);
 
 	public boolean addCommentToTicket(Ticket ticket);
 
