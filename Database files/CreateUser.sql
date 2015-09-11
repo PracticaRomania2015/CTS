@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/11/2015 12:30:43 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/11/2015 4:17:18 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -37,6 +37,7 @@ BEGIN
 		@DateTime = @DateTime
 	END
 	ELSE
+	BEGIN
 		SELECT @Error = 1
 
 
@@ -48,4 +49,5 @@ BEGIN
 		@UserId = NULL,
 		@Action = @Action, 
 		@DateTime = @DateTime
+	END
 END
