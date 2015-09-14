@@ -129,7 +129,7 @@
 						<th id="rounded-tl" class="wide-col">Subject</th>
 						<th class="slim-col">Category</th>
 						<th class="wide-col">Status</th>
-						<th class="slim-col">Answer Date</th>
+						<th class="slim-col">Last Comment</th>
 						<th id="rounded-tr" class="slim-col">Submit Date</th>
      	 			</tr>
     			</thead>

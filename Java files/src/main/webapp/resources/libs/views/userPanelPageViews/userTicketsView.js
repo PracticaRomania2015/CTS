@@ -107,7 +107,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 							+ " " + addZero(currentSubmitTkDate.getHours())
 							+ ":" + addZero(currentSubmitTkDate.getMinutes());
 
-					if (e.comments[0].user.userId == e.comments[1].user.userId) {
+					if (e.comments[0].dateTime == e.comments[1].dateTime) {
 						answerDate = "Not yet answered!";
 					} else {
 						var currentAnswerTkDate = new Date(
