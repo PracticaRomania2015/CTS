@@ -177,7 +177,7 @@
 			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
 			<div id="ticketResponseWrapper">
 				<div id="responseText">
-					<textarea id='' rows='15' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
+					<textarea id="ticketResponse" rows='15' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 				</div>
 				<div id="responseButtons">
 					<label id="assignationLabel">Assign ticket to</label>
