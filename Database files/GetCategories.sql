@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/11/2015 12:30:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/14/2015 9:20:19 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -27,7 +27,7 @@ BEGIN
 	SELECT @DateTime = SYSDATETIME()
 
 	EXEC dbo.AddHistoryEvent 
-	@UserId = NULL,
+	@UserId = @UserId,
 	@Action = @Action, 
 	@DateTime = @DateTime
 
