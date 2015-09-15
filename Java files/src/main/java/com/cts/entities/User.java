@@ -8,7 +8,7 @@ public class User {
 	private String title;
 	private String email;
 	private String password;
-	private int isAdmin;
+	private Role role;
 
 	public User() {
 
@@ -18,15 +18,15 @@ public class User {
 		firstName = "";
 		lastName = "";
 		title = "";
-		isAdmin = 0;
+		role = new Role();
 	}
 
-	public int getIsAdmin() {
-		return isAdmin;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setIsAdmin(int isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setIsAdmin(Role role) {
+		this.role = role;
 	}
 
 	public String getEmail() {

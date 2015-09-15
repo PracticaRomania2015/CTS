@@ -16,12 +16,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		InOutParam<String> titleParam = new InOutParam<String>("", "Title", true);
 		InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 		InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
-		InOutParam<Integer> isAdminParam = new InOutParam<Integer>(0, "IsAdmin", true);
+		InOutParam<Integer> roleIdParam = new InOutParam<Integer>(0, "RoleId", true);
+		InOutParam<String> roleNameParam = new InOutParam<String>("", "RoleName", true);
 		InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
 		try {
 
 			prepareExecution(StoredProceduresNames.ValidateLogin, userIdParam, firstNameParam, lastNameParam,
-					titleParam, emailParam, passwordParam, isAdminParam, errorParam);
+					titleParam, emailParam, passwordParam, roleIdParam, roleNameParam, errorParam);
 			execute();
 
 			if (errorParam.getParameter() == 0 && userIdParam.getParameter() != 0) {
@@ -30,7 +31,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				user.setFirstName(firstNameParam.getParameter());
 				user.setLastName(lastNameParam.getParameter());
 				user.setTitle(titleParam.getParameter());
-				user.setIsAdmin(isAdminParam.getParameter());
+				user.getRole().setRoleId(roleIdParam.getParameter());
+				user.getRole().setRoleName(roleNameParam.getParameter());
 				return true;
 			} else {
 
