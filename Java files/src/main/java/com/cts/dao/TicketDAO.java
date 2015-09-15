@@ -70,13 +70,12 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<Category> getCategories(User user) {
+	public ArrayList<Category> getCategories() {
 
 		ArrayList<Category> categories = new ArrayList<Category>();
 		try {
 
-			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
-			prepareExecution(StoredProceduresNames.GetCategories, userIdParam);
+			prepareExecution(StoredProceduresNames.GetCategories);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
 
