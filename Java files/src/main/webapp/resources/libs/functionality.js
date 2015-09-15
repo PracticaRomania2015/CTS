@@ -54,7 +54,7 @@ function userPanelPageFunctionality() {
 
 	var createTicketPageView, respondToTicketPageView;
 
-	if (sessionStorage.loggedUserRights == "1") {
+	if (sessionStorage.loggedUserRights == "Admin") {
 		$('#btn-mngTk').click(
 				function() {
 					userTicketsView = createTicketPageView = null;

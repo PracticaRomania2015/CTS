@@ -18,8 +18,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		var lastRightCommentUserId = 0;
 		var loggedUserId = Number(sessionStorage.loggedUserId);
 		
-		
-		
 		ticket.save({}, {
 			success : function(model, response) {
 				$('#ticketCommentsWrapper').empty();

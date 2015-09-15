@@ -22,7 +22,7 @@ var LogInView = GenericFrontPageChildView.extend({
 			success : function(model, response) {
 				if (response.userId) {
 					sessionStorage.loggedUserId = response.userId;
-					sessionStorage.loggedUserRights = response.isAdmin;
+					sessionStorage.loggedUserRights = response.role.roleName;
 					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 					userPanelPageFunctionality();
 				} else {
