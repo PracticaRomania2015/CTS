@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/11/2015 4:17:18 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/15/2015 9:47:11 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -22,8 +22,8 @@ BEGIN
 
 	IF NOT EXISTS (SELECT UserId FROM [User] WHERE Email = @Email)
 	BEGIN
-		INSERT INTO [User] (FirstName, LastName, Title, Email, Password, IsAdmin)
-		VALUES (@FirstName, @LastName, @Title, @Email, @Password, 0)
+		INSERT INTO [User] (FirstName, LastName, Title, Email, Password, RoleId)
+		VALUES (@FirstName, @LastName, @Title, @Email, @Password, 1)
 		SELECT @Error = 0
 
 
