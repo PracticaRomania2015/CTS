@@ -233,9 +233,7 @@ public class SubmitTicketControllerTest {
 	@Test
 	public void testGetCategories() {
 
-		User user = new User();
-		user.setUserId(0);
-		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getCategories(user));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), submitTicketController.getCategories());
 	}
 
 	@Test

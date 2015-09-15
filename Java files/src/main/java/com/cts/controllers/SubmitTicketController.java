@@ -17,7 +17,6 @@ import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Category;
 import com.cts.entities.Ticket;
-import com.cts.entities.User;
 
 /**
  * Handle requests for submit ticket page.
@@ -34,12 +33,12 @@ public class SubmitTicketController {
 	 * @return all categories or null
 	 */
 	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
-	public @ResponseBody String getCategories(@RequestBody User user) {
+	public @ResponseBody String getCategories() {
 
 		logger.info("Attempting to get categories from database ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
-		ArrayList<Category> categories = ticketDAO.getCategories(user);
+		ArrayList<Category> categories = ticketDAO.getCategories();
 
 		logger.info("Success to get categories from database ...");
 
