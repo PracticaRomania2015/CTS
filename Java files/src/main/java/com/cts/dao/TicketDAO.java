@@ -70,56 +70,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<Category> getCategories() {
-
-		ArrayList<Category> categories = new ArrayList<Category>();
-		try {
-
-			prepareExecution(StoredProceduresNames.GetCategories);
-			ResultSet resultSet = execute();
-			while (resultSet.next()) {
-
-				Category category = new Category();
-				category.setCategoryId(resultSet.getInt("CategoryId"));
-				category.setCategoryName(resultSet.getString("CategoryName"));
-				category.setParentCategoryId(resultSet.getInt("ParentCategoryId"));
-				categories.add(category);
-			}
-		} catch (SQLException e) {
-		} finally {
-
-			closeCallableStatement();
-		}
-		return categories;
-	}
-
-	@Override
-	public ArrayList<Category> getSubcategories(Category category) {
-
-		ArrayList<Category> subcategories = new ArrayList<Category>();
-		try {
-
-			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
-			prepareExecution(StoredProceduresNames.GetSubcategories, categoryIdParam);
-			ResultSet resultSet = execute();
-			while (resultSet.next()) {
-
-				Category subcategory = new Category();
-				subcategory.setCategoryId(resultSet.getInt("CategoryId"));
-				subcategory.setCategoryName(resultSet.getString("CategoryName"));
-				subcategory.setParentCategoryId(category.getCategoryId());
-				subcategories.add(subcategory);
-			}
-		} catch (SQLException e) {
-		} finally {
-
-			closeCallableStatement();
-		}
-
-		return subcategories;
-	}
-
-	@Override
 	public ArrayList<Ticket> getTickets(ViewTicketsRequest viewTicketsRequest, StringBuilder totalNumberOfPages) {
 
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
@@ -323,31 +273,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	}
 
 	@Override
-	public ArrayList<User> getAdminsForCategory(Category category) {
-
-		ArrayList<User> admins = new ArrayList<User>();
-		try {
-
-			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
-			prepareExecution(StoredProceduresNames.GetAdminsForCategory, categoryIdParam);
-			ResultSet resultSet = execute();
-			while (resultSet.next()) {
-
-				User admin = new User();
-				admin.setUserId(resultSet.getInt("UserId"));
-				admin.setFirstName(resultSet.getString("FirstName"));
-				admin.setLastName(resultSet.getString("LastName"));
-				admins.add(admin);
-			}
-		} catch (SQLException e) {
-		} finally {
-
-			closeCallableStatement();
-		}
-		return admins;
-	}
-
-	@Override
 	public boolean changeTicketPriority(Ticket ticket) {
 
 		try {
@@ -370,28 +295,5 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			closeCallableStatement();
 		}
 		return true;
-	}
-
-	@Override
-	public ArrayList<Priority> getPriorities() {
-
-		ArrayList<Priority> priorities = new ArrayList<Priority>();
-		try {
-
-			prepareExecution(StoredProceduresNames.GetPriorities);
-			ResultSet resultSet = execute();
-			while (resultSet.next()) {
-
-				Priority priority = new Priority();
-				priority.setPriorityId(resultSet.getInt("PriorityId"));
-				priority.setPriorityName(resultSet.getString("PriorityName"));
-				priorities.add(priority);
-			}
-		} catch (SQLException e) {
-		} finally {
-
-			closeCallableStatement();
-		}
-		return priorities;
 	}
 }

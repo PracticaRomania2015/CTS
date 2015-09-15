@@ -2,7 +2,6 @@ package com.cts.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.ResponseValues;
 import com.cts.communication.TicketResponse;
+import com.cts.dao.CategoryDAO;
+import com.cts.dao.CategoryDAOInterface;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Category;
@@ -37,8 +37,8 @@ public class SubmitTicketController {
 
 		logger.info("Attempting to get categories from database ...");
 
-		TicketDAOInterface ticketDAO = new TicketDAO();
-		ArrayList<Category> categories = ticketDAO.getCategories();
+		CategoryDAOInterface categoryDAO = new CategoryDAO();
+		ArrayList<Category> categories = categoryDAO.getCategories();
 
 		logger.info("Success to get categories from database ...");
 
@@ -60,8 +60,8 @@ public class SubmitTicketController {
 
 		logger.info("Attempting to get subcategories for a category from database ...");
 
-		TicketDAOInterface ticketDAO = new TicketDAO();
-		ArrayList<Category> subcategories = ticketDAO.getSubcategories(category);
+		CategoryDAOInterface categoryDAO = new CategoryDAO();
+		ArrayList<Category> subcategories = categoryDAO.getSubcategories(category);
 
 		logger.info("Success to get subcategories for a category from database ...");
 

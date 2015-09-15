@@ -1,7 +1,9 @@
 package com.cts.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 
@@ -148,5 +150,30 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 			closeCallableStatement();
 		}
+	}
+
+	@Override
+	public ArrayList<User> getAdminsForCategory(Category category) {
+
+		ArrayList<User> admins = new ArrayList<User>();
+		try {
+
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
+			prepareExecution(StoredProceduresNames.GetAdminsForCategory, categoryIdParam);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				User admin = new User();
+				admin.setUserId(resultSet.getInt("UserId"));
+				admin.setFirstName(resultSet.getString("FirstName"));
+				admin.setLastName(resultSet.getString("LastName"));
+				admins.add(admin);
+			}
+		} catch (SQLException e) {
+		} finally {
+
+			closeCallableStatement();
+		}
+		return admins;
 	}
 }

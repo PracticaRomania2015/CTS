@@ -102,5 +102,17 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetPriorities";
 		}
+	},
+
+	AddCategory {
+		public String toString() {
+			return "dbo.AddCategory";
+		}
+	},
+
+	DeleteCategory {
+		public String toString() {
+			return "dbo.DeleteCategory";
+		}
 	}
 }
