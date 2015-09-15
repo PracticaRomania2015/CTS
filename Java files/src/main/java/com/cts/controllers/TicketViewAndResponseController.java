@@ -25,7 +25,7 @@ import com.cts.entities.User;
 @Controller
 public class TicketViewAndResponseController {
 
-	private static Logger logger = Logger.getLogger(LoginController.class.getName());
+	private static Logger logger = Logger.getLogger(TicketViewAndResponseController.class.getName());
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	/**

@@ -22,7 +22,7 @@ import com.cts.utils.SendEmail;
 @Controller
 public class RecoveryController {
 
-	private static Logger logger = Logger.getLogger(LoginController.class.getName());
+	private static Logger logger = Logger.getLogger(RecoveryController.class.getName());
 
 	/**
 	 * @param email

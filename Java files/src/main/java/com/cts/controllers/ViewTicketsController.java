@@ -24,7 +24,7 @@ import com.cts.entities.ViewTicketsRequest;
 @Controller
 public class ViewTicketsController {
 
-	private static Logger logger = Logger.getLogger(LoginController.class.getName());
+	private static Logger logger = Logger.getLogger(ViewTicketsController.class.getName());
 
 	/**
 	 * POST method for view tickets controller.
