@@ -237,7 +237,14 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(ticket.getAssignedToUser().getUserId(), "UserId");
-			prepareExecution(StoredProceduresNames.AssignTicketToAdmin, ticketIdParam, userIdParam);
+			// ***
+			// TODO
+			// to be changed from 1 to a real user id from ui
+			// ***
+			InOutParam<Integer> userWhoDoTheAssignId = new InOutParam<Integer>(1, "UserWhoDoTheAssignId");
+			// ***
+			prepareExecution(StoredProceduresNames.AssignTicketToAdmin, ticketIdParam, userIdParam,
+					userWhoDoTheAssignId);
 			execute();
 		} catch (SQLException e) {
 
@@ -255,8 +262,14 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			// ***
+			// TODO
+			// to be changed from 1 to a real user id from ui
+			// ***
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
+			// ***
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam, errorParam);
+			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam, userIdParam, errorParam);
 			execute();
 			if (errorParam.getParameter() == 1) {
 
@@ -280,8 +293,15 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(ticket.getPriority().getPriorityId(),
 					"PriorityId");
+			// ***
+			// TODO
+			// to be changed from 1 to a real user id from ui
+			// ***
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
+			// ***
 			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.ChangeTicketPriority, ticketIdParam, priorityIdParam, errorParam);
+			prepareExecution(StoredProceduresNames.ChangeTicketPriority, ticketIdParam, priorityIdParam, userIdParam,
+					errorParam);
 			execute();
 			if (errorParam.getParameter() == 1) {
 
