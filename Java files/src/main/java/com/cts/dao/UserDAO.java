@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
+import com.cts.entities.UserStatus;
 
 public class UserDAO extends BaseDAO implements UserDAOInterface {
 
@@ -175,5 +176,11 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			closeCallableStatement();
 		}
 		return admins;
+	}
+
+	@Override
+	public boolean updateUserStatus(UserStatus userStatus) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
+import com.cts.entities.UserStatus;
 
 public interface UserDAOInterface {
 
@@ -18,4 +19,6 @@ public interface UserDAOInterface {
 	public boolean updateUserPersonalData(UserForUpdate user);
 
 	public ArrayList<User> getAdminsForCategory(Category category);
+
+	public boolean updateUserStatus(UserStatus userStatus);
 }
