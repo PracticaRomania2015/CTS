@@ -2,12 +2,25 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import com.cts.utils.ConfigReader;
+
 public class CategoryResponse implements ResponseMessage {
 
 	private String responseType;
+	private String emptyCategoryName;
 	private String unknownError;
 
 	private String description;
+	
+	public CategoryResponse() {
+
+		initAll();
+	}
+
+	private void initAll() {
+		emptyCategoryName = ConfigReader.getInstance().getValueForKey("emptyCategoryName");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
+	}
 	
 	public String getDescription() {
 		return description;
@@ -22,6 +35,11 @@ public class CategoryResponse implements ResponseMessage {
 		switch (responseValue) {
 			case SUCCESS: {
 				responseType = "success";
+				break;
+			}
+			case EMPTYCATEGORYNAME: {
+				description = emptyCategoryName;
+				responseType = "error";
 				break;
 			}
 			default: {

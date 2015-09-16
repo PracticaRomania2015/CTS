@@ -24,11 +24,9 @@ import com.cts.utils.HashUtil;
 @Controller
 public class RegisterController{
 	
-	// Regular expression for email validation.
 	private static String emailRegexp;
 	private Pattern pattern;
 
-	// Initializing the logger for this class.
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
 
 	public RegisterController() {
@@ -38,14 +36,15 @@ public class RegisterController{
 	}
 	
 	/**
-	 * @param email The email to be verified if matches the pattern provided
-	 * @return true if the email is in the cerner.com domain, false if it is in
-	 *         any other domain.
+	 * Check if email matches the pattern
+	 * 
+	 * @param email Email to be verified if matches the pattern provided.
+	 * @return true if the email matches the regex pattern, false otherwise.
 	 */
 	private boolean isValidEmail(String email) {
 		
 		Matcher matcher = pattern.matcher(email);
-		logger.info("DEBUG: " + matcher.matches() + " for " + email + ".");
+		logger.debug(matcher.matches() + " for " + email + ".");
 		if (!matcher.matches()) {
 
 			return false;
@@ -56,35 +55,35 @@ public class RegisterController{
 	/**
 	 * Register user
 	 * 
-	 * @param user The new user to be registered
-	 * @return A json response if error or success
+	 * @param user The new user to be registered.
+	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody String register(@RequestBody User user) {
 
-		logger.info("DEBUG: Attempting to register a user.");
+		logger.debug("Attempting to register a user.");
 
 		// User first name validation
 		if (user.getFirstName() == null){
 			
-			logger.info("ERROR: First name is null!");
+			logger.error("First name is null!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
 		}
 		if (user.getFirstName().equals("")) {
 			
-			logger.info("ERROR: First name is empty!");
+			logger.error("First name is empty!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		// User last name validation
 		if (user.getLastName() == null){
 			
-			logger.info("ERROR: Last name is null!");
+			logger.error("Last name is null!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
 		}
 		if (user.getLastName().equals("")) {
 			
-			logger.info("ERROR: Last name is empty!");
+			logger.error("Last name is empty!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
 		}
 		
@@ -92,29 +91,29 @@ public class RegisterController{
 		// User email validation
 		if (user.getEmail() == null){
 			
-			logger.info("ERROR: Last name is null!");
+			logger.error("Last name is null!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 			
-			logger.info("ERROR: Last name is empty!");
+			logger.error("Last name is empty!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 		if (!isValidEmail(user.getEmail())) {
 
-			logger.info("ERROR: Invalid Email");
+			logger.error("Invalid Email");
 			return new RegisterResponse().getMessageJson(ResponseValues.INVALIDEMAILFORMAT);
 		}
 		
 		// User password validation
 		if (user.getPassword() == null){
 			
-			logger.info("ERROR: Password is null!");
+			logger.error("Password is null!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 			
-			logger.info("ERROR: Password is empty!");
+			logger.error("Password is empty!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
 		}
 		
@@ -123,11 +122,11 @@ public class RegisterController{
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.createAccount(user)) {
 			
-			logger.info("INFO: A new account was created successfully!");
+			logger.info("A new account was created successfully!");
 			return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
 		} else {
 			
-			logger.info("WARN: The email already exists!");
+			logger.warn("The email already exists!");
 			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
 		}
 	}

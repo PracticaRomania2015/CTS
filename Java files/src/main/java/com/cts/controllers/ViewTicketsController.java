@@ -35,7 +35,7 @@ public class ViewTicketsController {
 	@RequestMapping(value = "/viewTickets", method = RequestMethod.POST)
 	public @ResponseBody String viewTickets(@RequestBody ViewTicketsRequest viewTicketsRequest) {
 
-		logger.info("DEBUG: Attempting to send the list of tickets ...");
+		logger.debug("Attempting to send the list of tickets ...");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		StringBuilder totalNumberOfPages = new StringBuilder();
@@ -47,10 +47,10 @@ public class ViewTicketsController {
 			ticketsJson = objectMapper.writeValueAsString(tickets);
 		} catch (IOException e) {
 
-			logger.info("ERROR: Json error when trying to map the array of tickets.");
+			logger.error("Json error when trying to map the array of tickets.");
 			return new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		}
-		logger.info("INFO: The list of tickets was successfully retrieved!");
+		logger.info("The list of tickets was successfully retrieved!");
 		return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"tickets\":" + ticketsJson + "}";
 	}
 }

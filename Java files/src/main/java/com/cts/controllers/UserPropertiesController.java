@@ -29,85 +29,85 @@ public class UserPropertiesController {
 		// UserId validation
 		if (Integer.valueOf(user.getUserId()) == null){
 			
-			logger.info("Invalid User ID.");
+			logger.error("Invalid User ID.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.ERROR);
 		}
 			
 		if (Integer.valueOf(user.getUserId()).equals("")){
 			
-			logger.info("Invalid User ID.");
+			logger.error("Invalid User ID.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.ERROR);
 		}
 		
 		// User title validation
 		if (user.getTitle() == null) {
 							
-			logger.info("Title is null or empty.");
+			logger.error("Title is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYTITLE);
 		}
 		
 		if (user.getTitle().equals("")) {
 			
-			logger.info("Title is null or empty.");
+			logger.error("Title is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYTITLE);
 		}
 		
 		// User first name validation
 		if (user.getFirstName() == null) {
 			
-			logger.info("First Name is null or empty.");
+			logger.error("First Name is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		if (user.getFirstName().equals("")) {
 			
-			logger.info("First Name is null or empty.");
+			logger.error("First Name is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		// User last name validation
 		if (user.getLastName() == null) {
 			
-			logger.info("Last Name is null or empty.");
+			logger.error("Last Name is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		if (user.getLastName().equals("")) {
 			
-			logger.info("Last Name is null or empty.");
+			logger.error("Last Name is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		// User email validation
 		if (user.getEmail() == null) {
 			
-			logger.info("Email is null or empty.");
+			logger.error("Email is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 		
 		if (user.getEmail().equals("")) {
 			
-			logger.info("Email is null or empty.");
+			logger.error("Email is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 
 		// User old password validation
 		if (user.getOldPassword() == null) {
 					
-			logger.info("Old password is null or empty.");
+			logger.error("Old password is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
 		}
 		
 		if (user.getOldPassword().equals("")) {
 			
-			logger.info("Old password is null or empty.");
+			logger.error("Old password is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
 		}
 		
 		// User new password validation
 		if (user.getPassword() == null) {
 			
-			logger.info("New password is null or empty.");
+			logger.error("New password is null or empty.");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
 		}
 		
@@ -115,11 +115,12 @@ public class UserPropertiesController {
 			
 			if (user.getOldPassword() != user.getPassword()){
 				
-				logger.info("Passwords not matching.");
+				logger.warn("Passwords not matching.");
 				return new UserPropertiesResponse().getMessageJson(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING);
 			}
 		}
 		
+		// Update user properties
 		user.setOldPassword(HashUtil.getHash((user.getOldPassword())));
 		user.setPassword(HashUtil.getHash((user.getPassword())));
 
@@ -130,7 +131,7 @@ public class UserPropertiesController {
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.UPDATEUSERSUCCESS);
 		}
 		
-		logger.info("ERROR: Database error when trying to update user!");
+		logger.error("Database error when trying to update user!");
 		return new UserPropertiesResponse().getMessageJson(ResponseValues.DBERROR);
 
 	}

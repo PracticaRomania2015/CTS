@@ -37,12 +37,12 @@ public class SubmitTicketController {
 	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
 	public @ResponseBody String getCategories() {
 
-		logger.info("DEBUG: Attempting to get categories from database.");
+		logger.debug("Attempting to get categories from database.");
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> categories = categoryDAO.getCategories();
 
-		logger.info("INFO: Success to get categories from database ...");
+		logger.info("Success to get categories from database ...");
 
 		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
@@ -60,12 +60,12 @@ public class SubmitTicketController {
 	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
 	public @ResponseBody String getSubcategories(@RequestBody Category category) {
 
-		logger.info("DEBUG: Attempting to get subcategories for a category from database.");
+		logger.debug("Attempting to get subcategories for a category from database.");
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(category);
 
-		logger.info("INFO: Success to get subcategories for a category from database.");
+		logger.info("Success to get subcategories for a category from database.");
 
 		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
@@ -84,41 +84,41 @@ public class SubmitTicketController {
 	@RequestMapping(value = "/submitTicket", method = RequestMethod.POST)
 	public @ResponseBody String submitTicket(@RequestBody Ticket ticket) {
 
-		logger.info("DEBUG: Attempting a ticket submission.");
+		logger.debug("Attempting a ticket submission.");
 
 		// Ticket subject validation
 		if (ticket.getSubject() == null){
 			
-			logger.info("ERROR: Ticket subject is null!");
+			logger.error("Ticket subject is null!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECT);
 		}
 		if (ticket.getSubject().equals("")) {
 			
-			logger.info("ERROR: Ticket subject is empty!");
+			logger.error("Ticket subject is empty!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECT);
 		}
 		
 		// Ticket category validation
 		if (ticket.getCategory() == null){
 			
-			logger.info("ERROR: Ticket category is null!");
+			logger.error("Ticket category is null!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 		if (ticket.getCategory().equals("")) {
 			
-			logger.info("ERROR: Ticket category is empty!");
+			logger.error("Ticket category is empty!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 
 		// Ticket description validation
 		if (ticket.getComments().get(0).getComment() == null){
 			
-			logger.info("ERROR: Ticket description is null!");
+			logger.error("Ticket description is null!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 		if (ticket.getComments().get(0).getComment().equals("")) {
 			
-			logger.info("ERROR: Ticket description is empty!");
+			logger.error("Ticket description is empty!");
 			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 

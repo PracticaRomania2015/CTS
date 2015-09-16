@@ -22,15 +22,29 @@ public class RootCategManagementController {
 	private static Logger logger = Logger.getLogger(RootCategManagementController.class.getName());
 
 	/**
-	 * POST method for view tickets controller.
+	 * Add category
 	 * 
-	 * @return list of tickets or error message.
+	 * @param category The new category to be added.
+	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/rootAddCategory", method = RequestMethod.POST)
 	public @ResponseBody String addCateg(@RequestBody Category category) {
 
-		logger.info("Attempting to add a category ...");
-
+		logger.debug("Attempting to add a category.");
+		
+		// Category name validation
+		if (category.getCategoryName() == null){
+			
+			logger.error("Category name is null.");
+			return new CategoryResponse().getMessageJson(ResponseValues.EMPTYCATEGORYNAME);
+		}
+		if (category.getCategoryName().equals("")){
+			
+			logger.error("Category name is empty.");
+			return new CategoryResponse().getMessageJson(ResponseValues.EMPTYCATEGORYNAME);
+		}
+		
+		// Adding category
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.addCategory(category)) {
 
@@ -42,15 +56,23 @@ public class RootCategManagementController {
 	}
 
 	/**
-	 * POST method for view tickets controller.
+	 * Remove category
 	 * 
-	 * @return list of tickets or error message.
+	 * @param category The Category to be removed.
+	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/rootRemoveCategory", method = RequestMethod.POST)
 	public @ResponseBody String removeCateg(@RequestBody Category category) {
 
-		logger.info("Attempting to delete a category ...");
+		logger.debug("Attempting to delete a category.");
 
+		// Category ID validation
+		if (Integer.valueOf(category.getCategoryId()) == null) {
+			
+			logger.error("Category ID is null.");
+			return new CategoryResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.deleteCategory(category)) {
 

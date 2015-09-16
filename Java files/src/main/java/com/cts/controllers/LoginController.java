@@ -26,14 +26,17 @@ public class LoginController {
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
 	/**
-	 * @param user User to be logged in.
-	 * @return user object in json format.
+	 * Convert user instance to JSON
+	 * 
+	 * @param user User instance to be converted in JSON.
+	 * @return User instance in JSON format.
 	 */
 	protected String getUserObjectInJsonFormat(User user) {
 
 		String jsonMessage = null;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
+			
 			jsonMessage = objectMapper.writeValueAsString(user);
 		} catch (IOException e) {
 		}
@@ -43,36 +46,35 @@ public class LoginController {
 	/**
 	 * Authenticate user
 	 * 
-	 * @param user
-	 * @return full user details if the login was successfully or error message
-	 *         otherwise
+	 * @param user User to be logged in.
+	 * @return JSON with complete user details.
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(@RequestBody User user) {
 
-		logger.info("DEBUG: Attempting a login a user.");
+		logger.debug("Attempting a login a user.");
 
 		// Email validation
 		if (user.getEmail() == null){
 					
-			logger.info("ERROR: Email is null!");
+			logger.error("Email is null!");
 			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 				
-			logger.info("ERROR: Email is empty!");
+			logger.error("Email is empty!");
 			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
 		
 		// Password validation
 		if (user.getPassword() == null){
 					
-			logger.info("ERROR: Password is null!");
+			logger.error("Password is null!");
 			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 				
-			logger.info("ERROR: Password is empty!");
+			logger.error("Password is empty!");
 			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
 		}
 		
@@ -81,16 +83,18 @@ public class LoginController {
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.validateLogin(user)) {
 
-			logger.info("INFO: User logged in succesfully!");
+			logger.info("User logged in succesfully!");
 			String userJson = getUserObjectInJsonFormat(user);
 			if (userJson != null) {	
+				
 				return userJson;
 			} else {
+				
 				return new LoginResponse().getMessageJson(ResponseValues.UNKNOWN);
 			}
 		} else {
 			
-			logger.info("WARN: Login information is not correct!");
+			logger.warn("Login information is not correct!");
 			return new LoginResponse().getMessageJson(ResponseValues.LOGININVALIDCREDENTIALS);
 		}
 	}
