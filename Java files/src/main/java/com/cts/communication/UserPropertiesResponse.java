@@ -4,32 +4,38 @@ import java.io.IOException;
 
 import com.cts.utils.ConfigReader;
 
-public class RegisterResponse implements ResponseMessage {
+public class UserPropertiesResponse implements ResponseMessage {
 
 	private String responseType;
-	private String registerSuccess;
 	private String emptyTitle;
 	private String emptyFirstName;
 	private String emptyLastName;
 	private String emptyEmail;
 	private String invalidEmailFormat;
-	private String registerExistingEmail;
+	private String updateUserEmptyOldPassword;
+	private String updateUserEmptyNewPassword;
+	private String updateUserPasswordsNotMatching;
+	private String updateUserSuccess;
 	private String dbError;
 	private String unknownError;
 	private String description;
 
-	public RegisterResponse() {
+	public UserPropertiesResponse() {
+
 		initAll();
 	}
 
 	private void initAll() {
-		registerSuccess = ConfigReader.getInstance().getValueForKey("registerSuccess");
-		registerExistingEmail = ConfigReader.getInstance().getValueForKey("registerExistingEmail");
-		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailFormat");
+		
 		emptyTitle = ConfigReader.getInstance().getValueForKey("emptyTitle");
 		emptyFirstName = ConfigReader.getInstance().getValueForKey("emptyFirstName");
 		emptyLastName = ConfigReader.getInstance().getValueForKey("emptyLastName");
 		emptyEmail = ConfigReader.getInstance().getValueForKey("emptyEmail");
+		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailFormat");
+		updateUserEmptyOldPassword = ConfigReader.getInstance().getValueForKey("updateUserEmptyOldPassword");
+		updateUserEmptyNewPassword = ConfigReader.getInstance().getValueForKey("updateUserEmptyNewPassword");
+		updateUserPasswordsNotMatching = ConfigReader.getInstance().getValueForKey("updateUserPasswordsNotMatching");
+		updateUserSuccess = ConfigReader.getInstance().getValueForKey("updateUserSuccess");
 		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
@@ -44,11 +50,14 @@ public class RegisterResponse implements ResponseMessage {
 
 	@Override
 	public void initDescription(ResponseValues responseValue) {
-		
+
 		switch (responseValue) {
-			case REGISTERSUCCESS: {
-				description = registerSuccess;
+			case SUCCESS: {
 				responseType = "success";
+				break;
+			}
+			case ERROR: {
+				responseType = "error";
 				break;
 			}
 			case EMPTYTITLE: {
@@ -76,8 +85,23 @@ public class RegisterResponse implements ResponseMessage {
 				responseType = "error";
 				break;
 			}
-			case REGISTEREXISTINGEMAIL: {
-				description = registerExistingEmail;
+			case UPDATEUSEREMPTYOLDPASSWORD: {
+				description = updateUserEmptyOldPassword;
+				responseType = "error";
+				break;
+			}
+			case UPDATEUSEREMPTYNEWPASSWORD: {
+				description = updateUserEmptyNewPassword;
+				responseType = "error";
+				break;
+			}
+			case UPDATEUSERPASSWORDSNOTMATCHING: {
+				description = updateUserPasswordsNotMatching;
+				responseType = "error";
+				break;
+			}
+			case UPDATEUSERSUCCESS: {
+				description = updateUserSuccess;
 				responseType = "error";
 				break;
 			}
@@ -97,14 +121,14 @@ public class RegisterResponse implements ResponseMessage {
 	@Override
 	public String getMessageJson(ResponseValues responseValue) {
 		initDescription(responseValue);
-
+				
 		String errorMessageJson = "";
 
 		try {
 			errorMessageJson = objectMapper.writeValueAsString(this);
+			
 		} catch (IOException e) {
 		}
 		return errorMessageJson;
 	}
-
 }

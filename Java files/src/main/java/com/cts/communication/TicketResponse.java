@@ -7,10 +7,10 @@ import com.cts.utils.ConfigReader;
 public class TicketResponse implements ResponseMessage {
 
 	private String responseType;
-	private String ticketEmptySubjectField;
-	private String ticketNoCategorySelected;
-	private String ticketEmptyDescriptionField;
-	private String ticketEmptyCommentField;
+	private String ticketEmptySubject;
+	private String ticketEmptyCategory;
+	private String ticketEmptyDescription;
+	private String ticketEmptyComment;
 	private String dbError;
 	private String unknownError;
 	private String description;
@@ -21,10 +21,10 @@ public class TicketResponse implements ResponseMessage {
 	}
 
 	private void initAll() {
-		ticketEmptySubjectField = ConfigReader.getInstance().getValueForKey("ticketEmptySubjectField");
-		ticketNoCategorySelected = ConfigReader.getInstance().getValueForKey("ticketNoCategorySelected");
-		ticketEmptyDescriptionField = ConfigReader.getInstance().getValueForKey("ticketEmptyDescriptionField");
-		ticketEmptyCommentField = ConfigReader.getInstance().getValueForKey("ticketEmptyCommentField");
+		ticketEmptySubject = ConfigReader.getInstance().getValueForKey("ticketEmptySubject");
+		ticketEmptyCategory = ConfigReader.getInstance().getValueForKey("ticketEmptyCategory");
+		ticketEmptyDescription = ConfigReader.getInstance().getValueForKey("ticketEmptyDescription");
+		ticketEmptyComment = ConfigReader.getInstance().getValueForKey("ticketEmptyComment");
 		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
@@ -49,23 +49,23 @@ public class TicketResponse implements ResponseMessage {
 				responseType = "error";
 				break;
 			}
-			case TICKETEMPTYSUBJECTFIELD: {
-				description = ticketEmptySubjectField;
+			case TICKETEMPTYSUBJECT: {
+				description = ticketEmptySubject;
 				responseType = "error";
 				break;
 			}
-			case TICKETNOCATEGORYSELECTED: {
-				description = ticketNoCategorySelected;
+			case TICKETEMPTYCATEGORY: {
+				description = ticketEmptyCategory;
 				responseType = "error";
 				break;
 			}
-			case TICKETEMPTYDESCRIPTIONFIELD: {
-				description = ticketEmptyDescriptionField;
+			case TICKETEMPTYDESCRIPTION: {
+				description = ticketEmptyDescription;
 				responseType = "error";
 				break;
 			}
-			case TICKETEMPTYCOMMENTFIELD: {
-				description = ticketEmptyCommentField;
+			case TICKETEMPTYCOMMENT: {
+				description = ticketEmptyComment;
 				responseType = "error";
 				break;
 			}

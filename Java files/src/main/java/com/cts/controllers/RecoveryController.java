@@ -25,30 +25,44 @@ public class RecoveryController {
 	private static Logger logger = Logger.getLogger(RecoveryController.class.getName());
 
 	/**
+	 * Reset password and send new one by email
+	 * 
 	 * @param email
 	 * @return message that will be displayed on ui.
 	 */
 	@RequestMapping(value = "/recoveryPassword", method = RequestMethod.POST)
 	public @ResponseBody String recoveryPassword(@RequestBody User user) {
 
+		logger.info("DEBUG: Attempting to recover the password for the following email: " + user.getEmail() + ".");
+		
+		// Email validation
+		if (user.getEmail() == null){
+			
+			logger.info("ERROR: Email is null!");
+			return new RecoveryResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+		}
+		if (user.getEmail().equals("")) {
+			
+			logger.info("ERROR: Email is empty!");
+			return new RecoveryResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+		}
+		
+		// Recovery mail contents
 		String subject = "New password";
-		logger.info("Attempting to recover the password for the following email: " + user.getEmail());
-
-		// Generate a new password
-		// if the specified email is valid then modify the password with the
-		// generated one and send it via email.
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword(10);
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
+		
+		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword))
 				&& SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
-			logger.info("The password was changed and was send via email!");
+			logger.info("INFO: The password was changed and was send via email!");
 			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYSUCCESS);
 		} else {
 
-			logger.info("The specified email is incorrect!");
+			logger.info("WARN: The specified email is incorrect!");
 			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYINCORRECTEMAIL);
 		}
 	}

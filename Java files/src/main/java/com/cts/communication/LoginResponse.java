@@ -4,15 +4,14 @@ import java.io.IOException;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import com.cts.communication.ResponseMessage;
 import com.cts.utils.ConfigReader;
 
 @JsonSerialize
 public class LoginResponse implements ResponseMessage {
 
 	private String responseType;
-	private String emptyEmailField;
-	private String emptyPasswordField;
+	private String emptyEmail;
+	private String emptyPassword;
 	private String loginInvalidCredentials;
 	private String unknownError;
 
@@ -23,8 +22,8 @@ public class LoginResponse implements ResponseMessage {
 	}
 
 	private void initAll() {
-		emptyEmailField = ConfigReader.getInstance().getValueForKey("emptyEmailField");
-		emptyPasswordField = ConfigReader.getInstance().getValueForKey("emptyPasswordField");
+		emptyEmail = ConfigReader.getInstance().getValueForKey("emptyEmail");
+		emptyPassword = ConfigReader.getInstance().getValueForKey("emptyPassword");
 		loginInvalidCredentials = ConfigReader.getInstance().getValueForKey("loginInvalidCredentials");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
@@ -40,13 +39,13 @@ public class LoginResponse implements ResponseMessage {
 	@Override
 	public void initDescription(ResponseValues responseValue) {
 		switch (responseValue) {
-			case EMPTYEMAILFIELD: {
-				description = emptyEmailField;
+			case EMPTYEMAIL: {
+				description = emptyEmail;
 				responseType = "error";
 				break;
 			}
-			case EMPTYPASSWORDFIELD: {
-				description = emptyPasswordField;
+			case EMPTYPASSWORD: {
+				description = emptyPassword;
 				responseType = "error";
 				break;
 			}

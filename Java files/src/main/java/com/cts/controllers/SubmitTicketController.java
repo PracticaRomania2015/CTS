@@ -2,6 +2,7 @@ package com.cts.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.cts.communication.ResponseValues;
 import com.cts.communication.TicketResponse;
 import com.cts.dao.CategoryDAO;
@@ -19,7 +21,7 @@ import com.cts.entities.Category;
 import com.cts.entities.Ticket;
 
 /**
- * Handle requests for submit ticket page.
+ * Handle requests for the submit ticket page.
  */
 @Controller
 public class SubmitTicketController {
@@ -28,19 +30,19 @@ public class SubmitTicketController {
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
-	 * GET method to get categories for the create new ticket page.
+	 * POST method to get categories
 	 * 
 	 * @return all categories or null
 	 */
 	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
 	public @ResponseBody String getCategories() {
 
-		logger.info("Attempting to get categories from database ...");
+		logger.info("DEBUG: Attempting to get categories from database.");
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> categories = categoryDAO.getCategories();
 
-		logger.info("Success to get categories from database ...");
+		logger.info("INFO: Success to get categories from database ...");
 
 		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
@@ -51,19 +53,19 @@ public class SubmitTicketController {
 	}
 
 	/**
-	 * GET method to get subcategories for a category
+	 * POST method to get subcategories for a category
 	 * 
 	 * @return subcategories for a category or null
 	 */
 	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
 	public @ResponseBody String getSubcategories(@RequestBody Category category) {
 
-		logger.info("Attempting to get subcategories for a category from database ...");
+		logger.info("DEBUG: Attempting to get subcategories for a category from database.");
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(category);
 
-		logger.info("Success to get subcategories for a category from database ...");
+		logger.info("INFO: Success to get subcategories for a category from database.");
 
 		String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 		try {
@@ -82,34 +84,49 @@ public class SubmitTicketController {
 	@RequestMapping(value = "/submitTicket", method = RequestMethod.POST)
 	public @ResponseBody String submitTicket(@RequestBody Ticket ticket) {
 
-		logger.info("Attempting a ticket submission ...");
+		logger.info("DEBUG: Attempting a ticket submission.");
 
-		// Check if the ticket subject is null or empty.
-		if (ticket.getSubject() == null || ticket.getSubject().equals("")) {
-
-			logger.info("Ticket subject is null or empty.");
-			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECTFIELD);
+		// Ticket subject validation
+		if (ticket.getSubject() == null){
+			
+			logger.info("ERROR: Ticket subject is null!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECT);
+		}
+		if (ticket.getSubject().equals("")) {
+			
+			logger.info("ERROR: Ticket subject is empty!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYSUBJECT);
+		}
+		
+		// Ticket category validation
+		if (ticket.getCategory() == null){
+			
+			logger.info("ERROR: Ticket category is null!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCATEGORY);
+		}
+		if (ticket.getCategory().equals("")) {
+			
+			logger.info("ERROR: Ticket category is empty!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 
-		// Check if the ticket category is null or empty.
-		if (ticket.getCategory().getCategoryId() == 0) {
-
-			logger.info("You must select a category for the ticket!");
-			return new TicketResponse().getMessageJson(ResponseValues.TICKETNOCATEGORYSELECTED);
+		// Ticket description validation
+		if (ticket.getComments().get(0).getComment() == null){
+			
+			logger.info("ERROR: Ticket description is null!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTION);
+		}
+		if (ticket.getComments().get(0).getComment().equals("")) {
+			
+			logger.info("ERROR: Ticket description is empty!");
+			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 
-		// Check if the ticket description is null or empty.
-		if (ticket.getComments().get(0).getComment() == null || ticket.getComments().get(0).getComment().equals("")) {
-
-			logger.info("Ticket description is null or empty.");
-			return new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYDESCRIPTIONFIELD);
-		}
-
-		// Create a new ticket.
+		// Ticket creation.
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.createTicket(ticket)) {
 
-			logger.info("Ticket submitted succesfully!");
+			logger.info("INFO: Ticket submitted succesfully!");
 			String jsonMessage = new TicketResponse().getMessageJson(ResponseValues.UNKNOWN);
 			try {
 				jsonMessage = objectMapper.writeValueAsString(ticket);
@@ -118,7 +135,7 @@ public class SubmitTicketController {
 			return jsonMessage;
 		} else {
 
-			logger.info("Database error when trying to create a new ticket.");
+			logger.info("ERROR: Database error when trying to create a new ticket.");
 			return new TicketResponse().getMessageJson(ResponseValues.DBERROR);
 		}
 	}

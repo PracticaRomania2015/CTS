@@ -166,7 +166,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		var tmpUser = new Backbone.Model({
 			userId : $("#ticketAdminsDropBox option:selected").val()
-		})
+		});
 		
 		var reassignAdminToTicket = new AssignAdminToTicket({
 			assignedToUser : tmpUser,
@@ -184,7 +184,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			}
 		});
 		
-		//TODO: asignarea efectiva a adminilor
 		//console.log("assign admin SP must be called");
 	},
 	

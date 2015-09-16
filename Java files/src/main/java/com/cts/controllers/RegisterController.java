@@ -19,18 +19,14 @@ import com.cts.utils.ConfigReader;
 import com.cts.utils.HashUtil;
 
 /**
- * Handles requests for the application register page.
+ * Handles requests for the register page.
  */
 @Controller
 public class RegisterController{
 	
-	// Regular expression to check if the mail is in the gmail.com domain.
+	// Regular expression for email validation.
 	private static String emailRegexp;
 	private Pattern pattern;
-
-	// Boolean variable that checks if the incoming data is passing all the
-	// local tests.
-	private boolean localSuccess;
 
 	// Initializing the logger for this class.
 	private static Logger logger = Logger.getLogger(RegisterController.class.getName());
@@ -40,132 +36,99 @@ public class RegisterController{
 		emailRegexp = ConfigReader.getInstance().getValueForKey("emailRegexp");
 		pattern = Pattern.compile(emailRegexp);
 	}
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String firstThingCalled() {
-
-		return "index";
-	}
-
-	// Post method of the controller. the user data is hidden from the URL.
+	
 	/**
-	 * @param user
-	 *            The new user to be registered
-	 * @return A json response if error or success
-	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody String register(@RequestBody User user) {
-
-		localSuccess = true;
-
-		logger.info("######## Attempting a register...");
-		try {
-			
-			// Checks if the fields are empty (eg: "")
-			if (user.getEmail().trim().isEmpty()) {
-
-				localSuccess = false;
-				logger.info("Error: Email field is empty!");
-				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
-			}
-		} catch (NullPointerException e) {
-			
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
-		}
-		try {
-			
-			if (user.getFirstName().trim().isEmpty()) {
-
-				localSuccess = false;
-				logger.info("Error: First Name field is empty!");
-				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD);
-
-			}
-		} catch (NullPointerException e) {
-			
-			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD);
-		}
-		try {
-			
-			if (user.getLastName().trim().isEmpty()) {
-				
-				localSuccess = false;
-				logger.info("Error: Last Name field is empty!");
-				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
-
-			}
-		} catch (NullPointerException e) {
-			
-			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD);
-		}
-		try {
-			
-			if (user.getPassword().trim().isEmpty()) {
-				
-				localSuccess = false;
-				logger.info("Error: Password field is empty!");
-				return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
-
-			}
-		} catch (NullPointerException e) {
-			
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
-		}
-		try {
-			if (user.getTitle().trim().isEmpty()) {
-				
-				localSuccess = false;
-				logger.info("Error: A title option must be selected!");
-				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
-
-			}
-		} catch (NullPointerException e) {
-			
-			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE);
-		}
-		// Checks if the email is valid
-		if (!isValidEmail(user.getEmail())) {
-
-			localSuccess = false;
-			logger.info("Error: Invalid Email");
-			return new RegisterResponse().getMessageJson(ResponseValues.INVALIDEMAILFORMAT);
-		}
-
-		// If the data passes the local tests, the database is called
-		if (localSuccess) {
-
-			// hash the password
-			user.setPassword(HashUtil.getHash((user.getPassword())));
-			UserDAOInterface userDAO = new UserDAO();
-
-			if (userDAO.createAccount(user)) {
-				
-				logger.info("A new account was successfully created");
-				return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
-			} else {
-				
-				logger.info("Error: email already exists.");
-				return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
-			}
-		}
-		logger.info("Unknown error.");
-		return new RegisterResponse().getMessageJson(ResponseValues.UNKNOWN);
-	}
-
-	/**
-	 * @param email
-	 *            The email to be verified if it is in cerner.com domain
+	 * @param email The email to be verified if matches the pattern provided
 	 * @return true if the email is in the cerner.com domain, false if it is in
 	 *         any other domain.
 	 */
 	private boolean isValidEmail(String email) {
 		
 		Matcher matcher = pattern.matcher(email);
-		logger.info(matcher.matches() + " for " + email);
+		logger.info("DEBUG: " + matcher.matches() + " for " + email + ".");
 		if (!matcher.matches()) {
 
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Register user
+	 * 
+	 * @param user The new user to be registered
+	 * @return A json response if error or success
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public @ResponseBody String register(@RequestBody User user) {
+
+		logger.info("DEBUG: Attempting to register a user.");
+
+		// User first name validation
+		if (user.getFirstName() == null){
+			
+			logger.info("ERROR: First name is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
+		}
+		if (user.getFirstName().equals("")) {
+			
+			logger.info("ERROR: First name is empty!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
+		}
+		
+		// User last name validation
+		if (user.getLastName() == null){
+			
+			logger.info("ERROR: Last name is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
+		}
+		if (user.getLastName().equals("")) {
+			
+			logger.info("ERROR: Last name is empty!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
+		}
+		
+		
+		// User email validation
+		if (user.getEmail() == null){
+			
+			logger.info("ERROR: Last name is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+		}
+		if (user.getEmail().equals("")) {
+			
+			logger.info("ERROR: Last name is empty!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+		}
+		if (!isValidEmail(user.getEmail())) {
+
+			logger.info("ERROR: Invalid Email");
+			return new RegisterResponse().getMessageJson(ResponseValues.INVALIDEMAILFORMAT);
+		}
+		
+		// User password validation
+		if (user.getPassword() == null){
+			
+			logger.info("ERROR: Password is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+		}
+		if (user.getPassword().equals("")) {
+			
+			logger.info("ERROR: Password is empty!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+		}
+		
+		// Account creation
+		user.setPassword(HashUtil.getHash((user.getPassword())));
+		UserDAOInterface userDAO = new UserDAO();
+		if (userDAO.createAccount(user)) {
+			
+			logger.info("INFO: A new account was created successfully!");
+			return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
+		} else {
+			
+			logger.info("WARN: The email already exists!");
+			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
+		}
 	}
 }

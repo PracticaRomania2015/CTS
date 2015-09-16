@@ -18,7 +18,7 @@ import com.cts.entities.User;
 import com.cts.utils.HashUtil;
 
 /**
- * Handle requests for login page.
+ * Handles requests for the login page.
  */
 @Controller
 public class LoginController {
@@ -26,7 +26,7 @@ public class LoginController {
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
 
 	/**
-	 * @param user
+	 * @param user User to be logged in.
 	 * @return user object in json format.
 	 */
 	protected String getUserObjectInJsonFormat(User user) {
@@ -39,39 +39,49 @@ public class LoginController {
 		}
 		return jsonMessage;
 	}
-
+	
 	/**
-	 * Post method for the login controller.
+	 * Authenticate user
 	 * 
-	 * @param userLoginJson
+	 * @param user
 	 * @return full user details if the login was successfully or error message
 	 *         otherwise
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(@RequestBody User user) {
 
-		logger.info("Attempting a login ...");
+		logger.info("DEBUG: Attempting a login a user.");
 
-		// Check if the username is null or empty.
-		if (user.getEmail() == null || user.getEmail().equals("")) {
-			
-			logger.info("Username is null or empty.");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD);
+		// Email validation
+		if (user.getEmail() == null){
+					
+			logger.info("ERROR: Email is null!");
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
-
-		// Check if the password is null or empty.
-		if (user.getPassword() == null || user.getPassword().equals("")) {
-			
-			logger.info("Password is null or empty.");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD);
+		if (user.getEmail().equals("")) {
+				
+			logger.info("ERROR: Email is empty!");
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
 		}
-
-		// Validate the login.
+		
+		// Password validation
+		if (user.getPassword() == null){
+					
+			logger.info("ERROR: Password is null!");
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+		}
+		if (user.getPassword().equals("")) {
+				
+			logger.info("ERROR: Password is empty!");
+			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+		}
+		
+		// Login credentials validation
 		user.setPassword(HashUtil.getHash((user.getPassword())));
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.validateLogin(user)) {
 
-			logger.info("Login succesfully!");
+			logger.info("INFO: User logged in succesfully!");
 			String userJson = getUserObjectInJsonFormat(user);
 			if (userJson != null) {	
 				return userJson;
@@ -80,7 +90,7 @@ public class LoginController {
 			}
 		} else {
 			
-			logger.info("Login information is not correct.");
+			logger.info("WARN: Login information is not correct!");
 			return new LoginResponse().getMessageJson(ResponseValues.LOGININVALIDCREDENTIALS);
 		}
 	}
