@@ -5,6 +5,7 @@ import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 import com.cts.entities.UserStatus;
+import com.cts.entities.ViewUsersRequest;
 
 public interface UserDAOInterface {
 
@@ -21,4 +22,6 @@ public interface UserDAOInterface {
 	public ArrayList<User> getAdminsForCategory(Category category);
 
 	public boolean updateUserStatus(UserStatus userStatus);
+
+	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest);
 }

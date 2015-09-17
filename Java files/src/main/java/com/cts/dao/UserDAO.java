@@ -7,6 +7,7 @@ import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 import com.cts.entities.UserStatus;
+import com.cts.entities.ViewUsersRequest;
 
 public class UserDAO extends BaseDAO implements UserDAOInterface {
 
@@ -182,5 +183,11 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean updateUserStatus(UserStatus userStatus) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

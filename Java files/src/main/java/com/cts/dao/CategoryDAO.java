@@ -3,7 +3,9 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import com.cts.entities.Category;
+import com.cts.entities.UserStatus;
 
 public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 
@@ -93,5 +95,11 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 			closeCallableStatement();
 		}
 		return true;
+	}
+
+	@Override
+	public HashMap<Category, Boolean> getCategoriesRightsForUser(UserStatus userStatus) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
