@@ -79,16 +79,8 @@ public class RootUserManagementController {
 			
 		UserDAOInterface userCategRightsDAO = new UserDAO();
 		if (userCategRightsDAO.updateUserStatus(userStatus)) {
-			String userRightsUpdate;
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				userRightsUpdate = objectMapper.writeValueAsString(userStatus);
-				logger.info("The list of rights was successfully sent to the DB!");
-				return new UserRightsResponse().getMessageJson(ResponseValues.SUCCESS);
-			} catch (IOException e) {
-				logger.error("Json error when trying to map the array of rights.");
-				return new UserRightsResponse().getMessageJson(ResponseValues.UNKNOWN);
-			}
+			logger.info("The list of rights was successfully sent to the DB!");
+			return new UserRightsResponse().getMessageJson(ResponseValues.SUCCESS);
 		}
 		else {
 			return new UserRightsResponse().getMessageJson(ResponseValues.DBERROR);
