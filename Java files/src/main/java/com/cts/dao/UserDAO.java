@@ -3,6 +3,7 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
@@ -187,7 +188,40 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 	@Override
 	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest, StringBuilder totalNumberOfPages) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+
+			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
+					viewUsersRequest.getRequestedPageNumber(), "RequestedPageNumber");
+			InOutParam<Integer> usersPerPageParam = new InOutParam<Integer>(viewUsersRequest.getUsersPerPage(),
+					"UsersPerPage");
+			InOutParam<String> textToSearchParam = new InOutParam<String>(viewUsersRequest.getTextToSearch(),
+					"TextToSearch");
+			InOutParam<String> searchTypeParam = new InOutParam<String>(viewUsersRequest.getSearchType(), "SearchType");
+			InOutParam<String> sortTypeParam = new InOutParam<String>(viewUsersRequest.getSortType(), "SortType");
+			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewUsersRequest.isSearchASC(),
+					"IsSearchASC");
+			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
+			prepareExecution(StoredProceduresNames.GetUsers, requestedPageNumberParam, usersPerPageParam,
+					textToSearchParam, searchTypeParam, sortTypeParam, isSearchASCParam, totalNumberOfPagesParam);
+			ResultSet resultSet = execute(true);
+			while (resultSet.next()) {
+
+				User user = new User();
+				user.setUserId(resultSet.getInt("UserId"));
+				user.setFirstName(resultSet.getString("FirstName"));
+				user.setLastName(resultSet.getString("LastName"));
+				user.setEmail(resultSet.getString("Email"));
+				users.add(user);
+			}
+			setOutParametersAfterExecute();
+			totalNumberOfPages.append(totalNumberOfPagesParam.getParameter());
+		} catch (SQLException e) {
+		} finally {
+
+			closeCallableStatement();
+		}
+		return users;
 	}
 }

@@ -120,5 +120,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetCategoriesRightsForUser";
 		}
+	},
+
+	GetUsers {
+		public String toString() {
+			return "dbo.GetUsers";
+		}
 	}
 }
