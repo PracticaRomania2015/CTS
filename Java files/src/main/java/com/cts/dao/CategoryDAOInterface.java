@@ -14,5 +14,5 @@ public interface CategoryDAOInterface {
 
 	public boolean deleteCategory(Category category);
 	
-	public boolean getCategoriesRightsForUser(UserStatus userStatus);
+	public boolean viewCategoriesRightsForUser(UserStatus userStatus);
 }

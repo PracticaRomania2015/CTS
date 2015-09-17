@@ -98,33 +98,34 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 	}
 
 	@Override
-	public boolean getCategoriesRightsForUser(UserStatus userStatus) {
+	public boolean viewCategoriesRightsForUser(UserStatus userStatus) {
 
 		HashMap<Category, Boolean> userCategories = new HashMap<Category, Boolean>();
 		try {
 
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
 			InOutParam<Boolean> isSysAdminParam = new InOutParam<Boolean>(false, "IsSysAdmin", true);
-			prepareExecution(StoredProceduresNames.DeleteCategory, userIdParam, isSysAdminParam);
+			prepareExecution(StoredProceduresNames.GetCategoriesRightsForUser, userIdParam, isSysAdminParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
-
+				
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt("CategoryId"));
 				category.setCategoryName(resultSet.getString("CategoryName"));
-				if (resultSet.getString("CategoryUserId") != "NULL") {
-
+				if (resultSet.getString("CategoryUserId") != null) {
+					
 					userCategories.put(category, true);
 				} else {
 
 					userCategories.put(category, false);
 				}
 			}
+			userStatus.setUserCategories(userCategories);
 			setOutParametersAfterExecute();
 			userStatus.setSysAdmin(isSysAdminParam.getParameter());
 
 		} catch (Exception e) {
-
+			
 			return false;
 		} finally {
 
