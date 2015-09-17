@@ -17,7 +17,7 @@ import com.cts.utils.HashUtil;
 import com.cts.utils.SendEmail;
 
 /**
- * Handle requests for recovery password page.
+ * Handles requests for recovery password page.
  */
 @Controller
 public class RecoveryController {
@@ -33,6 +33,13 @@ public class RecoveryController {
 	@RequestMapping(value = "/recoveryPassword", method = RequestMethod.POST)
 	public @ResponseBody String recoveryPassword(@RequestBody User user) {
 
+		// Parameter validation
+		if (user == null){
+			
+			logger.error("User is null!");
+			return new RecoveryResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
 		logger.debug("Attempting to recover the password for the following email: " + user.getEmail() + ".");
 		
 		// Email validation

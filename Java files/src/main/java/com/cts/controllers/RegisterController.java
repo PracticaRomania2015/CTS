@@ -39,7 +39,7 @@ public class RegisterController{
 	 * Check if email matches the pattern
 	 * 
 	 * @param email Email to be verified if matches the pattern provided.
-	 * @return true if the email matches the regex pattern, false otherwise.
+	 * @return True if the email matches the regex pattern, false otherwise.
 	 */
 	private boolean isValidEmail(String email) {
 		
@@ -62,7 +62,26 @@ public class RegisterController{
 	public @ResponseBody String register(@RequestBody User user) {
 
 		logger.debug("Attempting to register a user.");
+		
+		// Parameter validation
+		if (user == null){
+			
+			logger.error("User is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.ERROR);
+		}
 
+		// Title validation
+		if (user.getTitle() == null){
+			
+			logger.error("Title is null!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE);
+		}
+		if (user.getTitle().equals("")) {
+			
+			logger.error("Title is empty!");
+			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE);
+		}
+		
 		// User first name validation
 		if (user.getFirstName() == null){
 			
@@ -86,7 +105,6 @@ public class RegisterController{
 			logger.error("Last name is empty!");
 			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
 		}
-		
 		
 		// User email validation
 		if (user.getEmail() == null){

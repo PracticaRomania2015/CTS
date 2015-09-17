@@ -12,6 +12,7 @@ public class RegisterResponse implements ResponseMessage {
 	private String emptyFirstName;
 	private String emptyLastName;
 	private String emptyEmail;
+	private String emptyPassword;
 	private String invalidEmailFormat;
 	private String registerExistingEmail;
 	private String dbError;
@@ -19,10 +20,12 @@ public class RegisterResponse implements ResponseMessage {
 	private String description;
 
 	public RegisterResponse() {
+		
 		initAll();
 	}
 
 	private void initAll() {
+		
 		registerSuccess = ConfigReader.getInstance().getValueForKey("registerSuccess");
 		registerExistingEmail = ConfigReader.getInstance().getValueForKey("registerExistingEmail");
 		invalidEmailFormat = ConfigReader.getInstance().getValueForKey("invalidEmailFormat");
@@ -30,15 +33,17 @@ public class RegisterResponse implements ResponseMessage {
 		emptyFirstName = ConfigReader.getInstance().getValueForKey("emptyFirstName");
 		emptyLastName = ConfigReader.getInstance().getValueForKey("emptyLastName");
 		emptyEmail = ConfigReader.getInstance().getValueForKey("emptyEmail");
-		dbError = ConfigReader.getInstance().getValueForKey("dbError");
+		emptyPassword = ConfigReader.getInstance().getValueForKey("emptyPassword");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {
+		
 		return description;
 	}
 	
 	public String getResponseType() {
+		
 		return responseType;
 	}
 
@@ -49,6 +54,10 @@ public class RegisterResponse implements ResponseMessage {
 			case REGISTERSUCCESS: {
 				description = registerSuccess;
 				responseType = "success";
+				break;
+			}
+			case ERROR: {
+				responseType = "error";
 				break;
 			}
 			case EMPTYTITLE: {
@@ -68,6 +77,11 @@ public class RegisterResponse implements ResponseMessage {
 			}
 			case EMPTYEMAIL: {
 				description = emptyEmail;
+				responseType = "error";
+				break;
+			}
+			case EMPTYPASSWORD: {
+				description = emptyPassword;
 				responseType = "error";
 				break;
 			}

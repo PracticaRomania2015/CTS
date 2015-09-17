@@ -48,9 +48,11 @@ public class RootCategManagementController {
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.addCategory(category)) {
 
+			logger.info("Successfully added category from database.");
 			return new CategoryResponse().getMessageJson(ResponseValues.SUCCESS);
 		} else {
 
+			logger.warn("Could not add category to database!");
 			return new CategoryResponse().getMessageJson(ResponseValues.UNKNOWN);
 		}
 	}
@@ -66,6 +68,13 @@ public class RootCategManagementController {
 
 		logger.debug("Attempting to delete a category.");
 
+		// Parameter validation
+		if (category == null){
+			
+			logger.error("Category is null!");
+			return new CategoryResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
 		// Category ID validation
 		if (Integer.valueOf(category.getCategoryId()) == null) {
 			
@@ -73,13 +82,22 @@ public class RootCategManagementController {
 			return new CategoryResponse().getMessageJson(ResponseValues.ERROR);
 		}
 		
+		if (Integer.valueOf(category.getCategoryId()).equals("")){
+			
+			logger.error("Category ID is empty.");
+			return new CategoryResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
+		// Removing category
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.deleteCategory(category)) {
 
+			logger.info("Successfully removed category from database.");
 			return new CategoryResponse().getMessageJson(ResponseValues.SUCCESS);
 		} else {
 
-			return new CategoryResponse().getMessageJson(ResponseValues.UNKNOWN);
+			logger.warn("Could not remove category from database!");
+			return new CategoryResponse().getMessageJson(ResponseValues.DBERROR);
 		}
 	}
 }
