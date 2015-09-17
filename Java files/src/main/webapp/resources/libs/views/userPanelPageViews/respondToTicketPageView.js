@@ -1,13 +1,18 @@
 /* ================================================= */
+
 /* Respond to ticket page view */
+
 
 var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 	events : {
 		'click #respondToTicketButton' : 'submit',
 		'click #closeTheTicketButton' : 'close',
-		'change #ticketAdminsDropBox' : 'reassignAdmin'
+		'click #assignUserToTicketButton' : 'reassignAdmin'
 	},
+
+
+
 
 	initialize : function() {
 		var ticket = new GetTicketContentModel({
@@ -29,6 +34,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					
 					if(response.state.stateName == "Closed"){
 						$('#ticketResponseWrapper').remove();
+
 
 					}
 					
@@ -80,70 +86,88 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							
 					}	
 				});
-				$('#ticketTitle').empty().append(response.subject + " - " + response.category.categoryName);
-
+				$('#ticketTitle').empty().append("\""+response.subject +"\""+" is ");
 				var assignedToId = response.assignedToUser.userId;
 		
 				var categoryAdmins = new getAdminForCategory({
 					categoryId : response.category.categoryId
 				})
 				
+				var ticketSubject = response.subject;
+				var ticketState = response.state.stateName;
+				
 				var ticketOwnerId = response.comments[0].user.userId;
 				categoryAdmins.save({},{
 					success : function(model,response){
 						
 						var assignedUserName;
+						$('#ticketAdminsDropBox').find('option').remove().end();
 						_.each(response,function(e) {
 							if (assignedToId == e.userId)
 							{
-								assignedUserName = e.firstName;
+								assignedUserName = e.firstName + " "+ e.lastName;
 							}
 						});
 						
-						if (sessionStorage.loggedUserRights == 1)
+						if (sessionStorage.loggedUserRights == "Admin")
 
 						{
-							if (ticketOwnerId == sessionStorage.loggedUserId)
+							
+							if (ticketOwnerId == sessionStorage.loggedUserId) // Wrong condition ; Change to if user is not admin on this category
 							{
+
+								$('#ticketAdminsDropBox').remove();
+								$('#assignUserToTicketButton').remove();
+								
 								if (assignedToId == 0){
-									$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>Currently unassigned</div>");
+									$('#ticketTitle').append("currently unassigned");
 								}
 								else
 								{
-									$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>" + assignedUserName + "</div>");
+									$('#ticketTitle').append("assigned to "+ assignedUserName);
 								}
 							}
 							else
 							{
 								if (assignedToId == 0)
 								{
-									$('#ticketAdminsDropBox').append("<option value=0>Unassign ticket</option>");
+									$('#ticketAdminsDropBox').append("<option value=0>Set ticket as unassigned</option>");
+									$('#ticketTitle').append("currently unassigned");
 								}
 								else
 								{
-									$('#ticketAdminsDropBox').append("<option value=0 selected>Unassign ticket</option>");
+									$('#ticketAdminsDropBox').append("<option value=0 selected>Set ticket as unassigned</option>");
+									
 								}
 								_.each(response, function(e) {
 									if (assignedToId == e.userId)
 									{
 										$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
+										$('#ticketTitle').append("assigned to "+ assignedUserName);
 									}
 									else
 									{
 										$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
+										
 									}
 								});
 							}
 						}
 						else
 						{	
+							$('#ticketAdminsDropBox').remove();
+							$('#assignUserToTicketButton').remove();
 							if (assignedToId == 0){
-								$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>Currently unassigned</div>");
+								$('#ticketTitle').append("currently unassigned");
 							}
 							else
 							{
-								$('#ticketAdminsDropBox').replaceWith("<div id='ticketAdminsDropBox'>" + assignedUserName + "</div>");
+								$('#ticketTitle').append("assigned to "+ assignedUserName);
 							}
+						}
+						
+						if(ticketState == "Closed"){
+							$('#ticketTitle').empty().append("\""+ticketSubject +"\""+" is closed ");
 						}
 
 					},
@@ -166,8 +190,9 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		var tmpUser = new Backbone.Model({
 			userId : $("#ticketAdminsDropBox option:selected").val()
-		});
-		
+			
+		})
+		console.log(tmpUser);
 		var reassignAdminToTicket = new AssignAdminToTicket({
 			assignedToUser : tmpUser,
 			ticketId : this.model.get("ticketId")
@@ -184,6 +209,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			}
 		});
 		
+		//TODO: asignarea efectiva a adminilor
 		//console.log("assign admin SP must be called");
 	},
 	
@@ -212,6 +238,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		this.$el.append(_.template($('#respondToTicketTemplate').html()));
 		return this;
 	},
+
 
 	submit : function() {
 

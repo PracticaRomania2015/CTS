@@ -173,18 +173,22 @@
 			<span href="#" id="submitTicketButton" class="button">Submit</span>
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
-			<h1 id="ticketTitle" class="userPage"></h1>
+			<h1 id="ticketTitle" class="userPage">
+			<div id="ticketName"></div>
+			</h1>
 			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
 			<div id="ticketResponseWrapper">
 				<div id="responseText">
-					<textarea id="ticketResponse" rows='15' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
-				</div>
-				<div id="responseButtons">
-					<label id="assignationLabel">Assign ticket to</label>
-					<select id="ticketAdminsDropBox"></select>
-					<input type="file" class="browseFile" />
+					<textarea id="ticketResponse" rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 					<span href="#" class="button" id="respondToTicketButton">Submit</span>
 					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
+					<input type="file" class="browseFile" />
+					<select id="ticketAdminsDropBox"></select>
+					<span href="#" class="button" id="assignUserToTicketButton" >Assign user</span>
+				</div>
+				<div id="responseButtons">
+					
+					
 				</div>
 			</div>
 	</script>

@@ -4,7 +4,8 @@
 var RegisterView = GenericFrontPageChildView.extend({
 
 	events : {
-		'click #registerButton' : 'submit'
+		'click #registerButton' : 'submit',
+		'keydown input' : 'submitOnEnter'
 	},
 
 	appendData : function() {
@@ -37,6 +38,35 @@ var RegisterView = GenericFrontPageChildView.extend({
 			}
 		});
 
-	}
+	},
+
+	submitOnEnter: function(e){
+	      if ( e.keyCode  === 13 ) { 
+	    	  var user = new RegisterModel({
+	  			title : $("#regTitle").attr("selected", "selected").val(),
+	  			firstName : $("#regFirstName").val(),
+	  			lastName : $("#regLastName").val(),
+	  			email : $("#regMail").val(),
+	  			password : $("#regPass").val()
+	  		});
+
+	  		user.save({}, {
+	  			success : function(model, response) {
+	  				if (response.description == "Success!") {
+	  					$('#logIn').toggle();
+	  					$('#register').hide();
+	  					$('#recovery').hide();
+	  					alert("Account created!");
+	  				} else {
+	  					alert(response.description);
+	  				}
+	  			},
+	  			error : function(model, response) {
+	  				console.log(response);
+	  			}
+	  		});
+	      }
+	    }
+	
 
 });

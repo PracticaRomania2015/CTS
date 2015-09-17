@@ -100,6 +100,25 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		ticket.save({}, {
 			success : function(model, response) {
 				console.log(response);
+				assignedTicketsView = createTicketPageView = null;
+				if (!userTicketsView) {
+					userTicketsView = new UserTicketsView({
+						model : new ViewTicketsModel({})
+					});
+					$('#userPanelPageContainer').replaceWith(
+							userTicketsView.render().el);
+					handleErrorStyle();
+				}
+
+				$('#ats').hide();
+				$('#mts').show();
+				$('#sts').hide();
+				$('#ups').hide();
+
+				$('#atn').show();
+				$('#mtn').hide();
+				$('#stn').show();
+				$('#upn').show();
 				alert("Ticket submitted!");
 			},
 			error : function(model, response) {
