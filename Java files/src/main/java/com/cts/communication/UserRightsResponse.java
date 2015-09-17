@@ -6,6 +6,7 @@ public class UserRightsResponse implements ResponseMessage {
 
 	private String responseType;
 	private String unknownError;
+	private String dbError;
 
 	private String description;
 	
@@ -16,6 +17,7 @@ public class UserRightsResponse implements ResponseMessage {
 
 	private void initAll() {
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
+		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 	}
 	
 	public String getDescription() {
@@ -31,6 +33,11 @@ public class UserRightsResponse implements ResponseMessage {
 		switch (responseValue) {
 			case SUCCESS: {
 				responseType = "success";
+				break;
+			}
+			case DBERROR: {
+				description = dbError;
+				responseType = "error";
 				break;
 			}
 			default: {
