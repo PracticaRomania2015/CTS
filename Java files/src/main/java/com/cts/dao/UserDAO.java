@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
-import com.cts.entities.UserStatus;
+import com.cts.entities.ViewUsersRequest;
 
 public class UserDAO extends BaseDAO implements UserDAOInterface {
 
@@ -179,7 +179,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public boolean updateUserStatus(UserStatus userStatus) {
+	public boolean updateUserStatus(ViewUsersRequest userStatus) {
 		// TODO Auto-generated method stub
 		return false;
 	}
