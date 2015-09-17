@@ -114,5 +114,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.DeleteCategory";
 		}
+	},
+
+	GetCategoriesRightsForUser {
+		public String toString() {
+			return "dbo.GetCategoriesRightsForUser";
+		}
 	}
 }

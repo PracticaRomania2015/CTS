@@ -23,5 +23,5 @@ public interface UserDAOInterface {
 
 	public boolean updateUserStatus(UserStatus userStatus);
 
-	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest);
+	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest, StringBuilder totalNumberOfPages);
 }

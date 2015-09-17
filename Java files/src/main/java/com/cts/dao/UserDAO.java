@@ -186,7 +186,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest) {
+	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest, StringBuilder totalNumberOfPages) {
 		// TODO Auto-generated method stub
 		return null;
 	}
