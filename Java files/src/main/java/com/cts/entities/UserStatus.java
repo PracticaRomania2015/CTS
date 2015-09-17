@@ -2,13 +2,13 @@ package com.cts.entities;
 
 import java.util.ArrayList;
 
-public class ViewUsersRequest {
+public class UserStatus {
 
 	private int userId;
 	private boolean isSysAdmin;
 	private ArrayList<Integer> adminCategoryId;
 
-	public ViewUsersRequest() {
+	public UserStatus() {
 
 		userId = 0;
 		isSysAdmin = false;
