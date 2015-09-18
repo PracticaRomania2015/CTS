@@ -78,7 +78,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
 					"UserId");
 			InOutParam<Integer> isViewMyTicketsRequestParam = new InOutParam<Integer>(
-					viewTicketsRequest.getTypeOfRequest(), "IsViewMyTicketsRequest");
+					viewTicketsRequest.getTypeOfRequest(), "TypeOfRequest");
 			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
 					viewTicketsRequest.getRequestedPageNumber(), "RequestedPageNumber");
 			InOutParam<Integer> ticketsPerPageParam = new InOutParam<Integer>(viewTicketsRequest.getTicketsPerPage(),
@@ -87,10 +87,13 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					"TextToSearch");
 			InOutParam<String> searchTypeParam = new InOutParam<String>(viewTicketsRequest.getSearchType(),
 					"SearchType");
+			InOutParam<String> sortTypeParam = new InOutParam<String>(viewTicketsRequest.getSortType(), "SortType");
+			InOutParam<String> isSearchASCParam = new InOutParam<String>(viewTicketsRequest.getSortType(),
+					"IsSearchASC");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
 			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,
-					requestedPageNumberParam, ticketsPerPageParam, textToSearchParam, searchTypeParam,
-					totalNumberOfPagesParam);
+					requestedPageNumberParam, ticketsPerPageParam, textToSearchParam, searchTypeParam, sortTypeParam,
+					isSearchASCParam, totalNumberOfPagesParam);
 			ResultSet resultSet = execute(true);
 
 			while (resultSet.next()) {
