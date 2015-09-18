@@ -4,25 +4,20 @@ import java.io.IOException;
 
 import com.cts.utils.ConfigReader;
 
-public class RecoveryResponse implements ResponseMessage {
+public class UtilsResponse implements ResponseMessage {
 
 	private String responseType;
-	private String emptyEmail;
-	private String recoverySuccess;
-	private String recoveryIncorrectEmail;
 	private String unknownError;
 	private String description;
 
-	public RecoveryResponse() {
+	public UtilsResponse() {
 
 		initAll();
 	}
 
 	private void initAll() {
 		
-		emptyEmail = ConfigReader.getInstance().getValueForKey("emptyEmail");
-		recoverySuccess = ConfigReader.getInstance().getValueForKey("recoverySuccess");
-		recoveryIncorrectEmail = ConfigReader.getInstance().getValueForKey("recoveryIncorrectEmail");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
 	public String getDescription() {
@@ -39,22 +34,7 @@ public class RecoveryResponse implements ResponseMessage {
 	public void initDescription(ResponseValues responseValue) {
 
 		switch (responseValue) {
-			case RECOVERYSUCCESS: {
-				description = recoverySuccess;
-				responseType = "success";
-				break;
-			}
 			case ERROR: {
-				responseType = "error";
-				break;
-			}
-			case EMPTYEMAIL: {
-				description = emptyEmail;
-				responseType = "error";
-				break;
-			}
-			case RECOVERYINCORRECTEMAIL: {
-				description = recoveryIncorrectEmail;
 				responseType = "error";
 				break;
 			}
@@ -69,12 +49,12 @@ public class RecoveryResponse implements ResponseMessage {
 	@Override
 	public String getMessageJson(ResponseValues responseValue) {
 		initDescription(responseValue);
-		
+				
 		String errorMessageJson = "";
 
 		try {
-			
 			errorMessageJson = objectMapper.writeValueAsString(this);
+			
 		} catch (IOException e) {
 		}
 		return errorMessageJson;

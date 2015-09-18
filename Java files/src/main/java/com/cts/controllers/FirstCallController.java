@@ -13,7 +13,7 @@ public class FirstCallController{
 	/**
 	 * Index controller
 	 * 
-	 * @return index page of the application
+	 * @return Index page of the application
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {

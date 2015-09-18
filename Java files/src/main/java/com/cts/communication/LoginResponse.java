@@ -18,10 +18,12 @@ public class LoginResponse implements ResponseMessage {
 	private String description;
 
 	public LoginResponse() {
+		
 		initAll();
 	}
 
 	private void initAll() {
+		
 		emptyEmail = ConfigReader.getInstance().getValueForKey("emptyEmail");
 		emptyPassword = ConfigReader.getInstance().getValueForKey("emptyPassword");
 		loginInvalidCredentials = ConfigReader.getInstance().getValueForKey("loginInvalidCredentials");
@@ -29,16 +31,23 @@ public class LoginResponse implements ResponseMessage {
 	}
 	
 	public String getDescription() {
+		
 		return description;
 	}
 	
 	public String getResponseType() {
+		
 		return responseType;
 	}
 
 	@Override
 	public void initDescription(ResponseValues responseValue) {
+		
 		switch (responseValue) {
+			case ERROR: {
+				responseType = "error";
+				break;
+			}
 			case EMPTYEMAIL: {
 				description = emptyEmail;
 				responseType = "error";

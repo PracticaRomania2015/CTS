@@ -35,6 +35,10 @@ public class UserRightsResponse implements ResponseMessage {
 				responseType = "success";
 				break;
 			}
+			case ERROR: {
+				responseType = "error";
+				break;
+			}
 			case DBERROR: {
 				description = dbError;
 				responseType = "error";

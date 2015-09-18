@@ -21,6 +21,7 @@ public class TicketResponse implements ResponseMessage {
 	}
 
 	private void initAll() {
+		
 		ticketEmptySubject = ConfigReader.getInstance().getValueForKey("ticketEmptySubject");
 		ticketEmptyCategory = ConfigReader.getInstance().getValueForKey("ticketEmptyCategory");
 		ticketEmptyDescription = ConfigReader.getInstance().getValueForKey("ticketEmptyDescription");
@@ -30,10 +31,12 @@ public class TicketResponse implements ResponseMessage {
 	}
 	
 	public String getDescription() {
+		
 		return description;
 	}
 	
 	public String getResponseType() {
+		
 		return responseType;
 	}
 

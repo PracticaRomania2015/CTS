@@ -14,17 +14,29 @@ import com.cts.dao.UserDAOInterface;
 import com.cts.entities.UserForUpdate;
 import com.cts.utils.HashUtil;
 
+/**
+ * Handles requests for the user properties page.
+ */
 @Controller
 public class UserPropertiesController {
 
 	private static Logger logger = Logger.getLogger(UserPropertiesController.class.getName());
-
+	
 	/**
-	 * @param user
-	 * @return updated user object in json format.
+	 * Update user details
+	 * 
+	 * @param user User to which to update details
+	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public @ResponseBody String updateUserPersonalData(@RequestBody UserForUpdate user) {
+		
+		// Parameter validation
+		if (user == null){
+			
+			logger.error("User is null!");
+			return new UserPropertiesResponse().getMessageJson(ResponseValues.ERROR);
+		}
 		
 		// UserId validation
 		if (Integer.valueOf(user.getUserId()) == null){
@@ -129,10 +141,10 @@ public class UserPropertiesController {
 		
 			logger.info("Account updated successfully!");
 			return new UserPropertiesResponse().getMessageJson(ResponseValues.UPDATEUSERSUCCESS);
-		}
+		} else {
 		
-		logger.error("Database error when trying to update user!");
-		return new UserPropertiesResponse().getMessageJson(ResponseValues.DBERROR);
-
+			logger.error("Database error when trying to update user!");
+			return new UserPropertiesResponse().getMessageJson(ResponseValues.DBERROR);
+		}
 	}
 }

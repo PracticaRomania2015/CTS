@@ -39,6 +39,8 @@ public class LoginController {
 			
 			jsonMessage = objectMapper.writeValueAsString(user);
 		} catch (IOException e) {
+			
+			logger.error("Could not map user to JSON!");
 		}
 		return jsonMessage;
 	}
@@ -54,6 +56,13 @@ public class LoginController {
 
 		logger.debug("Attempting a login a user.");
 
+		// Parameter validation
+		if (user == null){
+			
+			logger.error("User is null!");
+			return new LoginResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
 		// Email validation
 		if (user.getEmail() == null){
 					
@@ -90,6 +99,7 @@ public class LoginController {
 				return userJson;
 			} else {
 				
+				logger.error("Login information in JSON format is null!");
 				return new LoginResponse().getMessageJson(ResponseValues.UNKNOWN);
 			}
 		} else {
