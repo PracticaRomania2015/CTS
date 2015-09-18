@@ -1,13 +1,14 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[AssignTicketToAdmin]    Script Date: 9/8/2015 12:03:55 PM ******/
+/****** Object:  StoredProcedure [dbo].[AssignTicketToAdmin]    Script Date: 9/18/2015 3:03:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[AssignTicketToAdmin]
 	@TicketId int,
-	@UserId int
+	@UserId int,
+	@UserWhoDoTheAssignId int
 
 AS
 BEGIN
@@ -15,6 +16,11 @@ BEGIN
 	SET NOCOUNT ON;
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
+	DECLARE @OldValue varchar(50)
+	DECLARE @NewValue varchar(50)
+
+	SELECT @DateTime = SYSDATETIME()
+	SELECT @OldValue = (SELECT AssignedToUserId FROM Ticket WHERE TicketId = @TicketId)
 
 	IF (@UserId = 0)
 		BEGIN
@@ -22,14 +28,17 @@ BEGIN
 			SET AssignedToUserId = NULL
 			WHERE TicketId = @TicketId
 
-			-- add a new history event
-			SELECT @Action = 'Unassigned ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + ']'
-			SELECT @DateTime = SYSDATETIME()
-
-			EXEC dbo.AddHistoryEvent 
-			@UserId = @UserId,
-			@Action = @Action, 
-			@DateTime = @DateTime
+			-- add a new ticket history event
+			SELECT @Action = 'Unassign'
+			SELECT @NewValue = ''
+	
+			EXEC dbo.AddTicketHistoryEvent 
+			@TicketId = @TicketId,
+			@UserId = @UserWhoDoTheAssignId,
+			@DateTime = @DateTime,
+			@Action = @Action,
+			@OldValue = @OldValue,
+			@NewValue = @NewValue
 		END
 	ELSE
 		BEGIN
@@ -37,19 +46,16 @@ BEGIN
 			SET AssignedToUserId = @UserId
 			WHERE TicketId = @TicketId
 
-			-- add a new history event
-			DECLARE @Username varchar(100)
+			-- add a new ticket history event
+			SELECT @Action = 'Assign'
+			SELECT @NewValue = @UserId
 
-			SELECT @Username = FirstName + LastName
-			FROM [User]
-			WHERE UserId = @UserId
-
-			SELECT @Action = 'Assigned ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + '] to ' + @Username
-			SELECT @DateTime = SYSDATETIME()
-
-			EXEC dbo.AddHistoryEvent 
-			@UserId = @UserId,
-			@Action = @Action, 
-			@DateTime = @DateTime
+			EXEC dbo.AddTicketHistoryEvent 
+			@TicketId = @TicketId,
+			@UserId = @UserWhoDoTheAssignId,
+			@DateTime = @DateTime,
+			@Action = @Action,
+			@OldValue = @OldValue,
+			@NewValue = @NewValue
 		END
 END

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 9/9/2015 10:31:46 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 9/18/2015 3:07:57 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,12 +17,14 @@ BEGIN
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 	SELECT @DateTime = SYSDATETIME()
-	-- add history event
+
+	-- add a new audit event
 	SELECT @Action = 'The stored procedure to get priorities was successfully executed.'
 
-	EXEC dbo.AddHistoryEvent 
+	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
-	@DateTime = @DateTime
+	@DateTime = @DateTime,
+	@TicketId = NULL
 
 END

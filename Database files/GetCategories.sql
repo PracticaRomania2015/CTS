@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/15/2015 9:47:30 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/18/2015 3:07:17 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,16 +17,17 @@ BEGIN
 	WHERE Category.ParentCategoryId IS NULL
 	ORDER BY Category.CategoryName
 
-	-- add history event
+	-- add a new audit event
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
 	SELECT @Action = 'The stored procedure to get categories was successfully executed.'
 	SELECT @DateTime = SYSDATETIME()
 
-	EXEC dbo.AddHistoryEvent 
+	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
-	@DateTime = @DateTime
+	@DateTime = @DateTime,
+	@TicketId = NULL
 
 END

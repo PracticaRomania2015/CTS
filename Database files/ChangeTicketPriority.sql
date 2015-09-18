@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ChangeTicketPriority]    Script Date: 9/10/2015 9:07:01 AM ******/
+/****** Object:  StoredProcedure [dbo].[ChangeTicketPriority]    Script Date: 9/18/2015 3:05:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8,6 +8,7 @@ GO
 ALTER PROCEDURE [dbo].[ChangeTicketPriority]
 	@TicketId int,
 	@PriorityId int,
+	@UserId int,
 	@Error int OUTPUT
 
 AS
@@ -17,7 +18,12 @@ BEGIN
 
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
+	DECLARE @OldValue varchar(50)
+	DECLARE @NewValue varchar(50)
+
 	SELECT @DateTime = SYSDATETIME()
+	SELECT @OldValue = (SELECT Priority.PriorityName FROM Ticket INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId WHERE Ticket.TicketId = @TicketId)
+	SELECT @NewValue = (SELECT PriorityName FROM Priority WHERE PriorityId = @PriorityId)
 	
 	SELECT @Error = 1
 
@@ -31,22 +37,26 @@ BEGIN
 		SET PriorityId = @PriorityId
 		WHERE TicketId = @TicketId
 		
-		-- add history event
-		SELECT @Action = 'Change ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + '] priority to ' + (SELECT PriorityName FROM Priority WHERE PriorityId = @PriorityId)
+		-- add a new ticket history event
+		SELECT @Action = 'Change priority'
 
-		EXEC dbo.AddHistoryEvent 
-		@UserId = NULL,
-		@Action = @Action, 
-		@DateTime = @DateTime
+		EXEC dbo.AddTicketHistoryEvent 
+		@TicketId = @TicketId,
+		@UserId = @UserId,
+		@DateTime = @DateTime,
+		@Action = @Action,
+		@OldValue = @OldValue,
+		@NewValue = @NewValue
 	END
 	ELSE
 	BEGIN
-		-- add history event
-		SELECT @Action = 'Failed to change the ticket priority caused by bad ticket id or bad priority id. Details: TicketId received is ' + CONVERT(VARCHAR(25), @TicketId, 126) + ', PriorityId received is ' + CONVERT(VARCHAR(25), @PriorityId, 126) + '.'	
+		-- add a new audit event
+		SELECT @Action = 'Failed to change the ticket priority caused by bad ticket id or bad priority id.'	
 
-		EXEC dbo.AddHistoryEvent 
-		@UserId = NULL,
+		EXEC dbo.AddAuditEvent 
+		@UserId = @UserId,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = @TicketId
 	END
 END

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/11/2015 4:28:22 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/18/2015 3:05:00 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -71,13 +71,17 @@ BEGIN
 				SET Ticket.StateId = @StateId
 				WHERE Ticket.TicketId = @TicketId
 			
-				-- add a new history event
+				-- add a new ticket history event
 				DECLARE @Action varchar(1000)
-				SELECT @Action = 'Added a new comment to a ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + ']: ' + @Comment
-				EXEC dbo.AddHistoryEvent 
+				SELECT @Action = 'Add comment'
+
+				EXEC dbo.AddTicketHistoryEvent 
+				@TicketId = @TicketId,
 				@UserId = @UserId,
+				@DateTime = @DateTime,
 				@Action = @Action,
-				@DateTime = @DateTime
+				@OldValue = '',
+				@NewValue = ''
 
 				-- set error parameter to 0 (everything goes fine)
 				SELECT @Error = 0

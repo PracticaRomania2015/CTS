@@ -315,4 +315,34 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 		}
 		return true;
 	}
+
+	@Override
+	public boolean reopenTicket(Ticket ticket) {
+
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			// ***
+			// TODO
+			// to be changed from 1 to a real user id from ui
+			// ***
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
+			// ***
+			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			prepareExecution(StoredProceduresNames.ReopenTicket, ticketIdParam, userIdParam,
+					errorParam);
+			execute();
+			if (errorParam.getParameter() == 1) {
+
+				return false;
+			}
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
+	}
 }

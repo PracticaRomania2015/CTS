@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/11/2015 1:31:01 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/18/2015 3:07:04 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,16 +18,17 @@ BEGIN
 	INNER JOIN UserCategory ON [User].UserId = UserCategory.UserId AND (UserCategory.CategoryId = @CategoryId OR UserCategory.CategoryId = Category.ParentCategoryId)
 	ORDER BY FirstName, LastName, UserId
 
-	-- add history event
+	-- add a new audit event
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @Action = 'The stored procedure to get admins for a certain category was successfully executed.'
+	SELECT @Action = 'The stored procedure to get admins for ' + (SELECT CategoryName FROM Category WHERE CategoryId = @CategoryId) + ' category was successfully executed.'
 	SELECT @DateTime = SYSDATETIME()
 
-	EXEC dbo.AddHistoryEvent 
+	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
-	@DateTime = @DateTime
+	@DateTime = @DateTime,
+	@TicketId = NULL
 
 END

@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/15/2015 9:47:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/18/2015 3:06:25 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -27,27 +27,29 @@ BEGIN
 		SELECT @Error = 0
 
 
-		-- add history event
+		-- add a new audit event
 		SELECT @Action = 'A new account was successfully created. [' + @Email + ']'
 		SELECT @DateTime = SYSDATETIME()
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = NULL,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 	ELSE
 	BEGIN
 		SELECT @Error = 1
 
 
-		-- add history event
+		-- add a new audit event
 		SELECT @Action = 'Failed to create a new account. Email already exists. [' + @Email + ']'
 		SELECT @DateTime = SYSDATETIME()
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = NULL,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 END

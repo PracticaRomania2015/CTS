@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetSubcategories]    Script Date: 9/8/2015 12:05:16 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetSubcategories]    Script Date: 9/18/2015 3:08:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,16 +18,17 @@ BEGIN
 	WHERE ParentCategoryId = @CategoryId
 	ORDER BY CategoryName
 
-	-- add history event
+	-- add a new audit event
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @Action = 'The stored procedure to get subcategories for the category [CategoryId = ' + @CategoryId + '] was successfully executed.'
+	SELECT @Action = 'The stored procedure to get subcategories for the category ' + (SELECT CategoryName FROM Category WHERE CategoryId = @CategoryId) + ' was successfully executed.'
 	SELECT @DateTime = SYSDATETIME()
 
-	EXEC dbo.AddHistoryEvent 
+	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
-	@DateTime = @DateTime
+	@DateTime = @DateTime,
+	@TicketId = NULL
 
 END
