@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 9/9/2015 9:53:46 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 9/18/2015 3:09:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -30,25 +30,27 @@ BEGIN
 
 	IF (@Error = 0)
 	BEGIN
-		-- add history event
+		-- add a new audit event
 		SELECT @Action = 'Updated personal details.'
 		SELECT @DateTime = SYSDATETIME()
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = @UserId,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 	ELSE
 	BEGIN
-		-- add history event
+		-- add a new audit event
 		SELECT @Action = 'Failed to update personal details. The password is not valid.'
 		SELECT @DateTime = SYSDATETIME()
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = @UserId,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 
 END

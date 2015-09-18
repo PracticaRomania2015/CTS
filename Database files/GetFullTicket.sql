@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/11/2015 12:30:12 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/18/2015 3:07:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -41,16 +41,17 @@ BEGIN
 	WHERE TicketId = @TicketId
 	ORDER BY DateTime
 
-	-- add history event
+	-- add a new audit event
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @Action = 'The stored procedure to get comments for the ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + '] was successfully executed.'
+	SELECT @Action = 'The stored procedure to get a full ticket was successfully executed.'
 	SELECT @DateTime = SYSDATETIME()
 
-	EXEC dbo.AddHistoryEvent 
+	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
-	@DateTime = @DateTime
+	@DateTime = @DateTime,
+	@TicketId = @TicketId
 
 END

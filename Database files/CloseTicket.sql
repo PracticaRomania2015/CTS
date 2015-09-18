@@ -1,12 +1,13 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CloseTicket]    Script Date: 9/9/2015 11:40:44 AM ******/
+/****** Object:  StoredProcedure [dbo].[CloseTicket]    Script Date: 9/18/2015 3:06:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[CloseTicket]
 	@TicketId int,
+	@UserId int,
 	@Error int OUTPUT
 
 AS
@@ -16,6 +17,10 @@ BEGIN
 
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
+	DECLARE @OldValue varchar(50)
+	DECLARE @NewValue varchar(50)
+
+	SELECT @OldValue = State.StateName FROM Ticket INNER JOIN State ON Ticket.StateId = State.StateId WHERE Ticket.TicketId = @TicketId
 
 	SELECT @DateTime = SYSDATETIME()
 
@@ -32,23 +37,27 @@ BEGIN
 	
 	IF (@Error = 0)
 	BEGIN
-		-- add history event
-		SELECT @Action = 'The ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + '] was closed'
-		
-		EXEC dbo.AddHistoryEvent 
-		@UserId = NULL,
-		@Action = @Action, 
-		@DateTime = @DateTime
+		-- add a new ticket history event
+		SELECT @Action = 'Close'
+		SELECT @NewValue = 'Close'
+
+		EXEC dbo.AddTicketHistoryEvent 
+		@TicketId = @TicketId,
+		@UserId = @UserId,
+		@DateTime = @DateTime,
+		@Action = @Action,
+		@OldValue = @OldValue,
+		@NewValue = @NewValue
 	END
 	ELSE
 	BEGIN
-		-- add history event
-		SELECT @Action = 'Failed when trying to close the ticket [TicketId = ' + CONVERT(VARCHAR(25), @TicketId, 126) + '].'
+		-- add a new audit event
+		SELECT @Action = 'Failed when trying to close the ticket.'
 
-		EXEC dbo.AddHistoryEvent 
-		@UserId = NULL,
+		EXEC dbo.AddAuditEvent 
+		@UserId = @UserId,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = @TicketId
 	END
-
 END

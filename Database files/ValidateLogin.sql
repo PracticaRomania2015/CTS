@@ -1,6 +1,6 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/15/2015 9:47:26 AM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/18/2015 3:09:32 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -30,18 +30,19 @@ BEGIN
 
 	IF (@Error = 0)
 	BEGIN
-		-- add history event
+		-- add a new audit event
 		SELECT @Action = 'Login successfully.'
 		SELECT @DateTime = SYSDATETIME()
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = @UserId,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 	ELSE
 	BEGIN
-		-- add history event
+		-- add a new audit event
 		DECLARE @UserIdForHistory int
 		DECLARE @Check int = 0
 
@@ -60,9 +61,10 @@ BEGIN
 
 		SELECT @DateTime = SYSDATETIME()		
 
-		EXEC dbo.AddHistoryEvent 
+		EXEC dbo.AddAuditEvent 
 		@UserId = @UserIdForHistory,
 		@Action = @Action, 
-		@DateTime = @DateTime
+		@DateTime = @DateTime,
+		@TicketId = NULL
 	END
 END
