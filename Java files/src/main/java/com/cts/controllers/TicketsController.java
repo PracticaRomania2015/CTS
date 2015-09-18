@@ -239,12 +239,7 @@ public class TicketsController {
 			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
 		}
 		
-		// UserId Validation
-		if (ticket.getAssignedToUser().getUserId() == 0){
-			
-			logger.error("Invalid UserId");
-			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
-		}
+	
 		
 		// TicketId Validation
 		if (ticket.getTicketId() == 0){
