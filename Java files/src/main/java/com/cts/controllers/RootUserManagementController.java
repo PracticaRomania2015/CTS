@@ -59,7 +59,6 @@ public class RootUserManagementController {
 			try {
 				userRightsStatus = objectMapper.writeValueAsString(userStatus);
 				logger.info("The list of rights was successfully retrieved!");
-				// System.out.println("{\"rights\":" + userRightsStatus + "}"); // If it fails here is where blows up !
 				return "{\"rights\":" + userRightsStatus + "}";
 			} catch (IOException e) {
 				logger.error("Json error when trying to map the array of rights.");

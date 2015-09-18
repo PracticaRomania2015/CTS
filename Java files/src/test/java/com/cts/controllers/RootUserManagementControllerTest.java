@@ -3,6 +3,7 @@ package com.cts.controllers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
 public class RootUserManagementControllerTest {
@@ -16,7 +17,7 @@ public class RootUserManagementControllerTest {
 	}
 	
 	@Test
-	public void testWithBadUserId() {
+	public void testReturnValueOfGetUsers() {
 		
 		ViewUsersRequest viewUsersRequest = new ViewUsersRequest();
 		viewUsersRequest.setRequestedPageNumber(1);
@@ -25,6 +26,14 @@ public class RootUserManagementControllerTest {
 		viewUsersRequest.setSearchType("");
 		viewUsersRequest.setSortType("");
 		viewUsersRequest.setSearchASC(true);
-		System.out.println(RUMC.viewUsers(viewUsersRequest));
+		System.out.println("User list: " + RUMC.viewUsers(viewUsersRequest));
+	}
+	
+	@Test
+	public void testReturnValueOfGetAdminStatus() {
+		
+		UserStatus userStatus = new UserStatus();
+		userStatus.setUserId(1);
+		System.out.println("User rights: " + RUMC.getUserAdminStatus(userStatus));
 	}
 }
