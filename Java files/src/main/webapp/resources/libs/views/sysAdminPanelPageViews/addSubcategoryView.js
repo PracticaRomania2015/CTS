@@ -39,8 +39,8 @@ var AddSubcategoryView = GenericSystemAdminPanelPageView.extend({
 		
 		subcategory.save({},{
 			success: function(model, response){
+				//TODO showing message if added successfully
 				console.log(response);
-				alert(response.description);
 			},
 			error: function(model, response){
 				alert(response);

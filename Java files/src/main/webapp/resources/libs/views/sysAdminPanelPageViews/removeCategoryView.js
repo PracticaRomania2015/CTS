@@ -68,14 +68,13 @@ var RemoveCategoryView = GenericSystemAdminPanelPageView.extend({
 		
 		var category = new RemoveCategoryModel({
 			categoryName : categoryNameVar,
-			categoryIdVar : categoryIdVar
+			categoryId : categoryIdVar
 		});
 		
-		console.log(category);
 		category.save({},{
 			success: function(model, response){
 				console.log(response);
-				alert(response.description);
+				//TODO showing message if added successfully
 			},
 			error: function(model, response){
 				alert(response);

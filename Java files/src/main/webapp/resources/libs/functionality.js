@@ -48,6 +48,46 @@ function frontPageFunctionality() {
 	});
 }
 
+function systemAdminPanelPageFunctionality(){
+	
+	var manageCategoriesView;
+
+	$('#manageCategoriesButton').click(
+			function() {
+				//TODO other views = null;
+				if (!manageCategoriesView) {
+					manageCategoriesView = new ManageCategoriesView({});
+					$('#systemAdminPageContainer').replaceWith(
+							manageCategoriesView.render().el);
+					handleErrorStyle();
+				}
+
+				//hide & show arrows
+
+			});
+	
+	$('#btn-logOut').click(
+			function() {
+				sessionStorage.clear();
+				
+				//TODO set all the other view to null
+				
+				$('#mainContainer').replaceWith(
+						_.template($('#frontPageTemplate').html()));
+				frontPageFunctionality();
+
+				$('#ats').hide();
+				$('#mts').hide();
+				$('#sts').hide();
+				$('#ups').hide();
+
+				$('#atn').show();
+				$('#mtn').show();
+				$('#stn').show();
+				$('#upn').show();
+			});
+	
+}
 var assignedTicketsView, userTicketsView;
 
 function userPanelPageFunctionality() {
