@@ -23,14 +23,14 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
 		InOutParam<Integer> roleIdParam = new InOutParam<Integer>(0, "RoleId", true);
 		InOutParam<String> roleNameParam = new InOutParam<String>("", "RoleName", true);
-		InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+		InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 		try {
 
 			prepareExecution(StoredProceduresNames.ValidateLogin, userIdParam, firstNameParam, lastNameParam,
-					titleParam, emailParam, passwordParam, roleIdParam, roleNameParam, errorParam);
+					titleParam, emailParam, passwordParam, roleIdParam, roleNameParam, errCodeParam);
 			execute();
 
-			if (errorParam.getParameter() == 0 && userIdParam.getParameter() != 0) {
+			if (errCodeParam.getParameter() == 0 && userIdParam.getParameter() != 0) {
 
 				user.setUserId(userIdParam.getParameter());
 				user.setFirstName(firstNameParam.getParameter());
@@ -62,12 +62,12 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
 			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.CreateUser, firstNameParam, lastNameParam, titleParam, emailParam,
-					passwordParam, errorParam);
+					passwordParam, errCodeParam);
 			execute();
 
-			if (errorParam.getParameter() == 0) {
+			if (errCodeParam.getParameter() == 0) {
 				return true;
 			} else {
 				return false;
@@ -105,10 +105,10 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 			InOutParam<String> emailParam = new InOutParam<String>(email, "Email");
 			InOutParam<String> passwordParam = new InOutParam<String>(newPassword, "Password");
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.ResetPassword, emailParam, passwordParam, errorParam);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.ResetPassword, emailParam, passwordParam, errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 0) {
+			if (errCodeParam.getParameter() == 0) {
 
 				return true;
 			} else {
@@ -135,11 +135,11 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
 			InOutParam<String> newPasswordParam = new InOutParam<String>(user.getPassword(), "NewPassword");
 			InOutParam<String> oldPasswordParam = new InOutParam<String>(user.getOldPassword(), "OldPassword");
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.UpdateUser, userIdParam, firstNameParam, lastNameParam, titleParam,
-					newPasswordParam, oldPasswordParam, errorParam);
+					newPasswordParam, oldPasswordParam, errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 0) {
+			if (errCodeParam.getParameter() == 0) {
 
 				return true;
 			} else {

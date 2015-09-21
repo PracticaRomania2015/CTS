@@ -18,9 +18,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 	public boolean createTicket(Ticket ticket) {
 
 		try {
-
+			
 			InOutParam<String> subjectParam = new InOutParam<String>(ticket.getSubject(), "Subject");
-			InOutParam<Integer> categoryParam = new InOutParam<Integer>(ticket.getCategory().getCategoryId(),
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(ticket.getCategory().getCategoryId(),
 					"CategoryId");
 			InOutParam<Timestamp> timestampParam = new InOutParam<Timestamp>(ticket.getComments().get(0).getDateTime(),
 					"DateTime");
@@ -34,7 +34,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					"PriorityId");
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(0, "TicketId", true);
 			InOutParam<Integer> commentIdParam = new InOutParam<Integer>(0, "CommentId", true);
-			prepareExecution(StoredProceduresNames.CreateTicket, subjectParam, categoryParam, timestampParam,
+			prepareExecution(StoredProceduresNames.CreateTicket, subjectParam, categoryIdParam, timestampParam,
 					commentParam, userIdParam, filePathParam, priorityIdParam, ticketIdParam, commentIdParam);
 			execute();
 			ticket.setTicketId(ticketIdParam.getParameter());
@@ -42,7 +42,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			ticket.getComments().get(0).setCommentId(commentIdParam.getParameter());
 			ticket.getComments().get(0).getUser().setUserId(userIdParam.getParameter());
 		} catch (SQLException e) {
-
+			
 			return false;
 		} finally {
 
@@ -206,11 +206,11 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					ticket.getComments().get(ticket.getComments().size() - 1).getUser().getUserId(), "UserId");
 			InOutParam<String> filePathParam = new InOutParam<String>(
 					ticket.getComments().get(ticket.getComments().size() - 1).getFilePath(), "FilePath");
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.AddCommentToTicket, ticketCommentIdParam, ticketIdParam,
-					dateTimeParam, commentParam, userIdParam, filePathParam, errorParam);
+					dateTimeParam, commentParam, userIdParam, filePathParam, errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 0) {
+			if (errCodeParam.getParameter() == 0) {
 
 				ticket.getComments().get(ticket.getComments().size() - 1)
 						.setCommentId(ticketCommentIdParam.getParameter());
@@ -267,10 +267,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			// ***
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
 			// ***
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
-			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam, userIdParam, errorParam);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.CloseTicket, ticketIdParam, userIdParam, errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 1) {
+			if (errCodeParam.getParameter() == 1) {
 
 				return false;
 			}
@@ -298,11 +298,11 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			// ***
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
 			// ***
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.ChangeTicketPriority, ticketIdParam, priorityIdParam, userIdParam,
-					errorParam);
+					errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 1) {
+			if (errCodeParam.getParameter() == 1) {
 
 				return false;
 			}
@@ -328,11 +328,11 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			// ***
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(1, "UserId");
 			// ***
-			InOutParam<Integer> errorParam = new InOutParam<Integer>(0, "Error", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.ReopenTicket, ticketIdParam, userIdParam,
-					errorParam);
+					errCodeParam);
 			execute();
-			if (errorParam.getParameter() == 1) {
+			if (errCodeParam.getParameter() == 1) {
 
 				return false;
 			}
