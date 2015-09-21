@@ -302,4 +302,45 @@ public class TicketsController {
 
 		}
 	}
+	
+	/**
+	 * Reopen a ticket
+	 * 
+	 * @param ticket Ticket to get status changed.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/reopenTicket", method = RequestMethod.POST)
+	public @ResponseBody String reopenTicket(@RequestBody Ticket ticket) {
+
+		logger.debug("Attempting to reopen a ticket.");
+		
+		// Parameter validation
+		if (ticket == null){
+			
+			logger.error("Ticket is null!");
+			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+		}
+		
+		// TicketId Validation
+		if (ticket.getTicketId() == 0){
+			
+			logger.error("Invalid TicketId");
+			return new TicketResponse().getMessageJson(ResponseValues.ERROR);
+		}
+
+		// Reopen the ticket
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		if (ticketDAO.reopenTicket(ticket)) {
+
+			logger.info("Ticket reopened successfully!");
+			return new TicketResponse().getMessageJson(ResponseValues.SUCCESS);
+
+		} else {
+
+			logger.error("Database error while trying to close ticket!");
+			return new TicketResponse().getMessageJson(ResponseValues.DBERROR);
+
+		}
+	}
+	
 }

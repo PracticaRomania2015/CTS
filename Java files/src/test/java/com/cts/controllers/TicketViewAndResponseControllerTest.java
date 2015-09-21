@@ -14,12 +14,14 @@ import com.cts.entities.TicketComment;
 
 public class TicketViewAndResponseControllerTest {
 
-	private static TicketViewAndResponseController ticketViewAndResponseController;
+	private static TicketsController ticketCnt;
+	private static UtilsController utilCnt;
 
 	@BeforeClass
 	public static void beforeClass() {
 
-		ticketViewAndResponseController = new TicketViewAndResponseController();
+		ticketCnt = new TicketsController();
+		utilCnt = new UtilsController();
 	}
 
 	@Test
@@ -27,7 +29,7 @@ public class TicketViewAndResponseControllerTest {
 
 		Ticket ticket = new Ticket();
 		ticket.setTicketId(1);
-		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketViewAndResponseController.viewTicket(ticket));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketCnt.viewTicket(ticket));
 	}
 
 	@Test
@@ -37,24 +39,24 @@ public class TicketViewAndResponseControllerTest {
 		TicketComment comment = new TicketComment();
 		comment.setComment("test");
 		ticket.getComments().add(comment);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketCnt.addComment(ticket));
 		ticket = new Ticket();
 		comment = new TicketComment();
 		comment.setComment("");
 		ticket.getComments().add(comment);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENT), ticketCnt.addComment(ticket));
 		ticket = new Ticket();
 		comment = new TicketComment();
 		comment.setComment(null);
 		ticket.getComments().add(comment);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(ticket));
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENTFIELD), ticketViewAndResponseController.addComment(null));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENT), ticketCnt.addComment(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.TICKETEMPTYCOMMENT), ticketCnt.addComment(null));
 	}
 	
 	@Test
 	public void testAssignTicketWithNullTicket() {
 		
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketViewAndResponseController.assignTicket(null));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketCnt.assignTicket(null));
 	}
 	
 	@Test
@@ -63,13 +65,13 @@ public class TicketViewAndResponseControllerTest {
 		Ticket ticket = new Ticket();
 		ticket.setTicketId(-1);
 		ticket.getAssignedToUser().setUserId(-1);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.assignTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketCnt.assignTicket(ticket));
 	}
 	
 	@Test
 	public void testCloseTicketWithNullTicket() {
 		
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketViewAndResponseController.closeTicket(null));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.ERROR), ticketCnt.closeTicket(null));
 	}
 	
 	@Test
@@ -77,7 +79,7 @@ public class TicketViewAndResponseControllerTest {
 		
 		Ticket ticket = new Ticket();
 		ticket.setTicketId(-1);
-		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketViewAndResponseController.closeTicket(ticket));
+		assertEquals(new TicketResponse().getMessageJson(ResponseValues.DBERROR), ticketCnt.closeTicket(ticket));
 	}
 		
 	@Test
@@ -85,6 +87,7 @@ public class TicketViewAndResponseControllerTest {
 		
 		Category category = new Category();
 		category.setCategoryId(1);
-		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), ticketViewAndResponseController.getAdminsForCategory(category));
+		assertNotNull(new TicketResponse().getMessageJson(ResponseValues.UNKNOWN), utilCnt.getAdminsForCategory(category));
 	}
+	
 }
