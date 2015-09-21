@@ -36,6 +36,8 @@ public class RootUserManagementController {
 
 		logger.debug("Attempting to retrieve a particular list of users.");
 
+		//TODO: Verifica validarile, ceva crapa. Foloseste JUnit ca sa vezi daca e bine.
+/*
 		// Parameter validation
 		if (viewUserRequest == null){
 			
@@ -104,7 +106,7 @@ public class RootUserManagementController {
 			logger.error("Sort Type is empty.");
 			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
 		}
-
+*/
 		// Getting users
 		UserDAOInterface userDAO = new UserDAO();
 		StringBuilder totalNumberOfPages = new StringBuilder();
