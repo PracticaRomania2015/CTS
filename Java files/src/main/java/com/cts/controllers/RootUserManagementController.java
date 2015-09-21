@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import com.cts.entities.User;
 import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
+@Controller
 public class RootUserManagementController {
 	
 	private static Logger logger = Logger.getLogger(RootUserManagementController.class.getName());
