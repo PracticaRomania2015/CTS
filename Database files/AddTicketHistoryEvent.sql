@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 9/18/2015 3:05:17 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 9/21/2015 12:51:29 PM ******/
+DROP PROCEDURE [dbo].[AddTicketHistoryEvent]
+GO
+
+/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 9/21/2015 12:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[AddTicketHistoryEvent] 
+
+CREATE PROCEDURE [dbo].[AddTicketHistoryEvent] 
 	@TicketId int,
 	@UserId int,
 	@DateTime datetime,
@@ -22,3 +29,6 @@ BEGIN
 	VALUES (@TicketId, @UserId, @DateTime, (SELECT ActionId FROM Action WHERE ActionName = @Action), @OldValue, @NewValue)
 
 END
+
+GO
+

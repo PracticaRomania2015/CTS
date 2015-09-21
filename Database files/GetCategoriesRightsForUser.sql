@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/18/2015 3:07:27 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/21/2015 12:52:55 PM ******/
+DROP PROCEDURE [dbo].[GetCategoriesRightsForUser]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/21/2015 12:52:55 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetCategoriesRightsForUser]
+
+CREATE PROCEDURE [dbo].[GetCategoriesRightsForUser]
 	@UserId int,
 	@IsSysAdmin bit OUTPUT
 
@@ -49,3 +56,6 @@ BEGIN
 	@TicketId = NULL
 
 END
+
+GO
+

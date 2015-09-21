@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/18/2015 3:07:47 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/21/2015 12:53:03 PM ******/
+DROP PROCEDURE [dbo].[GetFullTicket]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/21/2015 12:53:03 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetFullTicket]
+
+CREATE PROCEDURE [dbo].[GetFullTicket]
 	@TicketId int,
 	@Subject varchar(50) OUTPUT,
 	@CategoryId int OUTPUT,
@@ -55,3 +62,6 @@ BEGIN
 	@TicketId = @TicketId
 
 END
+
+GO
+

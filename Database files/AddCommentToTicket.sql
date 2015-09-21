@@ -1,18 +1,25 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/18/2015 3:05:00 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/21/2015 12:51:22 PM ******/
+DROP PROCEDURE [dbo].[AddCommentToTicket]
+GO
+
+/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/21/2015 12:51:22 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[AddCommentToTicket]
+
+CREATE PROCEDURE [dbo].[AddCommentToTicket]
 	@CommentId int OUTPUT,
 	@TicketId int,
 	@DateTime datetime,
 	@Comment varchar(250),
 	@UserId int,
 	@FilePath varchar(100),
-	@Error int OUTPUT
+	@ErrCode int OUTPUT
 
 AS
 BEGIN
@@ -22,6 +29,7 @@ BEGIN
 
 	IF (@TicketId != 0 AND @TicketId != 0 AND @Comment != '' AND @UserId != 0)
 		BEGIN
+			-- check if the ticket is closed or not
 			SELECT @Check = 1
 			FROM Ticket
 			INNER JOIN State ON Ticket.StateId = State.StateId
@@ -33,8 +41,14 @@ BEGIN
 				INSERT INTO TicketComment(TicketId, DateTime, Comment, UserId, FilePath)
 				VALUES (@TicketId, @DateTime, @Comment, @UserId, @FilePath)
 
+				IF (@@ROWCOUNT = 0 OR @@ERROR <> 0)
+				BEGIN
+					SELECT @ErrCode = 1
+					RETURN 1
+				END
+
 				-- get the id for added comment
-				SELECT TOP 1 @CommentId = CommentId FROM TicketComment ORDER BY CommentId DESC
+				SELECT @CommentId = @@IDENTITY
 
 				-- get the user who submitted the ticket
 				DECLARE @TicketUser int
@@ -66,9 +80,11 @@ BEGIN
 						WHERE State.StateName = 'Active'
 					END
 
+				SELECT @ErrCode = 1
+
 				-- change ticket state
 				UPDATE Ticket
-				SET Ticket.StateId = @StateId
+				SET Ticket.StateId = @StateId, @ErrCode = 0
 				WHERE Ticket.TicketId = @TicketId
 			
 				-- add a new ticket history event
@@ -82,20 +98,19 @@ BEGIN
 				@Action = @Action,
 				@OldValue = '',
 				@NewValue = ''
-
-				-- set error parameter to 0 (everything goes fine)
-				SELECT @Error = 0
 			END
 			ELSE
 			BEGIN
-				-- set error parameter to 1 (ticket is closed)
-				SELECT @Error = 1
+				-- set error parameter
+				SELECT @ErrCode = 1
 			END
 		END
 	ELSE
 		BEGIN
-			-- set error parameter to 1 (invalid data)
-			SELECT @Error = 1
+			-- set error parameter
+			SELECT @ErrCode = 1
 		END
-	
 END
+
+GO
+

@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/18/2015 3:09:32 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/21/2015 12:54:00 PM ******/
+DROP PROCEDURE [dbo].[ValidateLogin]
+GO
+
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/21/2015 12:54:00 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[ValidateLogin]
+
+CREATE PROCEDURE [dbo].[ValidateLogin]
 	@UserId int OUTPUT,
 	@FirstName varchar(50) OUTPUT,
 	@LastName varchar(50) OUTPUT,
@@ -14,7 +21,7 @@ ALTER PROCEDURE [dbo].[ValidateLogin]
 	@Password varchar(50),
 	@RoleId int OUTPUT,
 	@RoleName varchar(50) OUTPUT,
-	@Error int OUTPUT
+	@ErrCode int OUTPUT
 
 AS
 BEGIN
@@ -23,48 +30,46 @@ BEGIN
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @UserId = UserId, @FirstName = FirstName, @LastName = LastName, @Title = Title, @RoleId = Role.RoleId, @RoleName = Role.RoleName, @Error = 0
+	SELECT @DateTime = SYSDATETIME()
+
+	SELECT @UserId = UserId, @FirstName = FirstName, @LastName = LastName, @Title = Title, @RoleId = Role.RoleId, @RoleName = Role.RoleName, @ErrCode = 0
 	FROM [User]
 	INNER JOIN Role ON [User].RoleId = Role.RoleId
 	WHERE Email = @Email AND Password = @Password
 
-	IF (@Error = 0)
+	IF (@ErrCode = 0)
 	BEGIN
-		-- add a new audit event
+		-- set successfully message for audit event
 		SELECT @Action = 'Login successfully.'
-		SELECT @DateTime = SYSDATETIME()
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserId,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
 	END
 	ELSE
 	BEGIN
-		-- add a new audit event
-		DECLARE @UserIdForHistory int
+		-- check if the email is invalid or the password is invalid
 		DECLARE @Check int = 0
 
-		SELECT @UserIdForHistory = UserId, @Check = 1
+		SELECT @UserId = UserId, @Check = 1
 		FROM [User]
 		WHERE Email = @Email
 
 		IF (@Check = 1)
 		BEGIN
+			-- set error message for audit event (invalid password)
 			SELECT @Action = 'Failed to login. Invalid password.'
 		END
 		ELSE
 		BEGIN
+			-- set error message for audit event (invalid email)
 			SELECT @Action = 'Failed to login. Invalid email.'
-		END
-
-		SELECT @DateTime = SYSDATETIME()		
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserIdForHistory,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
+		END	
 	END
+
+	-- add a new audit event
+	EXEC dbo.AddAuditEvent 
+	@UserId = @UserId,
+	@Action = @Action, 
+	@DateTime = @DateTime,
+	@TicketId = NULL
 END
+
+GO
+

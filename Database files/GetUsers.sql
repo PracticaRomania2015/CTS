@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/18/2015 3:08:26 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/21/2015 12:53:35 PM ******/
+DROP PROCEDURE [dbo].[GetUsers]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/21/2015 12:53:35 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetUsers]
+
+CREATE PROCEDURE [dbo].[GetUsers]
 	@RequestedPageNumber int,
 	@UsersPerPage int,
 	@TextToSearch varchar(50),
@@ -25,6 +32,8 @@ BEGIN
 	DECLARE @DateTime datetime
 
 	SET @TotalNumberOfUsers =0
+	SELECT @Action = 'Requested all users for root panel; the stored procedure was successfully executed.'
+	SELECT @DateTime = SYSDATETIME()
 
 	SELECT @TotalNumberOfUsers = COUNT(*) FROM
 	(
@@ -99,13 +108,12 @@ BEGIN
 				
 
 	-- add a new audit event
-	SELECT @Action = 'Requested all users for root panel; the stored procedure was successfully executed.'
-	SELECT @DateTime = SYSDATETIME()
-
 	EXEC dbo.AddAuditEvent 
 	@UserId = NULL,
 	@Action = @Action, 
 	@DateTime = @DateTime,
 	@TicketId = NULL
-
 END
+
+GO
+

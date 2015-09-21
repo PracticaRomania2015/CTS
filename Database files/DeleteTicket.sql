@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteTicket]    Script Date: 9/18/2015 3:06:44 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[DeleteTicket]    Script Date: 9/21/2015 12:52:24 PM ******/
+DROP PROCEDURE [dbo].[DeleteTicket]
+GO
+
+/****** Object:  StoredProcedure [dbo].[DeleteTicket]    Script Date: 9/21/2015 12:52:24 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[DeleteTicket]
+
+CREATE PROCEDURE [dbo].[DeleteTicket]
 	@TicketId int
 
 AS
@@ -14,8 +21,12 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	IF @TicketId = 0
+	BEGIN
 		SELECT TOP 1 @TicketId = TicketId FROM Ticket ORDER BY TicketId DESC
+	END
 
+	DELETE FROM Audit WHERE TicketId = @TicketId
+	DELETE FROM TicketsHistory WHERE TicketId = @TicketId
 	DELETE FROM TicketComment WHERE TicketId = @TicketId
 	DELETE FROM Ticket WHERE TicketId = @TicketId
 
@@ -31,5 +42,7 @@ BEGIN
 	@Action = @Action, 
 	@DateTime = @DateTime,
 	@TicketId = @TicketId
-
 END
+
+GO
+

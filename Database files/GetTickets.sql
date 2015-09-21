@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/18/2015 3:08:17 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/21/2015 12:53:29 PM ******/
+DROP PROCEDURE [dbo].[GetTickets]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/21/2015 12:53:29 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetTickets]
+
+CREATE PROCEDURE [dbo].[GetTickets]
 	@UserId INT,
 	@TypeOfRequest INT,
 	@RequestedPageNumber INT,
@@ -25,6 +32,7 @@ BEGIN
 	DECLARE @DateTime datetime
 
 	SET @TotalNumberOfTickets = 0
+	SELECT @DateTime = SYSDATETIME()
 
 	IF @TypeOfRequest = 0
 	BEGIN
@@ -128,15 +136,8 @@ BEGIN
 						CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 0 THEN tt.LastDateTime END DESC,
 						CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 0 THEN PriorityName END DESC
 
-		-- add a new audit event
+		-- set param for audit event
 		SELECT @Action = 'Requested personal tickets; the stored procedure was successfully executed.'
-		SELECT @DateTime = SYSDATETIME()
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserId,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
 	END
 	ELSE
 	BEGIN
@@ -236,14 +237,16 @@ BEGIN
 						CASE WHEN @SortType = 'SubmitDate' AND @IsSearchASC = 0 THEN tt.DateTime END ASC,
 						CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 0 THEN tt.LastDateTime END DESC
 
-		-- add a new audit event
+		-- set param for audit event
 		SELECT @Action = 'Requested assigned tickets; the stored procedure was successfully executed.'
-		SELECT @DateTime = SYSDATETIME()
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserId,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
 	END
+
+	-- add a new audit event
+	EXEC dbo.AddAuditEvent 
+	@UserId = @UserId,
+	@Action = @Action, 
+	@DateTime = @DateTime,
+	@TicketId = NULL
 END
+GO
+

@@ -1,14 +1,21 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[CloseTicket]    Script Date: 9/18/2015 3:06:08 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[CloseTicket]    Script Date: 9/21/2015 12:51:50 PM ******/
+DROP PROCEDURE [dbo].[CloseTicket]
+GO
+
+/****** Object:  StoredProcedure [dbo].[CloseTicket]    Script Date: 9/21/2015 12:51:50 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[CloseTicket]
+
+CREATE PROCEDURE [dbo].[CloseTicket]
 	@TicketId int,
 	@UserId int,
-	@Error int OUTPUT
+	@ErrCode int OUTPUT
 
 AS
 BEGIN
@@ -21,7 +28,8 @@ BEGIN
 	DECLARE @NewValue varchar(50)
 
 	SELECT @OldValue = State.StateName FROM Ticket INNER JOIN State ON Ticket.StateId = State.StateId WHERE Ticket.TicketId = @TicketId
-
+	SELECT @NewValue = 'Close'
+	SELECT @Action = 'Close'
 	SELECT @DateTime = SYSDATETIME()
 
 	DECLARE @StateId int
@@ -29,35 +37,27 @@ BEGIN
 	FROM State
 	WHERE StateName = 'Closed'
 
-	SELECT @Error = 1
+	SELECT @ErrCode = 1
 
 	UPDATE Ticket
-	SET StateId = @StateId, @Error = 0
+	SET StateId = @StateId, @ErrCode = 0
 	WHERE TicketId = @TicketId
 	
-	IF (@Error = 0)
+	IF (@ErrCode = 1)
 	BEGIN
-		-- add a new ticket history event
-		SELECT @Action = 'Close'
-		SELECT @NewValue = 'Close'
-
-		EXEC dbo.AddTicketHistoryEvent 
-		@TicketId = @TicketId,
-		@UserId = @UserId,
-		@DateTime = @DateTime,
-		@Action = @Action,
-		@OldValue = @OldValue,
-		@NewValue = @NewValue
+		-- if the ticket was not closed then change the new value for history event into old value
+		SELECT @NewValue = @OldValue
 	END
-	ELSE
-	BEGIN
-		-- add a new audit event
-		SELECT @Action = 'Failed when trying to close the ticket.'
 
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserId,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = @TicketId
-	END
+	-- add a new ticket history event
+	EXEC dbo.AddTicketHistoryEvent 
+	@TicketId = @TicketId,
+	@UserId = @UserId,
+	@DateTime = @DateTime,
+	@Action = @Action,
+	@OldValue = @OldValue,
+	@NewValue = @NewValue
 END
+
+GO
+

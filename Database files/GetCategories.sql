@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/18/2015 3:07:17 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/21/2015 12:52:48 PM ******/
+DROP PROCEDURE [dbo].[GetCategories]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 9/21/2015 12:52:48 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetCategories]
+
+CREATE PROCEDURE [dbo].[GetCategories]
 
 AS
 BEGIN
@@ -14,7 +21,7 @@ BEGIN
 
 	SELECT Category.CategoryId, Category.CategoryName, Category.ParentCategoryId
 	FROM Category
-	WHERE Category.ParentCategoryId IS NULL
+	WHERE Category.ParentCategoryId IS NULL AND IsActive = 1
 	ORDER BY Category.CategoryName
 
 	-- add a new audit event
@@ -31,3 +38,5 @@ BEGIN
 	@TicketId = NULL
 
 END
+GO
+

@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[AssignTicketToAdmin]    Script Date: 9/18/2015 3:03:34 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[AssignTicketToAdmin]    Script Date: 9/21/2015 12:51:35 PM ******/
+DROP PROCEDURE [dbo].[AssignTicketToAdmin]
+GO
+
+/****** Object:  StoredProcedure [dbo].[AssignTicketToAdmin]    Script Date: 9/21/2015 12:51:35 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[AssignTicketToAdmin]
+
+CREATE PROCEDURE [dbo].[AssignTicketToAdmin]
 	@TicketId int,
 	@UserId int,
 	@UserWhoDoTheAssignId int
@@ -19,6 +26,7 @@ BEGIN
 	DECLARE @OldValue varchar(50)
 	DECLARE @NewValue varchar(50)
 
+	-- set params for histort event
 	SELECT @DateTime = SYSDATETIME()
 	SELECT @OldValue = (SELECT AssignedToUserId FROM Ticket WHERE TicketId = @TicketId)
 
@@ -28,17 +36,9 @@ BEGIN
 			SET AssignedToUserId = NULL
 			WHERE TicketId = @TicketId
 
-			-- add a new ticket history event
+			-- set params for histort event
 			SELECT @Action = 'Unassign'
 			SELECT @NewValue = ''
-	
-			EXEC dbo.AddTicketHistoryEvent 
-			@TicketId = @TicketId,
-			@UserId = @UserWhoDoTheAssignId,
-			@DateTime = @DateTime,
-			@Action = @Action,
-			@OldValue = @OldValue,
-			@NewValue = @NewValue
 		END
 	ELSE
 		BEGIN
@@ -46,16 +46,20 @@ BEGIN
 			SET AssignedToUserId = @UserId
 			WHERE TicketId = @TicketId
 
-			-- add a new ticket history event
+			-- set params for histort event
 			SELECT @Action = 'Assign'
 			SELECT @NewValue = @UserId
-
-			EXEC dbo.AddTicketHistoryEvent 
-			@TicketId = @TicketId,
-			@UserId = @UserWhoDoTheAssignId,
-			@DateTime = @DateTime,
-			@Action = @Action,
-			@OldValue = @OldValue,
-			@NewValue = @NewValue
 		END
+
+	-- add a new ticket history event
+	EXEC dbo.AddTicketHistoryEvent 
+	@TicketId = @TicketId,
+	@UserId = @UserWhoDoTheAssignId,
+	@DateTime = @DateTime,
+	@Action = @Action,
+	@OldValue = @OldValue,
+	@NewValue = @NewValue
 END
+
+GO
+

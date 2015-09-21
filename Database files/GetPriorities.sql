@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 9/18/2015 3:07:57 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 9/21/2015 12:53:09 PM ******/
+DROP PROCEDURE [dbo].[GetPriorities]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 9/21/2015 12:53:09 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetPriorities]
+
+CREATE PROCEDURE [dbo].[GetPriorities]
 
 AS
 BEGIN
@@ -28,3 +35,6 @@ BEGIN
 	@TicketId = NULL
 
 END
+
+GO
+

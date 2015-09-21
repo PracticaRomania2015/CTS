@@ -1,14 +1,21 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ReopenTicket]    Script Date: 9/18/2015 3:08:43 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[ReopenTicket]    Script Date: 9/21/2015 12:53:40 PM ******/
+DROP PROCEDURE [dbo].[ReopenTicket]
+GO
+
+/****** Object:  StoredProcedure [dbo].[ReopenTicket]    Script Date: 9/21/2015 12:53:40 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[ReopenTicket]
+
+CREATE PROCEDURE [dbo].[ReopenTicket]
 	@TicketId int,
 	@UserId int,
-	@Error int OUTPUT
+	@ErrCode int OUTPUT
 
 AS
 BEGIN
@@ -23,6 +30,7 @@ BEGIN
 	SELECT @OldValue = 'Closed'
 
 	SELECT @DateTime = SYSDATETIME()
+	SELECT @Action = 'Reopen'
 
 	DECLARE @StateId int
 	DECLARE @FirstCommentUser int
@@ -40,50 +48,38 @@ BEGIN
 
 	IF (@FirstCommentUser = @LastCommentUser)
 	BEGIN
-		SELECT @StateId = StateId
+		SELECT @StateId = StateId, @NewValue = StateName
 		FROM State
 		WHERE StateName = 'Active'
-
-		SELECT @NewValue = 'Active'
 	END
 	ELSE
 	BEGIN
-		SELECT @StateId = StateId
+		SELECT @StateId = StateId, @NewValue = StateName
 		FROM State
 		WHERE StateName = 'Answered'
-
-		SELECT @NewValue = 'Answered'
 	END
 
-	SELECT @Error = 1
+	SELECT @ErrCode = 1
 
 	UPDATE Ticket
-	SET StateId = @StateId, @Error = 0
+	SET StateId = @StateId, @ErrCode = 0
 	WHERE TicketId = @TicketId
 	
-	IF (@Error = 0)
+	IF (@ErrCode = 1)
 	BEGIN
-		-- add a new ticket history event
-		SELECT @Action = 'Reopen'
-
-		EXEC dbo.AddTicketHistoryEvent 
-		@TicketId = @TicketId,
-		@UserId = @UserId,
-		@DateTime = @DateTime,
-		@Action = @Action,
-		@OldValue = @OldValue,
-		@NewValue = @NewValue
-	END
-	ELSE
-	BEGIN
-		-- add a new audit event
-		SELECT @Action = 'Failed when trying to reopen the ticket.'
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = @UserId,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = @TicketId
+		-- if the ticket was not reopened then set the new value to old value
+		SELECT @NewValue = @OldValue
 	END
 
+	-- add a new ticket history event
+	EXEC dbo.AddTicketHistoryEvent 
+	@TicketId = @TicketId,
+	@UserId = @UserId,
+	@DateTime = @DateTime,
+	@Action = @Action,
+	@OldValue = @OldValue,
+	@NewValue = @NewValue
 END
+
+GO
+

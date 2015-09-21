@@ -1,11 +1,18 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/18/2015 3:07:04 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/21/2015 12:52:39 PM ******/
+DROP PROCEDURE [dbo].[GetAdminsForCategory]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetAdminsForCategory]    Script Date: 9/21/2015 12:52:39 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetAdminsForCategory]
+
+CREATE PROCEDURE [dbo].[GetAdminsForCategory]
 	@CategoryId int
 
 AS
@@ -32,3 +39,6 @@ BEGIN
 	@TicketId = NULL
 
 END
+
+GO
+

@@ -1,14 +1,21 @@
 USE [CTS]
 GO
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/18/2015 3:09:13 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/21/2015 12:53:47 PM ******/
+DROP PROCEDURE [dbo].[ResetPassword]
+GO
+
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/21/2015 12:53:47 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[ResetPassword]
+
+CREATE PROCEDURE [dbo].[ResetPassword]
 	@Email varchar(50),
 	@Password varchar(MAX),
-	@Error int OUTPUT
+	@ErrCode int OUTPUT
 
 AS
 BEGIN
@@ -17,35 +24,29 @@ BEGIN
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
-	SELECT @Error = 1
-	SELECT top 1 @Error = 0 FROM [User] WHERE Email = @Email
+	SELECT @DateTime = SYSDATETIME()
 
-	IF @Error = 0
+	SELECT @ErrCode = 1
+	
+	SELECT @Action = 'The password was successfully reseted for the account ' + @Email
+
+	UPDATE [User]
+	SET Password = @Password, @ErrCode = 0
+	WHERE Email = @Email
+
+	IF (@ErrCode = 1)
 	BEGIN
-		UPDATE [User]
-		SET Password = @Password
-		WHERE Email = @Email
-
-		-- add a new audit event
-		SELECT @Action = 'The password was successfully reseted for the account ' + @Email
-		SELECT @DateTime = SYSDATETIME()
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = NULL,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
-	END
-	ELSE
-	BEGIN
-		-- add a new audit event
+		-- if the password wasn't reseted then set an error message for audit event
 		SELECT @Action = 'Failed to reset the password for the account ' + @Email
-		SELECT @DateTime = SYSDATETIME()
-
-		EXEC dbo.AddAuditEvent 
-		@UserId = NULL,
-		@Action = @Action, 
-		@DateTime = @DateTime,
-		@TicketId = NULL
 	END
+
+	-- add a new audit event
+	EXEC dbo.AddAuditEvent 
+	@UserId = NULL,
+	@Action = @Action, 
+	@DateTime = @DateTime,
+	@TicketId = NULL
 END
+
+GO
+
