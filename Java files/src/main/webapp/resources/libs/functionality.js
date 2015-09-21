@@ -48,21 +48,65 @@ function frontPageFunctionality() {
 	});
 }
 
+function manageCategoriesPageFunctionality(){
+
+	var addCategoryView, addSubcategoryView, removeCategoryView;
+	
+	$('#addCategoryDivButton').click(
+			function() {
+				addSubcategoryView = removeCategoryView = null;
+				if(!addCategoryView){
+					addCategoryView = new AddCategoryView({
+						model: new AddCategoryModel({})
+					});
+					
+					$('#manageCategoriesContainer').replaceWith(addCategoryView.render().el);
+					handleErrorStyle();
+				}
+
+			});
+	
+	$('#addSubcategoryDivButton').click(
+			function(){
+				addCategoryView = removeCategoryView = null;
+				if(!addSubcategoryView){
+					addSubcategoryView = new AddSubcategoryView({
+						model: new AddSubcategoryModel({})
+					});
+					
+					$('#manageCategoriesContainer').replaceWith(addSubcategoryView.render().el);
+					handleErrorStyle();
+				}
+			});
+	
+	$('#removeCategoryDivButton').click(
+			function(){
+				addCategoryView = addSubcategoryView = null;
+				if(!removeCategoryView){
+					removeCategoryView = new RemoveCategoryView({
+						model: new RemoveCategoryModel({})
+					});
+					
+					$('#manageCategoriesContainer').replaceWith(removeCategoryView.render().el);
+					handleErrorStyle();
+				}
+			});
+}
+
 function systemAdminPanelPageFunctionality(){
 	
-	var manageCategoriesView;
+	var manageCategoriesView, manageUsersView;
 
 	$('#manageCategoriesButton').click(
 			function() {
-				//TODO other views = null;
+				manageUsersView = null;
 				if (!manageCategoriesView) {
 					manageCategoriesView = new ManageCategoriesView({});
 					$('#systemAdminPageContainer').replaceWith(
 							manageCategoriesView.render().el);
+					manageCategoriesPageFunctionality();
 					handleErrorStyle();
 				}
-
-				//hide & show arrows
 
 			});
 	
@@ -70,7 +114,7 @@ function systemAdminPanelPageFunctionality(){
 			function() {
 				sessionStorage.clear();
 				
-				//TODO set all the other view to null
+				manageCategoriesView = manageUsersView = null;
 				
 				$('#mainContainer').replaceWith(
 						_.template($('#frontPageTemplate').html()));
@@ -225,3 +269,5 @@ function addZero(i) {
 	}
 	return i;
 }
+
+var addCategoryView;

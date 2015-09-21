@@ -47,9 +47,6 @@
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/assignedTicketsView.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/genericSystemAdminPanelPageView.js"></script>
-<script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/addCategoryView.js"></script>
-<script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/addSubcategoryView.js"></script>
-<script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/removeCategoryView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageCategoriesView.js"></script>
 <script type="text/javascript" src="${res}/main.js"></script>
 
@@ -138,39 +135,21 @@
 		</div>
 	</script>
 	<script type="text/template" id="manageCategoriesTemplate">
-		<div id="manageCategoriesButtons">
-			<span href="#" class="button" id="addCategoryDivButton">Add Category</span>
-			<span href="#" class="button" id="addSubcategoryDivButton">Add Subcategory</span>
-			<span href="#" class="button" id="removeCategoryDivButton">Remove Category</span>
-		</div>
-		<div id="manageCategoriesContainer"></div>
-	</script>
-	<script type="text/template" id="addCategoryTemplate">
 		<div id="manageCategoriesContainer">
 			<form class='sysAdminPageForms'>
 				<input id='categoryName' type='text' placeholder='Category name' class="masterTooltip"/>
 				<span href="#" class="button" id="addCategoryButton">Add Category</span>
-			</form>
-		</div>
-	</script>
-	<script type="text/template" id="addSubcategoryTemplate">
-		<div id="manageCategoriesContainer">
-			<form class='sysAdminPageForms'>
-			<div id="categoryListDiv">
-				<select id="categoryListDropbox">
+
+				<div id="categoryListDivSubcategory">
+				<select id="categoryListDropboxSubcategory">
 					<option selected disabled value="">Select the category...</option>
 				</select>
-			</div>
-			<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip"/>
-			<span href="#" class="button" id="addSubcategoryButton">Add Subcategory</span>
-			</form>
-		</div>
-	</script>
-	<script type="text/template" id="removeCategoryTemplate">
-		<div id="manageCategoriesContainer">
-			<form class='sysAdminPageForms'>
-				<div id="categoryListDiv">
-					<select id="categoryListDropbox">
+				</div>
+				<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip"/>
+				<span href="#" class="button" id="addSubcategoryButton">Add Subcategory</span>
+
+				<div id="categoryListDivRemove">
+					<select id="categoryListDropboxRemove">
 						<option selected disabled value="">Select the category...</option>
 					</select>
 				</div>
