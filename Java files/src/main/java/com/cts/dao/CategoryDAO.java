@@ -3,8 +3,9 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import com.cts.entities.Category;
+import com.cts.entities.UserRight;
 import com.cts.entities.UserStatus;
 
 public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
@@ -100,7 +101,7 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 	@Override
 	public boolean viewCategoriesRightsForUser(UserStatus userStatus) {
 
-		HashMap<Category, Boolean> userCategories = new HashMap<Category, Boolean>();
+		ArrayList<UserRight> userCategories = new ArrayList<UserRight>();
 		try {
 
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
@@ -114,13 +115,13 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 				category.setCategoryName(resultSet.getString("CategoryName"));
 				if (resultSet.getString("CategoryUserId") != null) {
 					
-					userCategories.put(category, true);
+					userCategories.add(new UserRight(category, true));
 				} else {
 
-					userCategories.put(category, false);
+					userCategories.add(new UserRight(category, false));
 				}
 			}
-			userStatus.setUserCategories(userCategories);
+			userStatus.setCategoryAdminRights(userCategories);
 			setOutParametersAfterExecute();
 			userStatus.setSysAdmin(isSysAdminParam.getParameter());
 

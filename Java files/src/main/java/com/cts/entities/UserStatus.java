@@ -1,23 +1,20 @@
 package com.cts.entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class UserStatus {
 
 	private int userId;
 	private boolean isSysAdmin;
-	private ArrayList<Integer> adminCategoryId;
-	private HashMap<Category, Boolean> userCategories;
+	private ArrayList<UserRight> categoryAdminRights;
 
 	public UserStatus() {
 
 		userId = 0;
 		isSysAdmin = false;
-		adminCategoryId = new ArrayList<Integer>();
-		userCategories = new HashMap<Category, Boolean>();
+		setCategoryAdminRights(new ArrayList<UserRight>());
 	}
-
+	
 	public int getUserId() {
 
 		return userId;
@@ -38,23 +35,12 @@ public class UserStatus {
 		this.isSysAdmin = isSysAdmin;
 	}
 
-	public ArrayList<Integer> getAdminCategoryId() {
-
-		return adminCategoryId;
+	public ArrayList<UserRight> getCategoryAdminRights() {
+		return categoryAdminRights;
 	}
 
-	public void setAdminCategoryId(ArrayList<Integer> adminCategoryId) {
-
-		this.adminCategoryId = adminCategoryId;
+	public void setCategoryAdminRights(ArrayList<UserRight> categoryAdminRights) {
+		this.categoryAdminRights = categoryAdminRights;
 	}
 
-	public HashMap<Category, Boolean> getUserCategories() {
-
-		return userCategories;
-	}
-
-	public void setUserCategories(HashMap<Category, Boolean> userCategories) {
-
-		this.userCategories = userCategories;
-	}
 }
