@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCategory]    Script Date: 9/21/2015 12:51:16 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCategory]    Script Date: 9/22/2015 12:18:06 PM ******/
 DROP PROCEDURE [dbo].[AddCategory]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCategory]    Script Date: 9/21/2015 12:51:16 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCategory]    Script Date: 9/22/2015 12:18:06 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,35 +31,12 @@ BEGIN
 
 	SELECT @ErrCode = 1
 	FROM Category
-	WHERE CategoryName = @CategoryName
+	WHERE CategoryName = @CategoryName AND IsActive = 1
 
 	IF (@ErrCode = 1)
 	BEGIN
 		-- category already exists
-		-- check if is inactive
-		-- if it is then make it active
-		-- otherwise return error
-
-		DECLARE @Check int = 0
-		DECLARE @CategoryId int
-
-		SELECT @CategoryId = CategoryId
-		FROM Category
-		WHERE CategoryName = @CategoryName
-
-		UPDATE Category
-		SET IsActive = 1, @Check = 1
-		WHERE (CategoryId = @CategoryId OR ParentCategoryId = @CategoryId) AND IsActive = 0
-
-		IF (@Check = 0)
-		BEGIN
-			SELECT @Action = 'Failed to add category or subcategory: ' + @CategoryName + '; a category with the same name already exists.'
-		END
-		ELSE
-		BEGIN
-			SET @ErrCode = 0
-			SELECT @Action = 'Activate the category or subcategory: ' + @CategoryName
-		END
+		SELECT @Action = 'Failed to add category or subcategory: ' + @CategoryName + '; a category with the same name already exists.'
 	END
 	ELSE
 	BEGIN
