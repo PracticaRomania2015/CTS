@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/21/2015 12:52:09 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/22/2015 9:00:00 AM ******/
 DROP PROCEDURE [dbo].[CreateUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/21/2015 12:52:09 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/22/2015 9:00:00 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -40,6 +40,10 @@ BEGIN
 		BEGIN
 			SET @ErrCode = 1
 		END
+	END
+	ELSE
+	BEGIN
+		SET @ErrCode = 1
 	END
 
 	IF (@ErrCode = 1)
