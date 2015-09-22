@@ -48,6 +48,7 @@
 
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/genericSystemAdminPanelPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageCategoriesView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageUsersView.js"></script>
 <script type="text/javascript" src="${res}/main.js"></script>
 
 
@@ -150,7 +151,51 @@
 		</div>
 	</script>
 	<script type="text/template" id="manageUsersTemplate">
-		
+		<input class="searchUsers" id='usersSearchBox' type='text' placeholder='Search'/>
+		<select class="searchUsers" id="usersSearchDropBox">
+			<option selected value="UserId">User ID</option>
+			<option value="FirstName">First Name</option>
+			<option value="LastName">Last Name</option>
+			<option value="Email">E-mail</option>
+			<option value="RoleId">Role</option>
+		</select>
+		<span href="#" class="button" id="usersSearchButton">Search</span>
+
+		<table class="usersView">
+			<thead>
+				<tr>
+					<th id="rounded-tl" class="slim-col">User ID</th>
+					<th class="wide-col">First Name</th>
+					<th class="wide-col">Last Name</th>
+					<th class="wide-col">E-mail</th>
+					<th id="rounded-tr" class="slim-col">Role</th>
+				<tr>
+			</thead>
+			<tfoot>
+      				<tr>
+        				<th colspan="5" id="rounded-bot">
+							<div class="table-surf" id="firstPageReqBtn">&#60;&#60;</div>
+							&emsp;
+							<div class="table-surf" id="prevPageReqBtn">&#60;</div>
+							&emsp;
+							<div id="usersPagingNumbering" style="display: inline-block;"></div>
+							&emsp;
+							<div class="table-surf" id="nextPageReqBtn">&#62;</div>
+							&emsp;
+							<div class="table-surf" id="lastPageReqBtn">&#62;&#62;</div>
+							<div id="usersPerPgDiv">
+								Users/Page
+								<select id="usersPerPage">
+									<option selected disabled value="10">10</option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+								</select>
+							</div>
+						</th>
+      				</tr>
+    			</tfoot>
+    			<tbody id="usersViewBody"></tbody>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>

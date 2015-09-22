@@ -56,6 +56,12 @@ function userPanelPageFunctionality() {
 	
 	var manageCategoriesView, manageUsersView;
 
+	
+	if(sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "User"){
+		$('#manageCategoriesButton').remove();
+		$('#manageUsersButton').remove();
+	}
+
 	if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin") {
 		$('#btn-mngTk').click(
 				function() {
@@ -83,16 +89,23 @@ function userPanelPageFunctionality() {
 		if(sessionStorage.loggedUserRights == "SysAdmin"){
 			$('#manageCategoriesButton').click(
 					function() {
-						assignedTicketsView = userTicketsView = createTicketPageView = null;
+						assignedTicketsView = userTicketsView = createTicketPageView = manageUsersView = null;
 						if (!manageCategoriesView) {
 							manageCategoriesView = new ManageCategoriesView({});
 							$('#userPanelPageContainer').replaceWith(manageCategoriesView.render().el);
 							handleErrorStyle();
 						}
-
 					});
-		}else{
-			$('#manageCategoriesButton').remove();
+			
+			$('#manageUsersButton').click(
+					function(){
+						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
+						if(!manageUsersView){
+							manageUsersView = new ManageUsersView({});
+							$('userPanelPageContainer').replaceWith(manageUsersView.render().el);
+							handleErrorStyle();
+						}
+				});
 		}
 		
 	} else {
