@@ -2,7 +2,7 @@
 /* ================================================= */
 /* Manage Categories Page view */
 
-var ManageCategoriesView = GenericSystemAdminPanelPageView.extend({
+var ManageCategoriesView = GenericUserPanelPageView.extend({
 
 	appendData : function(){
 		this.$el.append("<h1 class='userPage'> Manage Categories </h1>");
@@ -24,7 +24,7 @@ var ManageCategoriesView = GenericSystemAdminPanelPageView.extend({
 		
 		categories.save({},{
 			success: function(model, response){
-				$('#systemAdminPageContainer').empty();
+				$('#userPanelPageContainer').empty();
 				currentView.appendData();
 				_.each(response,function(e){
 					$('#categoryListDropboxSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
@@ -103,7 +103,7 @@ var ManageCategoriesView = GenericSystemAdminPanelPageView.extend({
 				}else{
 					alert("The new subcategory was added successfully!");
 				};
-				//TODO showing message if added successfully
+				//TODO showing message if added successfully better
 			},
 			error: function(model, response){
 				alert(response);
@@ -137,7 +137,7 @@ var ManageCategoriesView = GenericSystemAdminPanelPageView.extend({
 				}else{
 					alert("Successfully removed!");
 				};
-				//TODO showing message if added successfully
+				//TODO showing message if removed successfully better
 			},
 			error: function(model, response){
 				alert(response);

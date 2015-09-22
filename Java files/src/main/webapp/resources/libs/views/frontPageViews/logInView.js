@@ -25,14 +25,9 @@ var LogInView = GenericFrontPageChildView.extend({
 				if (response.userId) {
 					sessionStorage.loggedUserId = response.userId;
 					sessionStorage.loggedUserRights = response.role.roleName;
-					if(sessionStorage.loggedUserRights == "SysAdmin"){
-						$('#mainContainer').replaceWith(_.template($('#systemAdminPageTemplate').html()));
-						systemAdminPanelPageFunctionality();
-					}else{
-						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
-						userPanelPageFunctionality();
-					}
-				} else {
+					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+					userPanelPageFunctionality();
+				}else {
 					alert(response.description);
 
 				};
@@ -54,19 +49,13 @@ var LogInView = GenericFrontPageChildView.extend({
 	  		user.save({}, {
 	  			success : function(model, response) {
 	  				if (response.userId) {
-					sessionStorage.loggedUserId = response.userId;
-					sessionStorage.loggedUserRights = response.role.roleName;
-					if(sessionStorage.loggedUserRights == "SysAdmin"){
-						$('#mainContainer').replaceWith(_.template($('#systemAdminPageTemplate').html()));
-						systemAdminPanelPageFunctionality();
-					}else{
+						sessionStorage.loggedUserId = response.userId;
+						sessionStorage.loggedUserRights = response.role.roleName;
 						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 						userPanelPageFunctionality();
-					}
-				} else {
-					alert(response.description);
-
-				};
+					}else {
+						alert(response.description);
+					};
 	  			},
 	  			error : function(model, response) {
 	  				alert(response);

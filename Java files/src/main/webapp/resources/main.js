@@ -1,10 +1,7 @@
 $(document).ready((function() {
 
 		if(typeof(Storage) !== "undefined") {
-			if(sessionStorage.loggedUserId && sessionStorage.loggedUserRights == "SysAdmin"){
-				$('#mainContainer').replaceWith(_.template($('#systemAdminPageTemplate').html()));
-				systemAdminPanelPageFunctionality();
-			}else if(sessionStorage.loggedUserId) {
+			if(sessionStorage.loggedUserId) {
 				$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 				userPanelPageFunctionality();
 			} 

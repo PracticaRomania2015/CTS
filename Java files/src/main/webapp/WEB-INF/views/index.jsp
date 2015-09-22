@@ -109,6 +109,8 @@
 				<span href='#' class='button' id='btn-prop'>User properties
 					<div id="upn" class="menuRightArrow"></div>
 					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='manageCategoriesButton'>Manage Categories</span>
+				<span href='#' class='button' id='manageUsersButton'>Manage Users</span>
 				<span href='#' class='button' id='btn-logOut'>Log out</span>
 			</div>
 			<div id="contextWrapper">
@@ -118,21 +120,6 @@
 				</div>
 			</div>
 			</div>
-	</script>
-<script type="text/template" id="systemAdminPageTemplate">
-		<div id='mainContainer'>
-		<div id='menuWrapper'>
-			<span href='#' class='button' id='manageCategoriesButton'>Manage Categories</span>
-			<span href='#' class='button' id='manageUsersButton'>Manage Users</span>
-			<span href='#' class='button' id='btn-logOut'>Log out</span>
-		</div>
-		<div id="contextWrapper">
-				<div id='systemAdminPageContainer'>
-					<h1 class="userPage">Welcome !</h1>
-					<h2 class="userPage">CTS Version: 0.01_ALPHA</h1>
-				</div>
-		</div>
-		</div>
 	</script>
 	<script type="text/template" id="manageCategoriesTemplate">
 		<div id="manageCategoriesContainer">
@@ -161,6 +148,9 @@
 				<span href="#" class="button" id="removeCategoryButton">Remove</span>
 			</form>
 		</div>
+	</script>
+	<script type="text/template" id="manageUsersTemplate">
+		
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>

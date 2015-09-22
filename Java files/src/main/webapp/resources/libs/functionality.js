@@ -48,100 +48,18 @@ function frontPageFunctionality() {
 	});
 }
 
-function manageCategoriesPageFunctionality(){
-
-	var addCategoryView, addSubcategoryView, removeCategoryView;
-	
-	$('#addCategoryDivButton').click(
-			function() {
-				addSubcategoryView = removeCategoryView = null;
-				if(!addCategoryView){
-					addCategoryView = new AddCategoryView({
-						model: new AddCategoryModel({})
-					});
-					
-					$('#manageCategoriesContainer').replaceWith(addCategoryView.render().el);
-					handleErrorStyle();
-				}
-
-			});
-	
-	$('#addSubcategoryDivButton').click(
-			function(){
-				addCategoryView = removeCategoryView = null;
-				if(!addSubcategoryView){
-					addSubcategoryView = new AddSubcategoryView({
-						model: new AddSubcategoryModel({})
-					});
-					
-					$('#manageCategoriesContainer').replaceWith(addSubcategoryView.render().el);
-					handleErrorStyle();
-				}
-			});
-	
-	$('#removeCategoryDivButton').click(
-			function(){
-				addCategoryView = addSubcategoryView = null;
-				if(!removeCategoryView){
-					removeCategoryView = new RemoveCategoryView({
-						model: new RemoveCategoryModel({})
-					});
-					
-					$('#manageCategoriesContainer').replaceWith(removeCategoryView.render().el);
-					handleErrorStyle();
-				}
-			});
-}
-
-function systemAdminPanelPageFunctionality(){
-	
-	var manageCategoriesView, manageUsersView;
-
-	$('#manageCategoriesButton').click(
-			function() {
-				manageUsersView = null;
-				if (!manageCategoriesView) {
-					manageCategoriesView = new ManageCategoriesView({});
-					$('#systemAdminPageContainer').replaceWith(
-							manageCategoriesView.render().el);
-					manageCategoriesPageFunctionality();
-					handleErrorStyle();
-				}
-
-			});
-	
-	$('#btn-logOut').click(
-			function() {
-				sessionStorage.clear();
-				
-				manageCategoriesView = manageUsersView = null;
-				
-				$('#mainContainer').replaceWith(
-						_.template($('#frontPageTemplate').html()));
-				frontPageFunctionality();
-
-				$('#ats').hide();
-				$('#mts').hide();
-				$('#sts').hide();
-				$('#ups').hide();
-
-				$('#atn').show();
-				$('#mtn').show();
-				$('#stn').show();
-				$('#upn').show();
-			});
-	
-}
 var assignedTicketsView, userTicketsView;
 
 function userPanelPageFunctionality() {
 
 	var createTicketPageView, respondToTicketPageView;
+	
+	var manageCategoriesView, manageUsersView;
 
-	if (sessionStorage.loggedUserRights == "Admin") {
+	if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin") {
 		$('#btn-mngTk').click(
 				function() {
-					userTicketsView = createTicketPageView = null;
+					userTicketsView = createTicketPageView = manageCategoriesView = null;
 					if (!assignedTicketsView) {
 						assignedTicketsView = new AssignedTicketsView({
 							model : new ViewTicketsModel({})
@@ -161,13 +79,29 @@ function userPanelPageFunctionality() {
 					$('#stn').show();
 					$('#upn').show();
 				});
+		
+		if(sessionStorage.loggedUserRights == "SysAdmin"){
+			$('#manageCategoriesButton').click(
+					function() {
+						assignedTicketsView = userTicketsView = createTicketPageView = null;
+						if (!manageCategoriesView) {
+							manageCategoriesView = new ManageCategoriesView({});
+							$('#userPanelPageContainer').replaceWith(manageCategoriesView.render().el);
+							handleErrorStyle();
+						}
+
+					});
+		}else{
+			$('#manageCategoriesButton').remove();
+		}
+		
 	} else {
 		$('#btn-mngTk').remove();
 	}
 
 	$('#btn-userTk').click(
 			function() {
-				assignedTicketsView = createTicketPageView = null;
+				assignedTicketsView = createTicketPageView = manageCategoriesView = null;
 				if (!userTicketsView) {
 					userTicketsView = new UserTicketsView({
 						model : new ViewTicketsModel({})
@@ -190,7 +124,7 @@ function userPanelPageFunctionality() {
 
 	$('#btn-subTk').click(
 			function() {
-				assignedTicketsView = userTicketsView = null;
+				assignedTicketsView = userTicketsView = manageCategoriesView = null;
 				if (!createTicketPageView) {
 					createTicketPageView = new CreateTicketPageView({
 						model : new CreateTicketModel({})
@@ -214,7 +148,7 @@ function userPanelPageFunctionality() {
 	$('#btn-prop')
 			.click(
 					function() {
-						assignedTicketsView = userTicketsView = createTicketPageView = null;
+						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
 
 						// TODO to create view for this & change from here
 
@@ -236,7 +170,7 @@ function userPanelPageFunctionality() {
 			function() {
 				sessionStorage.clear();
 				
-				assignedTicketsView = userTicketsView = createTicketPageView = null;
+				assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
 				
 				$('#mainContainer').replaceWith(
 						_.template($('#frontPageTemplate').html()));
@@ -269,5 +203,3 @@ function addZero(i) {
 	}
 	return i;
 }
-
-var addCategoryView;
