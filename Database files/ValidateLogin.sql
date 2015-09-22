@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/21/2015 12:54:00 PM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/22/2015 9:07:08 AM ******/
 DROP PROCEDURE [dbo].[ValidateLogin]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/21/2015 12:54:00 PM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/22/2015 9:07:08 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,6 +31,8 @@ BEGIN
 	DECLARE @DateTime datetime
 
 	SELECT @DateTime = SYSDATETIME()
+
+	SET @ErrCode = 1
 
 	SELECT @UserId = UserId, @FirstName = FirstName, @LastName = LastName, @Title = Title, @RoleId = Role.RoleId, @RoleName = Role.RoleName, @ErrCode = 0
 	FROM [User]
