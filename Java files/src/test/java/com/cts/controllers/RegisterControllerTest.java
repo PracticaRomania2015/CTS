@@ -22,6 +22,7 @@ public class RegisterControllerTest {
 	private static RecoveryController recoveryPasswordController;
 	private static User testUser;
 	private static UserDAOInterface userDAO;
+	private static FirstCallController initializer;
 
 	private static final String emptyEmail = "";
 	private static final String nullEmail = null;
@@ -51,6 +52,7 @@ public class RegisterControllerTest {
 		registerController = new RegisterController();
 		loginController = new LoginController();
 		recoveryPasswordController = new RecoveryController();
+		initializer = new FirstCallController();
 		testUser = new User();
 	}
 
@@ -87,66 +89,66 @@ public class RegisterControllerTest {
 	@Test
 	public void registerGET() {
 
-		assertEquals("index", registerController.firstThingCalled());
+		assertEquals("index", initializer.firstThingCalled());
 	}
 	
 	@Test
 	public void registerWithNullTitle() {
 		setUserParams(testFirstName, testLastName, nullTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithEmptyTitle() {
 		setUserParams(testFirstName, testLastName, emptyTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYTITLE), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE), registerController.register(testUser));
 	}
 
 	@Test
 	public void registerWithNullFirstName() {
 		setUserParams(nullFirstName, testLastName, testTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithEmptyFirstName() {
 		setUserParams(emptyFirstName, testLastName, testTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYFIRSTNAMEFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithNullLastName() {
 		setUserParams(testFirstName, nullLastName, testTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithEmptyLastName() {
 		setUserParams(testFirstName, emptyLastName, testTitle, testEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.REGISTEREMPTYLASTNAMEFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithNullEmail() {
 		setUserParams(testFirstName, testLastName, testTitle, nullEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithEmptyEmail() {
 		setUserParams(testFirstName, testLastName, testTitle, emptyEmail, testPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithNullPassword() {
 		setUserParams(testFirstName, testLastName, testTitle, testEmail, nullPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD), registerController.register(testUser));
 	}
 	
 	@Test
 	public void registerWithEmptyPassword() {
 		setUserParams(testFirstName, testLastName, testTitle, testEmail, emptyPassword);
-		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), registerController.register(testUser));
+		assertEquals(new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD), registerController.register(testUser));
 	}
 }

@@ -34,7 +34,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(nullEmail);
 		testUser.setPassword(testPassword);
-		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL), loginController.login(testUser));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(emptyEmail);
 		testUser.setPassword(testPassword);
-		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAILFIELD), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL), loginController.login(testUser));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(testEmail);
 		testUser.setPassword(nullPassword);
-		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD), loginController.login(testUser));
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class LoginControllerTest {
 
 		testUser.setEmail(testEmail);
 		testUser.setPassword(emptyPassword);
-		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORDFIELD), loginController.login(testUser));
+		assertEquals(new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD), loginController.login(testUser));
 	}
 
 	@Test

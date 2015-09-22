@@ -9,12 +9,12 @@ import com.cts.entities.ViewTicketsRequest;
 
 public class ViewTicketsControllerTest {
 
-	private static ViewTicketsController viewTicketsController;
+	private static TicketsController ticketsController;
 	
 	@BeforeClass
 	public static void beforeClass() {
 		
-		viewTicketsController = new ViewTicketsController();
+		ticketsController = new TicketsController();
 	}
 	
 	@Test
@@ -27,6 +27,6 @@ public class ViewTicketsControllerTest {
 		viewTicketRequest.setTypeOfRequest(0);
 		viewTicketRequest.setRequestedPageNumber(1);
 		viewTicketRequest.setTicketsPerPage(1);
-		assertEquals("{\"totalNumberOfPages\":1,\"tickets\":[]}", viewTicketsController.viewTickets(viewTicketRequest));
+		assertEquals("{\"totalNumberOfPages\":1,\"tickets\":[]}", ticketsController.viewTickets(viewTicketRequest));
 	}
 }
