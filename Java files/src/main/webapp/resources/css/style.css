@@ -1,15 +1,37 @@
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
+#header{
+	display: inline-block;
+	width: 1245px;
+	margin-left: 170px;
+	margin-right: 170px;
+}
 #logoWrapper {
-	display: block;
 	width: 250px;
 	margin: 0 auto;
 }
 
-#logo {
-	max-width: 100%;
-	max-height: 100%;
-	vertical-align: middle;
+#userInfo{
+	border-radius: 5px;
+	border: 3px solid #0d94d2;
+	display: block;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #0d94d2;
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+#logo{
+	width: 100%;
+	height: 100%;
+
+
+
+
 }
 
 /* =========================================================================================================================== */
@@ -171,7 +193,7 @@ h1.frontPage {
 	border-color: transparent transparent transparent #7bc143;
 }
 
-#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut {
+#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut,#manageUsersButton,#manageCategoriesButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -291,11 +313,15 @@ h2.userPage {
 }
 
 .ticketView thead th.wide-col {
-	width: 27.5%;
+	width: 15%;
 }
 
 .ticketView thead th.slim-col {
-	width: 15%;
+	width: 12.4%;
+}
+.ticketView thead th.id-col {
+	width: 8%;
+
 }
 
 .ticketView thead th#rounded-tl {

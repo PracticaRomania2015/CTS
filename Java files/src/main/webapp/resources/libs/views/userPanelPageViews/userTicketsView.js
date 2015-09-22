@@ -86,8 +86,10 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	addTicket : function(id, subj, categ, status, userName, ansDate, subDate) {
 		this.$el.find('tbody').append(
 				"<tr class='openTicketComments' id='" + id
-						+ "'><td><div class='columnOverflow'>" + subj
+						+ "'><td><div class='columnOverflow'>" + id
+						+ "</div></td><td><div class='columnOverflow'>" + subj
 						+ "</div></td><td><div class='columnOverflow'>" + categ
+						+ "</div></td><td><div class='columnOverflow'>" + "priority"
 						+ "</div></td><td><div class='columnOverflow'>"
 						+ status + " " + userName
 						+ "</div></td><td><div class='columnOverflow'>"

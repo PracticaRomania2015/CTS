@@ -54,6 +54,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 								"<div class='commentDateLeft'>" + dateString +
 								"</div></div>"));
 							lastLeftCommentUserId = loggedUserId;
+							lastRightCommentUserId =0;
 							
 						}
 						
@@ -82,6 +83,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 										"</div></div>"));
 							}
 								lastRightCommentUserId =e.user.userId;
+								lastLeftCommentUserId =0;
 						}
 							
 					}	
@@ -113,11 +115,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 
 						{
 							
-							if (ticketOwnerId == sessionStorage.loggedUserId) // Wrong condition ; Change to if user is not admin on this category
+							if (ticketOwnerId == sessionStorage.loggedUserId) 
 							{
-
-								$('#ticketAdminsDropBox').remove();
-								$('#assignUserToTicketButton').remove();
 								
 								if (assignedToId == 0){
 									$('#ticketTitle').append("currently unassigned");
@@ -129,6 +128,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							}
 							else
 							{
+								$('#ticketAdminsDropBox').show();
+								$('#assignUserToTicketButton').show();
 								if (assignedToId == 0)
 								{
 									$('#ticketAdminsDropBox').append("<option value=0>Set ticket as unassigned</option>");
@@ -155,8 +156,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						}
 						else
 						{	
-							$('#ticketAdminsDropBox').remove();
-							$('#assignUserToTicketButton').remove();
 							if (assignedToId == 0){
 								$('#ticketTitle').append("currently unassigned");
 							}

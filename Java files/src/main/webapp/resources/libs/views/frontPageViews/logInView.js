@@ -25,8 +25,14 @@ var LogInView = GenericFrontPageChildView.extend({
 				if (response.userId) {
 					sessionStorage.loggedUserId = response.userId;
 					sessionStorage.loggedUserRights = response.role.roleName;
-					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+					sessionStorage.loggedUserName = response.firstName + " " +response.lastName;
 					userPanelPageFunctionality();
+					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+
+
+
+					
+
 				}else {
 					alert(response.description);
 
@@ -51,6 +57,7 @@ var LogInView = GenericFrontPageChildView.extend({
 	  				if (response.userId) {
 						sessionStorage.loggedUserId = response.userId;
 						sessionStorage.loggedUserRights = response.role.roleName;
+						sessionStorage.loggedUserName = response.firstName + " " +response.lastName;
 						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 						userPanelPageFunctionality();
 					}else {

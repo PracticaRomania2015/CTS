@@ -30,6 +30,7 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getAdminForCategory.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignAdminToTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/closeTicketModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/userPropertiesModel.js"></script>
 
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
@@ -45,6 +46,7 @@
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/createTicketPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/respondToTicketPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/assignedTicketsView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPanelPageViews/userPropertiesPageView.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/genericSystemAdminPanelPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageCategoriesView.js"></script>
@@ -98,6 +100,10 @@
 	<script type="text/template" id="userPanelPageTemplate">
 			<div id='mainContainer'>
 			<div id='menuWrapper'>
+				<div id='userInfo'>
+					<div id="upn" class="menuRightArrow"></div>
+					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
+				</div>
 				<span href='#' class='button' id='btn-mngTk'>Manage tickets
 					<div id="atn" class="menuRightArrow"></div>
 					<div id="ats" class="menuRightArrowSelected" style="display: none;"></div></span>
@@ -107,11 +113,12 @@
 				<span href='#' class='button' id='btn-subTk'>Submit a ticket
 					<div id="stn" class="menuRightArrow"></div>
 					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='btn-prop'>User properties
-					<div id="upn" class="menuRightArrow"></div>
-					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
-				<span href='#' class='button' id='manageCategoriesButton'>Manage Categories</span>
-				<span href='#' class='button' id='manageUsersButton'>Manage Users</span>
+				<span href='#' class='button' id='manageCategoriesButton'>Manage Categories		
+					<div id="stn" class="menuRightArrow"></div>
+					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
+				<span href='#' class='button' id='manageUsersButton'>Manage Users
+					<div id="stn" class="menuRightArrow"></div>
+					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-logOut'>Log out</span>
 			</div>
 			<div id="contextWrapper">
@@ -203,14 +210,17 @@
 				<option selected value="Subject">Subject</option>
 				<option value="Category">Category</option>
 				<option value="Status">Status</option>
+				<option value="TicketId">TicketId</option>
 			</select>
 			<span href="#" class="button" id="ticketSearchButton">Search</span>
 			
 			<table class="ticketView">
     			<thead>
 					<tr>
-						<th id="rounded-tl" class="wide-col">Subject</th>
+						<th id="rounded-tl" class="id-col">Id</th>
+						<th class="wide-col">Subject</th>
 						<th class="slim-col">Category</th>
+						<th class="slim-col">Priority</th>
 						<th class="wide-col">Status</th>
 						<th class="slim-col">Last Comment</th>
 						<th id="rounded-tr" class="slim-col">Submit Date</th>
@@ -218,7 +228,7 @@
     			</thead>
     			<tfoot>
       				<tr>
-        				<th colspan="5" id="rounded-bot">
+        				<th colspan="7" id="rounded-bot">
 							<div class="table-surf" id="firstPageReqBtn">&#60;&#60;</div>
 							&emsp;
 							<div class="table-surf" id="prevPageReqBtn">&#60;</div>
@@ -266,18 +276,21 @@
 					<span href="#" class="button" id="respondToTicketButton">Submit</span>
 					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
 					<input type="file" class="browseFile" />
-					<select id="ticketAdminsDropBox"></select>
-					<span href="#" class="button" id="assignUserToTicketButton" >Assign user</span>
+					<select id="ticketAdminsDropBox" style='display: none;'></select>
+					<span href="#" class="button" id="assignUserToTicketButton"style='display: none;' >Assign user</span>
 				</div>
 				<div id="responseButtons">
-					
-					
 				</div>
 			</div>
 	</script>
+	<script type="text/template" id="userPropertiesTemplate">	
+			<h1 class="userPage" id="userPropertiesTitle"></h1>
+	</script>
 </head>
 <body>
-	<div id="logoWrapper"></div>
+	<div id="header">
+		<div id="logoWrapper" ></div>
+	</div>	
 	<div id="mainContainer"></div>
 </body>
 </html>

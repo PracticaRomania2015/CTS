@@ -56,6 +56,7 @@ function userPanelPageFunctionality() {
 	
 	var manageCategoriesView, manageUsersView;
 
+	$('#userInfo').append(sessionStorage.loggedUserName);
 	
 	if(sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "User"){
 		$('#manageCategoriesButton').remove();
@@ -158,16 +159,25 @@ function userPanelPageFunctionality() {
 				$('#upn').show();
 			});
 
-	$('#btn-prop')
+	$('#userInfo')
 			.click(
 					function() {
 						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
 
 						// TODO to create view for this & change from here
+						if (!userPropertiesPageView) {
+							userPropertiesPageView = new UserPropertiesPageView({
+								model : new UserPropertiesModel({})
+							});
+							$('#userPanelPageContainer').replaceWith(
+									userPropertiesPageView.render().el);
+							handleErrorStyle();
+						}
 
 						$('#userPanelPageContainer').replaceWith(
-								"<div id='userPanelPageContainer'></div>");
+							"<div id='userPanelPageContainer'></div>");
 
+						$('#userPropertiesTitle').append(sessionStorage.loggedUserName + " properties page");
 						$('#ats').hide();
 						$('#mts').hide();
 						$('#sts').hide();
@@ -216,3 +226,5 @@ function addZero(i) {
 	}
 	return i;
 }
+
+var addCategoryView,userPropertiesPageView;
