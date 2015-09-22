@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:03:52 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:48:43 PM ******/
 DROP PROCEDURE [dbo].[GetTickets]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:03:52 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:48:43 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -48,6 +48,7 @@ BEGIN
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)) 
+				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 			GROUP BY Ticket.TicketId
 		)CountId
 
@@ -97,6 +98,7 @@ BEGIN
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 			GROUP BY Ticket.TicketId
 		)
 		SELECT TicketId, Subject, DateTime, CategoryName, StateName, FirstName, LastName, LastDateTime, PriorityName
@@ -122,6 +124,7 @@ BEGIN
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
 				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%')) 
+				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%')) 
 			GROUP BY TicketComment.TicketId	
 		)CountId;
 
@@ -172,6 +175,7 @@ BEGIN
 				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
 				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%')) 
+				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%')) 
 			GROUP BY Ticket.TicketId
 		)
 		SELECT TicketId, Subject, DateTime, CategoryName, StateName, FirstName, LastName, LastDateTime, PriorityName
