@@ -131,29 +131,60 @@
 	</script>
 	<script type="text/template" id="manageCategoriesTemplate">
 		<div id="manageCategoriesContainer">
+
+			
+
+		
+
+
+
+
+
 			<form class='sysAdminPageForms'>
-				<input id='categoryName' type='text' placeholder='Category name' class="masterTooltip"/>
+				<div id="addCategoryContainer">
+					<h3 >Add Category</h3>
+					<input id='categoryName' type='text' placeholder='Category name' class="masterTooltip categoryManagment fieldCateg"/>
 				<span href="#" class="button" id="addCategoryButton">Add Category</span>
-
-				<div id="categoryListDivSubcategory">
-				<select id="categoryListDropboxSubcategory">
-					<option selected disabled value="">Select the category...</option>
-				</select>
 				</div>
-				<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip"/>
-				<span href="#" class="button" id="addSubcategoryButton">Add Subcategory</span>
+				
+				<div class="separatorWrapper">
+				<div class="contentFormSeparator">
+					<div id="gradient-line"></div>
+				</div> 
+				</div>
 
-				<div id="categoryListDivRemove">
-					<select id="categoryListDropboxRemove">
+				<div id="addSubCategoryContainer">
+					<h3 >Add SubCategory</h3>
+					<div id="categoryListDivSubcategory">
+					<select id="categoryListDropboxSubcategory" class="categoryManagment dropDownCateg">
 						<option selected disabled value="">Select the category...</option>
 					</select>
+					</div>
+					<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip categoryManagment fieldCateg"/>
+					<span href="#" class="button" id="addSubcategoryButton">Add Subcategory</span>
 				</div>
-				<div id="subcategoryListDiv">
-					<select id="subcategoryListDropbox" disabled=true>
-						<option selected disabled>Select the subcategory...</option>
+
+				<div class="separatorWrapper">
+				<div class="contentFormSeparator">
+					<div id="gradient-line"></div>
+				</div> 
+				</div>
+
+				<div id="removeCategory">
+					<h3 class="userPage">Remove Category</h3>
+					<div id="categoryListDivRemove">
+					<select id="categoryListDropboxRemove" class="categoryManagment dropDownCateg">
+						<option selected disabled value="">Select the category...</option>
 					</select>
+					</div>
+					<div id="subcategoryListDiv">
+						<select id="subcategoryListDropbox" disabled=true class="categoryManagment dropDownCateg" >
+							<option selected disabled>Select the subcategory...</option>
+						</select>
+					</div>
+					<span href="#" class="button" id="removeCategoryButton">Remove</span>
 				</div>
-				<span href="#" class="button" id="removeCategoryButton">Remove</span>
+		
 			</form>
 		</div>
 	</script>
