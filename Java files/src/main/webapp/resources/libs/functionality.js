@@ -102,8 +102,10 @@ function userPanelPageFunctionality() {
 					function(){
 						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
 						if(!manageUsersView){
-							manageUsersView = new ManageUsersView({});
-							$('userPanelPageContainer').replaceWith(manageUsersView.render().el);
+							manageUsersView = new ManageUsersView({
+								model: new ViewUsersModel({})
+							});
+							$('#userPanelPageContainer').replaceWith(manageUsersView.render().el);
 							handleErrorStyle();
 						}
 				});
@@ -115,7 +117,7 @@ function userPanelPageFunctionality() {
 
 	$('#btn-userTk').click(
 			function() {
-				assignedTicketsView = createTicketPageView = manageCategoriesView = null;
+				assignedTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
 				if (!userTicketsView) {
 					userTicketsView = new UserTicketsView({
 						model : new ViewTicketsModel({})
@@ -138,7 +140,7 @@ function userPanelPageFunctionality() {
 
 	$('#btn-subTk').click(
 			function() {
-				assignedTicketsView = userTicketsView = manageCategoriesView = null;
+				assignedTicketsView = userTicketsView = manageCategoriesView = manageUsersView = null;
 				if (!createTicketPageView) {
 					createTicketPageView = new CreateTicketPageView({
 						model : new CreateTicketModel({})
@@ -162,7 +164,7 @@ function userPanelPageFunctionality() {
 	$('#userInfo')
 			.click(
 					function() {
-						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
+						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
 
 						// TODO to create view for this & change from here
 						if (!userPropertiesPageView) {
@@ -193,7 +195,7 @@ function userPanelPageFunctionality() {
 			function() {
 				sessionStorage.clear();
 				
-				assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
+				assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
 				
 				$('#mainContainer').replaceWith(
 						_.template($('#frontPageTemplate').html()));

@@ -35,6 +35,7 @@
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/removeCategoryModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/viewUserModel.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/registerView.js"></script>
@@ -234,6 +235,7 @@
       				</tr>
     			</tfoot>
     			<tbody id="usersViewBody"></tbody>
+			</table>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
