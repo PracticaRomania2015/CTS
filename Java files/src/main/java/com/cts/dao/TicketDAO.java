@@ -158,9 +158,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> assignedUserLastNameParam = new InOutParam<String>("", "AssignedUserLastName", true);
 			InOutParam<Integer> priorityIdParam = new InOutParam<Integer>(0, "PriorityId", true);
 			InOutParam<String> priorityNameParam = new InOutParam<String>("", "PriorityName", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.GetFullTicket, ticketIdParam, subjectParam, categoryIdParam,
 					categoryNameParam, stateIdParam, stateNameParam, assignedUserIdParam, assignedUserFirstNameParam,
-					assignedUserLastNameParam, priorityIdParam, priorityNameParam);
+					assignedUserLastNameParam, priorityIdParam, priorityNameParam, errCodeParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
 
@@ -179,6 +180,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			}
 			ticket.setComments(ticketComments);
 			setOutParametersAfterExecute();
+			if (errCodeParam.getParameter() == 1) {
+
+				return false;
+			}
 			ticket.setSubject(subjectParam.getParameter());
 			ticket.getCategory().setCategoryId(categoryIdParam.getParameter());
 			ticket.getCategory().setCategoryName(categoryNameParam.getParameter());

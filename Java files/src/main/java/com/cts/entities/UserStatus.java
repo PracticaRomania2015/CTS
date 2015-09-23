@@ -12,7 +12,7 @@ public class UserStatus {
 
 		userId = 0;
 		isSysAdmin = false;
-		setCategoryAdminRights(new ArrayList<UserRight>());
+		categoryAdminRights = new ArrayList<UserRight>();
 	}
 	
 	public int getUserId() {
@@ -36,11 +36,12 @@ public class UserStatus {
 	}
 
 	public ArrayList<UserRight> getCategoryAdminRights() {
+		
 		return categoryAdminRights;
 	}
 
 	public void setCategoryAdminRights(ArrayList<UserRight> categoryAdminRights) {
+		
 		this.categoryAdminRights = categoryAdminRights;
 	}
-
 }
