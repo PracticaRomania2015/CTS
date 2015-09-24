@@ -4,7 +4,7 @@
 
 var RespondToTicketModel = Backbone.Model.extend({
 	
-	urlRoot: 'addComment/',
+	urlRoot: 'addCommentToTicket/',
 	
 	validate : function(attrs) {
 		
