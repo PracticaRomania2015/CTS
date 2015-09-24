@@ -20,13 +20,14 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 		
 		this.model.save({},{
 			success: function(model, response){
-				that.populateData(response.rights);
+				if(response.type == "success"){
+					that.populateData(response.data);
+				}
 			},
 			error: function(model, response){
 				console.log(response);
 			}
 		});
-		console.log(this.model);
 	},
 	
 	addManagedCategory: function(adminStatus, categoryId, categoryName){
@@ -44,8 +45,8 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 		var checked = userRights.sysAdmin?"checked":"";
 		$('#sysAdminDiv').empty().append("<input type='checkbox' id='sysAdminCheckbox' value='sysAdmin' " + checked + ">isSysAdmin</input>");
 		$('#sysAdminCheckbox').click(function(){
-			that.model.attributes.rights.sysAdmin = !that.model.attributes.rights.sysAdmin;
-			console.log(that.model.attributes.rights.sysAdmin);
+			that.model.attributes.data.sysAdmin = !that.model.attributes.data.sysAdmin;
+			console.log(that.model.attributes.data.sysAdmin);
 		});
 		this.$el.find('tbody').empty();
 		_.each(userRights.categoryAdminRights,
@@ -60,11 +61,13 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 	
 	submit: function(){
 		
-	//	console.log(this.model);
+		console.log(this.model);
 		
 		var userUpdate = new UpdateUserRoleModel({
-			userId : this.model.get("userId"),
-			rights : this.model.get("rights")
+			userId : this.model.get("data").userId,
+			sysAdmin : this.model.get("data").sysAdmin,
+			categoryAdminRights : this.model.get("data").categoryAdminRights,
+			
 		});
 		console.log(userUpdate);
 		

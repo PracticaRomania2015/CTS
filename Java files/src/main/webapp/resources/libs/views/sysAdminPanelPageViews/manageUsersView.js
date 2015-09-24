@@ -43,7 +43,7 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		console.log(this.model);
 		
 		this.model.unset('data');
-		//this.model.unset('totalNumberOfPages');
+		this.model.unset('totalNumberOfPages');
 		
 		this.model.set("requestedPageNumber", pageNumber);
 		
@@ -100,7 +100,7 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		_.each(usersArray,
 				function(e){
 					//change e.role stuff after the db change
-					currentView.addUser(e.userId, e.firstName, e.lastName, e.email, e.role);
+					currentView.addUser(e.userId, e.firstName, e.lastName, e.email, e.role.roleName);
 		});
 		this.$el.find('#usersPagingNumbering').empty().append(currentPage + "/" + totalPages)
 	}
