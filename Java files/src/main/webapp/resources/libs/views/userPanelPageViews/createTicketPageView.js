@@ -21,11 +21,18 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		
 		categories.save({}, {
 			success : function(model, response) {
-				_.each(response.data, function(e) {
-					$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-					
-				});
-				
+				if (response.type == "success"){
+					_.each(response.data, function(e) {
+						$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						
+					});
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
 			},
 			error : function(model, response) {
 				console.log(response);
@@ -43,17 +50,25 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		
 		categories.save({}, {
 			success : function(model, response) {
-				var selectedCategory = $('#ticketCategoryDropbox').val();
-				$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
-				if ($.isEmptyObject(response.data)) {
-					$('#ticketSubcategoryDropbox').attr("disabled", true);
-					$('#ticketSubcategoryDropbox').css("color", "#808080");
+				if (response.type == "success"){
+					var selectedCategory = $('#ticketCategoryDropbox').val();
+					$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+					if ($.isEmptyObject(response.data)) {
+						$('#ticketSubcategoryDropbox').attr("disabled", true);
+						$('#ticketSubcategoryDropbox').css("color", "#808080");
+					} else {
+						_.each(response.data, function(e) {
+							$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						});
+						$('#ticketSubcategoryDropbox').attr("disabled", false);
+						$('#ticketSubcategoryDropbox').removeAttr("style")
+					}
 				} else {
-					_.each(response.data, function(e) {
-						$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-					});
-					$('#ticketSubcategoryDropbox').attr("disabled", false);
-					$('#ticketSubcategoryDropbox').removeAttr("style")
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				}
 			},
 			error : function(model, response) {
@@ -98,27 +113,34 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		
 		ticket.save({}, {
 			success : function(model, response) {
-				console.log(response);
-				assignedTicketsView = createTicketPageView = null;
-				if (!userTicketsView) {
-					userTicketsView = new UserTicketsView({
-						model : new ViewTicketsModel({})
-					});
-					$('#userPanelPageContainer').replaceWith(
-							userTicketsView.render().el);
-					handleErrorStyle();
+				if (response.type == "success"){
+					assignedTicketsView = createTicketPageView = null;
+					if (!userTicketsView) {
+						userTicketsView = new UserTicketsView({
+							model : new ViewTicketsModel({})
+						});
+						$('#userPanelPageContainer').replaceWith(
+								userTicketsView.render().el);
+						handleErrorStyle();
+					}
+
+					$('#ats').hide();
+					$('#mts').show();
+					$('#sts').hide();
+					$('#ups').hide();
+
+					$('#atn').show();
+					$('#mtn').hide();
+					$('#stn').show();
+					$('#upn').show();
+					alert("Ticket submitted!");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				}
-
-				$('#ats').hide();
-				$('#mts').show();
-				$('#sts').hide();
-				$('#ups').hide();
-
-				$('#atn').show();
-				$('#mtn').hide();
-				$('#stn').show();
-				$('#upn').show();
-				alert("Ticket submitted!");
 			},
 			error : function(model, response) {
 				console.log(response);

@@ -30,7 +30,11 @@ var RegisterView = GenericFrontPageChildView.extend({
 						$('#recovery').hide();
 						alert("Account created!");
 					} else {
-						alert(response.description);
+						if (response.type == "error"){
+							alert(response.description);
+						} else {
+							alert("Unknown error!");
+						}
 					}
 				},
 				error : function(model, response) {

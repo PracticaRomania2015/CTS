@@ -24,12 +24,20 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		
 		categories.save({},{
 			success: function(model, response){
-				$('#userPanelPageContainer').empty();
-				currentView.appendData();
-				_.each(response.data,function(e){
-					$('#categoryListDropboxSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-					$('#categoryListDropboxRemove').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-				});
+				if (response.type == "success") {
+					$('#userPanelPageContainer').empty();
+					currentView.appendData();
+					_.each(response.data,function(e){
+						$('#categoryListDropboxSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						$('#categoryListDropboxRemove').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+					});
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
 			},
 			error: function(model, response){
 				console.log(response);
@@ -45,15 +53,23 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		
 		categories.save({}, {
 			success : function(model, response) {
-				var selectedCategory = $('#categoryListDropboxRemove').val();
-				$('#subcategoryListDropbox').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
-				if ($.isEmptyObject(response.data)) {
-					$('#subcategoryListDropbox').attr("disabled", true);
+				if (response.type == "success") {
+					var selectedCategory = $('#categoryListDropboxRemove').val();
+					$('#subcategoryListDropbox').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
+					if ($.isEmptyObject(response.data)) {
+						$('#subcategoryListDropbox').attr("disabled", true);
+					} else {
+						_.each(response.data, function(e) {
+							$('#subcategoryListDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						});
+						$('#subcategoryListDropbox').attr("disabled", false);
+					}
 				} else {
-					_.each(response.data, function(e) {
-						$('#subcategoryListDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
-					});
-					$('#subcategoryListDropbox').attr("disabled", false);
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				}
 			},
 			error : function(model, response) {
@@ -70,15 +86,18 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		category.save({},{
 			async: false,
 			success: function(model,response){
-				console.log(response);
-				if(response.type == "error"){
-					alert("An error occured while trying to add the new category.");
-				}else{
+				if(response.type == "success"){
 					alert("The new category was added successfully!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				};
 			},
 			error: function(model,response){
-				alert(response);
+				console.log(response);
 			}
 		});
 
@@ -97,16 +116,18 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		subcategory.save({},{
 			async: false,
 			success: function(model, response){
-				console.log(response);
-				if(response.type == "error"){
-					alert("An error occured while trying to add the new subcategory.");
-				}else{
+				if(response.type == "success"){
 					alert("The new subcategory was added successfully!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				};
-				//TODO showing message if added successfully better
 			},
 			error: function(model, response){
-				alert(response);
+				console.log(response);
 			}
 		});
 
@@ -131,16 +152,18 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		category.save({},{
 			async: false,
 			success: function(model, response){
-				console.log(response);
-				if(response.type == "error"){
-					alert("An error occured while trying to remove the selected category");
-				}else{
+				if(response.type == "success"){
 					alert("Successfully removed!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				};
-				//TODO showing message if removed successfully better
 			},
 			error: function(model, response){
-				alert(response);
+				console.log(response);
 			}
 		});
 

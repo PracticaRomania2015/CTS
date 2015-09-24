@@ -22,6 +22,12 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 			success: function(model, response){
 				if(response.type == "success"){
 					that.populateData(response.data);
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
 				}
 			},
 			error: function(model, response){
@@ -73,7 +79,15 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 		
 		userUpdate.save({},{
 			success: function(model,response){
-				console.log(response);
+				if (response.type == "success"){
+					alert("Account updated successfully!");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
 			},
 			error: function(model,response){
 				console.log(response);

@@ -34,13 +34,14 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 	},
 	
 	viewData: function(pageNumber, searchText, searchType){
+		
+		var self = this.model;
+		
 		if(pageNumber > this.model.get("totalNumberOfPages")){
 			pageNumber = this.model.get("totalNumberOfPages");
 		}else if(pageNumber < 1){
 			pageNumber = 1;
 		}
-		
-		console.log(this.model);
 		
 		this.model.unset('data');
 		this.model.unset('totalNumberOfPages');
@@ -57,12 +58,22 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		
 		var currentView = this;
 		
-		console.log(this.model);
-		
 		this.model.save({},{
 			success: function(model,response){
-				console.log(response);
-				currentView.populateData(pageNumber, response.data[0], response.data[1]);
+				if (response.type == "success"){
+					self.set("totalNumberOfPages", response.data[0]);
+					self.set("tickets", response.data[1]);
+					currentView.populateData(pageNumber, response.data[0], response.data[1]);
+					self.unset("data");
+					self.unset("type");
+					self.unset("description");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
 			},
 			error: function(model, response){
 				console.log(response);

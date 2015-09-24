@@ -26,15 +26,19 @@ var LogInView = GenericFrontPageChildView.extend({
 						sessionStorage.loggedUserId = response.data.userId;
 						sessionStorage.loggedUserRights = response.data.role.roleName;
 						sessionStorage.loggedUserName = response.data.firstName + " " +response.data.lastName;
-						userPanelPageFunctionality();
 						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
+						userPanelPageFunctionality();
 					} else {
-						alert(response.description);
-	
-					};
+						if (response.type == "error"){
+							alert(response.description);
+						} else {
+							alert("Unknown error!");
+						}
+					}
+					
 				},
 				error : function(model, response) {
-					alert(response);
+					console.log(response);
 				}
 			});
 		}

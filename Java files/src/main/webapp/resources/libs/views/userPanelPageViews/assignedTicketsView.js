@@ -44,7 +44,9 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	},
 
 	viewData : function(pgNr, srcTxt, srcTp) {
-
+		
+		var self = this.model;
+		
 		if (pgNr > this.model.get("totalNumberOfPages")) {
 			pgNr = this.model.get("totalNumberOfPages");
 		} else if (pgNr < 1) {
@@ -68,11 +70,23 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		this.model.set("textToSearch", srcTxt);
 		this.model.set("searchType", srcTp);
 		var currentView = this;
-
+		
 		this.model.save({}, {
 			success : function(model, response) {
-				currentView.populateData(pgNr, response.data[0],
-						response.data[1]);
+				if (response.type == "success"){
+					self.set("totalNumberOfPages", response.data[0]);
+					self.set("tickets", response.data[1]);
+					currentView.populateData(pageNumber, response.data[0], response.data[1]);
+					self.unset("data");
+					self.unset("type");
+					self.unset("description");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
 			},
 			error : function(model, response) {
 				console.log(response);
