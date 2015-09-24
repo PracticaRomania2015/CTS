@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:48:43 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/24/2015 9:30:03 AM ******/
 DROP PROCEDURE [dbo].[GetTickets]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/22/2015 12:48:43 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/24/2015 9:30:03 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -35,9 +35,10 @@ BEGIN
 
 	IF @TypeOfRequest = 0
 	BEGIN
+		-- personal tickets
 		SELECT @TotalNumberOfTickets = COUNT(*) FROM
 		(
-			SELECT Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Priority.PriorityName) as PriorityName
+			SELECT Ticket.TicketId
 			FROM Ticket
 			INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 			INNER JOIN State ON Ticket.StateId = State.StateId
@@ -110,9 +111,10 @@ BEGIN
 	END
 	ELSE
 	BEGIN
+		-- tickets that I manage
 		SELECT @TotalNumberOfTickets = COUNT(*) FROM
 		(
-			SELECT TicketComment.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Priority.PriorityName) as PriorityName
+			SELECT TicketComment.TicketId
 			FROM Ticket
 				INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 				INNER JOIN State ON Ticket.StateId = State.StateId

@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 8:32:06 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 10:22:20 AM ******/
 DROP PROCEDURE [dbo].[UpdateCategoriesRightsForUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 8:32:06 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 10:22:20 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,28 +31,36 @@ BEGIN
 
 	SET @ErrCode = 0
 
-	DECLARE @SQL varchar(600)
+	IF (@CategoryIdList = '')
+	BEGIN
+		DELETE FROM UserCategory
+		WHERE UserId = @UserId AND CategoryId IN (SELECT CategoryId FROM Category WHERE IsActive = 1)
+	END
+	ELSE
+	BEGIN
+		DECLARE @SQL varchar(600)
 
-	-- remove categories from user
-	SET @SQL = 
-	'DELETE	FROM UserCategory
-	WHERE UserId = ' + CONVERT(varchar(10), @UserId) + ' AND CategoryId NOT IN (' + @CategoryIdList + ') AND CategoryId IN (SELECT CategoryId FROM Category WHERE IsActive = 1)'
-	EXEC(@SQL)
+		-- remove categories from user
+		SET @SQL = 
+		'DELETE	FROM UserCategory
+		WHERE UserId = ' + CONVERT(varchar(10), @UserId) + ' AND CategoryId NOT IN (' + @CategoryIdList + ') AND CategoryId IN (SELECT CategoryId FROM Category WHERE IsActive = 1)'
+		EXEC(@SQL)
 
-	-- add new categories for user
-	SET @SQL = 
-	'DECLARE @CategoryId int = 1
-	 WHILE (@CategoryId <> 0)
-	 BEGIN
-		SET @CategoryId = 0
+		-- add new categories for user
+		SET @SQL = 
+		'DECLARE @CategoryId int = 1
+		 WHILE (@CategoryId <> 0)
+		 BEGIN
+			SET @CategoryId = 0
 			
-		SELECT TOP 1 @CategoryId = CategoryId FROM Category WHERE CategoryId IN (' + @CategoryIdList + ') AND CategoryId NOT IN (SELECT CategoryId FROM UserCategory WHERE UserId = ' + CONVERT(varchar(10), @UserId) + ')
+			SELECT TOP 1 @CategoryId = CategoryId FROM Category WHERE CategoryId IN (' + @CategoryIdList + ') AND CategoryId NOT IN (SELECT CategoryId FROM UserCategory WHERE UserId = ' + CONVERT(varchar(10), @UserId) + ')
 			
-		IF (@CategoryId <> 0)
-			INSERT INTO UserCategory
-			VALUES (' + CONVERT(varchar(10), @UserId) + ', @CategoryId)
-	END'
-	EXEC(@SQL)
+			IF (@CategoryId <> 0)
+				INSERT INTO UserCategory
+				VALUES (' + CONVERT(varchar(10), @UserId) + ', @CategoryId)
+		END'
+		EXEC(@SQL)
+	END
 
 	DECLARE @RoleId int
 

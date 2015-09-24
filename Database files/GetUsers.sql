@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:16:45 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:29:55 AM ******/
 DROP PROCEDURE [dbo].[GetUsers]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:16:45 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:29:55 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -27,7 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @TotalNumberOfUsers INT
-	DECLARE @UserTo INT
 	DECLARE @Action varchar(1000)
 	DECLARE @DateTime datetime
 
@@ -37,7 +36,7 @@ BEGIN
 
 	SELECT @TotalNumberOfUsers = COUNT(*) FROM
 	(
-		SELECT UserId, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Email) AS Email
+		SELECT UserId
 		FROM [User]
 		WHERE (@TextToSearch = '')
 			OR (@SearchType = 'UserId' AND UserId like '%' + @TextToSearch + '%')
@@ -59,20 +58,11 @@ BEGIN
 	IF @TotalNumberOfPages = 0
 	BEGIN
 		SET @TotalNumberOfPages=1
-	END
-
-	SELECT @UserTo = @RequestedPageNumber * @UsersPerPage
-
-	IF (@UserTo > @TotalNumberOfUsers)
-	BEGIN
-		SELECT @UsersPerPage = @UsersPerPage - (@UserTo - @TotalNumberOfUsers)
 	END;
-
-
 
 	WITH Users AS
 		(
-			SELECT UserId, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Email) AS Email, MAX(RoleName) AS Role,
+			SELECT UserId, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Email) AS Email, MAX(RoleName) AS RoleName,
 			ROW_NUMBER() OVER
 			(
 				ORDER BY 
@@ -98,7 +88,7 @@ BEGIN
 				OR (@SearchType = 'Role' AND RoleName like '%' + @TextToSearch + '%')
 			GROUP BY UserId
 		)
-		SELECT UserId, FirstName, LastName, Email
+		SELECT UserId, FirstName, LastName, Email, RoleName
 		FROM Users
 		WHERE RowNumber BETWEEN ((@RequestedPageNumber-1)*@UsersPerPage+1) AND (@RequestedPageNumber*@UsersPerPage)				
 

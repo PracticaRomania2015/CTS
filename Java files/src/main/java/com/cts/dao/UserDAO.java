@@ -186,15 +186,17 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		try {
 
 			String categoryIdList = "";
-			for (int i = 0; i < userStatus.getCategoryAdminRights().size() - 1; i++) {
-
+			for (int i = 0; i < userStatus.getCategoryAdminRights().size(); i++) {
+				
 				if (userStatus.getCategoryAdminRights().get(i).isAdminStatus())
 					categoryIdList += userStatus.getCategoryAdminRights().get(i).getCategory().getCategoryId() + ",";
 			}
-			if (userStatus.getCategoryAdminRights().get(userStatus.getCategoryAdminRights().size() - 1).isAdminStatus())
-				categoryIdList += userStatus.getCategoryAdminRights()
-						.get(userStatus.getCategoryAdminRights().size() - 1).getCategory().getCategoryId();
 
+			if(categoryIdList.length() > 0 && categoryIdList.substring(categoryIdList.length() - 1).equals(",")){
+				
+				categoryIdList = categoryIdList.substring(0, categoryIdList.length() - 1);
+			}
+			
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
 			InOutParam<Boolean> isSysAdminParam = new InOutParam<Boolean>(userStatus.isSysAdmin(), "IsSysAdmin");
 			InOutParam<String> categoryIdListParam = new InOutParam<String>(categoryIdList, "CategoryIdList");
@@ -210,7 +212,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				return false;
 			}
 		} catch (Exception e) {
-
+			
 			return false;
 		} finally {
 
