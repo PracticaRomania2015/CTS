@@ -30,47 +30,41 @@ public class RecoveryController {
 	 * @param user User with email to reset password.
 	 * @return JSON with success/error response.
 	 */
-	@RequestMapping(value = "/recoveryPassword", method = RequestMethod.POST)
+	//TODO:
+	//CHANGED FROM: /recoveryPassword
+	@RequestMapping(value = "/recovery", method = RequestMethod.POST)
 	public @ResponseBody String recoveryPassword(@RequestBody User user) {
-
-		// Parameter validation
-		if (user == null){
-			
-			logger.error("User is null!");
-			return new RecoveryResponse().getMessageJson(ResponseValues.ERROR);
-		}
 		
-		logger.debug("Attempting to recover the password for the following email: " + user.getEmail() + ".");
+		logger.debug("Attempting to reset the password for an account.");
 		
 		// Email validation
 		if (user.getEmail() == null){
 			
 			logger.error("Email is null!");
-			return new RecoveryResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 			
 			logger.error("Email is empty!");
-			return new RecoveryResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		
 		// Recovery mail contents
-		String subject = "New password";
+		String subject = "CTS - Password Reset";
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword(10);
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
 		
 		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();
-		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword))
-				&& SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword)) && SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
-			logger.info("The password was changed and was send via email!");
-			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYSUCCESS);
+			logger.info("The password was changed and was sent via email!");
+			return new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYSUCCESS);
 		} else {
 
-			logger.warn("The specified email is incorrect!");
-			return new RecoveryResponse().getMessageJson(ResponseValues.RECOVERYINCORRECTEMAIL);
+			logger.warn("No account with the provided email was found!");
+			return new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL);
 		}
 	}
 }

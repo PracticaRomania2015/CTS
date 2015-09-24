@@ -6,7 +6,7 @@ public interface ResponseMessage {
 
 	public ObjectMapper objectMapper = new ObjectMapper();
 
-	public String getMessageJson(ResponseValues responseValue);
+	public String getMessageJSON(ResponseValues responseValue);
 
 	public void initDescription(ResponseValues responseValue);
 

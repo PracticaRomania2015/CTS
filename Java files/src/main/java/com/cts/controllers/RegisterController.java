@@ -62,77 +62,70 @@ public class RegisterController{
 	public @ResponseBody String register(@RequestBody User user) {
 
 		logger.debug("Attempting to register a user.");
-		
-		// Parameter validation
-		if (user == null){
-			
-			logger.error("User is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.ERROR);
-		}
 
 		// Title validation
 		if (user.getTitle() == null){
 			
 			logger.error("Title is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		if (user.getTitle().equals("")) {
 			
 			logger.error("Title is empty!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYTITLE);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		
 		// User first name validation
 		if (user.getFirstName() == null){
 			
 			logger.error("First name is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		if (user.getFirstName().equals("")) {
 			
 			logger.error("First name is empty!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYFIRSTNAME);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		// User last name validation
 		if (user.getLastName() == null){
 			
 			logger.error("Last name is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		if (user.getLastName().equals("")) {
 			
 			logger.error("Last name is empty!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYLASTNAME);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		// User email validation
 		if (user.getEmail() == null){
 			
 			logger.error("Last name is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 			
 			logger.error("Last name is empty!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (!isValidEmail(user.getEmail())) {
 
 			logger.error("Invalid Email");
-			return new RegisterResponse().getMessageJson(ResponseValues.INVALIDEMAILFORMAT);
+			return new RegisterResponse().getMessageJSON(ResponseValues.INVALIDEMAILFORMAT);
 		}
 		
 		// User password validation
 		if (user.getPassword() == null){
 			
 			logger.error("Password is null!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 			
 			logger.error("Password is empty!");
-			return new RegisterResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
 		// Account creation
@@ -141,11 +134,11 @@ public class RegisterController{
 		if (userDAO.createAccount(user)) {
 			
 			logger.info("A new account was created successfully!");
-			return new RegisterResponse().getMessageJson(ResponseValues.REGISTERSUCCESS);
+			return new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS);
 		} else {
 			
-			logger.warn("The email already exists!");
-			return new RegisterResponse().getMessageJson(ResponseValues.REGISTEREXISTINGEMAIL);
+			logger.warn("An account with the provided email already exists!");
+			return new RegisterResponse().getMessageJSON(ResponseValues.REGISTEREXISTINGEMAIL);
 		}
 	}
 }

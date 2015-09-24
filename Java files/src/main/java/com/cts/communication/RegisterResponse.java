@@ -2,11 +2,19 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
+@JsonSerialize
 public class RegisterResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(RegisterResponse.class.getName());
 
-	private String responseType;
+	private String type;
+	private String description;
+	
 	private String registerSuccess;
 	private String emptyTitle;
 	private String emptyFirstName;
@@ -17,7 +25,7 @@ public class RegisterResponse implements ResponseMessage {
 	private String registerExistingEmail;
 	private String dbError;
 	private String unknownError;
-	private String description;
+	
 
 	public RegisterResponse() {
 		
@@ -37,88 +45,91 @@ public class RegisterResponse implements ResponseMessage {
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
+	public String getType() {
+		
+		return type;
+	}
+	
 	public String getDescription() {
 		
 		return description;
 	}
 	
-	public String getResponseType() {
-		
-		return responseType;
-	}
-
 	@Override
 	public void initDescription(ResponseValues responseValue) {
 		
 		switch (responseValue) {
 			case REGISTERSUCCESS: {
+				type = "success";
 				description = registerSuccess;
-				responseType = "success";
 				break;
 			}
 			case ERROR: {
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case EMPTYTITLE: {
+				type = "error";
 				description = emptyTitle;
-				responseType = "error";
 				break;
 			}
 			case EMPTYFIRSTNAME: {
+				type = "error";
 				description = emptyFirstName;
-				responseType = "error";
 				break;
 			}
 			case EMPTYLASTNAME: {
+				type = "error";
 				description = emptyLastName;
-				responseType = "error";
 				break;
 			}
 			case EMPTYEMAIL: {
+				type = "error";
 				description = emptyEmail;
-				responseType = "error";
 				break;
 			}
 			case EMPTYPASSWORD: {
 				description = emptyPassword;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case INVALIDEMAILFORMAT: {
+				type = "error";
 				description = invalidEmailFormat;
-				responseType = "error";
 				break;
 			}
 			case REGISTEREXISTINGEMAIL: {
+				type = "error";
 				description = registerExistingEmail;
-				responseType = "error";
 				break;
 			}
 			case DBERROR: {
+				type = "error";
 				description = dbError;
-				responseType = "error";
 				break;
 			}
 			default: {
+				type = "error";
 				description = unknownError;
-				responseType = "error";
 				break;
 			}
 		}
 	}
 
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
+	public String getMessageJSON(ResponseValues responseValue) {
+		
 		initDescription(responseValue);
-
-		String errorMessageJson = "";
-
 		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
+			
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return errorMessageJson;
 	}
 
 }

@@ -2,16 +2,24 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
+@JsonSerialize
 public class RecoveryResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(RecoveryResponse.class.getName());
 
-	private String responseType;
+	private String type;
+	private String description;
+	
 	private String emptyEmail;
 	private String recoverySuccess;
 	private String recoveryIncorrectEmail;
 	private String unknownError;
-	private String description;
+	
 
 	public RecoveryResponse() {
 
@@ -25,14 +33,14 @@ public class RecoveryResponse implements ResponseMessage {
 		recoveryIncorrectEmail = ConfigReader.getInstance().getValueForKey("recoveryIncorrectEmail");
 	}
 	
+	public String getType() {
+		
+		return type;
+	}
+	
 	public String getDescription() {
 		
 		return description;
-	}
-	
-	public String getResponseType() {
-		
-		return responseType;
 	}
 
 	@Override
@@ -40,43 +48,41 @@ public class RecoveryResponse implements ResponseMessage {
 
 		switch (responseValue) {
 			case RECOVERYSUCCESS: {
+				type = "success";
 				description = recoverySuccess;
-				responseType = "success";
-				break;
-			}
-			case ERROR: {
-				responseType = "error";
 				break;
 			}
 			case EMPTYEMAIL: {
+				type = "error";
 				description = emptyEmail;
-				responseType = "error";
 				break;
 			}
 			case RECOVERYINCORRECTEMAIL: {
+				type = "error";
 				description = recoveryIncorrectEmail;
-				responseType = "error";
 				break;
 			}
 			default: {
+				type = "error";
 				description = unknownError;
-				responseType = "error";
 				break;
 			}
 		}
 	}
 
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
-		initDescription(responseValue);
+	public String getMessageJSON(ResponseValues responseValue) {
 		
-		String errorMessageJson = "";
-
+		initDescription(responseValue);
 		try {
 			
-			errorMessageJson = objectMapper.writeValueAsString(this);
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return errorMessageJson;
 	}
 }

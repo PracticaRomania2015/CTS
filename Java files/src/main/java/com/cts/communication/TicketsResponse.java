@@ -2,22 +2,35 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
-public class TicketResponse implements ResponseMessage {
+@JsonSerialize
+public class TicketsResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(TicketsResponse.class.getName());
 
-	private String responseType;
+	private Object data;
+	private String type;
+	private String description;
+	
 	private String ticketEmptySubject;
 	private String ticketEmptyCategory;
 	private String ticketEmptyDescription;
 	private String ticketEmptyComment;
 	private String dbError;
 	private String unknownError;
-	private String description;
 
-	public TicketResponse() {
+	public TicketsResponse() {
 
 		initAll();
+	}
+	
+	public TicketsResponse(Object data){
+		
+		this.data = data;
 	}
 
 	private void initAll() {
@@ -30,72 +43,79 @@ public class TicketResponse implements ResponseMessage {
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
+	public Object getData() {
+		
+		return data;
+	}
+	
+	public String getType() {
+		
+		return type;
+	}
+
 	public String getDescription() {
 		
 		return description;
 	}
 	
-	public String getResponseType() {
-		
-		return responseType;
-	}
-
 	@Override
 	public void initDescription(ResponseValues responseValue) {
 
 		switch (responseValue) {
 			case SUCCESS: {
-				responseType = "success";
+				type = "success";
 				break;
 			}
 			case ERROR: {
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case TICKETEMPTYSUBJECT: {
 				description = ticketEmptySubject;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case TICKETEMPTYCATEGORY: {
 				description = ticketEmptyCategory;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case TICKETEMPTYDESCRIPTION: {
 				description = ticketEmptyDescription;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case TICKETEMPTYCOMMENT: {
 				description = ticketEmptyComment;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case DBERROR: {
 				description = dbError;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			default: {
 				description = unknownError;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 		}
 	}
 
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
+	public String getMessageJSON(ResponseValues responseValue) {
+		
 		initDescription(responseValue);
-				
-		String errorMessageJson = "";
-
 		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
 			
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return errorMessageJson;
 	}
 }

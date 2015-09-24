@@ -1,68 +1,96 @@
 package com.cts.communication;
+
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
+@JsonSerialize
 public class UserRightsResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(UserRightsResponse.class.getName());
 
-	private String responseType;
-	private String unknownError;
-	private String dbError;
-
+	private Object data;
+	private String type;
 	private String description;
+	
+	private String dbError;
+	private String unknownError;
+	
 	
 	public UserRightsResponse() {
 
 		initAll();
 	}
+	
+	public UserRightsResponse(Object data){
+		
+		this.data = data;
+	}
 
 	private void initAll() {
-		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
+		
 		dbError = ConfigReader.getInstance().getValueForKey("dbError");
+		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
+	}
+
+	public Object getData() {
+		
+		return data;
+	}
+	
+	public String getType() {
+		
+		return type;
 	}
 	
 	public String getDescription() {
+		
 		return description;
 	}
-	
-	public String getResponseType() {
-		return responseType;
-	}
+
 	
 	@Override
 	public void initDescription(ResponseValues responseValue) {
+		
 		switch (responseValue) {
 			case SUCCESS: {
-				responseType = "success";
+				type = "success";
 				break;
 			}
 			case ERROR: {
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case DBERROR: {
+				type = "error";
 				description = dbError;
-				responseType = "error";
 				break;
 			}
 			default: {
+				type = "error";
 				description = unknownError;
-				responseType = "error";
 				break;
 			}
 		}
 	}
 	
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
-		initDescription(responseValue);
+	public String getMessageJSON(ResponseValues responseValue) {
 		
-		String messageJson = "";
-
+		initDescription(responseValue);
 		try {
-			messageJson = objectMapper.writeValueAsString(this);
+			
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return messageJson;
 	}
 
 }

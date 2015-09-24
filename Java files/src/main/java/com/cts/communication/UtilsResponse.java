@@ -2,61 +2,93 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
+@JsonSerialize
 public class UtilsResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(UtilsResponse.class.getName());
 
-	private String responseType;
-	private String unknownError;
+	private Object data;
+	private String type;
 	private String description;
-
+	
+	private String dbError;
+	private String unknownError;
+	
+	
 	public UtilsResponse() {
 
 		initAll();
 	}
-
+	
+	public UtilsResponse(Object data){
+		
+		this.data = data;
+	}
+	
 	private void initAll() {
 		
+		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
+	public Object getData() {
+		
+		return data;
+	}
+	
+	public String getType() {
+		
+		return type;
+	}
+
 	public String getDescription() {
 		
 		return description;
-	}
-	
-	public String getResponseType() {
-		
-		return responseType;
 	}
 
 	@Override
 	public void initDescription(ResponseValues responseValue) {
 
 		switch (responseValue) {
+			case SUCCESS: {
+				type = "success";
+				break;
+			}
 			case ERROR: {
-				responseType = "error";
+				type = "error";
+				break;
+			}
+			case DBERROR: {
+				description = dbError;
+				type = "error";
 				break;
 			}
 			default: {
 				description = unknownError;
-				responseType = "error";
+				type = "error";
 				break;
 			}
 		}
 	}
 
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
+	public String getMessageJSON(ResponseValues responseValue) {
+		
 		initDescription(responseValue);
-				
-		String errorMessageJson = "";
-
 		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
 			
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return errorMessageJson;
 	}
 }

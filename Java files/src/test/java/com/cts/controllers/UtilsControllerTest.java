@@ -14,18 +14,13 @@ import com.cts.communication.CategoryResponse;
 import com.cts.communication.LoginResponse;
 import com.cts.communication.RegisterResponse;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UserRightsResponse;
 import com.cts.communication.UtilsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.UserDAO;
 import com.cts.entities.Category;
-import com.cts.entities.Ticket;
 import com.cts.entities.User;
-import com.cts.entities.UserRight;
-import com.cts.entities.UserStatus;
-import com.cts.entities.ViewUsersRequest;
 
-public class RootUserManagementControllerTest {
+public class UtilsControllerTest {
 
 	private static LoginController loginController;
 	private static RegisterController registerController;
@@ -34,9 +29,7 @@ public class RootUserManagementControllerTest {
 	private static UtilsController utilsController;
 	private static CategoryDAO categoryDAO;
 	private static UserDAO userDAO;
-	private static Category validCategory;
-	private static UserStatus validUserStatus, testUserStatus;
-	private static UserRight validUserRight;
+	private static Category validCategory, validSubcategory, testCategory;
 	private static User validUser;
 	
 	private static final String validTitle = "Mr.";
@@ -45,7 +38,10 @@ public class RootUserManagementControllerTest {
 	private static final String validEmail = "test@gmail.com";
 	private static final String validPassword = "testPassword";
 	private static final String validCategoryName = "testCategory";
+	private static final String validSubcategoryName = "testSubcategory";
 	
+	private static final int invalidCategoryId = 0;
+
 	@BeforeClass
 	public static void beforeClass() {
 		
@@ -58,8 +54,7 @@ public class RootUserManagementControllerTest {
 		userDAO = new UserDAO();
 		
 		validCategory = new Category();
-		validUserStatus = new UserStatus();
-		validUserRight = new UserRight();
+		validSubcategory = new Category();
 		validUser = new User();
 		
 		//valid account
@@ -82,12 +77,16 @@ public class RootUserManagementControllerTest {
 			}
 		}
 		
-		//valid userRight
-		validUserRight.setCategory(validCategory);
-		validUserRight.setAdminStatus(true);
-		
-		//valid userStatus
-		validUserStatus.setUserId(validUser.getUserId());
+		//valid subcategory
+		validSubcategory.setParentCategoryId(validCategory.getCategoryId());
+		validSubcategory.setCategoryName(validSubcategoryName);
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootCategManagementController.addCateg(validSubcategory));
+		ArrayList<Category> subcategories = categoryDAO.getSubcategories(validCategory);
+		for(Category subcategory : subcategories){
+			if (subcategory.getCategoryName().equals(validSubcategoryName)){
+				validSubcategory.setCategoryId(subcategory.getCategoryId());
+			}
+		}
 	}
 	
 	@AfterClass
@@ -95,62 +94,62 @@ public class RootUserManagementControllerTest {
 		
 		//delete valid account
 		assertTrue(userDAO.deleteAccount(validUser));
+		//delete valid subcategory
+		//TODO: actual delete instead of disable
+		assertTrue(categoryDAO.deleteCategory(validSubcategory));
 		//delete valid category
 		//TODO: actual delete instead of disable
 		assertTrue(categoryDAO.deleteCategory(validCategory));
 	}
 	
 	@Test
-	public void testGetUsersWithValidData() {
-
-		ViewUsersRequest viewUsersRequest = new ViewUsersRequest();
-		viewUsersRequest.setRequestedPageNumber(1);
-		viewUsersRequest.setUsersPerPage(10);
-		viewUsersRequest.setTextToSearch("");
-		viewUsersRequest.setSearchType("");
-		viewUsersRequest.setSearchASC(true);
+	public static void testGetSubcategoriesWithNullCategory() {
 		
-		StringBuilder totalNumberOfPages = new StringBuilder("1");
-		ArrayList<Object> output = new ArrayList<Object>();
-		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-		output.add(totalNumberOfPages);
-		output.add(tickets);
-		assertEquals(new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS), rootUserManagementController.getUsers(viewUsersRequest));
+		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getSubcategories(null));
 	}
 	
-	//TODO: needs DAO implementation
 	@Test
-	public void testSetUserRightsWithValidData() {
+	public static void testGetSubcategoriesWithInvalidCategoryId() {
 		
-		ArrayList<UserRight> categoryAdminRights = new ArrayList<UserRight>();
-		categoryAdminRights.add(validUserRight);
-		
-		validUserStatus.setSysAdmin(true);
-		validUserStatus.setCategoryAdminRights(categoryAdminRights);
-		
-		rootUserManagementController.setUserRights(validUserStatus);
+		testCategory = new Category();
+		testCategory.setCategoryId(invalidCategoryId);
+		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.ERROR), utilsController.getSubcategories(testCategory));
 	}
 	
-	//TODO: needs DAO implementation to check against
 	@Test
-	public void testGetUserRightsWithValidData() {
+	public static void testGetCategoriesWithValidData() {
 		
-		ArrayList<UserRight> categoryAdminRights = new ArrayList<UserRight>();
-		categoryAdminRights.add(validUserRight);
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		assertEquals(new UtilsResponse(categories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getCategories());
-		for (Category category : categories){
-			
-			validUserRight.setCategory(category);
-			validUserRight.setAdminStatus(false);
-			categoryAdminRights.add(validUserRight);
-		}
+	}
+	
+	@Test
+	public static void testGetAdminsForCategoryWithNullCategory(){
 		
-		testUserStatus = new UserStatus();
-		testUserStatus.setUserId(validUser.getUserId());
-		testUserStatus.setSysAdmin(true);
-		testUserStatus.setCategoryAdminRights(categoryAdminRights);
+		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(null));
+	}
+
+	@Test
+	public static void testGetAdminsForCategoryWithInvalidCategoryId() {
 		
-		assertEquals(new UserRightsResponse(testUserStatus).getMessageJSON(ResponseValues.SUCCESS), rootUserManagementController.getUserRights(validUserStatus));
+		testCategory = new Category();
+		testCategory.setCategoryId(invalidCategoryId);
+		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(testCategory));
+	}
+	
+	@Test
+	public static void testGetSubcategoriesWithValidData() {
+		
+		ArrayList<Category> subcategories = new ArrayList<Category>();
+		subcategories.add(validSubcategory);
+		assertEquals(new UtilsResponse(subcategories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getSubcategories(validCategory));
+	}
+	
+	//TODO: add admin to category and redo test
+	@Test
+	public static void testGetAdminsForCategoryWithValidData() {
+
+		ArrayList<User> admins = new ArrayList<User>();
+		assertEquals(new UtilsResponse(admins).getMessageJSON(ResponseValues.SUCCESS), utilsController.getAdminsForCategory(validCategory));
 	}
 }

@@ -1,9 +1,6 @@
 package com.cts.controllers;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,26 +21,6 @@ import com.cts.utils.HashUtil;
 public class LoginController {
 
 	private static Logger logger = Logger.getLogger(LoginController.class.getName());
-
-	/**
-	 * Convert user instance to JSON
-	 * 
-	 * @param user User instance to be converted in JSON.
-	 * @return User instance in JSON format.
-	 */
-	protected String getUserObjectInJsonFormat(User user) {
-
-		String jsonMessage = null;
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			
-			jsonMessage = objectMapper.writeValueAsString(user);
-		} catch (IOException e) {
-			
-			logger.error("Could not map user to JSON!");
-		}
-		return jsonMessage;
-	}
 	
 	/**
 	 * Authenticate user
@@ -54,58 +31,44 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(@RequestBody User user) {
 
-		logger.debug("Attempting a login a user.");
-
-		// Parameter validation
-		if (user == null){
-			
-			logger.error("User is null!");
-			return new LoginResponse().getMessageJson(ResponseValues.ERROR);
-		}
+		logger.debug("Attempting to login a user.");
 		
 		// Email validation
 		if (user.getEmail() == null){
 					
 			logger.error("Email is null!");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 				
 			logger.error("Email is empty!");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYEMAIL);
+			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		
 		// Password validation
 		if (user.getPassword() == null){
 					
 			logger.error("Password is null!");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 				
 			logger.error("Password is empty!");
-			return new LoginResponse().getMessageJson(ResponseValues.EMPTYPASSWORD);
+			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
 		// Login credentials validation
 		user.setPassword(HashUtil.getHash((user.getPassword())));
 		UserDAOInterface userDAO = new UserDAO();
+		
 		if (userDAO.validateLogin(user)) {
 
-			logger.info("User logged in succesfully!");
-			String userJson = getUserObjectInJsonFormat(user);
-			if (userJson != null) {	
-				
-				return userJson;
-			} else {
-				
-				logger.error("Login information in JSON format is null!");
-				return new LoginResponse().getMessageJson(ResponseValues.UNKNOWN);
-			}
+			logger.info("User logged in successfully!");
+			return new LoginResponse(user).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 			
-			logger.warn("Login information is not correct!");
-			return new LoginResponse().getMessageJson(ResponseValues.LOGININVALIDCREDENTIALS);
+			logger.warn("Account credentials are invalid!");
+			return new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS);
 		}
 	}
 }

@@ -15,28 +15,32 @@ import org.apache.log4j.Logger;
  * @author Mircea.Iordache
  * @version 1.618
  */
+@SuppressWarnings("static-access")
 public class ConfigReader {
-
-	public Properties getProp() {
-		return prop;
-	}
-
-	public InputStream getInput() {
-		return input;
-	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
+	
+	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
+	
 	private static ConfigReader instance = null;
 	private static Properties prop = null;
 	private static InputStream input = null;
 	private static String filePath = null;
 	private static String fileName = "config_en.properties";
 	private static long initialModDate = 0;
-	
-	private static Logger logger = Logger.getLogger(ConfigReader.class.getName());
+
+	public Properties getProp() {
+		
+		return prop;
+	}
+
+	public InputStream getInput() {
+		
+		return input;
+	}
+
+	public String getFilePath() {
+		
+		return filePath;
+	}
 	
 	protected ConfigReader() {
 		prop = new Properties();
@@ -58,31 +62,35 @@ public class ConfigReader {
 	}
 	
 	public static ConfigReader getInstance() {
+		
 		if(instance == null) {
 			instance = new ConfigReader();
 			Thread checker = new Thread() {
-				@SuppressWarnings("static-access")
 				public void run() {
 					while(true) {
 						try {
-							logger.info("Periodic configuration file check.");
+							logger.debug("Periodic configuration file check.");
 							long dateMod = new File(filePath).lastModified();
 							if ( dateMod != initialModDate ) {
 								try {
+									
 									input = new FileInputStream(filePath);
 									prop.load(input);
 									logger.info("Config file was updated.");
 								} catch (IOException e) {
+									
 									logger.error("File " + filePath + "not found.");
 									e.printStackTrace();
 								}
 								initialModDate = dateMod;
 							}
 							else {
-								logger.info("Config file was not changed.");
+								
+								logger.debug("Config file was not changed.");
 							}
 							this.sleep(600000);
 						} catch (InterruptedException e) {
+							
 							logger.error("The check and potential reconfiguration failed !");
 							e.printStackTrace();
 						}
@@ -95,6 +103,7 @@ public class ConfigReader {
 	}
 	
 	public String getValueForKey(String key) {
+		
 		String returnedValue = prop.getProperty(key);
 		logger.info("Got value: [" + returnedValue + "] for the key: [" + key +"]");
 		return returnedValue;

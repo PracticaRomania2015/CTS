@@ -1,10 +1,8 @@
 package com.cts.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +23,6 @@ import com.cts.entities.ViewUsersRequest;
 public class RootUserManagementController {
 	
 	private static Logger logger = Logger.getLogger(RootUserManagementController.class.getName());
-	private ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
 	 * Get particular list of users
@@ -33,97 +30,27 @@ public class RootUserManagementController {
 	 * @param viewUserRequest ViewUserRequest with details regarding which users to receive. 
 	 * @return List of users in JSON format.
 	 */
-	@RequestMapping(value = "/viewUsers", method = RequestMethod.POST)
-	public @ResponseBody String viewUsers(@RequestBody ViewUsersRequest viewUserRequest) {
+	//TODO:
+	//CHANGED FROM: /viewUsers
+	@RequestMapping(value = "/getUsers", method = RequestMethod.POST)
+	public @ResponseBody String getUsers(@RequestBody ViewUsersRequest viewUserRequest) {
 
 		logger.debug("Attempting to retrieve a particular list of users.");
-
-		//TODO: Verifica validarile, ceva crapa. Foloseste JUnit ca sa vezi daca e bine.
-/*
-		// Parameter validation
-		if (viewUserRequest == null){
-			
-			logger.error("ViewUserRequest is null!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
 		
-		// requestedPageNumber validation
-		if (Integer.valueOf(viewUserRequest.getRequestedPageNumber()) == null) {
-			
-			logger.error("Requested Page Number is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		if (Integer.valueOf(viewUserRequest.getRequestedPageNumber()).equals("")){
-			
-			logger.error("Requested Page Number is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// usersPerPage validation
-		if (Integer.valueOf(viewUserRequest.getUsersPerPage()) == null) {
-			
-			logger.error("Users Per Page is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		if (Integer.valueOf(viewUserRequest.getUsersPerPage()).equals("")){
-			
-			logger.error("Users Per Page is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// textToSearch validation
-		if (viewUserRequest.getTextToSearch() == null){
-			
-			logger.error("Text To Search is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		if (viewUserRequest.getTextToSearch().equals("")){
-			
-			logger.error("Text To Search is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// searchType validation
-		if (viewUserRequest.getSearchType() == null){
-			
-			logger.error("Search Type is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		if (viewUserRequest.getSearchType().equals("")){
-			
-			logger.error("Search Type is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// sortType validation
-		if (viewUserRequest.getSortType() == null){
-			
-			logger.error("Sort Type is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		if (viewUserRequest.getSortType().equals("")){
-			
-			logger.error("Sort Type is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-*/
-		// Getting users
 		UserDAOInterface userDAO = new UserDAO();
 		StringBuilder totalNumberOfPages = new StringBuilder();
 		ArrayList<User> users = userDAO.getUsers(viewUserRequest, totalNumberOfPages);
-		String usersJson;
-		try {
+		
+		if (totalNumberOfPages.toString().equals("")){
 			
-			usersJson = objectMapper.writeValueAsString(users);
-			logger.info("Successfully retrieved the list of users!");
-			return "{\"totalNumberOfPages\":" + totalNumberOfPages + ",\"users\":" + usersJson + "}";
-		} catch (IOException e) {
-
-			logger.error("JSON error when trying to map the array of users.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.UNKNOWN);
+			totalNumberOfPages.append("1");
 		}
+
+		ArrayList<Object> output = new ArrayList<Object>();
+		output.add(totalNumberOfPages);
+		output.add(users);
+		logger.info("Requested users received successfully!");
+		return new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS);
 	}
 	
 	/**
@@ -132,81 +59,57 @@ public class RootUserManagementController {
 	 * @param userStatus User to get the rights for.
 	 * @return UserStatus with User ID and it's rights.
 	 */
-	@RequestMapping(value = "/getUserAdminStatus", method = RequestMethod.POST)
-	public @ResponseBody String getUserAdminStatus(@RequestBody UserStatus userStatus) {
+	//TODO:
+	//CHANGED FROM: /getUserAdminStatus 
+	@RequestMapping(value = "/getUserRights", method = RequestMethod.POST)
+	public @ResponseBody String getUserRights(@RequestBody UserStatus userStatus) {
 
-		logger.debug("Attempting to get user rights.");
-		
-		// Parameter validation
-		if (userStatus == null){
-			
-			logger.error("UserStatus is null!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// User ID validation
-		if (Integer.valueOf(userStatus.getUserId()) == null) {
-			
-			logger.error("User ID is null.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		if (Integer.valueOf(userStatus.getUserId()).equals("")){
-			
-			logger.error("User ID is empty.");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
-		}
+		logger.debug("Attempting to get a user's rights.");
 		
 		// Is Sys Admin validation
 		if (userStatus.isSysAdmin() != (true && false)) {
 			
 			logger.error("isSysAdmin is not set!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.ERROR);
+			return new UserRightsResponse().getMessageJSON(ResponseValues.ERROR);
 		}
 		
+		// Getting user's rights
 		CategoryDAOInterface userCategRightsDAO = new CategoryDAO();
 		if (userCategRightsDAO.viewCategoriesRightsForUser(userStatus)) {
-			String userRightsStatus;
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				
-				userRightsStatus = objectMapper.writeValueAsString(userStatus);
-				logger.info("The list of rights was successfully retrieved!");
-				return "{\"rights\":" + userRightsStatus + "}";
-			} catch (IOException e) {
-				
-				logger.error("JSON error when trying to map the array of rights.");
-				return new UserRightsResponse().getMessageJson(ResponseValues.UNKNOWN);
-			}
+
+			logger.info("User's rights received successfully!");
+			return new UserRightsResponse(userStatus).getMessageJSON(ResponseValues.SUCCESS);
 		}
 		else {
 			
-			logger.error("Could not retrieve categories from database!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.DBERROR);
+			logger.error("User's rights could not be retrieved!");
+			return new UserRightsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 	
 	/**
-	 * Change user rights
+	 * Change rights of provided user
 	 * 
-	 * @param userStatus User to have rights changed.
+	 * @param userStatus User to have the rights changed.
 	 * @return JSON with success/error response.
 	 */
-	@RequestMapping(value = "/setUserAdminStatus", method = RequestMethod.POST)
-	public @ResponseBody String setUserAdminStatus(@RequestBody UserStatus userStatus) {
+	//TODO:
+	//CHANGED FROM: /setUserAdminStatus 
+	@RequestMapping(value = "/setUserRights", method = RequestMethod.POST)
+	public @ResponseBody String setUserRights(@RequestBody UserStatus userStatus) {
 
-		logger.debug("Attempting to set user rights ...");
+		logger.debug("Attempting to set a user's rights.");
 		
 		UserDAOInterface userCategRightsDAO = new UserDAO();
 		if (userCategRightsDAO.updateUserStatus(userStatus)) {
 			
-			logger.info("The list of rights was successfully sent to the DB!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.SUCCESS);
+			logger.info("User's rights updated successfully!");
+			return new UserRightsResponse().getMessageJSON(ResponseValues.SUCCESS);
 		}
 		else {
 			
-			logger.error("Could not save new user status to database!");
-			return new UserRightsResponse().getMessageJson(ResponseValues.DBERROR);
+			logger.error("User's rights could not be updated!");
+			return new UserRightsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 	

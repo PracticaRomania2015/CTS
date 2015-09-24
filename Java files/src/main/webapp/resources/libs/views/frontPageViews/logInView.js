@@ -22,18 +22,13 @@ var LogInView = GenericFrontPageChildView.extend({
 		
 		user.save({}, {
 			success : function(model, response) {
-				if (response.userId) {
-					sessionStorage.loggedUserId = response.userId;
-					sessionStorage.loggedUserRights = response.role.roleName;
-					sessionStorage.loggedUserName = response.firstName + " " +response.lastName;
+				if (response.type == "success") {
+					sessionStorage.loggedUserId = response.data.userId;
+					sessionStorage.loggedUserRights = response.data.role.roleName;
+					sessionStorage.loggedUserName = response.data.firstName + " " +response.data.lastName;
 					userPanelPageFunctionality();
 					$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
-
-
-
-					
-
-				}else {
+				} else {
 					alert(response.description);
 
 				};
@@ -55,9 +50,9 @@ var LogInView = GenericFrontPageChildView.extend({
 	  		user.save({}, {
 	  			success : function(model, response) {
 	  				if (response.userId) {
-						sessionStorage.loggedUserId = response.userId;
-						sessionStorage.loggedUserRights = response.role.roleName;
-						sessionStorage.loggedUserName = response.firstName + " " +response.lastName;
+	  					sessionStorage.loggedUserId = response.data.userId;
+						sessionStorage.loggedUserRights = response.data.role.roleName;
+						sessionStorage.loggedUserName = response.data.firstName + " " +response.data.lastName;
 						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
 						userPanelPageFunctionality();
 					}else {

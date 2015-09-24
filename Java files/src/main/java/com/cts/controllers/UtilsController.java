@@ -1,10 +1,8 @@
 package com.cts.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,35 +21,29 @@ import com.cts.entities.User;
 /**
  * Handles requests for general functionality.
  */
-
 @Controller
 public class UtilsController {
 
-	private static Logger logger = Logger.getLogger(TicketsController.class.getName());
-	private ObjectMapper objectMapper = new ObjectMapper();
+	private static Logger logger = Logger.getLogger(TicketsController.class.getName());	
 
 	/**
 	 * Get all categories
 	 * 
 	 * @return All categories in JSON format.
 	 */
+	//TODO: CHECK FOR 0 CATEGORIES
 	@RequestMapping(value = "/getCategories", method = RequestMethod.POST)
 	public @ResponseBody String getCategories() {
 
-		logger.debug("Attempting to get categories from database.");
+		logger.debug("Attempting to retrieve categories.");
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> categories = categoryDAO.getCategories();
-
-		logger.info("Success to get categories from database.");
-
-		String jsonMessage = new UtilsResponse().getMessageJson(ResponseValues.UNKNOWN);
-		try {
-			jsonMessage = objectMapper.writeValueAsString(categories);
-		} catch (IOException e) {
-		}
-		return jsonMessage;
+		
+		logger.info("Categories received successfully!");
+		return new UtilsResponse(categories).getMessageJSON(ResponseValues.SUCCESS);
 	}
+		
 
 	/**
 	 * Get subcategories of category provided 
@@ -59,42 +51,27 @@ public class UtilsController {
 	 * @param category Category from which to get subcategories
 	 * @return Subcategories from category provided
 	 */
+	//TODO: CHECK FOR 0 SUBCATEGORIES
 	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
 	public @ResponseBody String getSubcategories(@RequestBody Category category) {
 
-		logger.debug("Attempting to get subcategories for a category from database.");
-
-		// Parameter validation
-		if (category == null){
-			
-			logger.error("Category is null!");
-			return new UtilsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-		
-		// Category ID validation
-		if (Integer.valueOf(category.getCategoryId()) == null){
-			
-			logger.error("Category ID if null.");
-			return new UtilsResponse().getMessageJson(ResponseValues.ERROR);
-		}
-			
-		if (Integer.valueOf(category.getCategoryId()).equals("")){
-			
-			logger.error("Category ID if empty.");
-			return new UtilsResponse().getMessageJson(ResponseValues.ERROR);
-		}
+		logger.debug("Attempting to get subcategories for a category.");
 		
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(category);
 
-		logger.info("Success to get subcategories for a category from database.");
-
-		String jsonMessage = new UtilsResponse().getMessageJson(ResponseValues.UNKNOWN);
-		try {
-			jsonMessage = objectMapper.writeValueAsString(subcategories);
-		} catch (IOException e) {
+		if (subcategories != null) {
+			
+			logger.info("Subcategories received successfully!");
+			return new UtilsResponse(subcategories).getMessageJSON(ResponseValues.SUCCESS);
+		} else {
+			
+			logger.info("Subcategories could not be retrieved!");
+			return new UtilsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
-		return jsonMessage;
+		
+		
+		
 	}
 	
 	/**
@@ -103,32 +80,23 @@ public class UtilsController {
 	 * @param category Category from which to get admins.
 	 * @return List of admins for specified category in JSON format.
 	 */
+	//TODO: CHECK FOR 0 ADMINS
 	@RequestMapping(value = "/getAdminsForCategory", method = RequestMethod.POST)
 	public @ResponseBody String getAdminsForCategory(@RequestBody Category category) {
 
 		logger.debug("Attempting to retrieve admins for category.");
-
-		// TicketId Validation
-		if (category.getCategoryId() == 0){
-			
-			logger.error("Invalid CategoryId");
-			return new UtilsResponse().getMessageJson(ResponseValues.ERROR);
-		}
 		
-		// Getting admins for category
 		UserDAOInterface userDAO = new UserDAO();
 		ArrayList<User> admins = userDAO.getAdminsForCategory(category);
-
-		String jsonMessage = new UtilsResponse().getMessageJson(ResponseValues.UNKNOWN);
-		try {
+		
+		if (admins != null) {
 			
-			logger.info("Received admins from database!");
-			jsonMessage = objectMapper.writeValueAsString(admins);
-		} catch (IOException e) {
+			logger.info("Admins for the provided category received successfully!");
+			return new UtilsResponse(admins).getMessageJSON(ResponseValues.SUCCESS);
+		} else {
 			
-			logger.error("Error while trying to map the json for ticket object.");
-			return new UtilsResponse().getMessageJson(ResponseValues.UNKNOWN);
+			logger.info("Admins for the provided category  could not be retrieved!");
+			return new UtilsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
-		return jsonMessage;
 	}
 }

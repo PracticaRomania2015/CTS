@@ -2,11 +2,19 @@ package com.cts.communication;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.cts.utils.ConfigReader;
 
-public class UserPropertiesResponse implements ResponseMessage {
+@JsonSerialize
+public class UserPersonalDataResponse implements ResponseMessage {
+	
+	private static Logger logger = Logger.getLogger(UserPersonalDataResponse.class.getName());
 
-	private String responseType;
+	private String type;
+	private String description;
+	
 	private String emptyTitle;
 	private String emptyFirstName;
 	private String emptyLastName;
@@ -18,9 +26,8 @@ public class UserPropertiesResponse implements ResponseMessage {
 	private String updateUserSuccess;
 	private String dbError;
 	private String unknownError;
-	private String description;
 
-	public UserPropertiesResponse() {
+	public UserPersonalDataResponse() {
 
 		initAll();
 	}
@@ -40,12 +47,12 @@ public class UserPropertiesResponse implements ResponseMessage {
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 	
-	public String getDescription() {
-		return description;
+	public String getType() {
+		return type;
 	}
 	
-	public String getResponseType() {
-		return responseType;
+	public String getDescription() {
+		return description;
 	}
 
 	@Override
@@ -53,82 +60,84 @@ public class UserPropertiesResponse implements ResponseMessage {
 
 		switch (responseValue) {
 			case SUCCESS: {
-				responseType = "success";
+				type = "success";
 				break;
 			}
 			case ERROR: {
-				responseType = "error";
+				type = "error";
 				break;
 			}
 			case EMPTYTITLE: {
+				type = "error";
 				description = emptyTitle;
-				responseType = "error";
 				break;
 			}
 			case EMPTYFIRSTNAME: {
+				type = "error";
 				description = emptyFirstName;
-				responseType = "error";
 				break;
 			}
 			case EMPTYLASTNAME: {
+				type = "error";
 				description = emptyLastName;
-				responseType = "error";
 				break;
 			}
 			case EMPTYEMAIL: {
+				type = "error";
 				description = emptyEmail;
-				responseType = "error";
 				break;
 			}
 			case INVALIDEMAILFORMAT: {
+				type = "error";
 				description = invalidEmailFormat;
-				responseType = "error";
 				break;
 			}
 			case UPDATEUSEREMPTYOLDPASSWORD: {
+				type = "error";
 				description = updateUserEmptyOldPassword;
-				responseType = "error";
 				break;
 			}
 			case UPDATEUSEREMPTYNEWPASSWORD: {
+				type = "error";
 				description = updateUserEmptyNewPassword;
-				responseType = "error";
 				break;
 			}
 			case UPDATEUSERPASSWORDSNOTMATCHING: {
+				type = "error";
 				description = updateUserPasswordsNotMatching;
-				responseType = "error";
 				break;
 			}
 			case UPDATEUSERSUCCESS: {
+				type = "error";
 				description = updateUserSuccess;
-				responseType = "error";
 				break;
 			}
 			case DBERROR: {
+				type = "error";
 				description = dbError;
-				responseType = "error";
 				break;
 			}
 			default: {
+				type = "error";
 				description = unknownError;
-				responseType = "error";
 				break;
 			}
 		}
 	}
 
 	@Override
-	public String getMessageJson(ResponseValues responseValue) {
+	public String getMessageJSON(ResponseValues responseValue) {
+		
 		initDescription(responseValue);
-				
-		String errorMessageJson = "";
-
 		try {
-			errorMessageJson = objectMapper.writeValueAsString(this);
 			
+			String response = objectMapper.writeValueAsString(this);
+			logger.debug("JSON response created successfully!");
+			return response;
 		} catch (IOException e) {
+			
+			logger.error("Could not create JSON response!");
+			return "Could not create JSON";
 		}
-		return errorMessageJson;
 	}
 }
