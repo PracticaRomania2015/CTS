@@ -228,7 +228,7 @@ h1.frontPage {
 	cursor: pointer;
 }
 
-#ticketSearchButton {
+#ticketSearchButton,#usersSearchButton {
 	width: 150px;
 	border-radius: 5px;
 	background: #0d94d2;
@@ -285,12 +285,12 @@ h2.userPage {
 	color: #555;
 }
 
-#tkPerPgDiv {
+#tkPerPgDiv,#usersPerPgDiv {
 	display: inline-block;
 	float: right;
 }
 
-#ticketsPerPage {
+#ticketsPerPage,#usersPerPage {
 	border-radius: 5px;
 	width: 50px;
 	background: #f1f8ec;
@@ -302,7 +302,7 @@ h2.userPage {
 	color: #555;
 }
 
-.searchTickets {
+.searchTickets,.searchUsers {
 	border-radius: 5px;
 	border: 1px solid #555;
 	font-family: 'Arial';
@@ -311,17 +311,17 @@ h2.userPage {
 	background: #f1f8ec;
 }
 
-#ticketSearchBox {
+#ticketSearchBox,#usersSearchBox {
 	width: 300px;
 	padding: 9px;
 }
 
-#ticketSearchDropBox {
+#ticketSearchDropBox,#usersSearchDropBox {
 	width: 150px;
 	padding: 8px;
 }
 
-.ticketView {
+.ticketView,.usersView {
 	table-layout: fixed;
 	width: 100%;
 	margin: 0px 0px 5px 0px;
@@ -334,46 +334,46 @@ h2.userPage {
 	cursor: pointer;
 }
 
-.ticketView thead th.wide-col {
+.ticketView thead th.wide-col,.usersView thead th.wide-col{
 	width: 15%;
 }
 
-.ticketView thead th.slim-col {
+.ticketView thead th.slim-col,.usersView thead th.slim-col {
 	width: 12.4%;
 }
-.ticketView thead th.id-col {
+.ticketView thead th.id-col,.usersView thead th.id-col {
 	width: 8%;
 
 }
 
-.ticketView thead th#rounded-tl {
+.ticketView thead th#rounded-tl,.usersView thead th#rounded-tl  {
 	border-radius: 5px 0px 0px 0px;
 }
 
-.ticketView thead th#rounded-tr {
+.ticketView thead th#rounded-tr,.usersView thead th#rounded-tr  {
 	border-radius: 0px 5px 0px 0px;
 }
 
-.ticketView tfoot th#rounded-bot {
+.ticketView tfoot th#rounded-bot,.usersView  tfoot th#rounded-bot {
 	border-radius: 0px 0px 5px 5px;
 }
 
-.ticketView tbody tr:hover td {
+.ticketView tbody tr:hover td,.usersView tbody tr:hover td  {
 	color: #333;
 	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 }
 
-.ticketView tbody {
+.ticketView tbody,.usersView tbody  {
 	outline: 1px solid #0d94d2;
 	outline-offset: -1px;
 }
 
-.ticketView tbody tr {
+.ticketView tbody tr,.usersView tbody tr {
 	border-top: 1px solid #0d94d2;
 	cursor: pointer;
 }
 
-.ticketView th {
+.ticketView th,.usersView th {
 	font-size: 18px;
 	text-align: center;
 	padding: 10px;
@@ -382,7 +382,7 @@ h2.userPage {
 	color: #fff;
 }
 
-.ticketView td {
+.ticketView td,.usersView td {
 	font-size: 14px;
 	text-align: center;
 	padding: 5px;
