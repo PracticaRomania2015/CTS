@@ -22,10 +22,12 @@ public class User {
 	}
 
 	public Role getRole() {
+
 		return role;
 	}
 
-	public void setIsAdmin(Role role) {
+	public void setRole(Role role) {
+
 		this.role = role;
 	}
 
@@ -40,30 +42,37 @@ public class User {
 	}
 
 	public int getUserId() {
+
 		return userId;
 	}
 
 	public void setUserId(int userId) {
+
 		this.userId = userId;
 	}
 
 	public void setEmail(String email) {
+
 		this.email = email;
 	}
 
 	public void setPassword(String password) {
+
 		this.password = password;
 	}
 
 	public void setFirstName(String firstName) {
+
 		this.firstName = firstName;
 	}
 
 	public void setLastName(String lastName) {
+
 		this.lastName = lastName;
 	}
 
 	public void setTitle(String title) {
+
 		this.title = title;
 	}
 
@@ -78,6 +87,7 @@ public class User {
 	}
 
 	public String getTitle() {
+
 		return title;
 	}
 }

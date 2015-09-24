@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import com.cts.entities.Category;
+import com.cts.entities.Role;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 import com.cts.entities.UserStatus;
@@ -244,6 +245,9 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				user.setFirstName(resultSet.getString("FirstName"));
 				user.setLastName(resultSet.getString("LastName"));
 				user.setEmail(resultSet.getString("Email"));
+				Role role = new Role();
+				role.setRoleName(resultSet.getString("Role"));
+				user.setRole(role);
 				users.add(user);
 			}
 			setOutParametersAfterExecute();
