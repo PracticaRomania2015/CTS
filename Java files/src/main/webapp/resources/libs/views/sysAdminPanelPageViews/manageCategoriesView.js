@@ -26,7 +26,7 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			success: function(model, response){
 				$('#userPanelPageContainer').empty();
 				currentView.appendData();
-				_.each(response,function(e){
+				_.each(response.data,function(e){
 					$('#categoryListDropboxSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 					$('#categoryListDropboxRemove').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 				});
@@ -47,10 +47,10 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				var selectedCategory = $('#categoryListDropboxRemove').val();
 				$('#subcategoryListDropbox').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
-				if ($.isEmptyObject(response)) {
+				if ($.isEmptyObject(response.data)) {
 					$('#subcategoryListDropbox').attr("disabled", true);
 				} else {
-					_.each(response, function(e) {
+					_.each(response.data, function(e) {
 						$('#subcategoryListDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 					});
 					$('#subcategoryListDropbox').attr("disabled", false);
@@ -71,7 +71,7 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model,response){
 				console.log(response);
-				if(response.responseType == "error"){
+				if(response.type == "error"){
 					alert("An error occured while trying to add the new category.");
 				}else{
 					alert("The new category was added successfully!");
@@ -98,7 +98,7 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				console.log(response);
-				if(response.responseType == "error"){
+				if(response.type == "error"){
 					alert("An error occured while trying to add the new subcategory.");
 				}else{
 					alert("The new subcategory was added successfully!");
@@ -132,7 +132,7 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				console.log(response);
-				if(response.responseType == "error"){
+				if(response.type == "error"){
 					alert("An error occured while trying to remove the selected category");
 				}else{
 					alert("Successfully removed!");
