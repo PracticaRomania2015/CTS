@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/21/2015 12:52:55 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/23/2015 11:46:58 AM ******/
 DROP PROCEDURE [dbo].[GetCategoriesRightsForUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/21/2015 12:52:55 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCategoriesRightsForUser]    Script Date: 9/23/2015 11:46:58 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -39,7 +39,7 @@ BEGIN
 	FROM [User]
 	INNER JOIN UserCategory ON [User].UserId = UserCategory.UserId AND [User].UserId = @UserId
 	RIGHT JOIN Category ON UserCategory.CategoryId = Category.CategoryId
-	WHERE Category.ParentCategoryId IS NULL
+	WHERE Category.ParentCategoryId IS NULL AND Category.IsActive = 1
 	ORDER BY Category.CategoryName
 
 

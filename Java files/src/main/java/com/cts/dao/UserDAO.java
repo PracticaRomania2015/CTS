@@ -3,7 +3,6 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
@@ -182,8 +181,40 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 	@Override
 	public boolean updateUserStatus(UserStatus userStatus) {
-		// TODO Auto-generated method stub
-		return false;
+
+		try {
+
+			String categoryIdList = "";
+			for (int i = 0; i < userStatus.getCategoryAdminRights().size() - 1; i++) {
+
+				if (userStatus.getCategoryAdminRights().get(i).isAdminStatus())
+					categoryIdList += userStatus.getCategoryAdminRights().get(i).getCategory().getCategoryId() + ",";
+			}
+			if (userStatus.getCategoryAdminRights().get(userStatus.getCategoryAdminRights().size() - 1).isAdminStatus())
+				categoryIdList += userStatus.getCategoryAdminRights()
+						.get(userStatus.getCategoryAdminRights().size() - 1).getCategory().getCategoryId();
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
+			InOutParam<Boolean> isSysAdminParam = new InOutParam<Boolean>(userStatus.isSysAdmin(), "IsSysAdmin");
+			InOutParam<String> categoryIdListParam = new InOutParam<String>(categoryIdList, "CategoryIdList");
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.UpdateCategoriesRightsForUser, userIdParam, isSysAdminParam,
+					categoryIdListParam, errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() == 0) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		} catch (Exception e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
 	}
 
 	@Override

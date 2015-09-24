@@ -132,5 +132,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.ReopenTicket";
 		}
+	},
+
+	UpdateCategoriesRightsForUser {
+		public String toString() {
+			return "dbo.UpdateCategoriesRightsForUser";
+		}
 	}
 }
