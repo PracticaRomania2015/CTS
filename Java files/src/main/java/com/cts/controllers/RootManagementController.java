@@ -9,29 +9,98 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cts.communication.CategoryResponse;
 import com.cts.communication.ResponseValues;
 import com.cts.communication.UserRightsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.CategoryDAOInterface;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
+import com.cts.entities.Category;
 import com.cts.entities.User;
 import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
+/**
+ * Handle request for view tickets.
+ */
 @Controller
-public class RootUserManagementController {
-	
-	private static Logger logger = Logger.getLogger(RootUserManagementController.class.getName());
+public class RootManagementController {
 
+	private static Logger logger = Logger.getLogger(RootManagementController.class.getName());
+
+	/**
+	 * Add category
+	 * 
+	 * @param category The new category to be added.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/rootAddCategory", method = RequestMethod.POST)
+	public @ResponseBody String addCateg(@RequestBody Category category) {
+
+		logger.debug("Attempting to add a category/subcategory.");
+		
+		// Category name validation
+		if (category.getCategoryName() == null){
+			
+			logger.error("Category/Subcategory name is null.");
+			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+		}
+		if (category.getCategoryName().equals("")){
+			
+			logger.error("Category/Subcategory name is empty.");
+			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+		}
+		
+		// Adding category
+		CategoryDAOInterface categoryDAO = new CategoryDAO();
+		if (categoryDAO.addCategory(category)) {
+
+			logger.info("Category/Subcategory added successfully!");
+			return new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS);
+		} else {
+
+			logger.warn("Category/Subcategory could not be added!");
+			return new CategoryResponse().getMessageJSON(ResponseValues.UNKNOWN);
+		}
+	}
+
+	/**
+	 * Remove category
+	 * 
+	 * @param category The Category to be removed.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/rootRemoveCategory", method = RequestMethod.POST)
+	public @ResponseBody String removeCateg(@RequestBody Category category) {
+
+		logger.debug("Attempting to delete a category/subcategory.");
+		
+		if (Integer.valueOf(category.getCategoryId()).equals("")){
+			
+			logger.error("Category/Subcategory ID is empty.");
+			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYID);
+		}
+		
+		// Removing category
+		CategoryDAOInterface categoryDAO = new CategoryDAO();
+		if (categoryDAO.deleteCategory(category)) {
+
+			logger.info("Category/Subcategory removed successfully!");
+			return new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS);
+		} else {
+
+			logger.warn("Category/Subcategory could not be removed!");
+			return new CategoryResponse().getMessageJSON(ResponseValues.DBERROR);
+		}
+	}
+	
 	/**
 	 * Get particular list of users
 	 * 
 	 * @param viewUserRequest ViewUserRequest with details regarding which users to receive. 
 	 * @return List of users in JSON format.
 	 */
-	//TODO:
-	//CHANGED FROM: /viewUsers
 	@RequestMapping(value = "/getUsers", method = RequestMethod.POST)
 	public @ResponseBody String getUsers(@RequestBody ViewUsersRequest viewUserRequest) {
 
@@ -59,8 +128,6 @@ public class RootUserManagementController {
 	 * @param userStatus User to get the rights for.
 	 * @return UserStatus with User ID and it's rights.
 	 */
-	//TODO:
-	//CHANGED FROM: /getUserAdminStatus 
 	@RequestMapping(value = "/getUserRights", method = RequestMethod.POST)
 	public @ResponseBody String getUserRights(@RequestBody UserStatus userStatus) {
 
@@ -70,7 +137,7 @@ public class RootUserManagementController {
 		if (userStatus.isSysAdmin() != (true && false)) {
 			
 			logger.error("isSysAdmin is not set!");
-			return new UserRightsResponse().getMessageJSON(ResponseValues.ERROR);
+			return new UserRightsResponse().getMessageJSON(ResponseValues.ROOTMANAGEMENTEMPTYSYSADMIN);
 		}
 		
 		// Getting user's rights
@@ -93,8 +160,6 @@ public class RootUserManagementController {
 	 * @param userStatus User to have the rights changed.
 	 * @return JSON with success/error response.
 	 */
-	//TODO:
-	//CHANGED FROM: /setUserAdminStatus 
 	@RequestMapping(value = "/setUserRights", method = RequestMethod.POST)
 	public @ResponseBody String setUserRights(@RequestBody UserStatus userStatus) {
 
@@ -112,5 +177,4 @@ public class RootUserManagementController {
 			return new UserRightsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
-	
 }

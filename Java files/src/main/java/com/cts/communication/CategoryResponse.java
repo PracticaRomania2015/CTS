@@ -15,6 +15,7 @@ public class CategoryResponse implements ResponseMessage {
 	private String type;
 	private String description;
 	
+	private String categoryEmptyId;
 	private String categoryEmptyName;
 	private String unknownError;
 
@@ -25,6 +26,7 @@ public class CategoryResponse implements ResponseMessage {
 
 	private void initAll() {
 		
+		categoryEmptyId = ConfigReader.getInstance().getValueForKey("categoryEmptyId");
 		categoryEmptyName = ConfigReader.getInstance().getValueForKey("categoryEmptyName");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
@@ -45,6 +47,11 @@ public class CategoryResponse implements ResponseMessage {
 		switch (responseValue) {
 			case SUCCESS: {
 				type = "success";
+				break;
+			}
+			case CATEGORYEMPTYID: {
+				type = "error";
+				description = categoryEmptyId;
 				break;
 			}
 			case CATEGORYEMPTYNAME: {

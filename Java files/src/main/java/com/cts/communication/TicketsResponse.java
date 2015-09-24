@@ -66,10 +66,6 @@ public class TicketsResponse implements ResponseMessage {
 				type = "success";
 				break;
 			}
-			case ERROR: {
-				type = "error";
-				break;
-			}
 			case TICKETEMPTYSUBJECT: {
 				description = ticketEmptySubject;
 				type = "error";

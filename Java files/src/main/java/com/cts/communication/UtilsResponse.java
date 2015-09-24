@@ -59,10 +59,6 @@ public class UtilsResponse implements ResponseMessage {
 				type = "success";
 				break;
 			}
-			case ERROR: {
-				type = "error";
-				break;
-			}
 			case DBERROR: {
 				description = dbError;
 				type = "error";

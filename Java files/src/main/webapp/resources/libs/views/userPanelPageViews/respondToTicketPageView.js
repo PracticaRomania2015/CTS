@@ -107,7 +107,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									}
 								});
 								
-								if (sessionStorage.loggedUserRights == "Admin" ) {
+								if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin" ) {
 									
 									if (self.get("provenience") == "assignedTickets") {
 										$('#ticketAdminsDropBox').show();

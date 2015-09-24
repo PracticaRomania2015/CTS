@@ -30,7 +30,7 @@ public class TicketsControllerTest {
 
 	private static LoginController loginController;
 	private static RegisterController registerController;
-	private static RootCategManagementController rootCategManagementController;
+	private static RootManagementController rootManagementController;
 	private static TicketsController ticketsController;
 	private static CategoryDAO categoryDAO;
 	private static UserDAO userDAO;
@@ -64,7 +64,7 @@ public class TicketsControllerTest {
 
 		loginController = new LoginController();
 		registerController = new RegisterController();
-		rootCategManagementController = new RootCategManagementController();
+		rootManagementController = new RootManagementController();
 		ticketsController = new TicketsController();
 		categoryDAO =  new CategoryDAO();
 		userDAO = new UserDAO();
@@ -90,7 +90,7 @@ public class TicketsControllerTest {
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootCategManagementController.addCateg(validCategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -327,7 +327,7 @@ public class TicketsControllerTest {
 	@Test
 	public void testAssignAdminToTicketWithNullTicket() {
 		
-		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.ERROR), ticketsController.assignAdminToTicket(null));
+		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.DBERROR), ticketsController.assignAdminToTicket(null));
 	}
 	
 	@Test
@@ -335,7 +335,7 @@ public class TicketsControllerTest {
 		
 		testTicket = new Ticket();
 		testTicket.setTicketId(invalidTicketId);
-		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.ERROR), ticketsController.assignAdminToTicket(testTicket));
+		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.DBERROR), ticketsController.assignAdminToTicket(testTicket));
 	}
 	
 	@Test
@@ -352,7 +352,7 @@ public class TicketsControllerTest {
 		//ticket
 		testTicket = new Ticket();
 		testTicket.setAssignedToUser(testUser);
-		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.ERROR), ticketsController.assignAdminToTicket(testTicket));
+		assertEquals(new TicketsResponse().getMessageJSON(ResponseValues.DBERROR), ticketsController.assignAdminToTicket(testTicket));
 	}
 	
 	@Test

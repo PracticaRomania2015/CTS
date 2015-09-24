@@ -72,7 +72,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setUserId(invalidUserId);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.ERROR), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test

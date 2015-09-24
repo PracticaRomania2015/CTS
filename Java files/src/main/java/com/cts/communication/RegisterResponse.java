@@ -64,10 +64,6 @@ public class RegisterResponse implements ResponseMessage {
 				description = registerSuccess;
 				break;
 			}
-			case ERROR: {
-				type = "error";
-				break;
-			}
 			case EMPTYTITLE: {
 				type = "error";
 				description = emptyTitle;

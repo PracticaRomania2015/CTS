@@ -35,13 +35,6 @@ public class UserPersonalDataController {
 		
 		logger.debug("Attempting to update a user's personal data.");
 		
-		// UserId validation			
-		if (Integer.valueOf(user.getUserId()).equals("")){
-			
-			logger.error("User ID is empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.ERROR);
-		}
-		
 		// User title validation
 		if (user.getTitle() == null) {
 							

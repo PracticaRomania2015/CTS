@@ -63,10 +63,6 @@ public class UserPersonalDataResponse implements ResponseMessage {
 				type = "success";
 				break;
 			}
-			case ERROR: {
-				type = "error";
-				break;
-			}
 			case EMPTYTITLE: {
 				type = "error";
 				description = emptyTitle;

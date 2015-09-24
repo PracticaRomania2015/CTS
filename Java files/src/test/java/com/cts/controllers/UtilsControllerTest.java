@@ -24,8 +24,7 @@ public class UtilsControllerTest {
 
 	private static LoginController loginController;
 	private static RegisterController registerController;
-	private static RootCategManagementController rootCategManagementController;
-	private static RootUserManagementController rootUserManagementController;
+	private static RootManagementController rootManagementController;
 	private static UtilsController utilsController;
 	private static CategoryDAO categoryDAO;
 	private static UserDAO userDAO;
@@ -47,8 +46,7 @@ public class UtilsControllerTest {
 		
 		loginController = new LoginController();
 		registerController = new RegisterController();
-		rootCategManagementController = new RootCategManagementController();
-		rootUserManagementController = new RootUserManagementController();
+		rootManagementController = new RootManagementController();
 		utilsController = new UtilsController();
 		categoryDAO =  new CategoryDAO();
 		userDAO = new UserDAO();
@@ -69,7 +67,7 @@ public class UtilsControllerTest {
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootCategManagementController.addCateg(validCategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -80,7 +78,7 @@ public class UtilsControllerTest {
 		//valid subcategory
 		validSubcategory.setParentCategoryId(validCategory.getCategoryId());
 		validSubcategory.setCategoryName(validSubcategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootCategManagementController.addCateg(validSubcategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validSubcategory));
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(validCategory);
 		for(Category subcategory : subcategories){
 			if (subcategory.getCategoryName().equals(validSubcategoryName)){
@@ -113,7 +111,7 @@ public class UtilsControllerTest {
 		
 		testCategory = new Category();
 		testCategory.setCategoryId(invalidCategoryId);
-		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.ERROR), utilsController.getSubcategories(testCategory));
+		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.DBERROR), utilsController.getSubcategories(testCategory));
 	}
 	
 	@Test

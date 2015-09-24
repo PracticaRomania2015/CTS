@@ -8,39 +8,30 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import com.cts.utils.ConfigReader;
 
 @JsonSerialize
-public class UserRightsResponse implements ResponseMessage {
+public class RootManagementResponse implements ResponseMessage {
 	
-	private static Logger logger = Logger.getLogger(UserRightsResponse.class.getName());
+	private static Logger logger = Logger.getLogger(RootManagementResponse.class.getName());
 
-	private Object data;
 	private String type;
 	private String description;
 	
+	private String rootManagementEmptySysAdmin;
 	private String dbError;
 	private String unknownError;
 	
 	
-	public UserRightsResponse() {
+	public RootManagementResponse() {
 
 		initAll();
-	}
-	
-	public UserRightsResponse(Object data){
-		
-		this.data = data;
 	}
 
 	private void initAll() {
 		
+		rootManagementEmptySysAdmin = ConfigReader.getInstance().getValueForKey("rootManagementEmptySysAdmin");
 		dbError = ConfigReader.getInstance().getValueForKey("dbError");
 		unknownError = ConfigReader.getInstance().getValueForKey("unknownError");
 	}
 
-	public Object getData() {
-		
-		return data;
-	}
-	
 	public String getType() {
 		
 		return type;
@@ -58,6 +49,11 @@ public class UserRightsResponse implements ResponseMessage {
 		switch (responseValue) {
 			case SUCCESS: {
 				type = "success";
+				break;
+			}
+			case ROOTMANAGEMENTEMPTYSYSADMIN: {
+				type = "error";
+				description = rootManagementEmptySysAdmin;
 				break;
 			}
 			case DBERROR: {

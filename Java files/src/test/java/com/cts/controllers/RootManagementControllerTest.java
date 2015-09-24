@@ -25,12 +25,11 @@ import com.cts.entities.UserRight;
 import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
-public class RootUserManagementControllerTest {
+public class RootManagementControllerTest {
 
 	private static LoginController loginController;
 	private static RegisterController registerController;
-	private static RootCategManagementController rootCategManagementController;
-	private static RootUserManagementController rootUserManagementController;
+	private static RootManagementController rootManagementController;
 	private static UtilsController utilsController;
 	private static CategoryDAO categoryDAO;
 	private static UserDAO userDAO;
@@ -51,8 +50,7 @@ public class RootUserManagementControllerTest {
 		
 		loginController = new LoginController();
 		registerController = new RegisterController();
-		rootCategManagementController = new RootCategManagementController();
-		rootUserManagementController = new RootUserManagementController();
+		rootManagementController = new RootManagementController();
 		utilsController = new UtilsController();
 		categoryDAO =  new CategoryDAO();
 		userDAO = new UserDAO();
@@ -74,7 +72,7 @@ public class RootUserManagementControllerTest {
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootCategManagementController.addCateg(validCategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -115,7 +113,7 @@ public class RootUserManagementControllerTest {
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		output.add(totalNumberOfPages);
 		output.add(tickets);
-		assertEquals(new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS), rootUserManagementController.getUsers(viewUsersRequest));
+		assertEquals(new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUsers(viewUsersRequest));
 	}
 	
 	//TODO: needs DAO implementation
@@ -128,7 +126,7 @@ public class RootUserManagementControllerTest {
 		validUserStatus.setSysAdmin(true);
 		validUserStatus.setCategoryAdminRights(categoryAdminRights);
 		
-		rootUserManagementController.setUserRights(validUserStatus);
+		rootManagementController.setUserRights(validUserStatus);
 	}
 	
 	//TODO: needs DAO implementation to check against
@@ -151,6 +149,6 @@ public class RootUserManagementControllerTest {
 		testUserStatus.setSysAdmin(true);
 		testUserStatus.setCategoryAdminRights(categoryAdminRights);
 		
-		assertEquals(new UserRightsResponse(testUserStatus).getMessageJSON(ResponseValues.SUCCESS), rootUserManagementController.getUserRights(validUserStatus));
+		assertEquals(new UserRightsResponse(testUserStatus).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUserRights(validUserStatus));
 	}
 }
