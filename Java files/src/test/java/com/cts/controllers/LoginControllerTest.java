@@ -101,6 +101,7 @@ public class LoginControllerTest {
 		validUser.setPassword(validPassword);
 		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD), new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD).equals(loginController.login(validUser)));
 		validUser.setPassword(validPassword);
+		System.out.println(validUser);
 		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
 	}
 }

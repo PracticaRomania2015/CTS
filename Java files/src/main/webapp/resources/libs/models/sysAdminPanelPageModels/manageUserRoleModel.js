@@ -3,5 +3,5 @@
 /* Manage User Roles Page view */
 
 var ManageUserRoleModel = Backbone.Model.extend({
-	urlRoot : 'getUserAdminStatus/'
+	urlRoot : 'getUserRights/'
 })

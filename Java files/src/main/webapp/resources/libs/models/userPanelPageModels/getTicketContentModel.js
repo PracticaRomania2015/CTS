@@ -4,6 +4,6 @@
 
 var GetTicketContentModel = Backbone.Model.extend({
 	
-	urlRoot: 'viewTicket/'
+	urlRoot: 'getTicket/'
 
 });

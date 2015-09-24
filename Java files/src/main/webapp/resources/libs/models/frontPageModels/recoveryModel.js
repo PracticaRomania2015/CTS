@@ -4,7 +4,7 @@
 
 var RecoveryModel = Backbone.Model.extend({
 
-	urlRoot : 'recoveryPassword/',
+	urlRoot : 'recovery/',
 
 	validate : function(attrs) {
 

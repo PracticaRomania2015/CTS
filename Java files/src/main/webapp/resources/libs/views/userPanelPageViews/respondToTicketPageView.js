@@ -26,13 +26,13 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		ticket.save({}, {
 			success : function(model, response) {
 				$('#ticketCommentsWrapper').empty();
-				_.each(response.comments, function(e) {
+				_.each(response.data.comments, function(e) {
 					var date = new Date(e.dateTime);
 					var hour = addZero(date.getHours());
 					var minute = addZero(date.getMinutes());
 					var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
 					
-					if(response.state.stateName == "Closed"){
+					if(response.data.state.stateName == "Closed"){
 						$('#ticketResponseWrapper').remove();
 
 
@@ -88,23 +88,23 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							
 					}	
 				});
-				$('#ticketTitle').empty().append("\""+response.subject +"\""+" is ");
-				var assignedToId = response.assignedToUser.userId;
+				$('#ticketTitle').empty().append("\""+response.data.subject +"\""+" is ");
+				var assignedToId = response.data.assignedToUser.userId;
 		
 				var categoryAdmins = new getAdminForCategory({
-					categoryId : response.category.categoryId
+					categoryId : response.data.category.categoryId
 				})
 				
-				var ticketSubject = response.subject;
-				var ticketState = response.state.stateName;
+				var ticketSubject = response.data.subject;
+				var ticketState = response.data.state.stateName;
 				
-				var ticketOwnerId = response.comments[0].user.userId;
+				var ticketOwnerId = response.data.comments[0].user.userId;
 				categoryAdmins.save({},{
 					success : function(model,response){
 						
 						var assignedUserName;
 						$('#ticketAdminsDropBox').find('option').remove().end();
-						_.each(response,function(e) {
+						_.each(response.data,function(e) {
 							if (assignedToId == e.userId)
 							{
 								assignedUserName = e.firstName + " "+ e.lastName;
@@ -140,7 +140,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									$('#ticketAdminsDropBox').append("<option value=0 selected>Set ticket as unassigned</option>");
 									
 								}
-								_.each(response, function(e) {
+								_.each(response.data, function(e) {
 									if (assignedToId == e.userId)
 									{
 										$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
@@ -200,7 +200,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		reassignAdminToTicket.save({}, {
 			success : function(model, response) {
-				console.log(response);
+				console.log(response.data);
 				console.log("Ticket reassigned!");
 			},
 			error : function(model, response) {
@@ -222,7 +222,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			close.save({},{
 				async: false,
 				success : function(model, response){
-					console.log(response);
+					console.log(response.data);
 				},
 				error : function(model, response){
 					console.log(response);

@@ -4,6 +4,6 @@
 
 var GetSubcategoriesModel = Backbone.Model.extend({
 
-	urlRoot : 'getSubCategories/'
+	urlRoot : 'getSubcategories/'
 
 });

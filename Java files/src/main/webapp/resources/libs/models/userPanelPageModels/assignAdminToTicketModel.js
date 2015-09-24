@@ -4,6 +4,6 @@
 
 var AssignAdminToTicket = Backbone.Model.extend({
 	
-	urlRoot: 'assignUserToTicket/'
+	urlRoot: 'assignAdminToTicket/'
 
 });

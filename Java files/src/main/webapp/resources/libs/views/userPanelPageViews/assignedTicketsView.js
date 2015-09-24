@@ -71,8 +71,8 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 
 		this.model.save({}, {
 			success : function(model, response) {
-				currentView.populateData(pgNr, response.totalNumberOfPages,
-						response.tickets);
+				currentView.populateData(pgNr, response.data.totalNumberOfPages,
+						response.data.tickets);
 			},
 			error : function(model, response) {
 				console.log(response);

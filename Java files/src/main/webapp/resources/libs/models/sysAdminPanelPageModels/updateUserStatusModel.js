@@ -4,6 +4,6 @@
 
 var UpdateUserRoleModel = Backbone.Model.extend({
 
-	urlRoot : 'setUserAdminStatus/'
+	urlRoot : 'setUserRights/'
 
 });

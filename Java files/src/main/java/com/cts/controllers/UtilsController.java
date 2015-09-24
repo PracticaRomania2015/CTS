@@ -52,7 +52,7 @@ public class UtilsController {
 	 * @return Subcategories from category provided
 	 */
 	//TODO: CHECK FOR 0 SUBCATEGORIES
-	@RequestMapping(value = "/getSubCategories", method = RequestMethod.POST)
+	@RequestMapping(value = "/getSubcategories", method = RequestMethod.POST)
 	public @ResponseBody String getSubcategories(@RequestBody Category category) {
 
 		logger.debug("Attempting to get subcategories for a category.");
