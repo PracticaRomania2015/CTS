@@ -229,4 +229,54 @@ public class TicketsController {
 
 		}
 	}
+	
+	/**
+	 * Change specified ticket status to open
+	 * 
+	 * @param ticket Ticket to get status changed.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/openTicket", method = RequestMethod.POST)
+	public @ResponseBody String openTicket(@RequestBody Ticket ticket) {
+
+		logger.debug("Attempting to change ticket status to open.");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		if (ticketDAO.reopenTicket(ticket)) {
+
+			logger.info("Ticket opened successfully!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+
+		} else {
+
+			logger.error("Ticket could not be closed!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+
+		}
+	}
+	
+	/**
+	 * Change specified ticket priority
+	 * 
+	 * @param ticket Ticket to get priority changed.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/changeTicketPriority", method = RequestMethod.POST)
+	public @ResponseBody String changeTicketPriority(@RequestBody Ticket ticket) {
+
+		logger.debug("Attempting to change ticket priority.");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+		if (ticketDAO.changeTicketPriority(ticket)) {
+
+			logger.info("Ticket priority changed successfully!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+
+		} else {
+
+			logger.error("Ticket priority could not be closed!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+
+		}
+	}
 }
