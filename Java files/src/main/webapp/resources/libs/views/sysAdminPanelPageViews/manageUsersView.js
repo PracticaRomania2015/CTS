@@ -40,8 +40,10 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 			pageNumber = 1;
 		}
 		
-		this.model.unset('users');
-		this.model.unset('totalNumberOfPages');
+		console.log(this.model);
+		
+		this.model.unset('data');
+		//this.model.unset('totalNumberOfPages');
 		
 		this.model.set("requestedPageNumber", pageNumber);
 		
@@ -60,7 +62,7 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		this.model.save({},{
 			success: function(model,response){
 				console.log(response);
-				currentView.populateData(pageNumber, response.totalNumberOfPages, response.users);
+				currentView.populateData(pageNumber, response.data[0], response.data[1]);
 			},
 			error: function(model, response){
 				console.log(response);

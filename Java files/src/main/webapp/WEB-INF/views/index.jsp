@@ -35,7 +35,7 @@
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/removeCategoryModel.js"></script>
-<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/viewUsersModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/getUsersModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/manageUserRoleModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/updateUserStatusModel.js"></script>
 

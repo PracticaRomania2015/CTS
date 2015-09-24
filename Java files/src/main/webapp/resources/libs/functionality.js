@@ -103,7 +103,7 @@ function userPanelPageFunctionality() {
 						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
 						if(!manageUsersView){
 							manageUsersView = new ManageUsersView({
-								model: new ViewUsersModel({})
+								model: new GetUsersModel({})
 							});
 							$('#userPanelPageContainer').replaceWith(manageUsersView.render().el);
 							handleErrorStyle();

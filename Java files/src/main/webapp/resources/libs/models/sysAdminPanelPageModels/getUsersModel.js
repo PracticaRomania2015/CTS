@@ -2,8 +2,8 @@
 /* ================================================= */
 /* Manage Users Page view */
 
-var ViewUsersModel = Backbone.Model.extend({
+var GetUsersModel = Backbone.Model.extend({
 
-	urlRoot : 'viewUsers/'
+	urlRoot : 'getUsers/'
 
 });
