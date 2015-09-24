@@ -239,14 +239,14 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					textToSearchParam, searchTypeParam, sortTypeParam, isSearchASCParam, totalNumberOfPagesParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
-
+				
 				User user = new User();
 				user.setUserId(resultSet.getInt("UserId"));
 				user.setFirstName(resultSet.getString("FirstName"));
 				user.setLastName(resultSet.getString("LastName"));
 				user.setEmail(resultSet.getString("Email"));
 				Role role = new Role();
-				role.setRoleName(resultSet.getString("Role"));
+				role.setRoleName(resultSet.getString("RoleName"));
 				user.setRole(role);
 				users.add(user);
 			}
