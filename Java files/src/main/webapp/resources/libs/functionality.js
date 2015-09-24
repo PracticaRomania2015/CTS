@@ -48,13 +48,13 @@ function frontPageFunctionality() {
 	});
 }
 
-var assignedTicketsView, userTicketsView;
+var assignedTicketsView, userTicketsView, manageUsersView;
 
 function userPanelPageFunctionality() {
 
 	var createTicketPageView, respondToTicketPageView;
 	
-	var manageCategoriesView, manageUsersView;
+	var manageCategoriesView;
 
 	$('#userInfo').append(sessionStorage.loggedUserName);
 	
@@ -220,6 +220,10 @@ function setAssignedTicketsViewToNull() {
 
 function setUserTicketsViewToNull() {
 	userTicketsView = null;
+}
+
+function setManageUsersViewToNull(){
+	manageUsersView = null;
 }
 
 function addZero(i) {

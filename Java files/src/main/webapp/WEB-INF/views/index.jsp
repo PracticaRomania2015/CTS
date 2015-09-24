@@ -35,7 +35,10 @@
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/removeCategoryModel.js"></script>
-<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/viewUserModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/viewUsersModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/manageUserRoleModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/updateUserStatusModel.js"></script>
+
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/registerView.js"></script>
@@ -52,6 +55,7 @@
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/genericSystemAdminPanelPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageCategoriesView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageUsersView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageUserRoleView.js"></script>
 <script type="text/javascript" src="${res}/main.js"></script>
 
 
@@ -132,15 +136,6 @@
 	</script>
 	<script type="text/template" id="manageCategoriesTemplate">
 		<div id="manageCategoriesContainer">
-
-			
-
-		
-
-
-
-
-
 			<form class='sysAdminPageForms'>
 				<div id="addCategoryContainer">
 					<h3 >Add Category</h3>
@@ -236,6 +231,20 @@
     			</tfoot>
     			<tbody id="usersViewBody"></tbody>
 			</table>
+	</script>
+	<script type="text/template" id="manageUserRoleTemplate">
+		<div id = "sysAdminDiv"></div>
+		<table class = "userRoles">
+			<thead>
+				<tr>
+					<th id="rounded-tl" class="slim-col">Check</th>
+					<th class="slim-col">Category ID</th>
+					<th id="rounded-tr" class="slim-col">Category Name</th>
+				</tr>
+			</thead>
+			<tbody id="userRolesBody"></tbody>
+		</table>
+		<span href="#" class="button" id="updateUserRoles">Submit</span>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>

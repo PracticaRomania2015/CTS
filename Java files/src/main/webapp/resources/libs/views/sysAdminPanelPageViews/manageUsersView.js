@@ -43,19 +43,49 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		this.model.unset('users');
 		this.model.unset('totalNumberOfPages');
 		
-		//to be continuedl
-		this.model.set("user")
+		this.model.set("requestedPageNumber", pageNumber);
+		
+		if(!this.$el.find('#usersPerPage').val()){
+			this.model.set("usersPerPage", 10);
+		}else{
+			this.model.set("usersPerPage", this.$el.find('#usersPerPage').val());
+		}
+		this.model.set("textToSearch", searchText);
+		this.model.set("searchType", searchType);
+		
+		var currentView = this;
+		
+		console.log(this.model);
+		
+		this.model.save({},{
+			success: function(model,response){
+				console.log(response);
+				currentView.populateData(pageNumber, response.totalNumberOfPages, response.users);
+			},
+			error: function(model, response){
+				console.log(response);
+			}
+		})
 		
 	},
 	
 	//viewTicketComments
-	manageUser: function(clicked){},
+	manageUser: function(clicked){
+		var manageUserRoleView = new ManageUserRoleView({
+			model: new ManageUserRoleModel({
+				userId: $(clicked.currentTarget).attr('id')
+			})
+		});
+		
+		$('#userPanelPageContainer').replaceWith(manageUserRoleView.render().el);
+		setManageUsersViewToNull();
+	},
 	
 	addUser: function(userId, firstName, lastName, email, role){
-		//this might now show the id on the page
 		this.$el.find('tbody').append(
 				"<tr class='openUser' id='" + userId
-					+ "'><td><div class='columnOverflow'>" + firstName
+					+ "'><td><div class='columnOverflow'>" + userId
+					+ "</div></td><td><div class='columnOverflow'>" + firstName
 					+ "</div></td><td><div class='columnOverflow'>" + lastName
 					+ "</div></td><td><div class='columnOverflow'>" + email
 					+ "</div></td><td><div class='columnOverflow'>" + role
@@ -67,6 +97,7 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		this.$el.find('tbody').empty();
 		_.each(usersArray,
 				function(e){
+					//change e.role stuff after the db change
 					currentView.addUser(e.userId, e.firstName, e.lastName, e.email, e.role);
 		});
 		this.$el.find('#usersPagingNumbering').empty().append(currentPage + "/" + totalPages)
