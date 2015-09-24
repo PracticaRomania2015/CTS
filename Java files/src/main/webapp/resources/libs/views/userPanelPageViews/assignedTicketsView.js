@@ -76,7 +76,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 				if (response.type == "success"){
 					self.set("totalNumberOfPages", response.data[0]);
 					self.set("tickets", response.data[1]);
-					currentView.populateData(pageNumber, response.data[0], response.data[1]);
+					currentView.populateData(pgNr, response.data[0], response.data[1]);
 					self.unset("data");
 					self.unset("type");
 					self.unset("description");
