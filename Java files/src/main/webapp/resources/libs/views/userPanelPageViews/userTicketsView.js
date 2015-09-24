@@ -37,7 +37,8 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 
 		var respondToTicketPageView = new RespondToTicketPageView({
 			model : new RespondToTicketModel({
-				ticketId : $(clicked.currentTarget).attr('id')
+				ticketId : $(clicked.currentTarget).attr('id'),
+				provenience: "userTickets"
 			})
 		});
 		

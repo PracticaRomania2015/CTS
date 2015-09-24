@@ -11,10 +11,10 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		'click #assignUserToTicketButton' : 'reassignAdmin'
 	},
 
-
-
-
 	initialize : function() {
+		
+		var self = this.model;
+		
 		var ticket = new GetTicketContentModel({
 			ticketId : this.model.get("ticketId")
 		});
@@ -107,33 +107,37 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									}
 								});
 								
-								if (sessionStorage.loggedUserRights == "Admin") {	
-									if (ticketOwnerId == sessionStorage.loggedUserId) {	
-										if (assignedToId == 0) {
-											$('#ticketTitle').append("currently unassigned");
-										} else {
-											$('#ticketTitle').append("assigned to "+ assignedUserName);
-										}
-									} else {
+								if (sessionStorage.loggedUserRights == "Admin" ) {
+									
+									if (self.get("provenience") == "assignedTickets") {
 										$('#ticketAdminsDropBox').show();
 										$('#assignUserToTicketButton').show();
-										if (assignedToId == 0) {
-											$('#ticketAdminsDropBox').append("<option value=0>Set ticket as unassigned</option>");
-											$('#ticketTitle').append("currently unassigned");
+									} else {
+										if (self.get("provenience") == "userTickets") {
+											$('#ticketAdminsDropBox').hide();
+											$('#assignUserToTicketButton').hide();
 										} else {
-											$('#ticketAdminsDropBox').append("<option value=0 selected>Set ticket as unassigned</option>");
+											console.log("Invalid Session Storage Data!");
 										}
-										_.each(response.data, function(e) {
-											if (assignedToId == e.userId) {
-												$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
-												$('#ticketTitle').append("assigned to "+ assignedUserName);
-											} else {
-												$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
-												
-											}
-										});
 									}
-								} else {	
+									
+									if (assignedToId == 0) {
+										$('#ticketAdminsDropBox').append("<option value=0>Set ticket as unassigned</option>");
+										$('#ticketTitle').append("currently unassigned");
+									} else {
+										$('#ticketAdminsDropBox').append("<option value=0 selected>Set ticket as unassigned</option>");
+										$('#ticketTitle').append("assigned to "+ assignedUserName);
+									}
+									
+									_.each(response.data, function(e) {
+										if (assignedToId == e.userId) {
+											$('#ticketAdminsDropBox').append("<option value=" + e.userId + " selected>" + e.firstName + " " + e.lastName + "</option>");
+										} else {
+											$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
+										}
+									});
+								} else {
+									
 									if (assignedToId == 0) {
 										$('#ticketTitle').append("currently unassigned");
 									} else {
@@ -185,7 +189,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		reassignAdminToTicket.save({}, {
 			success : function(model, response) {
-				if (response.type == "succes"){
+				if (response.type == "success"){
 					alert("Ticket reassigned!");
 				} else {
 					if (response.type == "error"){
@@ -247,6 +251,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			comment : $("#ticketResponse").val()
 		});
 
+		
 		var resp = new RespondToTicketModel({
 			ticketId : this.model.get("ticketId"),
 			comments : [ ticketComment ]
