@@ -386,8 +386,23 @@ h2.userPage {
 	font-size: 14px;
 	text-align: center;
 	padding: 5px;
-	background: #f1f8ec;
+	background: #F1F8EC;
 	color: #000;
+}
+
+.classActive{
+	background: rgba(253, 185, 19, 0.80);
+	border-radius: 3px;
+}
+
+.classClosed{
+	background: rgba(124, 43, 131, 0.60);
+	border-radius: 3px;
+}
+
+.classAnswered{
+	background: rgba(245, 128, 37, 0.80);
+	border-radius: 3px;
 }
 
 #ticketCommentsWrapper {

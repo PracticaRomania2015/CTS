@@ -119,11 +119,11 @@
 					<div id="stn" class="menuRightArrow"></div>
 					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='manageCategoriesButton'>Manage Categories		
-					<div id="stn" class="menuRightArrow"></div>
-					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
+					<div id="mcn" class="menuRightArrow"></div>
+					<div id="mcs" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='manageUsersButton'>Manage Users
-					<div id="stn" class="menuRightArrow"></div>
-					<div id="sts" class="menuRightArrowSelected" style="display: none;"></div></span>
+					<div id="mun" class="menuRightArrow"></div>
+					<div id="mus" class="menuRightArrowSelected" style="display: none;"></div></span>
 				<span href='#' class='button' id='btn-logOut'>Log out</span>
 			</div>
 			<div id="contextWrapper">

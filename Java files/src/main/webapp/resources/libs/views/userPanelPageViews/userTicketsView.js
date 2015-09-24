@@ -98,14 +98,22 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		
 	},
 
-	addTicket : function(id, subj, categ, status, userName, ansDate, subDate) {
+	addTicket : function(id, subj, categ, status, userName, ansDate, subDate, priority) {
+		var statusClassColor;
+		if(status == "Closed"){
+			statusClassColor = "classClosed";
+		}else if(status == "Answered"){
+			statusClassColor = "classAnswered";
+		}else if(status == "Active"){
+			statusClassColor = "classActive";
+		}
 		this.$el.find('tbody').append(
 				"<tr class='openTicketComments' id='" + id
 						+ "'><td><div class='columnOverflow'>" + id
 						+ "</div></td><td><div class='columnOverflow'>" + subj
 						+ "</div></td><td><div class='columnOverflow'>" + categ
-						+ "</div></td><td><div class='columnOverflow'>" + "priority"
-						+ "</div></td><td><div class='columnOverflow'>"
+						+ "</div></td><td><div class='columnOverflow'>" + priority
+						+ "</div></td><td><div class='columnOverflow " + statusClassColor + "'>"
 						+ status + " " + userName
 						+ "</div></td><td><div class='columnOverflow'>"
 						+ ansDate
@@ -142,7 +150,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 					
 					currentView.addTicket(e.ticketId, e.subject,
 							e.category.categoryName, e.state.stateName,
-							e.state.stateName == "Closed" ? "" : assignedToUser, answerDate, submitDate);
+							e.state.stateName == "Closed" ? "" : assignedToUser, answerDate, submitDate, e.priority.priorityName);
 				});
 		this.$el.find('#ticketPagingNumbering').empty().append(
 				currentPage + "/" + totalPages);

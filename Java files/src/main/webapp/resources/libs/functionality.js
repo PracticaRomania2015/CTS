@@ -76,6 +76,8 @@ function userPanelPageFunctionality() {
 						handleErrorStyle();
 					}
 
+					$('#mus').hide();
+					$('#mcs').hide();
 					$('#ats').show();
 					$('#mts').hide();
 					$('#sts').hide();
@@ -85,6 +87,8 @@ function userPanelPageFunctionality() {
 					$('#mtn').show();
 					$('#stn').show();
 					$('#upn').show();
+					$('#mun').show();
+					$('#mcn').show();
 				});
 		
 		if(sessionStorage.loggedUserRights == "SysAdmin"){
@@ -96,6 +100,19 @@ function userPanelPageFunctionality() {
 							$('#userPanelPageContainer').replaceWith(manageCategoriesView.render().el);
 							handleErrorStyle();
 						}
+						$('#mus').hide();
+						$('#mcs').show();
+						$('#ats').hide();
+						$('#mts').hide();
+						$('#sts').hide();
+						$('#ups').hide();
+
+						$('#mun').show();
+						$('#mcn').hide();
+						$('#atn').show();
+						$('#mtn').show();
+						$('#stn').show();
+						$('#upn').show();
 					});
 			
 			$('#manageUsersButton').click(
@@ -108,6 +125,19 @@ function userPanelPageFunctionality() {
 							$('#userPanelPageContainer').replaceWith(manageUsersView.render().el);
 							handleErrorStyle();
 						}
+						$('#mus').show();
+						$('#mcs').hide();
+						$('#ats').hide();
+						$('#mts').hide();
+						$('#sts').hide();
+						$('#ups').hide();
+
+						$('#mun').hide();
+						$('#mcn').show();
+						$('#atn').show();
+						$('#mtn').show();
+						$('#stn').show();
+						$('#upn').show();
 				});
 		}
 		
@@ -131,11 +161,15 @@ function userPanelPageFunctionality() {
 				$('#mts').show();
 				$('#sts').hide();
 				$('#ups').hide();
+				$('#mus').hide();
+				$('#mcs').hide();
 
 				$('#atn').show();
 				$('#mtn').hide();
 				$('#stn').show();
 				$('#upn').show();
+				$('#mun').show();
+				$('#mcn').show();
 			});
 
 	$('#btn-subTk').click(
@@ -154,11 +188,15 @@ function userPanelPageFunctionality() {
 				$('#mts').hide();
 				$('#sts').show();
 				$('#ups').hide();
+				$('#mus').hide();
+				$('#mcs').hide();
 
 				$('#atn').show();
 				$('#mtn').show();
 				$('#stn').hide();
 				$('#upn').show();
+				$('#mun').show();
+				$('#mcn').show();
 			});
 
 	$('#userInfo')
@@ -184,11 +222,15 @@ function userPanelPageFunctionality() {
 						$('#mts').hide();
 						$('#sts').hide();
 						$('#ups').show();
+						$('#mus').hide();
+						$('#mcs').hide();
 
 						$('#atn').show();
 						$('#mtn').show();
 						$('#stn').show();
 						$('#upn').hide();
+						$('#mun').show();
+						$('#mcn').show();
 					});
 
 	$('#btn-logOut').click(
@@ -205,11 +247,15 @@ function userPanelPageFunctionality() {
 				$('#mts').hide();
 				$('#sts').hide();
 				$('#ups').hide();
+				$('#mus').hide();
+				$('#mcs').hide();
 
 				$('#atn').show();
 				$('#mtn').show();
 				$('#stn').show();
 				$('#upn').show();
+				$('#mun').show();
+				$('#mcn').show();
 			});
 
 }
