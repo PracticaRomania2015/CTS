@@ -65,9 +65,7 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 		})
 	},
 	
-	submit: function(){
-		
-		console.log(this.model);
+submit: function(){
 		
 		var userUpdate = new UpdateUserRoleModel({
 			userId : this.model.get("data").userId,
@@ -75,25 +73,29 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 			categoryAdminRights : this.model.get("data").categoryAdminRights,
 			
 		});
-		console.log(userUpdate);
 		
 		userUpdate.save({},{
 			success: function(model,response){
-				if (response.type == "success"){
-					alert("Account updated successfully!");
-				} else {
+				if(response.type == "success"){
+					if(sessionStorage.loggedUserId == userUpdate.attributes.userId && !userUpdate.attributes.sysAdmin){
+						alert("Your SysAdmin rights have been revoked! Please login to continue!");
+						$('#btn-logOut').trigger('click');
+					}else{
+						alert("The user was successfully updated!");
+					}
+				}else{
 					if (response.type == "error"){
 						alert(response.description);
 					} else {
 						alert("Unknown error!");
 					}
 				}
+				
 			},
-			error: function(model,response){
-				console.log(response);
+			error: function(model, response){
+				alert(response);
 			}
-		});
-		
+		})
 	}
 	
 })
