@@ -1,21 +1,18 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.ResponseValues;
 import com.cts.communication.TicketsResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
 import com.cts.entities.ViewTicketsRequest;
-
 
 /**
  * Handles requests for the tickets.
@@ -24,15 +21,16 @@ import com.cts.entities.ViewTicketsRequest;
 public class TicketsController {
 
 	private static Logger logger = Logger.getLogger(TicketsController.class.getName());
-	
+
 	/**
 	 * Get details of provided ticket
 	 * 
-	 * @param ticket Ticket to get details for.
+	 * @param ticket
+	 *            Ticket to get details for.
 	 * @return Complete ticket in JSON format.
 	 */
-	//TODO:
-	//CHANGED FROM: /viewTicket
+	// TODO:
+	// CHANGED FROM: /viewTicket
 	@RequestMapping(value = "/getTicket", method = RequestMethod.POST)
 	public @ResponseBody String getTicket(@RequestBody Ticket ticket) {
 
@@ -40,39 +38,41 @@ public class TicketsController {
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.getFullTicket(ticket)) {
-			
+
 			logger.info("Full ticket received successfully!");
 			return new TicketsResponse(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-			
+
 			logger.warn("Full ticket could not be retrieved!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.UNKNOWN);
 		}
 	}
-	
+
 	/**
 	 * Get particular list of tickets
 	 * 
-	 * @param viewTicketsRequest ViewTicketsRequest with details regarding which tickets to receive.  
+	 * @param viewTicketsRequest
+	 *            ViewTicketsRequest with details regarding which tickets to
+	 *            receive.
 	 * @return List of tickets in JSON format.
 	 */
-	//TODO:
-	//CHANGED FROM: /viewTickets
+	// TODO:
+	// CHANGED FROM: /viewTickets
 	@RequestMapping(value = "/getTickets", method = RequestMethod.POST)
 	public @ResponseBody String getTickets(@RequestBody ViewTicketsRequest viewTicketsRequest) {
 
 		logger.debug("Attempting to retrieve a particular list of tickets.");
-		
+
 		// Getting tickets
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		StringBuilder totalNumberOfPages = new StringBuilder();
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(viewTicketsRequest, totalNumberOfPages);
-		
-		if (totalNumberOfPages.toString().equals("")){
-			
+
+		if (totalNumberOfPages.toString().equals("")) {
+
 			totalNumberOfPages.append("1");
 		}
-		
+
 		ArrayList<Object> output = new ArrayList<Object>();
 		output.add(totalNumberOfPages);
 		output.add(tickets);
@@ -80,55 +80,56 @@ public class TicketsController {
 		return new TicketsResponse(output).getMessageJSON(ResponseValues.SUCCESS);
 
 	}
-	
+
 	/**
 	 * Submit ticket
 	 * 
-	 * @param ticket Ticket to be submitted.
+	 * @param ticket
+	 *            Ticket to be submitted.
 	 * @return Ticket with complete details in JSON format.
 	 */
 	@RequestMapping(value = "/submitTicket", method = RequestMethod.POST)
 	public @ResponseBody String submitTicket(@RequestBody Ticket ticket) {
 
 		logger.debug("Attempting to submit a ticket.");
-		
+
 		// Ticket subject validation
-		if (ticket.getSubject() == null){
-			
+		if (ticket.getSubject() == null) {
+
 			logger.error("Ticket subject is null!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
 		}
 		if (ticket.getSubject().equals("")) {
-			
+
 			logger.error("Ticket subject is empty!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
 		}
-		
+
 		// Ticket category validation
-		if (ticket.getCategory() == null){
-			
+		if (ticket.getCategory() == null) {
+
 			logger.error("Ticket category is null!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
 		}
-		
-		if (ticket.getCategory().getCategoryId() == 0){
-			
+
+		if (ticket.getCategory().getCategoryId() == 0) {
+
 			logger.error("Ticket category is invalid!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 
 		// Ticket description validation
-		if (ticket.getComments().get(0).getComment() == null){
-			
+		if (ticket.getComments().get(0).getComment() == null) {
+
 			logger.error("Ticket description is null!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 		if (ticket.getComments().get(0).getComment().equals("")) {
-			
+
 			logger.error("Ticket description is empty!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
-		
+
 		// Ticket creation.
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.createTicket(ticket)) {
@@ -141,28 +142,29 @@ public class TicketsController {
 			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
-	
+
 	/**
 	 * Add comment to specified ticket
 	 * 
-	 * @param ticket Ticket to which to add comment to.
+	 * @param ticket
+	 *            Ticket to which to add comment to.
 	 * @return Ticket with added comment details from database in JSON format.
 	 */
-	//TODO:
-	//CHANGED FROM: /addComment
+	// TODO:
+	// CHANGED FROM: /addComment
 	@RequestMapping(value = "/addCommentToTicket", method = RequestMethod.POST)
 	public @ResponseBody String addCommentToTicket(@RequestBody Ticket ticket) {
 
 		logger.debug("Attempting to add a comment to a ticket.");
-		
+
 		// New comment validation
-		if (ticket.getComments().get(0).getComment() == null){
-			
+		if (ticket.getComments().get(0).getComment() == null) {
+
 			logger.error("Ticket comment is null!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
 		}
 		if (ticket.getComments().get(0).getComment().equals("")) {
-			
+
 			logger.error("Ticket comment is empty!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
 		}
@@ -179,11 +181,12 @@ public class TicketsController {
 			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
-	
+
 	/**
 	 * Assign admin to a specified ticket
 	 * 
-	 * @param ticket Ticket to which to assign the admin
+	 * @param ticket
+	 *            Ticket to which to assign the admin
 	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/assignAdminToTicket", method = RequestMethod.POST)
@@ -204,11 +207,12 @@ public class TicketsController {
 
 		}
 	}
-	
+
 	/**
 	 * Change specified ticket status to closed
 	 * 
-	 * @param ticket Ticket to get status changed.
+	 * @param ticket
+	 *            Ticket to get status changed.
 	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/closeTicket", method = RequestMethod.POST)
@@ -277,6 +281,24 @@ public class TicketsController {
 			logger.error("Ticket priority could not be closed!");
 			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
 
+		}
+	}
+
+	@RequestMapping(value = "/changePriority", method = RequestMethod.POST)
+	public @ResponseBody String changePriority(@RequestBody Ticket ticket) {
+
+		logger.debug("Attempting to change the priority for a ticket.");
+
+		TicketDAOInterface ticketDAO = new TicketDAO();
+
+		if (ticketDAO.changeTicketPriority(ticket)) {
+
+			logger.info("The priority was successfully changed!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+		} else {
+
+			logger.info("Failed to change the priority!");
+			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 }
