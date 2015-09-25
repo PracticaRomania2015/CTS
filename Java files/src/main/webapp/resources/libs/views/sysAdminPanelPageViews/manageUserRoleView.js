@@ -38,11 +38,10 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 	
 	addManagedCategory: function(adminStatus, categoryId, categoryName){
 		var sysAdmin = adminStatus?"checked":"";
-		this.$el.find('tbody').append("<tr><td><div class='columnOverflow'>"
-										+ "<input type='checkbox' class='checkboxClassId' value='sysAdmin' id='"+categoryId+"' "+ sysAdmin +"/>"
-										+ "</div></td><td><div class='columnOverflow'>" + categoryId
+		this.$el.find('tbody').append("<tr><td><div class='columnOverflow'>" + categoryId
 										+ "</div></td><td><div class='columnOverflow'>" + categoryName
-										+ "</div></td></tr>");
+										+ "</div></td><td><div class='columnOverflow'><input type='checkbox' class='checkboxClassId' value='sysAdmin' id='"+categoryId+"' "+ sysAdmin +"/>"
+										+ "</div></td>");
 		
 	},
 	

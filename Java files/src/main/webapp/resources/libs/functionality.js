@@ -50,11 +50,13 @@ function frontPageFunctionality() {
 
 var assignedTicketsView, userTicketsView, manageUsersView;
 
+var createTicketPageView, respondToTicketPageView;
+	
+var manageCategoriesView;
+
 function userPanelPageFunctionality() {
 
-	var createTicketPageView, respondToTicketPageView;
 	
-	var manageCategoriesView;
 
 	$('#userInfo').append(sessionStorage.loggedUserName);
 	
@@ -272,11 +274,35 @@ function setManageUsersViewToNull(){
 	manageUsersView = null;
 }
 
+function setCreateTicketPageToNull(){
+	createTicketPageView = null;
+}
 function addZero(i) {
 	if (i < 10) {
 		i = "0" + i;
 	}
 	return i;
 }
+function createUserTicketPage(){
+	assignedTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
+	if (!userTicketsView) {
+		userTicketsView = new UserTicketsView({
+			model : new ViewTicketsModel({})
+		});
+		$('#userPanelPageContainer').replaceWith(
+				userTicketsView.render().el);
+		handleErrorStyle();
+	}
 
+	$('#ats').hide();
+	$('#mts').show();
+	$('#sts').hide();
+	$('#ups').hide();
+
+	$('#atn').show();
+	$('#mtn').hide();
+	$('#stn').show();
+	$('#upn').show();
+}
 var addCategoryView,userPropertiesPageView;
+

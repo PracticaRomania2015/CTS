@@ -118,6 +118,21 @@ td div.columnOverflow {
 	
 }
 
+#updateUserRoles{
+	border-radius: 5px;
+	background: #0d94d2;
+	display: block;
+	margin: 0 auto;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+	width: 100px;
+	float: right;
+	margin-left: 15px;
+}
 h3 {
 	font-family: 'Arial';
 	font-size: 16px;
@@ -329,51 +344,70 @@ h2.userPage {
 	border-collapse: collapse;
 }
 
+#manageUserContainer{
+	width: 50%;	
+	margin:0 auto;
+}
+.userRoles{
+	table-layout: fixed;
+	width: 100%;
+	margin: 5px 0px 5px 0px;
+	font-family: 'Arial';
+	border-collapse: collapse;
+	
+}
+
+#sysAdminDiv{
+	float: left;
+	color: #0d94d2;
+	margin-top: 7px;
+	margin-left: 10px;
+}
 .table-surf {
 	display: inline-block;
 	cursor: pointer;
 }
 
-.ticketView thead th.wide-col,.usersView thead th.wide-col{
+.ticketView thead th.wide-col,.usersView thead th.wide-col,.userRoles thead th.wide-col{
 	width: 15%;
 }
 
-.ticketView thead th.slim-col,.usersView thead th.slim-col {
+.ticketView thead th.slim-col,.usersView thead th.slim-col,.userRoles thead th.slim-col {
 	width: 12.4%;
 }
-.ticketView thead th.id-col,.usersView thead th.id-col {
+.ticketView thead th.id-col,.usersView thead th.id-col,.userRoles thead th.id-col {
 	width: 8%;
 
 }
 
-.ticketView thead th#rounded-tl,.usersView thead th#rounded-tl  {
+.ticketView thead th#rounded-tl,.usersView thead th#rounded-tl,.userRoles thead th#rounded-tl  {
 	border-radius: 5px 0px 0px 0px;
 }
 
-.ticketView thead th#rounded-tr,.usersView thead th#rounded-tr  {
+.ticketView thead th#rounded-tr,.usersView thead th#rounded-tr,.userRoles thead th#rounded-tr  {
 	border-radius: 0px 5px 0px 0px;
 }
 
-.ticketView tfoot th#rounded-bot,.usersView  tfoot th#rounded-bot {
+.ticketView tfoot th#rounded-bot,.usersView  tfoot th#rounded-bot,.userRoles tfoot th#rounded-bot {
 	border-radius: 0px 0px 5px 5px;
 }
 
-.ticketView tbody tr:hover td,.usersView tbody tr:hover td  {
+.ticketView tbody tr:hover td,.usersView tbody tr:hover td {
 	color: #333;
 	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 }
 
-.ticketView tbody,.usersView tbody  {
+.ticketView tbody,.usersView tbody,.userRoles tbody  {
 	outline: 1px solid #0d94d2;
 	outline-offset: -1px;
 }
 
-.ticketView tbody tr,.usersView tbody tr {
+.ticketView tbody tr,.usersView tbody tr,.userRoles tbody tr {
 	border-top: 1px solid #0d94d2;
 	cursor: pointer;
 }
 
-.ticketView th,.usersView th {
+.ticketView th,.usersView th,.userRoles th {
 	font-size: 18px;
 	text-align: center;
 	padding: 10px;
@@ -382,11 +416,11 @@ h2.userPage {
 	color: #fff;
 }
 
-.ticketView td,.usersView td {
+.ticketView td,.usersView td,.userRoles td {
 	font-size: 14px;
 	text-align: center;
 	padding: 5px;
-	background: #F1F8EC;
+	background: #f1f8ec;
 	color: #000;
 }
 

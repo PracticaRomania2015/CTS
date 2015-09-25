@@ -233,18 +233,22 @@
 			</table>
 	</script>
 	<script type="text/template" id="manageUserRoleTemplate">
-		<div id = "sysAdminDiv"></div>
+<div id="manageUserContainer">
+
 		<table class = "userRoles">
 			<thead>
 				<tr>
-					<th id="rounded-tl" class="slim-col">Check</th>
-					<th class="slim-col">Category ID</th>
-					<th id="rounded-tr" class="slim-col">Category Name</th>
+					<th id="rounded-tl" class="slim-col">Category ID</th>
+					<th class="wide-col">Category Name</th>
+					<th id="rounded-tr" class="wide-col">Check</th>				
 				</tr>
 			</thead>
 			<tbody id="userRolesBody"></tbody>
 		</table>
+
 		<span href="#" class="button" id="updateUserRoles">Submit</span>
+		<div id = "sysAdminDiv"></div>
+	</div>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">
 			<input class="searchTickets" id='ticketSearchBox' type='text' placeholder='Search'/>
