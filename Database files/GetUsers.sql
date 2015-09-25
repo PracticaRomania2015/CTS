@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:29:55 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/25/2015 10:11:37 AM ******/
 DROP PROCEDURE [dbo].[GetUsers]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/24/2015 9:29:55 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetUsers]    Script Date: 9/25/2015 10:11:37 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -62,21 +62,21 @@ BEGIN
 
 	WITH Users AS
 		(
-			SELECT UserId, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(Email) AS Email, MAX(RoleName) AS RoleName,
+			SELECT UserId, FirstName, LastName, Email, RoleName,
 			ROW_NUMBER() OVER
 			(
 				ORDER BY 
 					CASE WHEN @SortType = '' THEN UserId END ASC,
 					CASE WHEN @SortType = 'UserId' AND @IsSearchASC = 1 THEN UserId END ASC,
-					CASE WHEN @SortType = 'FirstName' AND @IsSearchASC = 1 THEN MAX(FirstName) END ASC,
-					CASE WHEN @SortType = 'LastName' AND @IsSearchASC = 1 THEN MAX(LastName) END ASC,
-					CASE WHEN @SortType = 'Email' AND @IsSearchASC = 1 THEN MAX(Email) END ASC,
-					CASE WHEN @SortType = 'Role' AND @IsSearchASC = 1 THEN MAX(RoleName) END ASC,
+					CASE WHEN @SortType = 'FirstName' AND @IsSearchASC = 1 THEN FirstName END ASC,
+					CASE WHEN @SortType = 'LastName' AND @IsSearchASC = 1 THEN LastName END ASC,
+					CASE WHEN @SortType = 'Email' AND @IsSearchASC = 1 THEN Email END ASC,
+					CASE WHEN @SortType = 'Role' AND @IsSearchASC = 1 THEN RoleName END ASC,
 					CASE WHEN @SortType = 'UserId' AND @IsSearchASC = 0 THEN UserId END DESC,
-					CASE WHEN @SortType = 'FirstName' AND @IsSearchASC = 0 THEN MAX(FirstName) END DESC,
-					CASE WHEN @SortType = 'LastName' AND @IsSearchASC = 0 THEN MAX(LastName) END DESC,
-					CASE WHEN @SortType = 'Email' AND @IsSearchASC = 0 THEN MAX(Email) END DESC,
-					CASE WHEN @SortType = 'Role' AND @IsSearchASC = 0 THEN MAX(RoleName) END DESC
+					CASE WHEN @SortType = 'FirstName' AND @IsSearchASC = 0 THEN FirstName END DESC,
+					CASE WHEN @SortType = 'LastName' AND @IsSearchASC = 0 THEN LastName END DESC,
+					CASE WHEN @SortType = 'Email' AND @IsSearchASC = 0 THEN Email END DESC,
+					CASE WHEN @SortType = 'Role' AND @IsSearchASC = 0 THEN RoleName END DESC
 			) AS RowNumber
 			FROM [User]
 			INNER JOIN Role ON [User].RoleId = Role.RoleId
@@ -86,7 +86,7 @@ BEGIN
 				OR (@SearchType = 'LastName' AND LastName like '%' + @TextToSearch + '%')
 				OR (@SearchType = 'Email' AND Email like '%' + @TextToSearch + '%')
 				OR (@SearchType = 'Role' AND RoleName like '%' + @TextToSearch + '%')
-			GROUP BY UserId
+			GROUP BY UserId, FirstName, LastName, Email, RoleName
 		)
 		SELECT UserId, FirstName, LastName, Email, RoleName
 		FROM Users

@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/24/2015 9:30:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/25/2015 10:11:45 AM ******/
 DROP PROCEDURE [dbo].[GetTickets]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/24/2015 9:30:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetTickets]    Script Date: 9/25/2015 10:11:45 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -36,22 +36,18 @@ BEGIN
 	IF @TypeOfRequest = 0
 	BEGIN
 		-- personal tickets
-		SELECT @TotalNumberOfTickets = COUNT(*) FROM
-		(
-			SELECT Ticket.TicketId
-			FROM Ticket
+		SELECT @TotalNumberOfTickets = COUNT(Ticket.TicketId)
+		FROM Ticket
 			INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 			INNER JOIN State ON Ticket.StateId = State.StateId
 			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
 			INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
-			WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
-				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
-				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
-				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)) 
-				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
-			GROUP BY Ticket.TicketId
-		)CountId
+		WHERE (@TextToSearch = '' AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
+			OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL)) 
+			OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 
 		IF @TotalNumberOfTickets % @TicketsPerPage =0
 		BEGIN
@@ -69,25 +65,25 @@ BEGIN
 
 		WITH Tickets AS
 		(
-			SELECT Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Priority.PriorityName) as PriorityName,
+			SELECT Ticket.TicketId, Subject, MIN(TicketComment.DateTime) AS DateTime, CategoryName, StateName, FirstName, LastName, MAX(TicketComment.DateTime) AS LastDateTime, PriorityName,
 			ROW_NUMBER() OVER
 			(
 				ORDER BY 
 					CASE WHEN @SortType = '' THEN MIN(TicketComment.DateTime) END DESC,
 					CASE WHEN @SortType = 'TicketId' AND @IsSearchASC = 1 THEN Ticket.TicketId END ASC,
-					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 1 THEN MAX(Ticket.Subject) END ASC,
-					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 1 THEN MAX(CategoryName) END ASC,
-					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 1 THEN MAX(StateName) END ASC,
+					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 1 THEN Subject END ASC,
+					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 1 THEN CategoryName END ASC,
+					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 1 THEN StateName END ASC,
 					CASE WHEN @SortType = 'SubmitDate' AND @IsSearchASC = 1 THEN MIN(TicketComment.DateTime) END ASC,
 					CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 1 THEN MAX(TicketComment.DateTime) END ASC,
-					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 1 THEN MAX(PriorityName) END ASC,
+					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 1 THEN PriorityName END ASC,
 					CASE WHEN @SortType = 'TicketId' AND @IsSearchASC = 0 THEN Ticket.TicketId END DESC,
-					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 0 THEN MAX(Subject) END DESC,
-					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 0 THEN MAX(CategoryName) END DESC,
-					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 0 THEN MAX(StateName) END DESC,
+					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 0 THEN Subject END DESC,
+					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 0 THEN CategoryName END DESC,
+					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 0 THEN StateName END DESC,
 					CASE WHEN @SortType = 'SubmitDate' AND @IsSearchASC = 0 THEN MIN(TicketComment.DateTime) END DESC,
 					CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 0 THEN MAX(TicketComment.DateTime) END DESC,
-					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 0 THEN MAX(PriorityName) END DESC
+					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 0 THEN PriorityName END DESC
 			) AS RowNumber
 			FROM Ticket
 				INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
@@ -100,7 +96,7 @@ BEGIN
 				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
 				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%') AND TicketComment.UserId = @UserId AND (Ticket.AssignedToUserId != @UserId OR Ticket.AssignedToUserId IS NULL))
-			GROUP BY Ticket.TicketId
+			GROUP BY Ticket.TicketId, Subject, CategoryName, StateName, FirstName, LastName, PriorityName
 		)
 		SELECT TicketId, Subject, DateTime, CategoryName, StateName, FirstName, LastName, LastDateTime, PriorityName
 		FROM Tickets
@@ -112,23 +108,18 @@ BEGIN
 	ELSE
 	BEGIN
 		-- tickets that I manage
-		SELECT @TotalNumberOfTickets = COUNT(*) FROM
-		(
-			SELECT TicketComment.TicketId
-			FROM Ticket
-				INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
-				INNER JOIN State ON Ticket.StateId = State.StateId
-				INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
-				INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND (UserCategory.CategoryId = Ticket.CategoryId OR UserCategory.CategoryId = Category.ParentCategoryId)
-				LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
-				INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
-			WHERE (@TextToSearch = '')
-				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
-				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
-				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%')) 
-				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%')) 
-			GROUP BY TicketComment.TicketId	
-		)CountId;
+		SELECT @TotalNumberOfTickets = COUNT(Ticket.TicketId)
+		FROM Ticket
+			INNER JOIN State ON Ticket.StateId = State.StateId
+			INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
+			INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND (UserCategory.CategoryId = Ticket.CategoryId OR UserCategory.CategoryId = Category.ParentCategoryId)
+			LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
+			INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
+		WHERE (@TextToSearch = '')
+			OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
+			OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
+			OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%')) 
+			OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%')) 
 
 		IF @TotalNumberOfTickets % @TicketsPerPage =0
 		BEGIN
@@ -146,39 +137,38 @@ BEGIN
 
 		WITH Tickets AS
 		(
-			SELECT Ticket.TicketId, MAX(Ticket.Subject) AS Subject, MIN(TicketComment.DateTime) AS DateTime, MAX(Category.CategoryName) AS CategoryName, MAX(State.StateName) AS StateName, MAX(FirstName) AS FirstName, MAX(LastName) AS LastName, MAX(TicketComment.DateTime) AS LastDateTime, MAX(Priority.PriorityName) as PriorityName,
+			SELECT Ticket.TicketId, Subject, MIN(TicketComment.DateTime) AS DateTime, CategoryName, StateName, FirstName, LastName, MAX(TicketComment.DateTime) AS LastDateTime, PriorityName,
 			ROW_NUMBER() OVER
 			(
 				ORDER BY 
 					CASE WHEN @SortType = '' THEN MIN(TicketComment.DateTime) END DESC,
 					CASE WHEN @SortType = 'TicketId' AND @IsSearchASC = 1 THEN Ticket.TicketId END ASC,
-					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 1 THEN MAX(Ticket.Subject) END ASC,
-					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 1 THEN MAX(CategoryName) END ASC,
-					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 1 THEN MAX(StateName) END ASC,
+					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 1 THEN Subject END ASC,
+					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 1 THEN CategoryName END ASC,
+					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 1 THEN StateName END ASC,
 					CASE WHEN @SortType = 'SubmitDate' AND @IsSearchASC = 1 THEN MIN(TicketComment.DateTime) END ASC,
 					CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 1 THEN MAX(TicketComment.DateTime) END ASC,
-					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 1 THEN MAX(PriorityName) END ASC,
+					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 1 THEN PriorityName END ASC,
 					CASE WHEN @SortType = 'TicketId' AND @IsSearchASC = 0 THEN Ticket.TicketId END DESC,
-					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 0 THEN MAX(Subject) END DESC,
-					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 0 THEN MAX(CategoryName) END DESC,
-					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 0 THEN MAX(StateName) END DESC,
+					CASE WHEN @SortType = 'Subject' AND @IsSearchASC = 0 THEN Subject END DESC,
+					CASE WHEN @SortType = 'Category' AND @IsSearchASC = 0 THEN CategoryName END DESC,
+					CASE WHEN @SortType = 'Status' AND @IsSearchASC = 0 THEN StateName END DESC,
 					CASE WHEN @SortType = 'SubmitDate' AND @IsSearchASC = 0 THEN MIN(TicketComment.DateTime) END DESC,
 					CASE WHEN @SortType = 'LastDateTime' AND @IsSearchASC = 0 THEN MAX(TicketComment.DateTime) END DESC,
-					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 0 THEN MAX(PriorityName) END DESC
+					CASE WHEN @SortType = 'Priority' AND @IsSearchASC = 0 THEN PriorityName END DESC
 			) AS RowNumber
 			FROM Ticket
 				INNER JOIN TicketComment ON Ticket.TicketId = TicketComment.TicketId
 				INNER JOIN State ON Ticket.StateId = State.StateId
 				INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
-				INNER JOIN UserCategory ON UserCategory.UserId = @UserId AND (UserCategory.CategoryId = Ticket.CategoryId OR UserCategory.CategoryId = Category.ParentCategoryId)
 				LEFT JOIN [User] ON [User].UserId = Ticket.AssignedToUserId
 				INNER JOIN Priority ON Ticket.PriorityId = Priority.PriorityId
-			WHERE (@TextToSearch = '')
-				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%'))
-				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%'))
-				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%')) 
-				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%')) 
-			GROUP BY Ticket.TicketId
+			WHERE (@TextToSearch = '') AND Ticket.CategoryId IN (select Category.CategoryId from UserCategory inner join Category on Category.CategoryId = UserCategory.CategoryId or Category.ParentCategoryId = UserCategory.CategoryId where UserCategory.UserId = @UserId)
+				OR (@SearchType = 'Subject' AND Subject like ('%' + @TextToSearch + '%')) AND Ticket.CategoryId IN (select Category.CategoryId from UserCategory inner join Category on Category.CategoryId = UserCategory.CategoryId or Category.ParentCategoryId = UserCategory.CategoryId where UserCategory.UserId = @UserId)
+				OR (@SearchType = 'Category' AND CategoryName like ('%' + @TextToSearch + '%')) AND Ticket.CategoryId IN (select Category.CategoryId from UserCategory inner join Category on Category.CategoryId = UserCategory.CategoryId or Category.ParentCategoryId = UserCategory.CategoryId where UserCategory.UserId = @UserId)
+				OR (@SearchType = 'Status' AND StateName like ('%' + @TextToSearch + '%'))  AND Ticket.CategoryId IN (select Category.CategoryId from UserCategory inner join Category on Category.CategoryId = UserCategory.CategoryId or Category.ParentCategoryId = UserCategory.CategoryId where UserCategory.UserId = @UserId)
+				OR (@SearchType = 'TicketId' AND Ticket.TicketId like ('%' + @TextToSearch + '%'))  AND Ticket.CategoryId IN (select Category.CategoryId from UserCategory inner join Category on Category.CategoryId = UserCategory.CategoryId or Category.ParentCategoryId = UserCategory.CategoryId where UserCategory.UserId = @UserId)
+			GROUP BY Ticket.TicketId, Subject, CategoryName, StateName, FirstName, LastName, PriorityName
 		)
 		SELECT TicketId, Subject, DateTime, CategoryName, StateName, FirstName, LastName, LastDateTime, PriorityName
 		FROM Tickets
