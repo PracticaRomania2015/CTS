@@ -19,11 +19,35 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 			userId : sessionStorage.loggedUserId
 		});
 		
+		var priorities =  new GetPrioritiesModel({
+			userId : sessionStorage.loggedUserId
+		});
+		
 		categories.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){
 					_.each(response.data, function(e) {
 						$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						
+					});
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+		
+		priorities.save({}, {
+			success : function(model, response) {
+				if (response.type == "success"){
+					_.each(response.data, function(e) {
+						$('#ticketPriorityDropbox').append($("<option></option>").attr("value", e.priorityId).text(e.priorityName));
 						
 					});
 				} else {
@@ -80,7 +104,7 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 	
 	submit : function() {
 		
-		var ticketCategoryName, ticketCategoryId;
+		var ticketCategoryName, ticketCategoryId,ticketPriorityName,ticketPriorityId;
 		if ($("#ticketSubcategoryDropbox option:selected").val() != "Select your subcategory"){
 			ticketCategoryName = $("#ticketSubcategoryDropbox option:selected").text();
 			ticketCategoryId = $("#ticketSubcategoryDropbox option:selected").val();
@@ -88,10 +112,20 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 			ticketCategoryName= $("#ticketCategoryDropbox option:selected").text();
 			ticketCategoryId = $("#ticketCategoryDropbox option:selected").val();
 		};
+		ticketPriorityName = $("#ticketPriorityDropbox option:selected").text();
+		ticketPriorityId = $("#ticketPriorityDropbox option:selected").val();
+		
+
+		
 		
 		var ticketCategory = new ValidateCategory({
 			categoryName: ticketCategoryName,
 			categoryId: ticketCategoryId
+		}, {validate: true});
+		
+		var ticketPriority = new ValidatePriority({
+			priorityName: ticketPriorityName,
+			priorityId: ticketPriorityId
 		}, {validate: true});
 		
 		var tmpUser = new Backbone.Model({
@@ -107,10 +141,10 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		var ticket = new CreateTicketModel({
 			subject : $("#ticketSubject").val(),
 			category : ticketCategory,
+			priority : ticketPriority,
 			comments : [ticketComment]
 		});
 		console.log(ticket.toJSON());
-		
 		ticket.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){

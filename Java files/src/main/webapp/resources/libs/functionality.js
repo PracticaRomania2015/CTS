@@ -153,6 +153,7 @@ function userPanelPageFunctionality() {
 				if (!userTicketsView) {
 					userTicketsView = new UserTicketsView({
 						model : new ViewTicketsModel({})
+						 
 					});
 					$('#userPanelPageContainer').replaceWith(
 							userTicketsView.render().el);

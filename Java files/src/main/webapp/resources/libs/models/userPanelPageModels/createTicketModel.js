@@ -26,6 +26,10 @@ var CreateTicketModel = Backbone.Model.extend({
 			ok = true;
 		}
 		
+		if((attrs.priority).validationError){
+			ok = true;
+		}
+		
 		if((attrs.comments[0]).validationError){
 			ok = true;
 		}

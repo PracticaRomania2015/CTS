@@ -82,7 +82,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		try {
-
+			
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
 					"UserId");
 			InOutParam<Integer> isViewMyTicketsRequestParam = new InOutParam<Integer>(
@@ -96,7 +96,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> searchTypeParam = new InOutParam<String>(viewTicketsRequest.getSearchType(),
 					"SearchType");
 			InOutParam<String> sortTypeParam = new InOutParam<String>(viewTicketsRequest.getSortType(), "SortType");
-			InOutParam<String> isSearchASCParam = new InOutParam<String>(viewTicketsRequest.getSortType(),
+			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewTicketsRequest.isSearchASC(),
 					"IsSearchASC");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
 			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,

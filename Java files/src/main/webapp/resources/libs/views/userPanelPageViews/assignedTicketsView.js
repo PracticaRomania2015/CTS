@@ -3,6 +3,13 @@
 
 var AssignedTicketsView = GenericUserPanelPageView.extend({
 
+	initialize : function() {
+		
+		var isAsc ;
+		var lastSortType;
+		var lastHovered;
+	},
+	
 	events : {
 		'change #ticketsPerPage' : function() {
 			this.viewData(1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
@@ -22,7 +29,10 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		'click #prevPageReqBtn' : function() {
 			this.viewData(this.model.get("requestedPageNumber") - 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
-		'click .openTicketComments' : 'viewTicketComments'
+		'click .openTicketComments' : 'viewTicketComments',
+		'click th' : 'orderBy'  ,
+		'mouseover th' :  'mouseoverTh',
+		'mouseout th' :  'mouseoutTh'
 	},
 
 	appendData : function() {
@@ -30,6 +40,136 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		this.viewData(1, "", "");
 		this.$el.append(_.template($('#userTicketsTemplate').html()));
 		return this;
+	},
+	
+	setSortType : function(clickedHeaderColumn){
+		switch (clickedHeaderColumn) {
+		case "id-col":
+			return "TicketId"
+			break;
+		case "subject-col":
+			return "Subject"
+			break;
+		case "category-col":
+			return "Category"
+			break;
+		case "priority-col":
+			return "Priority"
+			break;
+		case "status-col":
+			return "Status"
+			break;
+		case "lastComment-col":
+			return "LastDateTime"
+			break;
+		case "submitDate-col":
+			return "SubmitDate"
+			break;
+		default:
+			break;
+		}
+	},
+	
+	getColumName : function(clickedHeaderColumn){
+		switch (clickedHeaderColumn) {
+		case "id-col":
+			return "id"
+			break;
+		case "subject-col":
+			return "subject"
+			break;
+		case "category-col":
+			return "category"
+			break;
+		case "priority-col":
+			return "priority"
+			break;
+		case "status-col":
+			return "status"
+			break;
+		case "lastComment-col":
+			return "lastComment"
+			break;
+		case "submitDate-col":
+			return "submitDate"
+			break;
+		default:
+			break;
+		}
+	},
+	
+	
+	orderBy : function(clicked){ // Setting isSearchASC into model aint working
+	
+		
+		var clickedHeaderColumn = clicked.srcElement.id;
+		
+		if( typeof this.isAsc == 'undefined'){
+			this.isAsc = false;
+			this.lastSortType="";
+			console.log("Been here");
+		}
+		
+		if(typeof this.lastHovered != 'undefined'){
+			this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
+		}
+		
+		if(this.lastSortType==clickedHeaderColumn){
+			if(this.isAsc==false){
+				console.log("1");
+				this.isAsc=true;
+				this.model.set("sortType",this.setSortType(clickedHeaderColumn));
+				//this.model.set("isSearchASC",this.isAsc);
+				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').show();
+				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').hide();
+				
+			}
+			else{
+				console.log("2");
+				this.isAsc=false;
+				this.model.set("sortType",this.setSortType(clickedHeaderColumn));
+				//this.model.set("isSearchASC",this.isAsc);
+				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').hide();
+				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').show();
+			}
+		}
+		else{
+			console.log("3");
+			this.isAsc=true;
+			this.model.set("sortType",this.setSortType(clickedHeaderColumn));
+			//this.model.set("isSearchASC",this.isAsc);
+			this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').show();
+			this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').hide();
+			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrAsc').hide();
+			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrDesc').hide();
+			this.lastSortType=clickedHeaderColumn;
+		}
+		
+		console.log("thisIsAsc : "+this.isAsc);
+		console.log("modelIsAsc : "+this.model.get("isSearchASC"));
+		console.log("lastSortType : "+this.lastSortType);
+		console.log("thisSortType : "+this.getColumName(clickedHeaderColumn));
+		console.log("modelSortType : "+this.model.get("sortType"));
+		
+		this.viewData(1, this.$el.find('#ticketSearchBox').val(), this.$el.find('#ticketSearchDropBox').val());
+	},
+	
+	
+	
+	mouseoverTh : function(ev) {
+		var hoveredHeaderColumn = $(ev.target).attr('id');
+		if(typeof this.lastHovered != 'undefined'){
+			this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
+		}
+		if( this.model.get("sortType")!=this.setSortType(hoveredHeaderColumn)){
+			this.$el.find('#' + this.getColumName(hoveredHeaderColumn) + 'ArrHover').show();
+			this.lastHovered = hoveredHeaderColumn;
+		}
+	
+	},
+	
+	mouseoutTh : function(){
+		this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
 	},
 
 	viewTicketComments : function(clicked) {

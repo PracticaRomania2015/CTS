@@ -31,6 +31,10 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignAdminToTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/closeTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/userPropertiesModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/getPrioritiesModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/validatePriority.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignPriorityToTicketModel.js"></script>
+ 
 
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
@@ -198,11 +202,11 @@
 		<table class="usersView">
 			<thead>
 				<tr>
-					<th id="rounded-tl" class="slim-col">User ID</th>
+					<th id="" class="slim-col rounded-tl">User ID</th>
 					<th class="wide-col">First Name</th>
 					<th class="wide-col">Last Name</th>
 					<th class="wide-col">E-mail</th>
-					<th id="rounded-tr" class="slim-col">Role</th>
+					<th id="" class="slim-col rounded-tr">Role</th>
 				<tr>
 			</thead>
 			<tfoot>
@@ -238,9 +242,9 @@
 		<table class = "userRoles">
 			<thead>
 				<tr>
-					<th id="rounded-tl" class="slim-col">Category ID</th>
+					<th id="" class="slim-col rounded-tl">Category ID</th>
 					<th class="wide-col">Category Name</th>
-					<th id="rounded-tr" class="wide-col">Check</th>				
+					<th id="" class="wide-col rounded-tr">Check</th>				
 				</tr>
 			</thead>
 			<tbody id="userRolesBody"></tbody>
@@ -263,13 +267,41 @@
 			<table class="ticketView">
     			<thead>
 					<tr>
-						<th id="rounded-tl" class="id-col">Id</th>
-						<th class="wide-col">Subject</th>
-						<th class="slim-col">Category</th>
-						<th class="slim-col">Priority</th>
-						<th class="wide-col">Status</th>
-						<th class="slim-col">Last Comment</th>
-						<th id="rounded-tr" class="slim-col">Submit Date</th>
+						<th id="id-col" class="id-col rounded-tl">Id
+							<div id="idArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="idArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="idArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="subject-col" class="wide-col">Subject
+							<div id="subjectArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="subjectArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="subjectArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="category-col" class="slim-col">Category
+							<div id="categoryArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="categoryArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="categoryArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="priority-col" class="slim-col">Priority
+							<div id="priorityArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="priorityArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="priorityArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="status-col" class="wide-col">Status
+							<div id="statusArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="statusArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="statusArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="lastComment-col" class="slim-col">Last Comment
+							<div id="lastCommentArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="lastCommentArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="lastCommentArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
+						<th id="submitDate-col" class="slim-col rounded-tr">Submit Date
+							<div id="submitDateArrHover" class="arrowHover"  style='display: none;'></div>
+							<div id="submitDateArrAsc" class="arrowAsc"  style='display: none;'></div>
+							<div id="submitDateArrDesc" class="arrowDesc"  style='display: none;'></div>
+						</th>
      	 			</tr>
     			</thead>
     			<tfoot>
@@ -308,6 +340,9 @@
 			<select disabled id="ticketSubcategoryDropbox" class="ticketCategories" style="color: #808080">
 				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
 			</select>
+			<select id="ticketPriorityDropbox" class="ticketPriorities" style="color: #808080">
+				<option value="" disabled selected style='display:none;'>Set ticket priority</option>
+			</select>
 			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" id="submitTicketButton" class="button">Submit</span>
 	</script>
@@ -321,9 +356,10 @@
 					<textarea id="ticketResponse" rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 					<span href="#" class="button" id="respondToTicketButton">Submit</span>
 					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
-					<input type="file" class="browseFile" />
 					<select id="ticketAdminsDropBox" style='display: none;'></select>
 					<span href="#" class="button" id="assignUserToTicketButton"style='display: none;' >Assign user</span>
+					<select id="ticketPrioritiesDropBox" class="reassignTicketPriorities" style='display: none;'></select>
+					<span href="#" class="button" id="reassignPriorityToTicketButton"style='display: none;' >Set priority</span>
 				</div>
 				<div id="responseButtons">
 				</div>

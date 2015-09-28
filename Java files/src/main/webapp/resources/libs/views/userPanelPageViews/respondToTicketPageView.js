@@ -8,7 +8,8 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 	events : {
 		'click #respondToTicketButton' : 'submit',
 		'click #closeTheTicketButton' : 'close',
-		'click #assignUserToTicketButton' : 'reassignAdmin'
+		'click #assignUserToTicketButton' : 'reassignAdmin',
+		'click #reassignPriorityToTicketButton' : 'reassingPriority'
 	},
 
 	initialize : function() {
@@ -27,11 +28,45 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 					if (response.type == "success") {
 					$('#ticketCommentsWrapper').empty();
+
+
 					_.each(response.data.comments, function(e) {
 						var date = new Date(e.dateTime);
 						var hour = addZero(date.getHours());
 						var minute = addZero(date.getMinutes());
 						var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
+						
+						var ticketPriority = response.data.priority.priorityId;
+						console.log(ticketPriority);
+						
+						var priorities =  new GetPrioritiesModel({
+							userId : sessionStorage.loggedUserId
+						});
+					
+						
+						priorities.save({}, {
+							success : function(model, response) {
+								if (response.type == "success"){
+									_.each(response.data, function(e) {
+										if (ticketPriority == e.priorityId) {
+											$('#ticketPrioritiesDropBox').append("<option value=" +e.priorityId + " selected>" + e.priorityName + "</option>");
+										} else {
+											$('#ticketPrioritiesDropBox').append("<option value=" +e.priorityId + ">" + e.priorityName + "</option>");
+										}
+										
+									});
+								} else {
+									if (response.type == "error"){
+										alert(response.description);
+									} else {
+										alert("Unknown error!");
+									}
+								}
+							},
+							error : function(model, response) {
+								console.log(response);
+							}
+						});
 						
 						if(response.data.state.stateName == "Closed") {
 							$('#ticketResponseWrapper').remove();
@@ -84,6 +119,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					});
 					$('#ticketTitle').empty().append("\""+response.data.subject +"\""+" is ");
 					var assignedToId = response.data.assignedToUser.userId;
+					var ticketPriority = response.data.priorityId;
 			
 					var categoryAdmins = new getAdminForCategory({
 						categoryId : response.data.category.categoryId
@@ -112,10 +148,14 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									if (self.get("provenience") == "assignedTickets") {
 										$('#ticketAdminsDropBox').show();
 										$('#assignUserToTicketButton').show();
+										$('#ticketPrioritiesDropBox').show();
+										$('#reassignPriorityToTicketButton').show();
 									} else {
 										if (self.get("provenience") == "userTickets") {
 											$('#ticketAdminsDropBox').hide();
 											$('#assignUserToTicketButton').hide();
+											$('#ticketPrioritiesDropBox').hide();
+											$('#reassignPriorityToTicketButton').hide();
 										} else {
 											console.log("Invalid Session Storage Data!");
 										}
@@ -135,6 +175,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 										} else {
 											$('#ticketAdminsDropBox').append("<option value=" + e.userId + ">" + e.firstName + " " + e.lastName + "</option>");
 										}
+									
 									});
 								} else {
 									
@@ -191,6 +232,36 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				if (response.type == "success"){
 					alert("Ticket reassigned!");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+	},
+	
+	reassingPriority : function() {
+		
+		var selectedPriority = new Backbone.Model({
+			priorityId : $("#ticketPrioritiesDropBox  option:selected").val()
+			
+		})
+		
+		var reassignPriorityToTicket = new AssignPriorityToTicket({
+			priority : selectedPriority,
+			ticketId : this.model.get("ticketId")
+		});
+		
+		reassignPriorityToTicket.save({}, {
+			success : function(model, response) {
+				if (response.type == "success"){
+					alert("Priority changed successfully!");
 				} else {
 					if (response.type == "error"){
 						alert(response.description);
