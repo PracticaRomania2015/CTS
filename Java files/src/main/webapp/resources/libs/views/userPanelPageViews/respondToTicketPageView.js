@@ -47,6 +47,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						priorities.save({}, {
 							success : function(model, response) {
 								if (response.type == "success"){
+									$('#ticketPrioritiesDropBox').find('option').remove().end();
 									_.each(response.data, function(e) {
 										if (ticketPriority == e.priorityId) {
 											$('#ticketPrioritiesDropBox').append("<option value=" +e.priorityId + " selected>" + e.priorityName + "</option>");
