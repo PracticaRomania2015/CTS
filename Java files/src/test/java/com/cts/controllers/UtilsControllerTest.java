@@ -67,7 +67,7 @@ public class UtilsControllerTest {
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validCategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -78,7 +78,7 @@ public class UtilsControllerTest {
 		//valid subcategory
 		validSubcategory.setParentCategoryId(validCategory.getCategoryId());
 		validSubcategory.setCategoryName(validSubcategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCateg(validSubcategory));
+		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validSubcategory));
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(validCategory);
 		for(Category subcategory : subcategories){
 			if (subcategory.getCategoryName().equals(validSubcategoryName)){
