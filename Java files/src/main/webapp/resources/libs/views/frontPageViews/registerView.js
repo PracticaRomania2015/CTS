@@ -21,13 +21,11 @@ var RegisterView = GenericFrontPageChildView.extend({
 				email : $("#regMail").val(),
 				password : $("#regPass").val()
 			});
-	
+			
 			user.save({}, {
 				success : function(model, response) {
 					if (response.type == "success") {
-						$('#logIn').toggle();
-						$('#register').hide();
-						$('#recovery').hide();
+						$('#toggle-login').trigger('click');
 						alert("Account created!");
 					} else {
 						if (response.type == "error"){
