@@ -16,7 +16,7 @@ var CreateTicketModel = Backbone.Model.extend({
 			$("#ticketSubject").attr("title", getValue("mandatory"));
 			$("#ticketSubject").addClass("error");
 			ok = true;
-		} else if (attrs.subject.length > 50) {
+		} else if (attrs.subject.length > 255) {
 			$("#ticketSubject").attr("title", getValue("ticketSubject"));
 			$("#ticketSubject").addClass("error");
 			ok = true;
