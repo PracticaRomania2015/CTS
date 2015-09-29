@@ -10,7 +10,7 @@ var LogInModel = Backbone.Model.extend({
 
 		var ok = false;
 
-		var regexEmail = /^[a-zA-Z0-9]([a-zA-Z0-9-_+.])+\@gmail.com$/;
+		var regexEmail = /([A-Za-z.])+@([A-Za-z])+\.([A-Za-z])+/;
 		$("#logInMail").removeAttr("title");
 		$("#logInMail").removeClass("error");
 		if (!attrs.email) {

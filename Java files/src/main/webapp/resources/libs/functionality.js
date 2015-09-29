@@ -299,11 +299,15 @@ function createUserTicketPage(){
 	$('#mts').show();
 	$('#sts').hide();
 	$('#ups').hide();
+	$('#mus').hide();
+	$('#mcs').hide();
 
 	$('#atn').show();
 	$('#mtn').hide();
 	$('#stn').show();
 	$('#upn').show();
+	$('#mun').show();
+	$('#mcn').show();
 }
 var addCategoryView,userPropertiesPageView;
 

@@ -24,7 +24,7 @@ var RegisterView = GenericFrontPageChildView.extend({
 	
 			user.save({}, {
 				success : function(model, response) {
-					if (response.description == "Success!") {
+					if (response.type == "success") {
 						$('#logIn').toggle();
 						$('#register').hide();
 						$('#recovery').hide();
