@@ -136,7 +136,7 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 	
 	removeCategory : function(){
 		var categoryNameVar, categoryIdVar;
-		if ($("#subcategoryListDropbox option:selected").val() != "Select the subcategory..."){
+		if (!$("#subcategoryListDropbox").attr("disabled")){
 			categoryNameVar = $("#subcategoryListDropbox option:selected").text();
 			categoryIdVar = $("#subcategoryListDropbox option:selected").val();
 		} else {

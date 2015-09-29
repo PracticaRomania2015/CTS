@@ -339,7 +339,6 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						alert("Unknown error!");
 					}
 				}
-				console.log(response);
 			},
 			error : function(model, response) {
 				console.log(response);
