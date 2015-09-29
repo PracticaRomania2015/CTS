@@ -27,7 +27,7 @@ var RegisterModel = Backbone.Model.extend({
 			ok = true;
 		}
 
-		var regexEmail = /([A-Za-z.])*@([Gg][Mm][Aa][Ii][Ll])[.]([Cc][Oo][Mm])*\w+$/;
+		var regexEmail = /([A-Za-z.])+@([A-Za-z])+\.([A-Za-z])+/;
 		$("#regMail").removeAttr("title");
 		$("#regMail").removeClass("error");
 		if (!attrs.email || !regexEmail.test(attrs.email)) {
