@@ -3,7 +3,6 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import com.cts.entities.Category;
 import com.cts.entities.UserRight;
 import com.cts.entities.UserStatus;
@@ -71,8 +70,8 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.AddCategory, categoryNameParam, parentCategoryIdParam, errCodeParam);
 			execute();
-			if (errCodeParam.getParameter() != 0){
-				
+			if (errCodeParam.getParameter() != 0) {
+
 				return false;
 			}
 		} catch (Exception e) {
@@ -114,12 +113,12 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 			prepareExecution(StoredProceduresNames.GetCategoriesRightsForUser, userIdParam, isSysAdminParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
-				
+
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt("CategoryId"));
 				category.setCategoryName(resultSet.getString("CategoryName"));
 				if (resultSet.getString("CategoryUserId") != null) {
-					
+
 					userCategories.add(new UserRight(category, true));
 				} else {
 
@@ -131,7 +130,31 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 			userStatus.setSysAdmin(isSysAdminParam.getParameter());
 
 		} catch (Exception e) {
-			
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean editCategory(Category category) {
+
+		try {
+
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getParentCategoryId(), "CategoryId");
+			InOutParam<String> categoryNameParam = new InOutParam<String>(category.getCategoryName(), "CategoryName");
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.EditCategory, categoryIdParam, categoryNameParam, errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() != 0) {
+
+				return false;
+			}
+		} catch (Exception e) {
+
 			return false;
 		} finally {
 
