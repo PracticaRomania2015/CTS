@@ -130,6 +130,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					var ticketState = response.data.state.stateName;
 					
 					var ticketOwnerId = response.data.comments[0].user.userId;
+					
 					categoryAdmins.save({},{
 						
 						success : function(model,response) {
@@ -144,19 +145,19 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									}
 								});
 								
+								$('#ticketPrioritiesDropBox').show();
+								$('#reassignPriorityToTicketButton').show();
+								
 								if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin" ) {
 									
 									if (self.get("provenience") == "assignedTickets") {
 										$('#ticketAdminsDropBox').show();
 										$('#assignUserToTicketButton').show();
-										$('#ticketPrioritiesDropBox').show();
-										$('#reassignPriorityToTicketButton').show();
+										
 									} else {
 										if (self.get("provenience") == "userTickets") {
 											$('#ticketAdminsDropBox').hide();
 											$('#assignUserToTicketButton').hide();
-											$('#ticketPrioritiesDropBox').hide();
-											$('#reassignPriorityToTicketButton').hide();
 										} else {
 											console.log("Invalid Session Storage Data!");
 										}
