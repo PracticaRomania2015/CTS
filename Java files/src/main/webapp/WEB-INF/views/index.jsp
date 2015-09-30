@@ -133,7 +133,7 @@
 			<div id="contextWrapper">
 				<div id='userPanelPageContainer'>
 					<h1 class="userPage">Welcome !</h1>
-					<h2 class="userPage">CTS Version: 0.01_ALPHA</h1>
+					<h2 class="userPage">CTS Version: 1.00_BETA</h1>
 				</div>
 			</div>
 			</div>
