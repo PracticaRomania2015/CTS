@@ -110,8 +110,8 @@
 			<div id='mainContainer'>
 			<div id='menuWrapper'>
 				<div id='userInfo'>
-					<div id="upn" class="menuRightArrow"></div>
-					<div id="ups" class="menuRightArrowSelected" style="display: none;"></div></span>
+					<div id="upn" class="menuRightArrow userPropertiesMenuButton"></div>
+					<div id="ups" class="menuRightArrowSelected userPropertiesMenuButton" style="display: none;"></div></span>
 				</div>
 				<span href='#' class='button' id='btn-mngTk'>Manage tickets
 					<div id="atn" class="menuRightArrow"></div>

@@ -247,6 +247,10 @@ h1.frontPage {
 	border-color: transparent transparent transparent #7bc143;
 }
 
+.userPropertiesMenuButton {
+	margin-right: -2px;
+}
+
 #btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut,#manageUsersButton,#manageCategoriesButton {
 	border-radius: 5px;
 	background: #0d94d2;
