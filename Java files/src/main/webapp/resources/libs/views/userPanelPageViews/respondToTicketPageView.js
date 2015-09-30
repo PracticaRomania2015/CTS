@@ -282,12 +282,14 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 				ticketId : this.model.get("ticketId")
 			})
 			
-			this.submit();
+			if ($("#ticketResponse").val() != ""){
+				this.submit();
+			}
 			
 			close.save({},{
 				async: false,
 				success : function(model, response){
-					if (response.type == "succes"){
+					if (response.type == "success"){
 						alert("Ticket closed!");
 					} else {
 						if (response.type == "error"){
