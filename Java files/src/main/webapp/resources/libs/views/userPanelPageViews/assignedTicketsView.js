@@ -250,7 +250,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 						+ "</div></td><td><div class='columnOverflow'>" + subj
 						+ "</div></td><td><div class='columnOverflow'>" + categ
 						+ "</div></td><td><div class='columnOverflow'>" + priority
-						+ "</div></td><td><div class='columnOverflow " + statusClassColor + "'>"
+						+ "</div></td><td><div class='columnOverflow'><div class='" + statusClassColor + "'/>"
 						+ status + " " + userName
 						+ "</div></td><td><div class='columnOverflow'>"
 						+ ansDate

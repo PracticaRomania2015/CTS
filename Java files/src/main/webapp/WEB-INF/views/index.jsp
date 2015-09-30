@@ -38,6 +38,7 @@
 
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/editCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/removeCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/getUsersModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/manageUserRoleModel.js"></script>
@@ -141,50 +142,115 @@
 	<script type="text/template" id="manageCategoriesTemplate">
 		<div id="manageCategoriesContainer">
 			<form class='sysAdminPageForms'>
+				<div id="manageCategoriesDiv">
 				<div id="addCategoryContainer">
 					<h3 >Add Category</h3>
 					<input id='categoryName' type='text' placeholder='Category name' class="masterTooltip categoryManagment fieldCateg"/>
-				<span href="#" class="button" id="addCategoryButton">Add Category</span>
+				<span href="#" class="button" id="addCategoryButton">Add</span>
 				</div>
-				
-				<div class="separatorWrapper">
-				<div class="contentFormSeparator">
-					<div id="gradient-line"></div>
+
+
+				<div class="verticalSeparatorWrapper">
+				<div class="contentFormVerticalSeparator">
+					<div id="gradient-verticalLine"></div>
 				</div> 
 				</div>
 
-				<div id="addSubCategoryContainer">
-					<h3 >Add SubCategory</h3>
-					<div id="categoryListDivSubcategory">
-					<select id="categoryListDropboxSubcategory" class="categoryManagment dropDownCateg">
+
+
+
+
+				<div id = "editCategoryContainer">
+					<h3>Edit Category</h3>
+					<div id="categoryListDivEditCategory">
+					<select id="categoryListDropboxEditCategory" class="categoryManagment dropDownCateg">
 						<option selected disabled value="">Select the category...</option>
 					</select>
 					</div>
-					<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip categoryManagment fieldCateg"/>
-					<span href="#" class="button" id="addSubcategoryButton">Add Subcategory</span>
+
+					<input id='categoryNewName' type='text' placeholder='New category name' class="masterTooltip categoryManagment fieldCateg"/>
+					<span href="#" class="button" id="editCategoryButton">Change</span>
 				</div>
 
-				<div class="separatorWrapper">
-				<div class="contentFormSeparator">
-					<div id="gradient-line"></div>
+				<div class="verticalSeparatorWrapper">
+				<div class="contentFormVerticalSeparator">
+					<div id="gradient-verticalLine"></div>
 				</div> 
 				</div>
 
-				<div id="removeCategory">
+				<div id="removeCategoryContainer">
 					<h3 class="userPage">Remove Category</h3>
 					<div id="categoryListDivRemove">
 					<select id="categoryListDropboxRemove" class="categoryManagment dropDownCateg">
 						<option selected disabled value="">Select the category...</option>
 					</select>
+					<span href="#" class="button" id="removeCategoryButton">Remove</span>
+				</div>
+				</div>
+
+				<div class="horizontalSeparatorWrapper">
+				<div class="contentFormHorizontalSeparator">
+					<div id="gradient-horizontalLine"></div>
+				</div> 
+				</div>
+
+				<div id="manageSubcategoriesDiv">
+				<div id="addSubcategoryContainer">
+					<h3 >Add Subcategory</h3>
+					<div id="categoryListDivSubcategory">
+					<select id="categoryListDropboxSubcategory" class="categoryManagment dropDownCateg">
+						<option selected disabled value="">Select the category...</option>
+					</select>
 					</div>
-					<div id="subcategoryListDiv">
-						<select id="subcategoryListDropbox" disabled=true class="categoryManagment dropDownCateg" >
+
+					<input id='subcategoryName' type='text' placeholder='Subcategory name' class="masterTooltip categoryManagment fieldCateg"/>
+					<span href="#" class="button" id="addSubcategoryButton">Add</span>
+				</div>
+
+				<div class="verticalSeparatorWrapper">
+				<div class="contentFormVerticalSeparator">
+					<div id="gradient-verticalLine"></div>
+				</div> 
+				</div>
+
+				<div id = "editSubcategoryContainer">
+				<h3>Edit Subcategory</h3>
+					<div id="categoryListDivEditSubcategory">
+					<select id="categoryListDropboxEditSubcategory" class="categoryManagment dropDownCateg">
+						<option selected disabled value="">Select the category...</option>
+					</select>
+					</div>
+					<div id="subcategoryListDivEditSubcategory">
+						<select id="subcategoryListDropboxEditSubcategory" disabled=true class="categoryManagment dropDownCateg" >
 							<option selected disabled>Select the subcategory...</option>
 						</select>
 					</div>
-					<span href="#" class="button" id="removeCategoryButton">Remove</span>
+
+					<input id='subcategoryNewName' type='text' placeholder='New subcategory name' class="masterTooltip categoryManagment fieldCateg"/>
+					<span href="#" class="button" id="editSubcategoryButton">Change</span>
 				</div>
 		
+				<div class="verticalSeparatorWrapper">
+				<div class="contentFormVerticalSeparator">
+					<div id="gradient-verticalLine"></div>
+				</div> 
+				</div>
+
+				<div id="removeSubcategoryContainer">
+					<h3 class="userPage">Remove Subcategory</h3>
+					<div id="categoryListDivRemoveSubcategory">
+					<select id="categoryListDropboxRemoveSubcategory" class="categoryManagment dropDownCateg">
+						<option selected disabled value="">Select the category...</option>
+					</select>
+					</div>
+					<div id="subcategoryListDivRemoveSubcategory">
+						<select id="subcategoryListDropboxRemoveSubcategory" disabled=true class="categoryManagment dropDownCateg" >
+							<option selected disabled>Select the subcategory...</option>
+						</select>
+					</div>
+					<span href="#" class="button" id="removeSubcategoryButton">Remove</span>
+				</div>
+				</div>
 			</form>
 		</div>
 	</script>

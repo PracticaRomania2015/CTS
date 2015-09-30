@@ -144,17 +144,15 @@ public class CategoryDAO extends BaseDAO implements CategoryDAOInterface {
 
 		try {
 
-			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getParentCategoryId(), "CategoryId");
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
 			InOutParam<String> categoryNameParam = new InOutParam<String>(category.getCategoryName(), "CategoryName");
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.EditCategory, categoryIdParam, categoryNameParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() != 0) {
-
 				return false;
 			}
 		} catch (Exception e) {
-
 			return false;
 		} finally {
 

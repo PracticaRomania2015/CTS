@@ -14,22 +14,29 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		'click #addCategoryButton' : 'submitCategory',
 		'click #addSubcategoryButton' : 'submitSubcategory',
 		'click #removeCategoryButton' : 'removeCategory',
-		'change #categoryListDropboxRemove' : 'populateSubcategories'
+		'click #removeSubcategoryButton' : 'removeSubcategory',
+		'click #editCategoryButton' : 'editCategory',
+		'click #editSubcategoryButton' : 'editSubcategory',
+		'change #categoryListDropboxRemoveSubcategory' : 'populateSubcategoriesForRemoveSubcategory',
+		'change #categoryListDropboxEditSubcategory' : 'populateSubcategoriesForEdit'
 	},
 	
 	initialize: function(){
 		var categories = new GetCategoriesModel({});
 		
-		var currentView = this;
+		var that = this;
 		
 		categories.save({},{
 			success: function(model, response){
 				if (response.type == "success") {
 					$('#userPanelPageContainer').empty();
-					currentView.appendData();
+					that.appendData();
 					_.each(response.data,function(e){
 						$('#categoryListDropboxSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 						$('#categoryListDropboxRemove').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						$('#categoryListDropboxEditCategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						$('#categoryListDropboxEditSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						$('#categoryListDropboxRemoveSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 					});
 				} else {
 					if (response.type == "error"){
@@ -45,24 +52,57 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		});
 	},
 	
-	populateSubcategories : function() {	
+	populateSubcategoriesForRemoveSubcategory : function() {	
 		var categories = new GetSubcategoriesModel({
-			categoryId : $("#categoryListDropboxRemove option:selected").val(),
-			categoryName : $("#categoryListDropboxRemove option:selected").text()
+			categoryId : $("#categoryListDropboxRemoveSubcategory option:selected").val(),
+			categoryName : $("#categoryListDropboxRemoveSubcategory option:selected").text()
 		});
 		
 		categories.save({}, {
 			success : function(model, response) {
 				if (response.type == "success") {
-					var selectedCategory = $('#categoryListDropboxRemove').val();
-					$('#subcategoryListDropbox').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
+					var selectedCategory = $('#categoryListDropboxRemoveSubcategory').val();
+					$('#subcategoryListDropboxRemoveSubcategory').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
 					if ($.isEmptyObject(response.data)) {
-						$('#subcategoryListDropbox').attr("disabled", true);
+						$('#subcategoryListDropboxRemoveSubcategory').attr("disabled", true);
 					} else {
 						_.each(response.data, function(e) {
-							$('#subcategoryListDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+							$('#subcategoryListDropboxRemoveSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 						});
-						$('#subcategoryListDropbox').attr("disabled", false);
+						$('#subcategoryListDropboxRemoveSubcategory').attr("disabled", false);
+					}
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+	},
+	
+	populateSubcategoriesForEdit : function(){
+		var categories = new GetSubcategoriesModel({
+			categoryId : $("#categoryListDropboxEditSubcategory option:selected").val(),
+			categoryName : $("#categoryListDropboxEditSubcategory option:selected").text()
+		});
+		
+		categories.save({}, {
+			success : function(model, response) {
+				if (response.type == "success") {
+					var selectedCategory = $('#categoryListDropboxEditSubcategory').val();
+					$('#subcategoryListDropboxEditSubcategory').find('option').remove().end().append('<option selected style="display:none;">Select the subcategory...</option>').val('');
+					if ($.isEmptyObject(response.data)) {
+						$('#subcategoryListDropboxEditSubcategory').attr("disabled", true);
+					} else {
+						_.each(response.data, function(e) {
+							$('#subcategoryListDropboxEditSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						});
+						$('#subcategoryListDropboxEditSubcategory').attr("disabled", false);
 					}
 				} else {
 					if (response.type == "error"){
@@ -134,19 +174,66 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		this.initialize();
 	},
 	
-	removeCategory : function(){
-		var categoryNameVar, categoryIdVar;
-		if (!$("#subcategoryListDropbox").attr("disabled")){
-			categoryNameVar = $("#subcategoryListDropbox option:selected").text();
-			categoryIdVar = $("#subcategoryListDropbox option:selected").val();
-		} else {
-			categoryNameVar = $("#categoryListDropboxRemove option:selected").text();
-			categoryIdVar = $("#categoryListDropboxRemove option:selected").val();
-		};
+	editCategory : function() {
+		var category = new EditCategoryModel({
+			categoryId : $("#categoryListDropboxEditCategory option:selected").val(),
+			categoryName : $('#categoryNewName').val()
+		});
+		
+		
+		category.save({},{
+			async: false,
+			success: function(model,response){
+				if(response.type == "success"){
+					alert("The category was updated successfully!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				};
+			},
+			error: function(model,response){
+				console.log(response);
+			}
+		});
+
+		this.initialize();
+	},
+	
+	editSubcategory : function() {
+		var subcategory = new EditCategoryModel({
+			categoryId : $("#subcategoryListDropboxEditSubcategory option:selected").val(),
+			categoryName : $('#subcategoryNewName').val()
+		});
+		
+		subcategory.save({},{
+			async: false,
+			success: function(model, response){
+				if(response.type == "success"){
+					alert("The subcategory was updated successfully!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				};
+			},
+			error: function(model, response){
+				console.log(response);
+			}
+		});
+
+		this.initialize();
+	},
+	
+	removeSubcategory : function(){
 		
 		var category = new RemoveCategoryModel({
-			categoryName : categoryNameVar,
-			categoryId : categoryIdVar
+			categoryName : $("#subcategoryListDropboxRemoveSubcategory option:selected").text(),
+			categoryId : $("#subcategoryListDropboxRemoveSubcategory option:selected").val()
 		});
 		
 		category.save({},{
@@ -168,6 +255,33 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 		});
 
 		this.initialize();
-	}
+	},
 	
+	removeCategory: function(){
+	
+		var category = new RemoveCategoryModel({
+			categoryName : $("#categoryListDropboxRemove option:selected").text(),
+			categoryId : $("#categoryListDropboxRemove option:selected").val()
+		});
+		
+		category.save({},{
+			async: false,
+			success: function(model, response){
+				if(response.type == "success"){
+					alert("Successfully removed!");
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				};
+			},
+			error: function(model, response){
+				console.log(response);
+			}
+		});
+	
+		this.initialize();
+	}
 })
