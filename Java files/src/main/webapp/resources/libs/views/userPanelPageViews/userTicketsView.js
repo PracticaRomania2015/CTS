@@ -276,16 +276,13 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 							+ " " + addZero(currentSubmitTkDate.getHours())
 							+ ":" + addZero(currentSubmitTkDate.getMinutes());
 
-					if (e.comments[0].dateTime == e.comments[1].dateTime) {
-						answerDate = "Not yet answered!";
-					} else {
-						var currentAnswerTkDate = new Date(
+					var currentAnswerTkDate = new Date(
 								e.comments[1].dateTime);
 						answerDate = currentAnswerTkDate.toLocaleDateString()
 								+ " " + addZero(currentAnswerTkDate.getHours())
 								+ ":"
 								+ addZero(currentAnswerTkDate.getMinutes());
-					}
+					
 					if (e.assignedToUser.firstName == null || e.assignedToUser.lastName == null){
 						assignedToUser = " - Unassigned";
 					} else {

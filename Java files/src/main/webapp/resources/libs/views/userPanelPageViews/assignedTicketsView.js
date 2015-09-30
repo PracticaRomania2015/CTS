@@ -261,7 +261,6 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 	populateData : function(currentPage, totalPages, tkArray) {
 		var currentView = this;
 		this.$el.find('tbody').empty();
-		console.log(tkArray);
 		_.each(tkArray,
 				function(e) {
 					var answerDate;
@@ -270,18 +269,14 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 							+ " " + addZero(currentSubmitTkDate.getHours())
 							+ ":" + addZero(currentSubmitTkDate.getMinutes());
 
-					if (e.comments[0].dateTime == e.comments[1].dateTime) {
-						answerDate = "Not yet answered!";
-					} else {
-						var currentAnswerTkDate = new Date(
-								e.comments[1].dateTime);
-						var answerDate = currentAnswerTkDate
+					var currentAnswerTkDate = new Date(e.comments[1].dateTime);
+					var answerDate = currentAnswerTkDate
 								.toLocaleDateString()
 								+ " "
 								+ addZero(currentAnswerTkDate.getHours())
 								+ ":"
 								+ addZero(currentAnswerTkDate.getMinutes());
-					}
+	
 					if (e.assignedToUser.firstName == null || e.assignedToUser.lastName == null){
 						assignedToUser = " - Unassigned";
 					} else {
