@@ -10,11 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.CategoryResponse;
-import com.cts.communication.LoginResponse;
-import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UtilsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.UserDAO;
 import com.cts.entities.Category;
@@ -61,13 +58,13 @@ public class UtilsControllerTest {
 		validUser.setLastName(validLastName);
 		validUser.setEmail(validEmail);
 		validUser.setPassword(validPassword);
-		assertEquals(new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
 		validUser.setPassword(validPassword);
-		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
+		assertFalse(new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validCategory));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -78,7 +75,7 @@ public class UtilsControllerTest {
 		//valid subcategory
 		validSubcategory.setParentCategoryId(validCategory.getCategoryId());
 		validSubcategory.setCategoryName(validSubcategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validSubcategory));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validSubcategory));
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(validCategory);
 		for(Category subcategory : subcategories){
 			if (subcategory.getCategoryName().equals(validSubcategoryName)){
@@ -103,7 +100,7 @@ public class UtilsControllerTest {
 	@Test
 	public static void testGetSubcategoriesWithNullCategory() {
 		
-		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getSubcategories(null));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getSubcategories(null));
 	}
 	
 	@Test
@@ -111,20 +108,20 @@ public class UtilsControllerTest {
 		
 		testCategory = new Category();
 		testCategory.setCategoryId(invalidCategoryId);
-		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.DBERROR), utilsController.getSubcategories(testCategory));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.DBERROR), utilsController.getSubcategories(testCategory));
 	}
 	
 	@Test
 	public static void testGetCategoriesWithValidData() {
 		
 		ArrayList<Category> categories = categoryDAO.getCategories();
-		assertEquals(new UtilsResponse(categories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getCategories());
+		assertEquals(new ResponseMessage(categories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getCategories());
 	}
 	
 	@Test
 	public static void testGetAdminsForCategoryWithNullCategory(){
 		
-		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(null));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(null));
 	}
 
 	@Test
@@ -132,7 +129,7 @@ public class UtilsControllerTest {
 		
 		testCategory = new Category();
 		testCategory.setCategoryId(invalidCategoryId);
-		assertEquals(new UtilsResponse().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(testCategory));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN), utilsController.getAdminsForCategory(testCategory));
 	}
 	
 	@Test
@@ -140,7 +137,7 @@ public class UtilsControllerTest {
 		
 		ArrayList<Category> subcategories = new ArrayList<Category>();
 		subcategories.add(validSubcategory);
-		assertEquals(new UtilsResponse(subcategories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getSubcategories(validCategory));
+		assertEquals(new ResponseMessage(subcategories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getSubcategories(validCategory));
 	}
 	
 	//TODO: add admin to category and redo test
@@ -148,6 +145,6 @@ public class UtilsControllerTest {
 	public static void testGetAdminsForCategoryWithValidData() {
 
 		ArrayList<User> admins = new ArrayList<User>();
-		assertEquals(new UtilsResponse(admins).getMessageJSON(ResponseValues.SUCCESS), utilsController.getAdminsForCategory(validCategory));
+		assertEquals(new ResponseMessage(admins).getMessageJSON(ResponseValues.SUCCESS), utilsController.getAdminsForCategory(validCategory));
 	}
 }

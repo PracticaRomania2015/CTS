@@ -10,12 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.CategoryResponse;
-import com.cts.communication.LoginResponse;
-import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UserRightsResponse;
-import com.cts.communication.UtilsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.UserDAO;
 import com.cts.entities.Category;
@@ -66,13 +62,13 @@ public class RootManagementControllerTest {
 		validUser.setLastName(validLastName);
 		validUser.setEmail(validEmail);
 		validUser.setPassword(validPassword);
-		assertEquals(new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
 		validUser.setPassword(validPassword);
-		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
+		assertFalse(new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
 		
 		//valid category
 		validCategory.setCategoryName(validCategoryName);
-		assertEquals(new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validCategory));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS), rootManagementController.addCategory(validCategory));
 		ArrayList<Category> categories = categoryDAO.getCategories();
 		for(Category category : categories){
 			if (category.getCategoryName().equals(validCategoryName)){
@@ -113,10 +109,9 @@ public class RootManagementControllerTest {
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		output.add(totalNumberOfPages);
 		output.add(tickets);
-		assertEquals(new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUsers(viewUsersRequest));
+		assertEquals(new ResponseMessage(output).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUsers(viewUsersRequest));
 	}
 	
-	//TODO: needs DAO implementation
 	@Test
 	public void testSetUserRightsWithValidData() {
 		
@@ -129,14 +124,13 @@ public class RootManagementControllerTest {
 		rootManagementController.setUserRights(validUserStatus);
 	}
 	
-	//TODO: needs DAO implementation to check against
 	@Test
 	public void testGetUserRightsWithValidData() {
 		
 		ArrayList<UserRight> categoryAdminRights = new ArrayList<UserRight>();
 		categoryAdminRights.add(validUserRight);
 		ArrayList<Category> categories = categoryDAO.getCategories();
-		assertEquals(new UtilsResponse(categories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getCategories());
+		assertEquals(new ResponseMessage(categories).getMessageJSON(ResponseValues.SUCCESS), utilsController.getCategories());
 		for (Category category : categories){
 			
 			validUserRight.setCategory(category);
@@ -149,6 +143,6 @@ public class RootManagementControllerTest {
 		testUserStatus.setSysAdmin(true);
 		testUserStatus.setCategoryAdminRights(categoryAdminRights);
 		
-		assertEquals(new UserRightsResponse(testUserStatus).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUserRights(validUserStatus));
+		assertEquals(new ResponseMessage(testUserStatus).getMessageJSON(ResponseValues.SUCCESS), rootManagementController.getUserRights(validUserStatus));
 	}
 }

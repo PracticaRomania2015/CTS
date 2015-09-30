@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cts.communication.RecoveryResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
@@ -30,8 +30,6 @@ public class RecoveryController {
 	 * @param user User with email to reset password.
 	 * @return JSON with success/error response.
 	 */
-	//TODO:
-	//CHANGED FROM: /recoveryPassword
 	@RequestMapping(value = "/recovery", method = RequestMethod.POST)
 	public @ResponseBody String recoveryPassword(@RequestBody User user) {
 		
@@ -41,12 +39,12 @@ public class RecoveryController {
 		if (user.getEmail() == null){
 			
 			logger.error("Email is null!");
-			return new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 			
 			logger.error("Email is empty!");
-			return new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		
 		// Recovery mail contents
@@ -60,11 +58,11 @@ public class RecoveryController {
 		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword)) && SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 			logger.info("The password was changed and was sent via email!");
-			return new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYSUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYSUCCESS);
 		} else {
 
 			logger.warn("No account with the provided email was found!");
-			return new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL);
 		}
 	}
 }

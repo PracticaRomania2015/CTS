@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UserPersonalDataResponse;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.UserForUpdate;
@@ -39,72 +39,72 @@ public class UserPersonalDataController {
 		if (user.getTitle() == null) {
 							
 			logger.error("Title is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		
 		if (user.getTitle().equals("")) {
 			
 			logger.error("Title is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		
 		// User first name validation
 		if (user.getFirstName() == null) {
 			
 			logger.error("First Name is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		if (user.getFirstName().equals("")) {
 			
 			logger.error("First Name is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		// User last name validation
 		if (user.getLastName() == null) {
 			
 			logger.error("Last Name is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		if (user.getLastName().equals("")) {
 			
 			logger.error("Last Name is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		// User email validation
 		if (user.getEmail() == null) {
 			
 			logger.error("Email is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		
 		if (user.getEmail().equals("")) {
 			
 			logger.error("Email is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 
 		// User old password validation
 		if (user.getOldPassword() == null) {
 					
 			logger.error("Old password is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
 		}
 		
 		if (user.getOldPassword().equals("")) {
 			
 			logger.error("Old password is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD);
 		}
 		
 		// User new password validation
 		if (user.getPassword() == null) {
 			
 			logger.error("New password is null or empty!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
 		if (!user.getPassword().equals("")){
@@ -112,7 +112,7 @@ public class UserPersonalDataController {
 			if (user.getOldPassword() != user.getPassword()){
 				
 				logger.warn("Passwords not matching!");
-				return new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING);
+				return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING);
 			}
 		}
 		
@@ -124,11 +124,11 @@ public class UserPersonalDataController {
 		if (userDAO.updateUserPersonalData(user)) {
 		
 			logger.info("Account updated successfully!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSERSUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERSUCCESS);
 		} else {
 		
 			logger.error("Account could not be updated!");
-			return new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 }

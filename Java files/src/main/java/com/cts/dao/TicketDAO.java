@@ -163,6 +163,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					categoryNameParam, stateIdParam, stateNameParam, assignedUserIdParam, assignedUserFirstNameParam,
 					assignedUserLastNameParam, priorityIdParam, priorityNameParam, errCodeParam);
 			ResultSet resultSet = execute(true);
+			if (resultSet == null){
+				return false;
+			}
 			while (resultSet.next()) {
 
 				TicketComment ticketComment = new TicketComment();
@@ -181,7 +184,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			ticket.setComments(ticketComments);
 			setOutParametersAfterExecute();
 			if (errCodeParam.getParameter() == 1) {
-
 				return false;
 			}
 			ticket.setSubject(subjectParam.getParameter());

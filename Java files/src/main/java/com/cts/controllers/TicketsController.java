@@ -1,14 +1,16 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.TicketsResponse;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
 import com.cts.entities.Ticket;
@@ -40,11 +42,11 @@ public class TicketsController {
 		if (ticketDAO.getFullTicket(ticket)) {
 
 			logger.info("Full ticket received successfully!");
-			return new TicketsResponse(ticket).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.warn("Full ticket could not be retrieved!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.UNKNOWN);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN);
 		}
 	}
 
@@ -77,7 +79,7 @@ public class TicketsController {
 		output.add(totalNumberOfPages);
 		output.add(tickets);
 		logger.info("Requested tickets received successfully!");
-		return new TicketsResponse(output).getMessageJSON(ResponseValues.SUCCESS);
+		return new ResponseMessage(output).getMessageJSON(ResponseValues.SUCCESS);
 
 	}
 
@@ -97,37 +99,37 @@ public class TicketsController {
 		if (ticket.getSubject() == null) {
 
 			logger.error("Ticket subject is null!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
 		}
 		if (ticket.getSubject().equals("")) {
 
 			logger.error("Ticket subject is empty!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYSUBJECT);
 		}
 
 		// Ticket category validation
 		if (ticket.getCategory() == null) {
 
 			logger.error("Ticket category is null!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 
 		if (ticket.getCategory().getCategoryId() == 0) {
 
 			logger.error("Ticket category is invalid!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYCATEGORY);
 		}
 
 		// Ticket description validation
 		if (ticket.getComments().get(0).getComment() == null) {
 
 			logger.error("Ticket description is null!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 		if (ticket.getComments().get(0).getComment().equals("")) {
 
 			logger.error("Ticket description is empty!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 
 		// Ticket creation.
@@ -135,11 +137,11 @@ public class TicketsController {
 		if (ticketDAO.createTicket(ticket)) {
 
 			logger.info("Ticket submitted succesfully!");
-			return new TicketsResponse(ticket).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.info("Ticket could not be submitted!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
@@ -161,12 +163,12 @@ public class TicketsController {
 		if (ticket.getComments().get(0).getComment() == null) {
 
 			logger.error("Ticket comment is null!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
 		}
 		if (ticket.getComments().get(0).getComment().equals("")) {
 
 			logger.error("Ticket comment is empty!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
+			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYCOMMENT);
 		}
 
 		// Adding comment to ticket
@@ -174,11 +176,11 @@ public class TicketsController {
 		if (ticketDAO.addCommentToTicket(ticket)) {
 
 			logger.info("Comment submitted successfully!");
-			return new TicketsResponse(ticket).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.error("Comment could not be submitted!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
@@ -198,12 +200,12 @@ public class TicketsController {
 		if (ticketDAO.assignTicket(ticket)) {
 
 			logger.info("Admin assigned to ticket successfully!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 
 		} else {
 
 			logger.error("Admin could not be assigned to ticket!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 
 		}
 	}
@@ -224,12 +226,12 @@ public class TicketsController {
 		if (ticketDAO.closeTicket(ticket)) {
 
 			logger.info("Ticket closed successfully!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 
 		} else {
 
 			logger.error("Ticket could not be closed!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 
 		}
 	}
@@ -249,12 +251,12 @@ public class TicketsController {
 		if (ticketDAO.reopenTicket(ticket)) {
 
 			logger.info("Ticket opened successfully!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 
 		} else {
 
 			logger.error("Ticket could not be closed!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 
 		}
 	}
@@ -274,12 +276,12 @@ public class TicketsController {
 		if (ticketDAO.changeTicketPriority(ticket)) {
 
 			logger.info("Ticket priority changed successfully!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 
 		} else {
 
 			logger.error("Ticket priority could not be closed!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 
 		}
 	}
@@ -294,11 +296,11 @@ public class TicketsController {
 		if (ticketDAO.changeTicketPriority(ticket)) {
 
 			logger.info("The priority was successfully changed!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.info("Failed to change the priority!");
-			return new TicketsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cts.communication.LoginResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
@@ -37,24 +37,24 @@ public class LoginController {
 		if (user.getEmail() == null){
 					
 			logger.error("Email is null!");
-			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 				
 			logger.error("Email is empty!");
-			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		
 		// Password validation
 		if (user.getPassword() == null){
 					
 			logger.error("Password is null!");
-			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 				
 			logger.error("Password is empty!");
-			return new LoginResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
 		// Login credentials validation
@@ -64,11 +64,11 @@ public class LoginController {
 		if (userDAO.validateLogin(user)) {
 
 			logger.info("User logged in successfully!");
-			return new LoginResponse(user).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(user).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 			
 			logger.warn("Account credentials are invalid!");
-			return new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS);
 		}
 	}
 }

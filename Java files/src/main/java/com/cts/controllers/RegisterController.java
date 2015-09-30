@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
@@ -67,65 +67,65 @@ public class RegisterController{
 		if (user.getTitle() == null){
 			
 			logger.error("Title is null!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		if (user.getTitle().equals("")) {
 			
 			logger.error("Title is empty!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYTITLE);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE);
 		}
 		
 		// User first name validation
 		if (user.getFirstName() == null){
 			
 			logger.error("First name is null!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		if (user.getFirstName().equals("")) {
 			
 			logger.error("First name is empty!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME);
 		}
 		
 		// User last name validation
 		if (user.getLastName() == null){
 			
 			logger.error("Last name is null!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		if (user.getLastName().equals("")) {
 			
 			logger.error("Last name is empty!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME);
 		}
 		
 		// User email validation
 		if (user.getEmail() == null){
 			
 			logger.error("Last name is null!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
 			
 			logger.error("Last name is empty!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (!isValidEmail(user.getEmail())) {
 
 			logger.error("Invalid Email");
-			return new RegisterResponse().getMessageJSON(ResponseValues.INVALIDEMAILFORMAT);
+			return new ResponseMessage().getMessageJSON(ResponseValues.INVALIDEMAILFORMAT);
 		}
 		
 		// User password validation
 		if (user.getPassword() == null){
 			
 			logger.error("Password is null!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		if (user.getPassword().equals("")) {
 			
 			logger.error("Password is empty!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD);
+			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
 		// Account creation
@@ -134,11 +134,11 @@ public class RegisterController{
 		if (userDAO.createAccount(user)) {
 			
 			logger.info("A new account was created successfully!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.REGISTERSUCCESS);
 		} else {
 			
 			logger.warn("An account with the provided email already exists!");
-			return new RegisterResponse().getMessageJSON(ResponseValues.REGISTEREXISTINGEMAIL);
+			return new ResponseMessage().getMessageJSON(ResponseValues.REGISTEREXISTINGEMAIL);
 		}
 	}
 }

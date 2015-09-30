@@ -1,14 +1,16 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UtilsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.CategoryDAOInterface;
 import com.cts.dao.PriorityDAO;
@@ -42,7 +44,7 @@ public class UtilsController {
 		ArrayList<Category> categories = categoryDAO.getCategories();
 
 		logger.info("Categories received successfully!");
-		return new UtilsResponse(categories).getMessageJSON(ResponseValues.SUCCESS);
+		return new ResponseMessage(categories).getMessageJSON(ResponseValues.SUCCESS);
 	}
 
 	/**
@@ -64,11 +66,11 @@ public class UtilsController {
 		if (subcategories != null) {
 
 			logger.info("Subcategories received successfully!");
-			return new UtilsResponse(subcategories).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(subcategories).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.info("Subcategories could not be retrieved!");
-			return new UtilsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 
 	}
@@ -92,11 +94,11 @@ public class UtilsController {
 		if (admins != null) {
 
 			logger.info("Admins for the provided category received successfully!");
-			return new UtilsResponse(admins).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(admins).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.info("Admins for the provided category could not be retrieved!");
-			return new UtilsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
@@ -111,11 +113,11 @@ public class UtilsController {
 		if (priorities != null) {
 
 			logger.info("Priorities received successfully!");
-			return new UtilsResponse(priorities).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(priorities).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.info("Priorities could not be retrieved!");
-			return new UtilsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 }

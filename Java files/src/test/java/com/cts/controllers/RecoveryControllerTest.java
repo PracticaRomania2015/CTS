@@ -8,9 +8,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.LoginResponse;
-import com.cts.communication.RecoveryResponse;
-import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
 import com.cts.entities.User;
@@ -47,9 +45,9 @@ public class RecoveryControllerTest {
 		validUser.setLastName(validLastName);
 		validUser.setEmail(validEmail);
 		validUser.setPassword(validPassword);
-		assertEquals(new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
 		validUser.setPassword(validPassword);
-		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
+		assertFalse(new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
 	}
 	
 	@AfterClass
@@ -62,27 +60,28 @@ public class RecoveryControllerTest {
 	public void testRecoveryPasswordWithNullEmail() {
 		
 		validUser.setEmail(null);
-		assertEquals(new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL), recoveryController.recoveryPassword(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL), recoveryController.recoveryPassword(validUser));
 	}
 	
 	@Test
 	public void testRecoveryPasswordWithEmptyEmail() {
 		
 		validUser.setEmail(empty);
-		assertEquals(new RecoveryResponse().getMessageJSON(ResponseValues.EMPTYEMAIL), recoveryController.recoveryPassword(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL), recoveryController.recoveryPassword(validUser));
 	}
 	
 	@Test
 	public void testRecoveryPasswordWithInvalidEmail() {
 		
 		validUser.setEmail(invalidEmail);
-		assertEquals(new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL), recoveryController.recoveryPassword(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL), recoveryController.recoveryPassword(validUser));
 	}
 	
 	@Test
 	public void testRecoveryPasswordWithValidData() {
 		
-		assertEquals(new RecoveryResponse().getMessageJSON(ResponseValues.RECOVERYSUCCESS), recoveryController.recoveryPassword(validUser));
+		validUser.setEmail(validEmail);
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYSUCCESS), recoveryController.recoveryPassword(validUser));
 	}
 
 }

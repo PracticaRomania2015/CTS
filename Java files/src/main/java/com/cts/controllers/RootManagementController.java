@@ -1,15 +1,16 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cts.communication.CategoryResponse;
+
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UserRightsResponse;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.CategoryDAOInterface;
 import com.cts.dao.UserDAO;
@@ -43,12 +44,12 @@ public class RootManagementController {
 		if (category.getCategoryName() == null) {
 
 			logger.error("Category/Subcategory name is null.");
-			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 		if (category.getCategoryName().equals("")) {
 
 			logger.error("Category/Subcategory name is empty.");
-			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 
 		// Adding category
@@ -56,11 +57,11 @@ public class RootManagementController {
 		if (categoryDAO.addCategory(category)) {
 
 			logger.info("Category/Subcategory added successfully!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.warn("Category/Subcategory could not be added!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.UNKNOWN);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN);
 		}
 	}
 
@@ -79,7 +80,7 @@ public class RootManagementController {
 		if (Integer.valueOf(category.getCategoryId()).equals("")) {
 
 			logger.error("Category/Subcategory ID is empty.");
-			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYID);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYID);
 		}
 
 		// Removing category
@@ -87,11 +88,11 @@ public class RootManagementController {
 		if (categoryDAO.deleteCategory(category)) {
 
 			logger.info("Category/Subcategory removed successfully!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.warn("Category/Subcategory could not be removed!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
@@ -111,12 +112,12 @@ public class RootManagementController {
 		if (category.getCategoryName() == null) {
 
 			logger.error("Category/Subcategory name is null.");
-			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 		if (category.getCategoryName().equals("")) {
 
 			logger.error("Category/Subcategory name is empty.");
-			return new CategoryResponse().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 
 		// Editing category
@@ -124,11 +125,11 @@ public class RootManagementController {
 		if (categoryDAO.editCategory(category)) {
 
 			logger.info("Category/Subcategory edited successfully!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.warn("Category/Subcategory could not be edited!");
-			return new CategoryResponse().getMessageJSON(ResponseValues.UNKNOWN);
+			return new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN);
 		}
 	}
 
@@ -157,7 +158,7 @@ public class RootManagementController {
 		output.add(totalNumberOfPages);
 		output.add(users);
 		logger.info("Requested users received successfully!");
-		return new UserRightsResponse(output).getMessageJSON(ResponseValues.SUCCESS);
+		return new ResponseMessage(output).getMessageJSON(ResponseValues.SUCCESS);
 	}
 
 	/**
@@ -176,7 +177,7 @@ public class RootManagementController {
 		if (userStatus.isSysAdmin() != (true && false)) {
 
 			logger.error("isSysAdmin is not set!");
-			return new UserRightsResponse().getMessageJSON(ResponseValues.ROOTMANAGEMENTEMPTYSYSADMIN);
+			return new ResponseMessage().getMessageJSON(ResponseValues.ROOTMANAGEMENTEMPTYSYSADMIN);
 		}
 
 		// Getting user's rights
@@ -184,11 +185,11 @@ public class RootManagementController {
 		if (userCategRightsDAO.viewCategoriesRightsForUser(userStatus)) {
 
 			logger.info("User's rights received successfully!");
-			return new UserRightsResponse(userStatus).getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage(userStatus).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.error("User's rights could not be retrieved!");
-			return new UserRightsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
@@ -208,11 +209,11 @@ public class RootManagementController {
 		if (userCategRightsDAO.updateUserStatus(userStatus)) {
 
 			logger.info("User's rights updated successfully!");
-			return new UserRightsResponse().getMessageJSON(ResponseValues.SUCCESS);
+			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
 			logger.error("User's rights could not be updated!");
-			return new UserRightsResponse().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 }

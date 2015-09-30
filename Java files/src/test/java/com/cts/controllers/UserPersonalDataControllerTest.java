@@ -8,10 +8,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cts.communication.LoginResponse;
-import com.cts.communication.RegisterResponse;
+import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
-import com.cts.communication.UserPersonalDataResponse;
 import com.cts.dao.UserDAO;
 import com.cts.entities.UserForUpdate;
 
@@ -54,9 +52,9 @@ public class UserPersonalDataControllerTest {
 		validUser.setLastName(validLastName);
 		validUser.setEmail(validEmail);
 		validUser.setPassword(validPassword);
-		assertEquals(new RegisterResponse().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.REGISTERSUCCESS), registerController.register(validUser));
 		validUser.setPassword(validPassword);
-		assertFalse(new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new LoginResponse().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
+		assertFalse(new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS), new ResponseMessage().getMessageJSON(ResponseValues.LOGININVALIDCREDENTIALS).equals(loginController.login(validUser)));
 		validUser.setOldPassword(validPassword);
 	}
 	
@@ -72,7 +70,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setUserId(invalidUserId);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.DBERROR), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -80,7 +78,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setUserId(invalidUserId);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.DBERROR), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -88,7 +86,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setTitle(null);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYTITLE), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -96,7 +94,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setTitle(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYTITLE), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYTITLE), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -104,7 +102,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setFirstName(null);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -112,7 +110,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setFirstName(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYFIRSTNAME), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYFIRSTNAME), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -120,7 +118,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setLastName(null);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -128,7 +126,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setLastName(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYLASTNAME), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYLASTNAME), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -136,7 +134,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setEmail(null);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYEMAIL), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -144,7 +142,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setEmail(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYEMAIL), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -152,7 +150,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setOldPassword(null);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -160,7 +158,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setOldPassword(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSEREMPTYOLDPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -168,7 +166,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setPassword(empty);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.EMPTYPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -176,7 +174,7 @@ public class UserPersonalDataControllerTest {
 
 		testUser = validUser;
 		testUser.setPassword(wrongPassword);
-		assertEquals(new UserPersonalDataResponse().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING), userPersonalDataController.updateUserPersonalData(testUser));
+		assertEquals(new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING), userPersonalDataController.updateUserPersonalData(testUser));
 	}
 	
 	@Test
@@ -188,6 +186,6 @@ public class UserPersonalDataControllerTest {
 		validUser.setEmail(validNewEmail);
 		validUser.setPassword(validNewPassword);
 		validUser.setOldPassword(validPassword);
-		assertFalse(new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR), new UserPersonalDataResponse().getMessageJSON(ResponseValues.DBERROR).equals(userPersonalDataController.updateUserPersonalData(validUser)));
+		assertFalse(new ResponseMessage().getMessageJSON(ResponseValues.DBERROR), new ResponseMessage().getMessageJSON(ResponseValues.DBERROR).equals(userPersonalDataController.updateUserPersonalData(validUser)));
 	}
 }
