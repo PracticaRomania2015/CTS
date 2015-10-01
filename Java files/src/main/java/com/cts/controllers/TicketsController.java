@@ -183,14 +183,14 @@ public class TicketsController {
 			UserDAOInterface userDAO = new UserDAO();
 			user = userDAO.getTicketUser(ticket);
 			if (user != null) {
-				
+
 				logger.info(
 						"User who created the ticket retrieved successfully! Trying to sent the email for notification!");
 				String subject = "CTS - Notification Manager";
 				String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
-						+ ",\n\nA new comment was added to your ticket with the id: " + ticket.getTicketId()
+						+ ",\n\nAn admin has responded to your ticket #" + ticket.getTicketId()
 						+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
-				
+
 				if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 					logger.info("An email was sent to notify the ticket user that a new comment was added.");
