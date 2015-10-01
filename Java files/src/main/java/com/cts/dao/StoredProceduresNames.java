@@ -150,5 +150,11 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.ChangeTicketCategory";
 		}
+	},
+
+	GetTicketUser {
+		public String toString() {
+			return "dbo.GetTicketUser";
+		}
 	}
 }

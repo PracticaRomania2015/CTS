@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import com.cts.entities.Category;
 import com.cts.entities.Role;
+import com.cts.entities.Ticket;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 import com.cts.entities.UserStatus;
@@ -187,16 +188,16 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 			String categoryIdList = "";
 			for (int i = 0; i < userStatus.getCategoryAdminRights().size(); i++) {
-				
+
 				if (userStatus.getCategoryAdminRights().get(i).isAdminStatus())
 					categoryIdList += userStatus.getCategoryAdminRights().get(i).getCategory().getCategoryId() + ",";
 			}
 
-			if(categoryIdList.length() > 0 && categoryIdList.substring(categoryIdList.length() - 1).equals(",")){
-				
+			if (categoryIdList.length() > 0 && categoryIdList.substring(categoryIdList.length() - 1).equals(",")) {
+
 				categoryIdList = categoryIdList.substring(0, categoryIdList.length() - 1);
 			}
-			
+
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
 			InOutParam<Boolean> isSysAdminParam = new InOutParam<Boolean>(userStatus.isSysAdmin(), "IsSysAdmin");
 			InOutParam<String> categoryIdListParam = new InOutParam<String>(categoryIdList, "CategoryIdList");
@@ -212,7 +213,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				return false;
 			}
 		} catch (Exception e) {
-			
+
 			return false;
 		} finally {
 
@@ -241,7 +242,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					textToSearchParam, searchTypeParam, sortTypeParam, isSearchASCParam, totalNumberOfPagesParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
-				
+
 				User user = new User();
 				user.setUserId(resultSet.getInt("UserId"));
 				user.setFirstName(resultSet.getString("FirstName"));
@@ -260,5 +261,37 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			closeCallableStatement();
 		}
 		return users;
+	}
+
+	@Override
+	public User getTicketUser(Ticket ticket) {
+
+		User user = null;
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
+			InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
+			InOutParam<String> emailParam = new InOutParam<String>("", "Email", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.GetTicketUser, ticketIdParam, firstNameParam, lastNameParam,
+					emailParam, errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() == 0) {
+
+				user = new User();
+				user.setFirstName(firstNameParam.getParameter());
+				user.setLastName(lastNameParam.getParameter());
+				user.setEmail(emailParam.getParameter());
+			}
+
+		} catch (SQLException e) {
+
+			return user;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return user;
 	}
 }

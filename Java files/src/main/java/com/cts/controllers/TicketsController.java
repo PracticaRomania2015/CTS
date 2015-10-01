@@ -13,8 +13,12 @@ import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.TicketDAO;
 import com.cts.dao.TicketDAOInterface;
+import com.cts.dao.UserDAO;
+import com.cts.dao.UserDAOInterface;
 import com.cts.entities.Ticket;
+import com.cts.entities.User;
 import com.cts.entities.ViewTicketsRequest;
+import com.cts.utils.SendEmail;
 
 /**
  * Handles requests for the tickets.
@@ -175,6 +179,28 @@ public class TicketsController {
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.addCommentToTicket(ticket)) {
 
+			User user = null;
+			UserDAOInterface userDAO = new UserDAO();
+			user = userDAO.getTicketUser(ticket);
+			if (user != null) {
+
+				logger.info(
+						"User who created the ticket retrieved successfully! Trying to sent the email for notification!");
+				String subject = "CTS - Notification Manager";
+				String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
+						+ ",\n\nA new comment was added to your ticket with the id: " + ticket.getTicketId()
+						+ "\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
+				if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+
+					logger.info("An email was sent to notify the ticket user that a new comment was added.");
+				} else {
+
+					logger.info("Failed to send an email to notify the ticket user that a new comment was added.");
+				}
+			} else {
+
+				logger.info("The comment was posted by the user who created the ticket. No email will be sent!");
+			}
 			logger.info("Comment submitted successfully!");
 			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {

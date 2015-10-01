@@ -2,6 +2,7 @@ package com.cts.dao;
 
 import java.util.ArrayList;
 import com.cts.entities.Category;
+import com.cts.entities.Ticket;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
 import com.cts.entities.UserStatus;
@@ -24,4 +25,6 @@ public interface UserDAOInterface {
 	public boolean updateUserStatus(UserStatus userStatus);
 
 	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest, StringBuilder totalNumberOfPages);
+	
+	public User getTicketUser(Ticket ticket);
 }
