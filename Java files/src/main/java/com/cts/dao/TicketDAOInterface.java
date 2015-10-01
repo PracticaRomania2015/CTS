@@ -23,4 +23,6 @@ public interface TicketDAOInterface {
 	public boolean changeTicketPriority(Ticket ticket);
 	
 	public boolean reopenTicket(Ticket ticket);
+	
+	public boolean changeTicketCategory(Ticket ticket);
 }

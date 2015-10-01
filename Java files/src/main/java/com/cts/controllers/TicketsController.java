@@ -235,11 +235,12 @@ public class TicketsController {
 
 		}
 	}
-	
+
 	/**
 	 * Change specified ticket status to open
 	 * 
-	 * @param ticket Ticket to get status changed.
+	 * @param ticket
+	 *            Ticket to get status changed.
 	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/openTicket", method = RequestMethod.POST)
@@ -260,11 +261,12 @@ public class TicketsController {
 
 		}
 	}
-	
+
 	/**
 	 * Change specified ticket priority
 	 * 
-	 * @param ticket Ticket to get priority changed.
+	 * @param ticket
+	 *            Ticket to get priority changed.
 	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/changeTicketPriority", method = RequestMethod.POST)
@@ -280,26 +282,33 @@ public class TicketsController {
 
 		} else {
 
-			logger.error("Ticket priority could not be closed!");
+			logger.error("Failed to change the ticket priority!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 
 		}
 	}
 
-	@RequestMapping(value = "/changePriority", method = RequestMethod.POST)
-	public @ResponseBody String changePriority(@RequestBody Ticket ticket) {
+	/**
+	 * Change specified ticket category
+	 * 
+	 * @param ticket
+	 *            Ticket to get category changed.
+	 * @return JSON with success/error response.
+	 */
+	@RequestMapping(value = "/changeTicketCategory", method = RequestMethod.POST)
+	public @ResponseBody String changeTicketCategory(@RequestBody Ticket ticket) {
 
-		logger.debug("Attempting to change the priority for a ticket.");
+		logger.debug("Attempting to change ticket category.");
 
 		TicketDAOInterface ticketDAO = new TicketDAO();
 
-		if (ticketDAO.changeTicketPriority(ticket)) {
+		if (ticketDAO.changeTicketCategory(ticket)) {
 
-			logger.info("The priority was successfully changed!");
+			logger.info("Ticket category changed successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
-			logger.info("Failed to change the priority!");
+			logger.info("Failed to change the ticket category!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
