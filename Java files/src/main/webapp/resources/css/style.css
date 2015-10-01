@@ -1,10 +1,9 @@
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
 #header{
-	display: inline-block;
 	width: 1245px;
-	margin-left: 170px;
-	margin-right: 170px;
+	margin: 0 auto;
+
 }
 #logoWrapper {
 	width: 250px;
@@ -28,6 +27,7 @@
 #logo{
 	width: 100%;
 	height: 100%;
+	margin: 0 auto;
 
 
 
