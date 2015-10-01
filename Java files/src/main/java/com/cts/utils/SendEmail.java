@@ -20,7 +20,7 @@ public class SendEmail {
 		props.put("mail.smtp.socketFactory.port", "587");
 		props.put("mail.smtp.auth", "true");
 
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(user, password);
 			}

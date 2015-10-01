@@ -278,7 +278,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					emailParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
+				
 				user = new User();
 				user.setFirstName(firstNameParam.getParameter());
 				user.setLastName(lastNameParam.getParameter());
@@ -286,7 +286,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			}
 
 		} catch (SQLException e) {
-
+			
 			return user;
 		} finally {
 
