@@ -8,7 +8,7 @@ var RecoveryModel = Backbone.Model.extend({
 
 	validate : function(attrs) {
 
-		var regexEmail = /([A-Za-z.])*@([Gg][Mm][Aa][Ii][Ll])[.]([Cc][Oo][Mm])*\w+$/;
+		var regexEmail = /([A-Za-z.])+@([A-Za-z])+\.([A-Za-z])+/;
 		$("#recoveryMail").removeAttr("title");
 		$("#recoveryMail").removeClass("error");
 		if (!attrs.email) {
