@@ -93,12 +93,12 @@ public class ViewTicketsRequest {
 		this.sortType = sortType;
 	}
 
-	public boolean isSearchASC() {
+	public boolean getIsSearchASC() {
 
 		return isSearchASC;
 	}
 
-	public void setSearchASC(boolean isSearchASC) {
+	public void setIsSearchASC(boolean isSearchASC) {
 
 		this.isSearchASC = isSearchASC;
 	}

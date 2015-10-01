@@ -333,40 +333,54 @@
 			<table class="ticketView">
     			<thead>
 					<tr>
-						<th id="id-col" class="id-col rounded-tl">Id
-							<div id="idArrHover" class="arrowHover"  style='display: none;'></div>
+						<th id="id-col" class="id-col rounded-tl">
+							<div id="idTh">Id</div>
+							<div id="idArrUp" class="arrowUp" ></div>
+							<div id="idArrDown" class="arrowDown" ></div>
 							<div id="idArrAsc" class="arrowAsc"  style='display: none;'></div>
 							<div id="idArrDesc" class="arrowDesc"  style='display: none;'></div>
 						</th>
-						<th id="subject-col" class="wide-col">Subject
-							<div id="subjectArrHover" class="arrowHover"  style='display: none;'></div>
+						<th id="subject-col" class="wide-col">
+							<div id="subjectTh">Subject</div>
+							<div id="subjectArrUp" class="arrowUp" ></div>
+							<div id="subjectArrDown" class="arrowDown" ></div>
 							<div id="subjectArrAsc" class="arrowAsc"  style='display: none;'></div>
 							<div id="subjectArrDesc" class="arrowDesc"  style='display: none;'></div>
 						</th>
-						<th id="category-col" class="slim-col">Category
-							<div id="categoryArrHover" class="arrowHover"  style='display: none;'></div>
+						<th id="category-col" class="slim-col">
+							<div id="categoryTh">Category</div>
+							<div id="categoryArrUp" class="arrowUp" ></div>
+							<div id="categoryArrDown" class="arrowDown" ></div>
 							<div id="categoryArrAsc" class="arrowAsc"  style='display: none;'></div>
 							<div id="categoryArrDesc" class="arrowDesc"  style='display: none;'></div>
 						</th>
-						<th id="priority-col" class="slim-col">Priority
-							<div id="priorityArrHover" class="arrowHover"  style='display: none;'></div>
+						<th id="priority-col" class="slim-col">
+							<div id="priorityTh">Priority</div>
+							<div id="priorityArrUp" class="arrowUp" ></div>
+							<div id="priorityArrDown" class="arrowDown" ></div>
 							<div id="priorityArrAsc" class="arrowAsc"  style='display: none;'></div>
 							<div id="priorityArrDesc" class="arrowDesc"  style='display: none;'></div>
 						</th>
-						<th id="status-col" class="wide-col">Status
-							<div id="statusArrHover" class="arrowHover"  style='display: none;'></div>
+						<th id="status-col" class="wide-col">
+							<div id="statusTh">Status</div>
+							<div id="statusArrUp" class="arrowUp" ></div>
+							<div id="statusArrDown" class="arrowDown" ></div>
 							<div id="statusArrAsc" class="arrowAsc"  style='display: none;'></div>
 							<div id="statusArrDesc" class="arrowDesc"  style='display: none;'></div>
 						</th>
-						<th id="lastComment-col" class="slim-col">Last Comment
-							<div id="lastCommentArrHover" class="arrowHover"  style='display: none;'></div>
-							<div id="lastCommentArrAsc" class="arrowAsc"  style='display: none;'></div>
-							<div id="lastCommentArrDesc" class="arrowDesc"  style='display: none;'></div>
+						<th id="lastComment-col" class="slim-col"> 
+							<div id="lastCommentTh">Last Comment</div>
+							<div id="lastCommentArrUp" class="arrowUp twoRowsArrUp" ></div>
+							<div id="lastCommentArrDown" class="arrowDown twoRowsArrDown" ></div>
+							<div id="lastCommentArrAsc" class="arrowAsc twoRowsArrAsc"  style='display: none;'></div>
+							<div id="lastCommentArrDesc" class="arrowDesc twoRowsArrDesc"  style='display: none;'></div>
 						</th>
-						<th id="submitDate-col" class="slim-col rounded-tr">Submit Date
-							<div id="submitDateArrHover" class="arrowHover"  style='display: none;'></div>
-							<div id="submitDateArrAsc" class="arrowAsc"  style='display: none;'></div>
-							<div id="submitDateArrDesc" class="arrowDesc"  style='display: none;'></div>
+						<th id="submitDate-col" class="slim-col rounded-tr">
+							<div id="submitDateTh">Submit On</div>
+							<div id="submitDateArrUp" class="arrowUp " ></div>
+							<div id="submitDateArrDown" class="arrowDown " ></div>
+							<div id="submitDateArrAsc" class="arrowAsc "  style='display: none;'></div>
+							<div id="submitDateArrDesc" class="arrowDesc "  style='display: none;'></div>
 						</th>
      	 			</tr>
     			</thead>

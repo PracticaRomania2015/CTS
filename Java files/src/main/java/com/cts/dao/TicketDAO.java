@@ -96,7 +96,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> searchTypeParam = new InOutParam<String>(viewTicketsRequest.getSearchType(),
 					"SearchType");
 			InOutParam<String> sortTypeParam = new InOutParam<String>(viewTicketsRequest.getSortType(), "SortType");
-			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewTicketsRequest.isSearchASC(),
+			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewTicketsRequest.getIsSearchASC(),
 					"IsSearchASC");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
 			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,

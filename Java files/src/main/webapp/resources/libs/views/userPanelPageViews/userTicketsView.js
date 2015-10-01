@@ -8,7 +8,6 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		
 		var isAsc ;
 		var lastSortType;
-		var lastHovered;
 	},
 	
 	events : {
@@ -32,9 +31,7 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 			this.viewData(this.model.get("requestedPageNumber") - 1, $('#ticketSearchBox').val(), $('#ticketSearchDropBox').val());
 		},
 		'click .openTicketComments' : 'viewTicketComments',
-		'click th' : 'orderBy'  ,
-		'mouseover th' :  'mouseoverTh',
-		'mouseout th' :  'mouseoutTh'
+		'click #id-col, #subject-col, #category-col, #priority-col, #status-col, #lastComment-col, #submitDate-col' : 'orderBy'  
 	},
 
 	appendData : function() {
@@ -44,27 +41,62 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		return this;
 	},
 	
-	setSortType : function(clickedHeaderColumn){
-		switch (clickedHeaderColumn) {
+	setSortType : function(clickedId){
+		switch (clickedId) {
 		case "id-col":
+		case "idTh":
+		case "idArrUp":
+		case "idArrDown":
+		case "idArrAsc":	
+		case "idArrDesc":	
 			return "TicketId"
 			break;
 		case "subject-col":
+		case "subjectTh":
+		case "subjectArrUp":
+		case "subjectArrDown":
+		case "subjectArrAsc":	
+		case "subjectArrDesc":
 			return "Subject"
 			break;
 		case "category-col":
+		case "categoryTh":
+		case "categoryArrUp":
+		case "categoryArrDown":
+		case "categoryArrAsc":	
+		case "categoryArrDesc":
 			return "Category"
 			break;
 		case "priority-col":
+		case "priorityTh":
+		case "priorityArrUp":
+		case "priorityArrDown":
+		case "priorityArrAsc":	
+		case "priorityArrDesc":
 			return "Priority"
 			break;
 		case "status-col":
+		case "statusTh":
+		case "statusArrUp":
+		case "statusArrDown":
+		case "statusArrAsc":	
+		case "statusArrDesc":
 			return "Status"
 			break;
 		case "lastComment-col":
+		case "lastCommentTh":
+		case "lastCommentArrUp":
+		case "lastCommentArrDown":
+		case "lastCommentArrAsc":	
+		case "lastCommentArrDesc":
 			return "LastDateTime"
 			break;
 		case "submitDate-col":
+		case "submitDateTh":
+		case "submitDateArrUp":
+		case "submitDateArrDown":
+		case "submitDateArrAsc":	
+		case "submitDateArrDesc":
 			return "SubmitDate"
 			break;
 		default:
@@ -72,27 +104,69 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 		}
 	},
 	
-	getColumName : function(clickedHeaderColumn){
-		switch (clickedHeaderColumn) {
+	getColumName : function(clickedId){
+		switch (clickedId) {
 		case "id-col":
+		case "idTh":
+		case "idArrUp":
+		case "idArrDown":
+		case "idArrAsc":	
+		case "idArrDesc":
+		case "TicketId":
 			return "id"
 			break;
 		case "subject-col":
+		case "subjectTh":
+		case "subjectArrUp":
+		case "subjectArrDown":
+		case "subjectArrAsc":	
+		case "subjectArrDesc":
+		case "Subject":
 			return "subject"
 			break;
 		case "category-col":
+		case "categoryTh":
+		case "categoryArrUp":
+		case "categoryArrDown":
+		case "categoryArrAsc":	
+		case "categoryArrDesc":
+		case "Category":
 			return "category"
 			break;
 		case "priority-col":
+		case "priorityTh":
+		case "priorityArrUp":
+		case "priorityArrDown":
+		case "priorityArrAsc":	
+		case "priorityArrDesc":
+		case "Priority":
 			return "priority"
 			break;
 		case "status-col":
+		case "statusTh":
+		case "statusArrUp":
+		case "statusArrDown":
+		case "statusArrAsc":	
+		case "statusArrDesc":
+		case "Status":
 			return "status"
 			break;
 		case "lastComment-col":
+		case "lastCommentTh":
+		case "lastCommentArrUp":
+		case "lastCommentArrDown":
+		case "lastCommentArrAsc":	
+		case "lastCommentArrDesc":
+		case "LastDateTime":
 			return "lastComment"
 			break;
 		case "submitDate-col":
+		case "submitDateTh":
+		case "submitDateArrUp":
+		case "submitDateArrDown":
+		case "submitDateArrAsc":	
+		case "submitDateArrDesc":
+		case "SubmitDate":
 			return "submitDate"
 			break;
 		default:
@@ -101,77 +175,55 @@ var UserTicketsView = GenericUserPanelPageView.extend({
 	},
 	
 	
-	orderBy : function(clicked){ // Setting isSearchASC into model aint working
-	
+orderBy : function(clicked){
 		
-		var clickedHeaderColumn = clicked.srcElement.id;
+		var clickedId = clicked.srcElement.id;
 		
 		if( typeof this.isAsc == 'undefined'){
 			this.isAsc = false;
 			this.lastSortType="";
 			console.log("Been here");
 		}
+	
 		
-		if(typeof this.lastHovered != 'undefined'){
-			this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
-		}
-		
-		if(this.lastSortType==clickedHeaderColumn){
+		if(this.lastSortType==this.setSortType(clickedId)){
 			if(this.isAsc==false){
-				console.log("1");
 				this.isAsc=true;
-				this.model.set("sortType",this.setSortType(clickedHeaderColumn));
-				//this.model.set("isSearchASC", true);
-				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').show();
-				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').hide();
+				this.model.set("sortType",this.setSortType(clickedId));
+				this.model.set("isSearchASC",this.isAsc);
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrAsc').show();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrDesc').hide();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrUp').hide();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrDown').hide();
 				
 			}
 			else{
-				console.log("2");
 				this.isAsc=false;
-				this.model.set("sortType",this.setSortType(clickedHeaderColumn));
-			//	this.model.set("isSearchASC",false);
-				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').hide();
-				this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').show();
+				this.model.set("sortType",this.setSortType(clickedId));
+				this.model.set("isSearchASC",this.isAsc);
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrAsc').hide();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrDesc').show();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrUp').hide();
+				this.$el.find('#' + this.getColumName(clickedId) + 'ArrDown').hide();
 			}
 		}
 		else{
-			console.log("3");
 			this.isAsc=true;
-			this.model.set("sortType",this.setSortType(clickedHeaderColumn));
-		//	this.model.set("isSearchASC",true);
-			this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrAsc').show();
-			this.$el.find('#' + this.getColumName(clickedHeaderColumn) + 'ArrDesc').hide();
+			this.model.set("sortType",this.setSortType(clickedId));
+			this.model.set("isSearchASC",this.isAsc);
+			this.$el.find('#' + this.getColumName(clickedId) + 'ArrAsc').show();
+			this.$el.find('#' + this.getColumName(clickedId) + 'ArrUp').hide();
+			this.$el.find('#' + this.getColumName(clickedId) + 'ArrDown').hide();
 			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrAsc').hide();
 			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrDesc').hide();
-			this.lastSortType=clickedHeaderColumn;
+			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrUp').show();
+			this.$el.find('#' + this.getColumName(this.lastSortType) + 'ArrDown').show();
+			
 		}
 		
-		console.log("thisIsAsc : "+this.isAsc);
-		console.log("modelIsAsc : "+this.model.get("isSearchASC"));
-		console.log("lastSortType : "+this.lastSortType);
-		console.log("thisSortType : "+this.getColumName(clickedHeaderColumn));
-		console.log("modelSortType : "+this.model.get("sortType"));
+		this.lastSortType=this.setSortType(clickedId);
 		
-		this.viewData(1, this.$el.find('#ticketSearchBox').val(), this.$el.find('#ticketSearchDropBox').val());
-	},
-	
-	
-	
-	mouseoverTh : function(ev) {
-		var hoveredHeaderColumn = $(ev.target).attr('id');
-		if(typeof this.lastHovered != 'undefined'){
-			this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
-		}
-		if( this.model.get("sortType")!=this.setSortType(hoveredHeaderColumn)){
-			this.$el.find('#' + this.getColumName(hoveredHeaderColumn) + 'ArrHover').show();
-			this.lastHovered = hoveredHeaderColumn;
-		}
-	
-	},
-	
-	mouseoutTh : function(){
-		this.$el.find('#' + this.getColumName(this.lastHovered ) + 'ArrHover').hide();
+		this.viewData(1, "", "");
 	},
 
 	viewTicketComments : function(clicked) {

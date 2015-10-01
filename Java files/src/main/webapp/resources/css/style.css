@@ -709,9 +709,8 @@ h2.userPage {
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-bottom: 5px solid #7bc143;
-	display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
+    float: right;
+    margin-top: -12px;
 }
 
 .arrowAsc{
@@ -720,21 +719,8 @@ h2.userPage {
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid #7bc143;;
-	display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
-}
-
-.arrowHover{
-	width: 0; 
-	height: 0; 
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-top: 5px solid #f1f8ec;
-	display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
-
+    float: right;
+    margin-top: -12px;
 }
 
 .reassignTicketPriorities{
@@ -744,4 +730,42 @@ h2.userPage {
 	margin-left: 20px;
 	margin-top: 7px;
 }
+
+.arrowDown{
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #7bc143;;
+	float: right;
+	margin-top: -8px;
+	vertical-align: middle;
+
+
+}
+
+.arrowUp{
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #7bc143;
+	float: right;
+	margin-top: -18px;
+	vertical-align: middle;
+
+}
+
+.twoRowsArrUp{
+	margin-top: -28px;
+}
+
+.twoRowsArrDown{
+	margin-top: -18px;
+}
+
+.twoRowsArrAsc,.twoRowsArrDesc{
+	margin-top: -22px;
+}
+
 
