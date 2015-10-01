@@ -308,16 +308,21 @@
 		<table class = "userRoles">
 			<thead>
 				<tr>
-					<th id="" class="slim-col rounded-tl">Category ID</th>
-					<th class="wide-col">Category Name</th>
+					<th class="wide-col rounded-tl">Category Name</th>
 					<th id="" class="wide-col rounded-tr">Check</th>				
 				</tr>
 			</thead>
+
 			<tbody id="userRolesBody"></tbody>
+			<tfoot>
+      			<tr>
+        			<th colspan="2" id="rounded-bot"><div id = "sysAdminDiv"></div></th>
+      			</tr>
+    		</tfoot>			
 		</table>
 
 		<span href="#" class="button" id="updateUserRoles">Submit</span>
-		<div id = "sysAdminDiv"></div>
+		
 	</div>
 	</script>
 	<script type="text/template" id="userTicketsTemplate">

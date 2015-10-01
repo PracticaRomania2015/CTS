@@ -9,14 +9,15 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 	},
 	
 	appendData: function(){
-		this.$el.append("<h1 class='userPage'> Manage User Roles </h1>");
+		this.$el.append("<h1 class='userPage'> Manage "+this.userName+" Roles </h1>");
 		this.$el.append(_.template($('#manageUserRoleTemplate').html()));
 		return this;
 	},
 	
-	initialize: function(){
+	initialize: function(options){
 		
 		var that = this;
+		this.userName = options.userName;
 		
 		this.model.save({},{
 			success: function(model, response){
@@ -38,8 +39,7 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 	
 	addManagedCategory: function(adminStatus, categoryId, categoryName){
 		var sysAdmin = adminStatus?"checked":"";
-		this.$el.find('tbody').append("<tr><td><div class='columnOverflow'>" + categoryId
-										+ "</div></td><td><div class='columnOverflow'>" + categoryName
+		this.$el.find('tbody').append("<tr><td><div class='columnOverflow'>" + categoryName
 										+ "</div></td><td><div class='columnOverflow'><input type='checkbox' class='checkboxClassId' value='sysAdmin' id='"+categoryId+"' "+ sysAdmin +"/>"
 										+ "</div></td>");
 		
@@ -48,7 +48,7 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 	populateData: function(userRights){
 		var that = this;
 		var checked = userRights.sysAdmin?"checked":"";
-		$('#sysAdminDiv').empty().append("<input type='checkbox' id='sysAdminCheckbox' value='sysAdmin' " + checked + ">isSysAdmin</input>");
+		$('#sysAdminDiv').empty().append("<input type='checkbox' id='sysAdminCheckbox' value='sysAdmin' " + checked + ">Set user as root admin</input>");
 		$('#sysAdminCheckbox').click(function(){
 			that.model.attributes.data.sysAdmin = !that.model.attributes.data.sysAdmin;
 			console.log(that.model.attributes.data.sysAdmin);

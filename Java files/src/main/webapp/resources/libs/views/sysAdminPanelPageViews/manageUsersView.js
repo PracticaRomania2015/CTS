@@ -89,7 +89,8 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 		var manageUserRoleView = new ManageUserRoleView({
 			model: new ManageUserRoleModel({
 				userId: $(clicked.currentTarget).attr('id')
-			})
+			}),
+			userName  : $(clicked.currentTarget).attr('value')
 		});
 		
 		$('#userPanelPageContainer').replaceWith(manageUserRoleView.render().el);
@@ -99,7 +100,7 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 	addUser: function(userId, firstName, lastName, email, role){
 		this.$el.find('tbody').append(
 				"<tr class='openUser' id='" + userId
-					+ "'><td><div class='columnOverflow'>" + userId
+					+ "' value='"+ firstName+ " " + lastName +"'><td><div class='columnOverflow'>" + userId
 					+ "</div></td><td><div class='columnOverflow'>" + firstName
 					+ "</div></td><td><div class='columnOverflow'>" + lastName
 					+ "</div></td><td><div class='columnOverflow'>" + email

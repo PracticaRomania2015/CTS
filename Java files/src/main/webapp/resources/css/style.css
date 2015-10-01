@@ -379,9 +379,12 @@ h2.userPage {
 }
 
 #sysAdminDiv{
-	float: left;
-	color: #0d94d2;
-	margin-top: 7px;
+	margin: 0 auto;
+	color: white;
+	font-family: arial
+}
+
+.sysAdminCheckbox{
 	margin-left: 10px;
 }
 .table-surf {
@@ -767,5 +770,4 @@ h2.userPage {
 .twoRowsArrAsc,.twoRowsArrDesc{
 	margin-top: -22px;
 }
-
 
