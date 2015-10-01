@@ -68,7 +68,7 @@ function userPanelPageFunctionality() {
 	if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin") {
 		$('#btn-mngTk').click(
 				function() {
-					userTicketsView = createTicketPageView = manageCategoriesView = null;
+					userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
 					if (!assignedTicketsView) {
 						assignedTicketsView = new AssignedTicketsView({
 							model : new ViewTicketsModel({})
