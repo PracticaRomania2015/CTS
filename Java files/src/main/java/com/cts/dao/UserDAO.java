@@ -270,23 +270,25 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		try {
 
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(0, "UserId", true);
 			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
 			InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
 			InOutParam<String> emailParam = new InOutParam<String>("", "Email", true);
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
-			prepareExecution(StoredProceduresNames.GetTicketUser, ticketIdParam, firstNameParam, lastNameParam,
-					emailParam, errCodeParam);
+			prepareExecution(StoredProceduresNames.GetTicketUser, ticketIdParam, userIdParam, firstNameParam,
+					lastNameParam, emailParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-				
+
 				user = new User();
+				user.setUserId(userIdParam.getParameter());
 				user.setFirstName(firstNameParam.getParameter());
 				user.setLastName(lastNameParam.getParameter());
 				user.setEmail(emailParam.getParameter());
 			}
 
 		} catch (SQLException e) {
-			
+
 			return user;
 		} finally {
 
