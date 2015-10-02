@@ -41,22 +41,38 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			execute();
 			if (errCodeParam.getParameter() == 0) {
 
-				ticket.setTicketId(ticketIdParam.getParameter());
-				ticket.getComments().get(0).setTicketId(ticketIdParam.getParameter());
-				ticket.getComments().get(0).setCommentId(commentIdParam.getParameter());
-				ticket.getComments().get(0).getUser().setUserId(userIdParam.getParameter());
+				if (ticketIdParam.getParameter() != null) {
+
+					ticket.setTicketId(ticketIdParam.getParameter());
+					ticket.getComments().get(0).setTicketId(ticketIdParam.getParameter());
+				}
+				if (commentIdParam.getParameter() != null) {
+
+					ticket.getComments().get(0).setCommentId(commentIdParam.getParameter());
+				}
+				if (userIdParam.getParameter() != null) {
+
+					ticket.getComments().get(0).getUser().setUserId(userIdParam.getParameter());
+				}
 			} else {
 
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e)
+
+		{
 
 			return false;
-		} finally {
+		} finally
+
+		{
 
 			closeCallableStatement();
 		}
 		return true;
+
 	}
 
 	@Override
@@ -192,7 +208,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			ticket.getState().setStateId(stateIdParam.getParameter());
 			ticket.getState().setStateName(stateNameParam.getParameter());
 			if (assignedUserIdParam.getParameter() != null) {
-				
+
 				ticket.getAssignedToUser().setUserId(assignedUserIdParam.getParameter());
 			}
 			ticket.getAssignedToUser().setFirstName(assignedUserFirstNameParam.getParameter());
