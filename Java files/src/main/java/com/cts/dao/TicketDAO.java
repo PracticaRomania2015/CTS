@@ -58,16 +58,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 				return false;
 			}
-		} catch (
-
-		SQLException e)
-
-		{
+		} catch (SQLException e) {
 
 			return false;
-		} finally
-
-		{
+		} finally {
 
 			closeCallableStatement();
 		}
