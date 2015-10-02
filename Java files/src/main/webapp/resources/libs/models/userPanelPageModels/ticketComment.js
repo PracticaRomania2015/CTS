@@ -12,7 +12,7 @@ var TicketComment = Backbone.Model.extend({
 			$("#ticketContent").attr("title", getValue("mandatory"));
 			$("#ticketContent").addClass("error");
 			return true;
-		} else if (attrs.comment.length > 250) {
+		} else if (attrs.comment.length > 2000) {
 			$("#ticketContent").attr("title", getValue("ticketComment"));
 			$("#ticketContent").addClass("error");
 			return true;
