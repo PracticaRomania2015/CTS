@@ -186,21 +186,28 @@ public class TicketsController {
 
 				logger.info(
 						"User who created the ticket retrieved successfully! Trying to sent the email for notification!");
-				String subject = "CTS - Notification Manager";
-				String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
-						+ ",\n\nAn admin has responded to your ticket #" + ticket.getTicketId()
-						+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
+				if (user.getUserId() != ticket.getComments().get(ticket.getComments().size() - 1).getUser()
+						.getUserId()) {
 
-				if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+					String subject = "CTS - Notification Manager";
+					String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
+							+ ",\n\nAn admin has responded to your ticket #" + ticket.getTicketId()
+							+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
 
-					logger.info("An email was sent to notify the ticket user that a new comment was added.");
+					if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+
+						logger.info("An email was sent to notify the ticket user that a new comment was added.");
+					} else {
+
+						logger.info("Failed to send an email to notify the ticket user that a new comment was added.");
+					}
 				} else {
 
-					logger.info("Failed to send an email to notify the ticket user that a new comment was added.");
+					logger.info("The comment was posted by the user who created the ticket. No email will be sent!");
 				}
 			} else {
 
-				logger.info("The comment was posted by the user who created the ticket. No email will be sent!");
+				logger.info("Cannot retrive the user who submitted the ticket!");
 			}
 			logger.info("Comment submitted successfully!");
 			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
