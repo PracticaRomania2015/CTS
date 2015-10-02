@@ -428,7 +428,7 @@
 			<select id="ticketPriorityDropbox" class="ticketPriorities" style="color: #808080">
 				<option value="" disabled selected style='display:none;'>Set ticket priority</option>
 			</select>
-			<textarea id='ticketContent' rows='10' maxlength='500' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
+			<textarea id='ticketContent' rows='10' maxlength='2000' placeholder='Describe your problem.' class='masterTooltip ticketInput'></textarea>
 			<span href="#" id="submitTicketButton" class="button">Submit</span>
 	</script>
 	<script type="text/template" id="respondToTicketTemplate">
@@ -438,7 +438,7 @@
 			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
 			<div id="ticketResponseWrapper">
 				<div id="responseText">
-					<textarea id="ticketResponse" rows='10' maxlength='500' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
+					<textarea id="ticketResponse" rows='10' maxlength='2000' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
 					<span href="#" class="button" id="respondToTicketButton">Submit</span>
 					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
 					<select id="ticketAdminsDropBox" style='display: none;'></select>
