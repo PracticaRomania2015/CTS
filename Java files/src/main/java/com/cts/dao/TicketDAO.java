@@ -82,7 +82,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		try {
-			
+
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
 					"UserId");
 			InOutParam<Integer> isViewMyTicketsRequestParam = new InOutParam<Integer>(
@@ -163,7 +163,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					categoryNameParam, stateIdParam, stateNameParam, assignedUserIdParam, assignedUserFirstNameParam,
 					assignedUserLastNameParam, priorityIdParam, priorityNameParam, errCodeParam);
 			ResultSet resultSet = execute(true);
-			if (resultSet == null){
+			if (resultSet == null) {
 				return false;
 			}
 			while (resultSet.next()) {
@@ -191,7 +191,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			ticket.getCategory().setCategoryName(categoryNameParam.getParameter());
 			ticket.getState().setStateId(stateIdParam.getParameter());
 			ticket.getState().setStateName(stateNameParam.getParameter());
-			ticket.getAssignedToUser().setUserId(assignedUserIdParam.getParameter());
+			if (assignedUserIdParam.getParameter() != null) {
+				
+				ticket.getAssignedToUser().setUserId(assignedUserIdParam.getParameter());
+			}
 			ticket.getAssignedToUser().setFirstName(assignedUserFirstNameParam.getParameter());
 			ticket.getAssignedToUser().setLastName(assignedUserLastNameParam.getParameter());
 			ticket.getPriority().setPriorityId(priorityIdParam.getParameter());

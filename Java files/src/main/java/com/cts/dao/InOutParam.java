@@ -61,7 +61,6 @@ public class InOutParam<T> {
 		} else if (parameter instanceof Timestamp) {
 
 			return java.sql.Types.TIMESTAMP;
-
 		} else {
 
 			return 0;
