@@ -161,6 +161,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> subjectParam = new InOutParam<String>("", "Subject", true);
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(0, "CategoryId", true);
 			InOutParam<String> categoryNameParam = new InOutParam<String>("", "CategoryName", true);
+			InOutParam<Integer> parentCategoryIdParam = new InOutParam<Integer>(0, "ParentCategoryId", true);
 			InOutParam<Integer> stateIdParam = new InOutParam<Integer>(0, "StateId", true);
 			InOutParam<String> stateNameParam = new InOutParam<String>("", "StateName", true);
 			InOutParam<Integer> assignedUserIdParam = new InOutParam<Integer>(0, "AssignedUserId", true);
@@ -170,8 +171,9 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<String> priorityNameParam = new InOutParam<String>("", "PriorityName", true);
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.GetFullTicket, ticketIdParam, subjectParam, categoryIdParam,
-					categoryNameParam, stateIdParam, stateNameParam, assignedUserIdParam, assignedUserFirstNameParam,
-					assignedUserLastNameParam, priorityIdParam, priorityNameParam, errCodeParam);
+					categoryNameParam, parentCategoryIdParam, stateIdParam, stateNameParam, assignedUserIdParam,
+					assignedUserFirstNameParam, assignedUserLastNameParam, priorityIdParam, priorityNameParam,
+					errCodeParam);
 			ResultSet resultSet = execute(true);
 			if (resultSet == null) {
 				return false;
@@ -196,9 +198,16 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			if (errCodeParam.getParameter() == 1) {
 				return false;
 			}
+			System.out.println("*arent ID : " + parentCategoryIdParam.getType());
 			ticket.setSubject(subjectParam.getParameter());
 			ticket.getCategory().setCategoryId(categoryIdParam.getParameter());
 			ticket.getCategory().setCategoryName(categoryNameParam.getParameter());
+			if (parentCategoryIdParam.getParameter() == null) {
+				ticket.getCategory().setParentCategoryId(0);
+			} else {
+				ticket.getCategory().setParentCategoryId(parentCategoryIdParam.getParameter());
+			}
+
 			ticket.getState().setStateId(stateIdParam.getParameter());
 			ticket.getState().setStateName(stateNameParam.getParameter());
 			if (assignedUserIdParam.getParameter() != null) {
