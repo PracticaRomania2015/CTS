@@ -95,8 +95,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(viewTicketsRequest.getUser().getUserId(),
 					"UserId");
-			InOutParam<Integer> isViewMyTicketsRequestParam = new InOutParam<Integer>(
-					viewTicketsRequest.getTypeOfRequest(), "TypeOfRequest");
 			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
 					viewTicketsRequest.getRequestedPageNumber(), "RequestedPageNumber");
 			InOutParam<Integer> ticketsPerPageParam = new InOutParam<Integer>(viewTicketsRequest.getTicketsPerPage(),
@@ -105,13 +103,31 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 					"TextToSearch");
 			InOutParam<String> searchTypeParam = new InOutParam<String>(viewTicketsRequest.getSearchType(),
 					"SearchType");
+			InOutParam<Integer> selectedCategoryIdParam = new InOutParam<Integer>(
+					viewTicketsRequest.getSelectedCategory().getCategoryId(), "SelectedCategoryID");
+			InOutParam<Integer> selectedPriorityIdParam = new InOutParam<Integer>(
+					viewTicketsRequest.getSelectedCategory().getCategoryId(), "SelectedPriorityID");
+			InOutParam<Integer> selectedStateIdParam = new InOutParam<Integer>(
+					viewTicketsRequest.getSelectedCategory().getCategoryId(), "SelectedStateID");
 			InOutParam<String> sortTypeParam = new InOutParam<String>(viewTicketsRequest.getSortType(), "SortType");
 			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewTicketsRequest.getIsSearchASC(),
 					"IsSearchASC");
 			InOutParam<Integer> totalNumberOfPagesParam = new InOutParam<Integer>(0, "TotalNumberOfPages", true);
-			prepareExecution(StoredProceduresNames.GetTickets, userIdParam, isViewMyTicketsRequestParam,
-					requestedPageNumberParam, ticketsPerPageParam, textToSearchParam, searchTypeParam, sortTypeParam,
-					isSearchASCParam, totalNumberOfPagesParam);
+
+			if (viewTicketsRequest.getTypeOfRequest() == 0) {
+
+				prepareExecution(StoredProceduresNames.GetPersonalTickets, userIdParam, requestedPageNumberParam,
+						ticketsPerPageParam, textToSearchParam, searchTypeParam, selectedCategoryIdParam,
+						selectedPriorityIdParam, selectedStateIdParam, sortTypeParam, isSearchASCParam,
+						totalNumberOfPagesParam);
+			} else {
+
+				prepareExecution(StoredProceduresNames.GetManageTickets, userIdParam, requestedPageNumberParam,
+						ticketsPerPageParam, textToSearchParam, searchTypeParam, selectedCategoryIdParam,
+						selectedPriorityIdParam, selectedStateIdParam, sortTypeParam, isSearchASCParam,
+						totalNumberOfPagesParam);
+
+			}
 			ResultSet resultSet = execute(true);
 
 			while (resultSet.next()) {
@@ -120,7 +136,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				ticket.setTicketId(resultSet.getInt("TicketId"));
 				ticket.setSubject(resultSet.getString("Subject"));
 				TicketComment firstTicketComment = new TicketComment();
-				firstTicketComment.setDateTime(resultSet.getTimestamp("DateTime"));
+				firstTicketComment.setDateTime(resultSet.getTimestamp("SubmitDate"));
 				ticket.getComments().add(firstTicketComment);
 				Category category = new Category();
 				category.setCategoryName(resultSet.getString("CategoryName"));
@@ -129,11 +145,10 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 				state.setStateName(resultSet.getString("StateName"));
 				ticket.setState(state);
 				User assignedUser = new User();
-				assignedUser.setFirstName(resultSet.getString("FirstName"));
-				assignedUser.setLastName(resultSet.getString("LastName"));
+				assignedUser.setFirstName(resultSet.getString("AssignedUserName"));
 				ticket.setAssignedToUser(assignedUser);
 				TicketComment lastTicketComment = new TicketComment();
-				lastTicketComment.setDateTime(resultSet.getTimestamp("LastDateTime"));
+				lastTicketComment.setDateTime(resultSet.getTimestamp("AnswerDate"));
 				ticket.getComments().add(lastTicketComment);
 				Priority priority = new Priority();
 				priority.setPriorityName(resultSet.getString("PriorityName"));

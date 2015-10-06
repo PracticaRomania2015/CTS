@@ -62,9 +62,15 @@ public enum StoredProceduresNames {
 		}
 	},
 
-	GetTickets {
+	GetPersonalTickets {
 		public String toString() {
-			return "dbo.GetTickets";
+			return "dbo.GetPersonalTickets";
+		}
+	},
+
+	GetManageTickets {
+		public String toString() {
+			return "dbo.GetManageTickets";
 		}
 	},
 

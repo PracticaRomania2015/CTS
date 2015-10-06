@@ -10,6 +10,9 @@ public class ViewTicketsRequest {
 	private String searchType;
 	private String sortType;
 	private boolean isSearchASC;
+	private Category selectedCategory;
+	private Priority selectedPriority;
+	private State selectedState;
 
 	public ViewTicketsRequest() {
 
@@ -21,6 +24,9 @@ public class ViewTicketsRequest {
 		searchType = "";
 		sortType = "";
 		isSearchASC = true;
+		selectedCategory = new Category();
+		selectedPriority = new Priority();
+		selectedState = new State();
 	}
 
 	public User getUser() {
@@ -101,5 +107,35 @@ public class ViewTicketsRequest {
 	public void setIsSearchASC(boolean isSearchASC) {
 
 		this.isSearchASC = isSearchASC;
+	}
+
+	public Category getSelectedCategory() {
+
+		return selectedCategory;
+	}
+
+	public void setSelectedCategory(Category selectedCategory) {
+
+		this.selectedCategory = selectedCategory;
+	}
+
+	public Priority getSelectedPriority() {
+
+		return selectedPriority;
+	}
+
+	public void setSelectedPriority(Priority selectedPriority) {
+
+		this.selectedPriority = selectedPriority;
+	}
+
+	public State getSelectedState() {
+
+		return selectedState;
+	}
+
+	public void setSelectedState(State selectedState) {
+
+		this.selectedState = selectedState;
 	}
 }
