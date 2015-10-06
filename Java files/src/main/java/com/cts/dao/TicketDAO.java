@@ -108,7 +108,7 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			InOutParam<Integer> selectedPriorityIdParam = new InOutParam<Integer>(
 					viewTicketsRequest.getSelectedPriority().getPriorityId(), "SelectedPriorityID");
 			InOutParam<Integer> selectedStateIdParam = new InOutParam<Integer>(
-					viewTicketsRequest.getSelectedState().getStateId(), "SelectedStateID");
+					viewTicketsRequest.getSelectedState().getStateId(), "SelectedStatusID");
 			InOutParam<String> sortTypeParam = new InOutParam<String>(viewTicketsRequest.getSortType(), "SortType");
 			InOutParam<Boolean> isSearchASCParam = new InOutParam<Boolean>(viewTicketsRequest.getIsSearchASC(),
 					"IsSearchASC");
