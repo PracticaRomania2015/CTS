@@ -23,7 +23,12 @@ var LogInView = GenericFrontPageChildView.extend({
 			user.save({}, {
 				success : function(model, response) {
 					if (response.type == "success") {
+						console.log(response.data);
 						sessionStorage.loggedUserId = response.data.userId;
+						sessionStorage.loggedUserFirstName = response.data.firstName;
+						sessionStorage.loggedUserLastName = response.data.lastName;
+						sessionStorage.loggedUserTitle = response.data.title;
+						sessionStorage.loggedUserEmail = response.data.email;
 						sessionStorage.loggedUserRights = response.data.role.roleName;
 						sessionStorage.loggedUserName = response.data.firstName + " " +response.data.lastName;
 						$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));

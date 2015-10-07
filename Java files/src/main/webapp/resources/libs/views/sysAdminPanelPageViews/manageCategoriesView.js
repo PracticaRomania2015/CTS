@@ -37,6 +37,8 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 						$('#categoryListDropboxEditCategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 						$('#categoryListDropboxEditSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
 						$('#categoryListDropboxRemoveSubcategory').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						that.populateCategoryRow(e.categoryId, e.categoryName);
+						
 					});
 				} else {
 					if (response.type == "error"){
@@ -50,6 +52,44 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 				console.log(response);
 			}
 		});
+	},
+	
+	addCategory: function(categoryName){
+		this.$el.find('tbody').append("<tr><td><div class='columnOverflow'>" + categoryName
+										+ "</div></td></tr>");
+	},
+	
+	populateCategoryRow : function(categoryId, categoryName){
+		this.addCategory(categoryName);
+		
+		var subcategories = new GetSubcategoriesModel({
+			categoryId : categoryId
+		})
+		
+		var that = this;
+		
+		//TODO append child subcategory to parent category accordingly
+		subcategories.save({},{
+			success: function(model, response){
+				if(response.type == "success"){
+					if(!$.isEmptyObject(response.data)){
+						_.each(response.data, function(e){
+							that.addCategory(e.categoryName);
+						})
+					}
+				}else{
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error: function(model, response){
+				console.log(response);
+			}
+		})
+		
 	},
 	
 	populateSubcategoriesForRemoveSubcategory : function() {	

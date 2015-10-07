@@ -35,7 +35,6 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/validatePriority.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignPriorityToTicketModel.js"></script>
  
-
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/editCategoryModel.js"></script>
@@ -43,6 +42,7 @@
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/getUsersModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/manageUserRoleModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/updateUserStatusModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPropertiesPageModels/userPropertiesModel.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/genericFrontPageChildView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/frontPageViews/logInView.js"></script>
@@ -56,6 +56,7 @@
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/respondToTicketPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/assignedTicketsView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/userPanelPageViews/userPropertiesPageView.js"></script>
+<script type="text/javascript" src="${res}/libs/views/userPropertiesPageViews/userPropertiesPageView.js"></script>
 
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/genericSystemAdminPanelPageView.js"></script>
 <script type="text/javascript" src="${res}/libs/views/sysAdminPanelPageViews/manageCategoriesView.js"></script>
@@ -451,7 +452,14 @@
 			</div>
 	</script>
 	<script type="text/template" id="userPropertiesTemplate">	
-			<h1 class="userPage" id="userPropertiesTitle"></h1>
+			<h3>Update security</h3>
+			<form class='propertiesPanelPage'>
+				<input id='oldPassword' type='password' placeholder='Old Password' class="masterTooltip"/>
+				<input id='newPassword' type='password' placeholder='New Password' class="masterTooltip"/>
+				<input id='confirmNewPassword' type='password' placeholder='Confirm New Password' class="masterTooltip"/>
+				
+				<span href="#" class="button" id="changePasswordButton">Save</span>
+			</form>
 	</script>
 </head>
 <body>

@@ -52,11 +52,9 @@ var assignedTicketsView, userTicketsView, manageUsersView;
 
 var createTicketPageView, respondToTicketPageView;
 	
-var manageCategoriesView;
+var manageCategoriesView, userPropertiesPageView;
 
 function userPanelPageFunctionality() {
-
-	
 
 	$('#userInfo').append(sessionStorage.loggedUserName);
 	
@@ -68,7 +66,7 @@ function userPanelPageFunctionality() {
 	if (sessionStorage.loggedUserRights == "Admin" || sessionStorage.loggedUserRights == "SysAdmin") {
 		$('#btn-mngTk').click(
 				function() {
-					userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
+					userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = userPropertiesPageView = null;
 					if (!assignedTicketsView) {
 						assignedTicketsView = new AssignedTicketsView({
 							model : new ViewTicketsModel({})
@@ -96,7 +94,7 @@ function userPanelPageFunctionality() {
 		if(sessionStorage.loggedUserRights == "SysAdmin"){
 			$('#manageCategoriesButton').click(
 					function() {
-						assignedTicketsView = userTicketsView = createTicketPageView = manageUsersView = null;
+						assignedTicketsView = userTicketsView = createTicketPageView = manageUsersView = userPropertiesPageView = null;
 						if (!manageCategoriesView) {
 							manageCategoriesView = new ManageCategoriesView({});
 							$('#userPanelPageContainer').replaceWith(manageCategoriesView.render().el);
@@ -119,7 +117,7 @@ function userPanelPageFunctionality() {
 			
 			$('#manageUsersButton').click(
 					function(){
-						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = null;
+						assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = userPropertiesPageView =  null;
 						if(!manageUsersView){
 							manageUsersView = new ManageUsersView({
 								model: new GetUsersModel({})
@@ -149,7 +147,7 @@ function userPanelPageFunctionality() {
 
 	$('#btn-userTk').click(
 			function() {
-				assignedTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
+				assignedTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = userPropertiesPageView = null;
 				if (!userTicketsView) {
 					userTicketsView = new UserTicketsView({
 						model : new ViewTicketsModel({})
@@ -177,7 +175,7 @@ function userPanelPageFunctionality() {
 
 	$('#btn-subTk').click(
 			function() {
-				assignedTicketsView = userTicketsView = manageCategoriesView = manageUsersView = null;
+				assignedTicketsView = userTicketsView = manageCategoriesView = manageUsersView = userPropertiesPageView = null;
 				if (!createTicketPageView) {
 					createTicketPageView = new CreateTicketPageView({
 						model : new CreateTicketModel({})
@@ -209,18 +207,11 @@ function userPanelPageFunctionality() {
 
 						// TODO to create view for this & change from here
 						if (!userPropertiesPageView) {
-							userPropertiesPageView = new UserPropertiesPageView({
-								model : new UserPropertiesModel({})
-							});
+							userPropertiesPageView = new UserPropertiesPageView({});
 							$('#userPanelPageContainer').replaceWith(
 									userPropertiesPageView.render().el);
 							handleErrorStyle();
 						}
-
-						$('#userPanelPageContainer').replaceWith(
-							"<div id='userPanelPageContainer'></div>");
-
-						$('#userPropertiesTitle').append(sessionStorage.loggedUserName + " properties page");
 						$('#ats').hide();
 						$('#mts').hide();
 						$('#sts').hide();
@@ -240,7 +231,7 @@ function userPanelPageFunctionality() {
 			function() {
 				sessionStorage.clear();
 				
-				assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = null;
+				assignedTicketsView = userTicketsView = createTicketPageView = manageCategoriesView = manageUsersView = userPropertiesPageView = null;
 				
 				$('#mainContainer').replaceWith(
 						_.template($('#frontPageTemplate').html()));

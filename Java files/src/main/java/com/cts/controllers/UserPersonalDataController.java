@@ -107,14 +107,14 @@ public class UserPersonalDataController {
 			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYPASSWORD);
 		}
 		
-		if (!user.getPassword().equals("")){
-			
-			if (user.getOldPassword() != user.getPassword()){
-				
-				logger.warn("Passwords not matching!");
-				return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING);
-			}
-		}
+//		if (!user.getPassword().equals("")){
+//			
+//			if (user.getOldPassword() != user.getPassword()){
+//				
+//				logger.warn("Passwords not matching!");
+//				return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERPASSWORDSNOTMATCHING);
+//			}
+//		}
 		
 		// Update user properties
 		user.setOldPassword(HashUtil.getHash((user.getOldPassword())));

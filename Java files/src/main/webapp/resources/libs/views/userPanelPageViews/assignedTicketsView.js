@@ -264,6 +264,7 @@ var AssignedTicketsView = GenericUserPanelPageView.extend({
 		}
 		this.model.set("textToSearch", srcTxt);
 		this.model.set("searchType", srcTp);
+		
 		var currentView = this;
 		
 		this.model.save({}, {
