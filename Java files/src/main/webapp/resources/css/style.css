@@ -120,7 +120,7 @@ td div.columnOverflow {
 	float: right;
 }
 
-#addCategoryButton,#addSubcategoryButton,#editSubcategoryButton,#removeSubcategoryButton,#removeCategoryButton, #editCategoryButton{
+#addCategoryButton,#addSubcategoryButton,#editSubcategoryButton,#removeSubcategoryButton,#removeCategoryButton, #editCategoryButton, #changePasswordButton{
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -640,7 +640,7 @@ h2.userPage {
 	width: 100%;
 	display: inline-block;
 }
-#addCategoryContainer,#editCategoryContainer,#removeCategoryContainer, #removeSubcategoryContainer, #addSubcategoryContainer, #editSubcategoryContainer{
+#addCategoryContainer,#editCategoryContainer,#removeCategoryContainer, #removeSubcategoryContainer, #addSubcategoryContainer, #editSubcategoryContainer, #changePassswordContainer{
 
 	width: 30%;
 	display:inline-block;
@@ -687,7 +687,7 @@ h2.userPage {
 
 }
 
-.categoryManagment {
+.categoryManagment, .savePassword {
 	padding:10px;
 	border-radius: 5px;
 	border: 1px solid #555;
@@ -702,7 +702,7 @@ h2.userPage {
 	width:232px;
 }
 
-.fieldCateg{
+.fieldCateg, .fieldPass{
 	width:210px;
 }
 

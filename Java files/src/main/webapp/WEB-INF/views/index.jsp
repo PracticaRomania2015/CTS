@@ -454,11 +454,23 @@
 	<script type="text/template" id="userPropertiesTemplate">	
 			<h3>Update security</h3>
 			<form class='propertiesPanelPage'>
-				<input id='oldPassword' type='password' placeholder='Old Password' class="masterTooltip"/>
-				<input id='newPassword' type='password' placeholder='New Password' class="masterTooltip"/>
-				<input id='confirmNewPassword' type='password' placeholder='Confirm New Password' class="masterTooltip"/>
-				
+			<div id='changePassswordContainer'>
+				<input id='oldPassword' type='password' placeholder='Old Password' class="masterTooltip savePassword fieldPass"/>
+				<input id='newPassword' type='password' placeholder='New Password' class="masterTooltip savePassword fieldPass"/>
+				<input id='confirmNewPassword' type='password' placeholder='Confirm New Password' class="masterTooltip savePassword fieldPass"/>
 				<span href="#" class="button" id="changePasswordButton">Save</span>
+			</div>
+
+			<!--this horizontal line doesn't space as expected
+				TODO other user properties related stuff
+			<div class="horizontalSeparatorWrapper">
+			<div class="contentFormHorizontalSeparator">
+				<div id="gradient-horizontalLine"></div>
+			</div> 
+			</div>
+			
+			<div id='changeTODOContainer'>
+			</div>-->
 			</form>
 	</script>
 </head>
