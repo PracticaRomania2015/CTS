@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/21/2015 12:51:57 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 10/8/2015 1:18:16 PM ******/
 DROP PROCEDURE [dbo].[CreateTicket]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 9/21/2015 12:51:57 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateTicket]    Script Date: 10/8/2015 1:18:16 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,10 +13,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[CreateTicket]
-	@Subject varchar(50),
+	@Subject varchar(255),
 	@CategoryId int,
 	@DateTime datetime,
-	@Comment varchar(250),
+	@Comment varchar(2000),
 	@UserId int,
 	@FilePath varchar(100),
 	@PriorityId int,
@@ -34,11 +34,7 @@ BEGIN
 
 	SET @ErrCode = 0
 
-	-- *****
-	-- to be modified; this is hard coded to normal priority until the ui is ready
-	-- *****
-	SELECT @PriorityId = 2
-	-- *****
+	
 
 	DECLARE @StateId int
 	SELECT @StateId = StateId FROM State WHERE StateName = 'Active'

@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/22/2015 9:00:00 AM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 10/8/2015 1:18:22 PM ******/
 DROP PROCEDURE [dbo].[CreateUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 9/22/2015 9:00:00 AM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 10/8/2015 1:18:22 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,6 +18,10 @@ CREATE PROCEDURE [dbo].[CreateUser]
 	@Title varchar(10),
 	@Email varchar(50),
 	@Password varchar(50),
+	@Question_1_Id int,
+	@Question_1_Answer varchar(255),
+	@Question_2_Id int,
+	@Question_2_Answer varchar(255),
 	@ErrCode int OUTPUT
 
 AS
@@ -33,8 +37,8 @@ BEGIN
 
 	IF NOT EXISTS (SELECT UserId FROM [User] WHERE Email = @Email)
 	BEGIN
-		INSERT INTO [User] (FirstName, LastName, Title, Email, Password, RoleId)
-		VALUES (@FirstName, @LastName, @Title, @Email, @Password, 1)
+		INSERT INTO [User] (FirstName, LastName, Title, Email, Password, RoleId, Question_1_Id, Question_1_Answer, Question_2_Id, Question_2_Answer)
+		VALUES (@FirstName, @LastName, @Title, @Email, @Password, 1, @Question_1_Id, @Question_1_Answer, @Question_2_Id, @Question_2_Answer)
 
 		IF (@@ROWCOUNT = 0 OR @@ERROR <> 0)
 		BEGIN

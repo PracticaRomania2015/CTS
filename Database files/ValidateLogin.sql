@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/22/2015 9:07:08 AM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 10/8/2015 1:21:34 PM ******/
 DROP PROCEDURE [dbo].[ValidateLogin]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 9/22/2015 9:07:08 AM ******/
+/****** Object:  StoredProcedure [dbo].[ValidateLogin]    Script Date: 10/8/2015 1:21:34 PM ******/
 SET ANSI_NULLS ON
 GO
 

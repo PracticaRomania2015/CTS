@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/23/2015 9:51:18 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/8/2015 1:19:21 PM ******/
 DROP PROCEDURE [dbo].[GetFullTicket]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 9/23/2015 9:51:18 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/8/2015 1:19:21 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -17,6 +17,7 @@ CREATE PROCEDURE [dbo].[GetFullTicket]
 	@Subject varchar(50) OUTPUT,
 	@CategoryId int OUTPUT,
 	@CategoryName varchar(50) OUTPUT,
+	@ParentCategoryId int OUTPUT,
 	@StateId int OUTPUT,
 	@StateName varchar(50) OUTPUT,
 	@AssignedUserId int OUTPUT,
@@ -37,7 +38,7 @@ BEGIN
 	
 	SET @ErrCode = 1
 
-	SELECT @Subject = Ticket.Subject, @CategoryId = Category.CategoryId, @CategoryName = Category.CategoryName, @StateId = State.StateId, @StateName = State.StateName, @PriorityId = Priority.PriorityId, @PriorityName = Priority.PriorityName, @ErrCode = 0
+	SELECT @Subject = Ticket.Subject, @CategoryId = Category.CategoryId, @CategoryName = Category.CategoryName,@ParentCategoryId = Category.ParentCategoryId, @StateId = State.StateId, @StateName = State.StateName, @PriorityId = Priority.PriorityId, @PriorityName = Priority.PriorityName, @ErrCode = 0
 	FROM Ticket
 	INNER JOIN Category ON Ticket.CategoryId = Category.CategoryId
 	INNER JOIN State ON Ticket.StateId = State.StateId

@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/29/2015 12:17:25 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 10/8/2015 1:17:26 PM ******/
 DROP PROCEDURE [dbo].[AddCommentToTicket]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 9/29/2015 12:17:25 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCommentToTicket]    Script Date: 10/8/2015 1:17:26 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,7 +16,7 @@ CREATE PROCEDURE [dbo].[AddCommentToTicket]
 	@CommentId int OUTPUT,
 	@TicketId int,
 	@DateTime datetime,
-	@Comment varchar(250),
+	@Comment varchar(2000),
 	@UserId int,
 	@FilePath varchar(100),
 	@ErrCode int OUTPUT

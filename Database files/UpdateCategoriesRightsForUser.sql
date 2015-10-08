@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 10:22:20 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/8/2015 1:21:17 PM ******/
 DROP PROCEDURE [dbo].[UpdateCategoriesRightsForUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 9/24/2015 10:22:20 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/8/2015 1:21:17 PM ******/
 SET ANSI_NULLS ON
 GO
 

@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/21/2015 12:53:47 PM ******/
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/8/2015 1:21:11 PM ******/
 DROP PROCEDURE [dbo].[ResetPassword]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 9/21/2015 12:53:47 PM ******/
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/8/2015 1:21:11 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,6 +15,10 @@ GO
 CREATE PROCEDURE [dbo].[ResetPassword]
 	@Email varchar(50),
 	@Password varchar(MAX),
+	@Question_1_Id int,
+	@Question_1_Answer varchar(255),
+	@Question_2_Id int,
+	@Question_2_Answer varchar(255),
 	@ErrCode int OUTPUT
 
 AS
@@ -32,7 +36,7 @@ BEGIN
 
 	UPDATE [User]
 	SET Password = @Password, @ErrCode = 0
-	WHERE Email = @Email
+	WHERE Email = @Email AND Question_1_Id = @Question_1_Id AND Question_1_Answer = @Question_1_Answer AND Question_2_Id = @Question_2_Id AND Question_2_Answer = @Question_2_Answer
 
 	IF (@ErrCode = 1)
 	BEGIN
