@@ -22,15 +22,14 @@ var RecoveryView = GenericFrontPageChildView.extend({
 			user.save({}, {
 				success : function(model, response) {
 					if (response.type == "success"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
 						if (response.type == "error"){
-							alert(response.description);
+							popNotification(response.description);
 						} else {
-							alert("Unknown error!");
+							popNotification("Unknown error!");
 						}
 					}
-					alert(response.description);
 				},
 				error : function(model, response) {
 					console.log(response);

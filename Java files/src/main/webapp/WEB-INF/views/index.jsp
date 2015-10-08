@@ -475,6 +475,7 @@
 	</script>
 </head>
 <body>
+	<div id="notifications" class="notifications"></div>
 	<div id="header">
 		<div id="logoWrapper" ></div>
 	</div>	

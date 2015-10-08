@@ -25,9 +25,9 @@ var ManageUserRoleView = GenericUserPanelPageView.extend({
 					that.populateData(response.data);
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -77,16 +77,16 @@ submit: function(){
 			success: function(model,response){
 				if(response.type == "success"){
 					if(sessionStorage.loggedUserId == userUpdate.attributes.userId && !userUpdate.attributes.sysAdmin){
-						alert("Your SysAdmin rights have been revoked! Please login to continue!");
+						popNotification("Your SysAdmin rights have been revoked! Please login to continue!");
 						$('#btn-logOut').trigger('click');
 					}else{
-						alert("The user was successfully updated!");
+						popNotification("The user was successfully updated!");
 					}
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 				

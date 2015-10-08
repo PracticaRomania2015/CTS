@@ -23,7 +23,6 @@ var LogInView = GenericFrontPageChildView.extend({
 			user.save({}, {
 				success : function(model, response) {
 					if (response.type == "success") {
-						console.log(response.data);
 						sessionStorage.loggedUserId = response.data.userId;
 						sessionStorage.loggedUserFirstName = response.data.firstName;
 						sessionStorage.loggedUserLastName = response.data.lastName;
@@ -35,9 +34,9 @@ var LogInView = GenericFrontPageChildView.extend({
 						userPanelPageFunctionality();
 					} else {
 						if (response.type == "error"){
-							alert(response.description);
+							popNotification(response.description);
 						} else {
-							alert("Unknown error!");
+							popNotification("Unknown error!");
 						}
 					}
 					

@@ -54,6 +54,8 @@ var createTicketPageView, respondToTicketPageView;
 	
 var manageCategoriesView, userPropertiesPageView;
 
+var addCategoryView,userPropertiesPageView;
+
 function userPanelPageFunctionality() {
 
 	$('#userInfo').append(sessionStorage.loggedUserName);
@@ -300,5 +302,10 @@ function createUserTicketPage(){
 	$('#mun').show();
 	$('#mcn').show();
 }
-var addCategoryView,userPropertiesPageView;
+
+function popNotification(notification){
+	$('#notifications').empty();
+	$('#notifications').append(notification);
+	$('#notifications').fadeIn("fast").delay(4000).fadeOut("slow");
+}
 

@@ -26,12 +26,12 @@ var RegisterView = GenericFrontPageChildView.extend({
 				success : function(model, response) {
 					if (response.type == "success") {
 						$('#toggle-login').trigger('click');
-						alert("Account created!");
+						popNotification("Account created!");
 					} else {
 						if (response.type == "error"){
-							alert(response.description);
+							popNotification(response.description);
 						} else {
-							alert("Unknown error!");
+							popNotification("Unknown error!");
 						}
 					}
 				},

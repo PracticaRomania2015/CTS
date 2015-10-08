@@ -58,9 +58,9 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									});
 								} else {
 									if (response.type == "error"){
-										alert(response.description);
+										popNotification(response.description);
 									} else {
-										alert("Unknown error!");
+										popNotification("Unknown error!");
 									}
 								}
 							},
@@ -193,9 +193,9 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 								}
 							} else {
 								if (response.type == "error"){
-									alert(response.description);
+									popNotification(response.description);
 								} else {
-									alert("Unknown error!");
+									popNotification("Unknown error!");
 								}
 							}
 						},
@@ -205,9 +205,9 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 					})
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -233,12 +233,12 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		reassignAdminToTicket.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){
-					alert("Ticket reassigned!");
+					popNotification("Ticket reassigned!");
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -263,12 +263,12 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		reassignPriorityToTicket.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){
-					alert("Priority changed successfully!");
+					popNotification("Priority changed successfully!");
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -291,12 +291,12 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 				async: false,
 				success : function(model, response){
 					if (response.type == "success"){
-						alert("Ticket closed!");
+						popNotification("Ticket closed!");
 					} else {
 						if (response.type == "error"){
-							alert(response.description);
+							popNotification(response.description);
 						} else {
-							alert("Unknown error!");
+							popNotification("Unknown error!");
 						}
 					}
 				},
@@ -338,9 +338,9 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 				if (response.type == "success"){
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},

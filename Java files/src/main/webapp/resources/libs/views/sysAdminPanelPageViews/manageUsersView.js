@@ -71,9 +71,9 @@ var ManageUsersView = GenericUserPanelPageView.extend({
 					self.unset("description");
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},

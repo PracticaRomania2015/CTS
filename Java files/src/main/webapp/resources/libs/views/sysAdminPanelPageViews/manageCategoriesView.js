@@ -42,9 +42,9 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 					});
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -79,9 +79,9 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 					}
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -113,9 +113,9 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 					}
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -146,9 +146,9 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 					}
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -167,12 +167,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model,response){
 				if(response.type == "success"){
-					alert("The new category was added successfully!");
+					popNotification("The new category was added successfully!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},
@@ -197,12 +197,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				if(response.type == "success"){
-					alert("The new subcategory was added successfully!");
+					popNotification("The new subcategory was added successfully!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},
@@ -225,12 +225,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model,response){
 				if(response.type == "success"){
-					alert("The category was updated successfully!");
+					popNotification("The category was updated successfully!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},
@@ -252,12 +252,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				if(response.type == "success"){
-					alert("The subcategory was updated successfully!");
+					popNotification("The subcategory was updated successfully!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},
@@ -280,12 +280,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				if(response.type == "success"){
-					alert("Successfully removed!");
+					popNotification("Successfully removed!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},
@@ -308,12 +308,12 @@ var ManageCategoriesView = GenericUserPanelPageView.extend({
 			async: false,
 			success: function(model, response){
 				if(response.type == "success"){
-					alert("Successfully removed!");
+					popNotification("Successfully removed!");
 				}else{
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				};
 			},

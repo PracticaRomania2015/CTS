@@ -281,9 +281,9 @@ orderBy : function(clicked){
 					self.unset("description");
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},

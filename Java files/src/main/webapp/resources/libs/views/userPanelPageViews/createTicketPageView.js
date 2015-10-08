@@ -32,9 +32,9 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 					});
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -52,9 +52,9 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 					});
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -89,9 +89,9 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 					}
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},
@@ -148,13 +148,13 @@ var CreateTicketPageView = GenericUserPanelPageView.extend({
 		ticket.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){
-					alert("Ticket submitted!");
+					popNotification("Ticket submitted!");
 					createUserTicketPage();
 				} else {
 					if (response.type == "error"){
-						alert(response.description);
+						popNotification(response.description);
 					} else {
-						alert("Unknown error!");
+						popNotification("Unknown error!");
 					}
 				}
 			},

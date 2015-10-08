@@ -771,3 +771,22 @@ h2.userPage {
 	margin-top: -22px;
 }
 
+.notifications{
+	display: none;
+	width: 150px;
+	border-radius: 5px;
+	background: #0d94d2;
+	margin: 5px 0px 5px 0px;
+	padding: 10px;
+	font-family: 'Arial';
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+}
+
+#notifications{
+	position: absolute;
+	float: left;
+}
+
