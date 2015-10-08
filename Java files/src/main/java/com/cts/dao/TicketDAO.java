@@ -213,7 +213,6 @@ public class TicketDAO extends BaseDAO implements TicketDAOInterface {
 			if (errCodeParam.getParameter() == 1) {
 				return false;
 			}
-			System.out.println("*arent ID : " + parentCategoryIdParam.getType());
 			ticket.setSubject(subjectParam.getParameter());
 			ticket.getCategory().setCategoryId(categoryIdParam.getParameter());
 			ticket.getCategory().setCategoryName(categoryNameParam.getParameter());

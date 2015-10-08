@@ -35,6 +35,9 @@
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/validatePriority.js"></script>
 <script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignPriorityToTicketModel.js"></script>
  
+
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/assignCategoryToTicketModel.js"></script>
+<script type="text/javascript" src="${res}/libs/models/userPanelPageModels/reopenTicketModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addCategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/addSubcategoryModel.js"></script>
 <script type="text/javascript" src="${res}/libs/models/sysAdminPanelPageModels/editCategoryModel.js"></script>
@@ -446,10 +449,18 @@
 					<span href="#" class="button" id="assignUserToTicketButton"style='display: none;' >Assign user</span>
 					<select id="ticketPrioritiesDropBox" class="reassignTicketPriorities" style='display: none;'></select>
 					<span href="#" class="button" id="reassignPriorityToTicketButton"style='display: none;' >Set priority</span>
+					<select id="ticketCategoryDropbox" class="reassignTicketCategory">
+						<option value="" disabled selected style='display:none;'>Select your category</option>
+					</select>
+					<select disabled id="ticketSubcategoryDropbox" class="reassignTicketSubcategory" style="color: #808080">
+						<option value="" disabled selected style='display:none;'>Select your subcategory</option>
+					</select>
+					<span href="#" class="button" id="reassignCategoryToTicketButton" >Set category</span>
 				</div>
 				<div id="responseButtons">
 				</div>
 			</div>
+<span href="#" class="button" id="reopenTicketButton" style='display:none;' >Reopen Ticket</span>
 	</script>
 	<script type="text/template" id="userPropertiesTemplate">	
 			<h3>Update security</h3>
