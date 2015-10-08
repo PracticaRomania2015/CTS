@@ -27,41 +27,60 @@ public class RecoveryController {
 	/**
 	 * Reset password and send a new one by email
 	 * 
-	 * @param user User with email to reset password.
+	 * @param user
+	 *            User with email to reset password.
 	 * @return JSON with success/error response.
 	 */
 	@RequestMapping(value = "/recovery", method = RequestMethod.POST)
 	public @ResponseBody String recoveryPassword(@RequestBody User user) {
-		
+
 		logger.debug("Attempting to reset the password for an account.");
-		
+
 		// Email validation
-		if (user.getEmail() == null){
-			
+		if (user.getEmail() == null) {
+
 			logger.error("Email is null!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
 		if (user.getEmail().equals("")) {
-			
+
 			logger.error("Email is empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
-		
+
+		// User questions validation
+		if (user.getQuestion_1().getQuestion() == null || user.getQuestion_1().getQuestion().equals("")
+				|| user.getQuestion_2().getQuestion() == null || user.getQuestion_2().getQuestion().equals("")) {
+
+			logger.error("Questions are not set properly!");
+			return new ResponseMessage().getMessageJSON(ResponseValues.QUESTIONSERROR);
+		}
+
+		// User questions answers validation
+		if (user.getQuestionAnswer_1() == null || user.getQuestionAnswer_1().equals("")
+				|| user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")) {
+
+			logger.error("Questions answers are not set properly!");
+			return new ResponseMessage().getMessageJSON(ResponseValues.QUESTIONSANSWERSERROR);
+		}
+
 		// Recovery mail contents
 		String subject = "CTS - Password Reset";
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword(10);
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
-		
+		user.setPassword(HashUtil.getHash(newPassword));
+
 		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();
-		if (userDAO.resetPassword(user.getEmail(), HashUtil.getHash(newPassword)) && SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+		if (userDAO.resetPassword(user) && SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
 			logger.info("The password was changed and was sent via email!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYSUCCESS);
 		} else {
 
-			logger.warn("No account with the provided email was found!");
+			logger.warn(
+					"No account with the provided email was found or the specified questions and answers are incorrect!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL);
 		}
 	}

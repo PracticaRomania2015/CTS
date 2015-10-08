@@ -7,7 +7,6 @@ public class Category {
 	private int parentCategoryId;
 
 	public Category() {
-
 		categoryId = 0;
 		categoryName = "";
 		parentCategoryId = 0;

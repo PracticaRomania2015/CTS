@@ -16,7 +16,7 @@ public interface UserDAOInterface {
 
 	public boolean deleteAccount(User user);
 
-	public boolean resetPassword(String email, String newPassword);
+	public boolean resetPassword(User user);
 
 	public boolean updateUserPersonalData(UserForUpdate user);
 
@@ -25,6 +25,8 @@ public interface UserDAOInterface {
 	public boolean updateUserStatus(UserStatus userStatus);
 
 	public ArrayList<User> getUsers(ViewUsersRequest viewUsersRequest, StringBuilder totalNumberOfPages);
-	
+
 	public User getTicketUser(Ticket ticket);
+
+	public boolean getUserData(User user);
 }

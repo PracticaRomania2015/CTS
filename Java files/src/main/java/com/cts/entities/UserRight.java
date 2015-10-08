@@ -4,17 +4,15 @@ public class UserRight {
 
 	private Category category;
 	private boolean adminStatus;
-	
+
 	public UserRight() {
-
-		setCategory(null);
-		setAdminStatus(false);
+		category = new Category();
+		adminStatus = false;
 	}
-	
-	public UserRight(Category c, boolean b) {
 
-		setCategory(c);
-		setAdminStatus(b);
+	public UserRight(Category category, boolean status) {
+		this.category = category;
+		this.adminStatus = status;
 	}
 
 	public Category getCategory() {
@@ -32,5 +30,4 @@ public class UserRight {
 	public void setAdminStatus(boolean adminStatus) {
 		this.adminStatus = adminStatus;
 	}
-	
 }

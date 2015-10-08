@@ -12,7 +12,6 @@ public class TicketComment {
 	private String filePath;
 
 	public TicketComment() {
-
 		commentId = 0;
 		ticketId = 0;
 		dateTime = new Timestamp(0);
@@ -68,5 +67,4 @@ public class TicketComment {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
 }

@@ -13,6 +13,8 @@ public enum ResponseValues {
 	INVALIDEMAILFORMAT("error", ConfigReader.getInstance().getValueForKey("invalidEmailFormat")),
 	DBERROR("error", ConfigReader.getInstance().getValueForKey("dbError")),
 	UNKNOWN("error", ConfigReader.getInstance().getValueForKey("unknownError")),
+	QUESTIONSERROR("error", ConfigReader.getInstance().getValueForKey("questionsError")),
+	QUESTIONSANSWERSERROR("error", ConfigReader.getInstance().getValueForKey("questionsAnswersError")),
 	
 	LOGININVALIDCREDENTIALS("error", ConfigReader.getInstance().getValueForKey("loginInvalidCredentials")),
 	

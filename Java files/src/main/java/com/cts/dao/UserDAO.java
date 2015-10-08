@@ -63,9 +63,18 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
 			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
+			InOutParam<Integer> question_1_IdParam = new InOutParam<Integer>(user.getQuestion_1().getQuestionId(),
+					"Question_1_Id");
+			InOutParam<String> question_1_AnswerParam = new InOutParam<String>(user.getQuestionAnswer_1(),
+					"Question_1_Answer");
+			InOutParam<Integer> question_2_IdParam = new InOutParam<Integer>(user.getQuestion_2().getQuestionId(),
+					"Question_2_Id");
+			InOutParam<String> question_2_AnswerParam = new InOutParam<String>(user.getQuestionAnswer_2(),
+					"Question_2_Answer");
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 			prepareExecution(StoredProceduresNames.CreateUser, firstNameParam, lastNameParam, titleParam, emailParam,
-					passwordParam, errCodeParam);
+					passwordParam, question_1_IdParam, question_1_AnswerParam, question_2_IdParam,
+					question_2_AnswerParam, errCodeParam);
 			execute();
 
 			if (errCodeParam.getParameter() == 0) {
@@ -100,14 +109,23 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public boolean resetPassword(String email, String newPassword) {
+	public boolean resetPassword(User user) {
 
 		try {
 
-			InOutParam<String> emailParam = new InOutParam<String>(email, "Email");
-			InOutParam<String> passwordParam = new InOutParam<String>(newPassword, "Password");
+			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
+			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
+			InOutParam<Integer> question_1_IdParam = new InOutParam<Integer>(user.getQuestion_1().getQuestionId(),
+					"Question_1_Id");
+			InOutParam<String> question_1_AnswerParam = new InOutParam<String>(user.getQuestionAnswer_1(),
+					"Question_1_Answer");
+			InOutParam<Integer> question_2_IdParam = new InOutParam<Integer>(user.getQuestion_2().getQuestionId(),
+					"Question_2_Id");
+			InOutParam<String> question_2_AnswerParam = new InOutParam<String>(user.getQuestionAnswer_2(),
+					"Question_2_Answer");
 			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
-			prepareExecution(StoredProceduresNames.ResetPassword, emailParam, passwordParam, errCodeParam);
+			prepareExecution(StoredProceduresNames.ResetPassword, emailParam, passwordParam, question_1_IdParam,
+					question_1_AnswerParam, question_2_IdParam, question_2_AnswerParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
 
@@ -286,7 +304,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				user.setLastName(lastNameParam.getParameter());
 				user.setEmail(emailParam.getParameter());
 			}
-
 		} catch (SQLException e) {
 
 			return user;
@@ -295,5 +312,35 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			closeCallableStatement();
 		}
 		return user;
+	}
+
+	@Override
+	public boolean getUserData(User user) {
+
+		try {
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
+			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
+			InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
+			InOutParam<String> titleParam = new InOutParam<String>("", "Title", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.GetUserData, userIdParam, firstNameParam, lastNameParam, titleParam,
+					errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() == 0) {
+
+				user.setUserId(user.getUserId());
+				user.setFirstName(firstNameParam.getParameter());
+				user.setLastName(lastNameParam.getParameter());
+				user.setTitle(titleParam.getParameter());
+			}
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
 	}
 }

@@ -1,24 +1,25 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.CategoryDAO;
 import com.cts.dao.CategoryDAOInterface;
 import com.cts.dao.PriorityDAO;
 import com.cts.dao.PriorityDAOInterface;
+import com.cts.dao.QuestionDAO;
+import com.cts.dao.QuestionDAOInterface;
 import com.cts.dao.UserDAO;
 import com.cts.dao.UserDAOInterface;
 import com.cts.entities.Category;
 import com.cts.entities.Priority;
+import com.cts.entities.Question;
 import com.cts.entities.User;
 
 /**
@@ -117,6 +118,25 @@ public class UtilsController {
 		} else {
 
 			logger.info("Priorities could not be retrieved!");
+			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
+		}
+	}
+
+	@RequestMapping(value = "/getQuestions", method = RequestMethod.POST)
+	public @ResponseBody String getQuestions() {
+
+		logger.debug("Attempting to retrieve questions.");
+
+		QuestionDAOInterface questionDAO = new QuestionDAO();
+		ArrayList<Question> questions = questionDAO.getQuestions();
+
+		if (questions != null) {
+
+			logger.info("Questions received successfully!");
+			return new ResponseMessage(questions).getMessageJSON(ResponseValues.SUCCESS);
+		} else {
+
+			logger.info("Questions could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}

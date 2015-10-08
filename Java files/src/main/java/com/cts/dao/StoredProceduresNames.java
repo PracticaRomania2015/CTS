@@ -162,5 +162,17 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetTicketUser";
 		}
+	},
+
+	GetUserData {
+		public String toString() {
+			return "dbo.GetUserData";
+		}
+	},
+
+	GetQuestions {
+		public String toString() {
+			return "dbo.GetQuestions";
+		}
 	}
 }
