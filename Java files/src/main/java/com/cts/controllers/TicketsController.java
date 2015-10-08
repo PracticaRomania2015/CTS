@@ -74,11 +74,6 @@ public class TicketsController {
 		StringBuilder totalNumberOfPages = new StringBuilder();
 		ArrayList<Ticket> tickets = ticketDAO.getTickets(viewTicketsRequest, totalNumberOfPages);
 
-		if (totalNumberOfPages.toString().equals("")) {
-
-			totalNumberOfPages.append("1");
-		}
-
 		ArrayList<Object> output = new ArrayList<Object>();
 		output.add(totalNumberOfPages);
 		output.add(tickets);
