@@ -91,7 +91,7 @@ td div.columnOverflow {
 #toggle-login, #toggle-signup, #toggle-recovery, #logInButton,
 	#registerButton, #recoveryButton, 
 	#respondToTicketButton, #closeTheTicketButton, #assignUserToTicketButton,
-	#reassignPriorityToTicketButton {
+	#reassignPriorityToTicketButton,#reassignCategoryToTicketButton,#reopenTicketButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -600,7 +600,12 @@ h2.userPage {
 	margin-right: 11px;
 
 }
+#reopenTicketButton{
+	float: right;
+	width: 18%;
+	margin-right: 11px;
 
+}
 
 #closeTheTicketButton{
 	float: right;
@@ -620,7 +625,12 @@ h2.userPage {
 
 
 
-
+#reassignCategoryToTicketButton{
+	background-color: #7BC143;
+	width: 15%;
+	float: left;
+	margin-left: 8px;
+}
 #assignUserToTicketButton{
 	background-color: #7BC143;
 	width: 15%;
@@ -727,6 +737,21 @@ h2.userPage {
 }
 
 .reassignTicketPriorities{
+	padding: 8px;
+	width: 25%;
+	float : left;
+	margin-left: 20px;
+	margin-top: 7px;
+}
+
+.reassignTicketCategory{
+	padding: 8px;
+	width: 25%;
+	float : left;
+	margin-left: 20px;
+	margin-top: 7px;
+}
+.reassignTicketSubcategory{
 	padding: 8px;
 	width: 25%;
 	float : left;

@@ -67,9 +67,11 @@ public abstract class BaseDAO {
 	}
 
 	protected ResultSet execute(boolean bothOutputParamsAndResultSet) throws SQLException {
-
+		
+		ResultSet rs;
 		callableStatement.execute();
-		return callableStatement.getResultSet();
+		rs = callableStatement.getResultSet();
+		return rs;
 	}
 
 	private void setParameters() throws SQLException {

@@ -9,7 +9,10 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		'click #respondToTicketButton' : 'submit',
 		'click #closeTheTicketButton' : 'close',
 		'click #assignUserToTicketButton' : 'reassignAdmin',
-		'click #reassignPriorityToTicketButton' : 'reassingPriority'
+		'click #reassignPriorityToTicketButton' : 'reassingPriority',
+		'click #reassignCategoryToTicketButton' : 'reassignCategory',
+		'change #ticketCategoryDropbox' : 'populateSubcategories',
+		'click #reopenTicketButton' : 'reopenTicket'
 	},
 
 	initialize : function() {
@@ -18,6 +21,30 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		
 		var ticket = new GetTicketContentModel({
 			ticketId : this.model.get("ticketId")
+		});
+		
+		var categories = new GetCategoriesModel({
+			userId : sessionStorage.loggedUserId
+		});
+		
+		categories.save({}, {
+			success : function(model, response) {
+				if (response.type == "success"){
+					_.each(response.data, function(e) {
+						$('#ticketCategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						
+					});
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
 		});
 		
 		var lastLeftCommentUserId = 0;
@@ -37,7 +64,10 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 						var dateString = date.toLocaleDateString() + " " +hour +":"+ minute ;
 						
 						var ticketPriority = response.data.priority.priorityId;
-						console.log(ticketPriority);
+						
+						
+						var ticketCategory = response.data.category.categoryId;
+						var parentTicketCategory = response.data.category.parentCategoryId;
 						
 						var priorities =  new GetPrioritiesModel({
 							userId : sessionStorage.loggedUserId
@@ -69,8 +99,90 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 							}
 						});
 						
+						var categories = new GetCategoriesModel({
+							userId : sessionStorage.loggedUserId
+						});
+						
+						categories.save({}, {
+							success : function(model, response) {
+								$('#ticketCategoryDropbox').find('option').remove().end();
+								if (response.type == "success"){
+									_.each(response.data, function(e) {
+										
+										if(parentTicketCategory!=0){
+											
+											
+											if(parentTicketCategory==e.categoryId){
+												$('#ticketCategoryDropbox').append("<option value=" +e.categoryId + " selected>" + e.categoryName + "</option>");
+											}
+											else{
+												$('#ticketCategoryDropbox').append("<option value=" +e.categoryId + ">" + e.categoryName + "</option>");
+											}
+											
+											var subCategories = new GetSubcategoriesModel({
+												categoryId : parentTicketCategory,
+												//categoryName : $("#ticketCategoryDropbox option:selected").text()
+											});
+											
+											subCategories.save({}, {
+												success : function(model, response) {
+													if (response.type == "success"){
+														var selectedCategory = $('#ticketCategoryDropbox').val();
+														$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+														if ($.isEmptyObject(response.data)) {
+															$('#ticketSubcategoryDropbox').attr("disabled", true);
+															$('#ticketSubcategoryDropbox').css("color", "#808080");
+														} else {
+															_.each(response.data, function(e) {
+																if(ticketCategory==e.categoryId){
+																	$('#ticketSubcategoryDropbox').append("<option value=" +e.categoryId + " selected>" + e.categoryName + "</option>");
+																}
+																else{
+																	$('#ticketSubcategoryDropbox').append("<option value=" +e.categoryId + ">" + e.categoryName + "</option>");
+																}
+															});
+															$('#ticketSubcategoryDropbox').attr("disabled", false);
+															$('#ticketSubcategoryDropbox').removeAttr("style")
+														}
+													} else {
+														if (response.type == "error"){
+															alert(response.description);
+														} else {
+															alert("Unknown error!");
+														}
+													}
+												},
+												error : function(model, response) {
+													console.log(response);
+												}
+											});
+										}
+										else{
+											if(ticketCategory==e.categoryId){
+												$('#ticketCategoryDropbox').append("<option value=" +e.categoryId + " selected>" + e.categoryName + "</option>");
+											}
+											else{
+												$('#ticketCategoryDropbox').append("<option value=" +e.categoryId + ">" + e.categoryName + "</option>");
+											}
+										}
+										
+									});
+								} else {
+									if (response.type == "error"){
+										alert(response.description);
+									} else {
+										alert("Unknown error!");
+									}
+								}
+							},
+							error : function(model, response) {
+								console.log(response);
+							}
+						});
+			
 						if(response.data.state.stateName == "Closed") {
 							$('#ticketResponseWrapper').remove();
+							$('#reopenTicketButton').show();
 						}
 						
 						if (loggedUserId == e.user.userId) {
@@ -278,6 +390,106 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 		});
 	},
 	
+	reassignCategory : function(){
+		var selectedCategoryId;
+		if( $('#ticketSubcategoryDropbox').is(':enabled') ){
+			selectedCategoryId= $("#ticketSubcategoryDropbox  option:selected").val()
+		}
+		else{
+			selectedCategoryId = $("#ticketCategoryDropbox  option:selected").val()
+		}
+		var selectedCategory = new Backbone.Model({
+		
+			categoryId : selectedCategoryId
+			
+		})
+		
+		var reassignCategoryToTicket = new AssignCategoryToTicket({
+
+			category : selectedCategory,
+			ticketId : this.model.get("ticketId")
+		});
+		
+		reassignCategoryToTicket.save({}, {
+			success : function(model, response) {
+				if (response.type == "success"){
+					alert("Category changed successfully!");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+	},
+	
+	populateSubcategories : function() {
+		
+		var categories = new GetSubcategoriesModel({
+			categoryId : $("#ticketCategoryDropbox option:selected").val(),
+			categoryName : $("#ticketCategoryDropbox option:selected").text()
+		});
+		
+		categories.save({}, {
+			success : function(model, response) {
+				if (response.type == "success"){
+					var selectedCategory = $('#ticketCategoryDropbox').val();
+					$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+					if ($.isEmptyObject(response.data)) {
+						$('#ticketSubcategoryDropbox').attr("disabled", true);
+						$('#ticketSubcategoryDropbox').css("color", "#808080");
+					} else {
+						_.each(response.data, function(e) {
+							$('#ticketSubcategoryDropbox').append($("<option></option>").attr("value", e.categoryId).text(e.categoryName));
+						});
+						$('#ticketSubcategoryDropbox').attr("disabled", false);
+						$('#ticketSubcategoryDropbox').removeAttr("style")
+					}
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response) {
+				console.log(response);
+			}
+		});
+		
+	},
+	
+	reopenTicket : function(){
+		var reopenTicket = new ReopenTicketModel({
+			ticketId : this.model.get("ticketId")
+		})
+	
+		reopenTicket.save({},{
+			async: false,
+			success : function(model, response){
+				if (response.type == "success"){
+					alert("Ticket reopened!");
+				} else {
+					if (response.type == "error"){
+						alert(response.description);
+					} else {
+						alert("Unknown error!");
+					}
+				}
+			},
+			error : function(model, response){
+				console.log(response);
+			}
+		});
+		
+		this.initialize();
+	},
 	close : function(){
 			var close = new CloseTicketModel({
 				ticketId : this.model.get("ticketId")
