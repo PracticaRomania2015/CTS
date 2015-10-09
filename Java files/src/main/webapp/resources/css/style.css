@@ -568,50 +568,45 @@ h2.userPage {
 }
 
 #responseText{
-	margin: 5px auto !important;
-	
+	margin-left: 9px !important;
+	width: 50%;
+	float: left;
 	
 }
 #responseButtons{
-	float: right;
-	width :30%;
-	margin-right: 40px;
-	margin-top: 120px;
+	float: left;
+	width :47%;
+	margin-top: 15px;
+	margin-left: 20px;
 }
 #ticketAdminsDropBox{
-	padding: 8px;
-	width: 20%;
-	float : left;
-	margin-left: 11px;
-	margin-top: 7px;
+	float: left;
+	width: 45%;
+	margin-left: 5px;
 }
 
 #ticketPrioritiesDropBox{
-	padding: 8px;
-	width: 15%;
-	float : left;
-	margin-left: 10px;
+	float: left;
+	width: 45%;
+	margin-left: 5px;
 	margin-top: 7px;
 }
 
 #respondToTicketButton{
-	float: right;
-	width: 10%;
-	margin-right: 11px;
-
+	float: left;
+	margin-left: 5px;
+	width: 30%
 }
 #reopenTicketButton{
-	float: right;
-	width: 18%;
+	display:inline;
 	margin-right: 11px;
 
 }
 
 #closeTheTicketButton{
-	float: right;
-	width: 10%;
-	margin-right: 5px;
-
+	float:left;
+	margin-left: 5px;
+	width: 30%
 }
 .browseFile{
 	margin-top:15px;
@@ -627,22 +622,28 @@ h2.userPage {
 
 #reassignCategoryToTicketButton{
 	background-color: #7BC143;
-	width: 15%;
-	float: left;
-	margin-left: 8px;
+	width: 41%;
+	margin: 0 auto;
+	margin-top: 7px;
+	display: inline-block;
+
 }
 #assignUserToTicketButton{
 	background-color: #7BC143;
-	width: 15%;
+	width: 41%;
 	float: left;
-	margin-left: 8px;
+	margin-left: 15px;
+	margin-top: 6px;
+
 }
 
-#reassignPriorityToTicketButton{
+#reassignPriorityToTicketButton {
 	background-color: #7BC143;
-	width: 15%;
+	width: 41%;
 	float: left;
-	margin-left: 8px;
+	margin-left: 15px;
+	margin-top: 6px;
+
 }
 
 #manageCategoriesContainer{
@@ -745,13 +746,21 @@ h2.userPage {
 }
 
 .reassignTicketCategory{
-	padding: 8px;
-	width: 25%;
+	padding: 10px;
+	width: 45%;
 	float : left;
-	margin-left: 20px;
+	margin-left: 5px;
 	margin-top: 7px;
 }
 .reassignTicketSubcategory{
+	padding: 10px;
+	width: 45%;
+	float : left;
+	margin-left: 15px;
+	margin-top: 7px;
+}
+
+.reassignTicketAdmin{
 	padding: 8px;
 	width: 25%;
 	float : left;
@@ -800,7 +809,7 @@ h2.userPage {
 	display: none;
 	width: 150px;
 	border-radius: 5px;
-	background: #0d94d2;
+	background: #4bb8ef;
 	margin: 5px 0px 5px 0px;
 	padding: 10px;
 	font-family: 'Arial';
@@ -814,4 +823,10 @@ h2.userPage {
 	position: absolute;
 	float: left;
 }
+
+#submitButtonsWrapper{
+	margin-left: 80px;
+	margin-top: 8px;
+}
+
 

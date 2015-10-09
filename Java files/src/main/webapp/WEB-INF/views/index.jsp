@@ -427,7 +427,7 @@
 				<option value="" disabled selected style='display:none;'>Select your category</option>
 			</select>
 			<select disabled id="ticketSubcategoryDropbox" class="ticketCategories" style="color: #808080">
-				<option value="" disabled selected style='display:none;'>Select your subcategory</option>
+				<option value="0" disabled selected style='display:none;'>Select your subcategory</option>
 			</select>
 			<select id="ticketPriorityDropbox" class="ticketPriorities" style="color: #808080">
 				<option value="" disabled selected style='display:none;'>Set ticket priority</option>
@@ -442,10 +442,12 @@
 			<div id="ticketCommentsWrapper" class="ticketInput"></div>		
 			<div id="ticketResponseWrapper">
 				<div id="responseText">
-					<textarea id="ticketResponse" rows='10' maxlength='2000' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
-					<span href="#" class="button" id="respondToTicketButton">Submit</span>
-					<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
-					<select id="ticketAdminsDropBox" style='display: none;'></select>
+					<textarea id="ticketResponse" rows='15' maxlength='2000' placeholder='Type your response here.' class='masterTooltip ticketInput'></textarea>
+				</div>
+				<div id="responseButtons">
+					
+					
+					<select id="ticketAdminsDropBox" class="reassignTicketAdmin" style='display: none;'></select>
 					<span href="#" class="button" id="assignUserToTicketButton"style='display: none;' >Assign user</span>
 					<select id="ticketPrioritiesDropBox" class="reassignTicketPriorities" style='display: none;'></select>
 					<span href="#" class="button" id="reassignPriorityToTicketButton"style='display: none;' >Set priority</span>
@@ -453,14 +455,18 @@
 						<option value="" disabled selected style='display:none;'>Select your category</option>
 					</select>
 					<select disabled id="ticketSubcategoryDropbox" class="reassignTicketSubcategory" style="color: #808080">
-						<option value="" disabled selected style='display:none;'>Select your subcategory</option>
+						<option value="0" disabled selected style='display:none;'>Select your subcategory</option>
 					</select>
 					<span href="#" class="button" id="reassignCategoryToTicketButton" >Set category</span>
-				</div>
-				<div id="responseButtons">
+					
+
+					<div id="submitButtonsWrapper">
+						<span href="#" class="button" id="respondToTicketButton">Submit</span>
+						<span href="#" class="button" id="closeTheTicketButton">Close Ticket</span>
+					</div>
 				</div>
 			</div>
-<span href="#" class="button" id="reopenTicketButton" style='display:none;' >Reopen Ticket</span>
+			<span href="#" class="button" id="reopenTicketButton" style='display:none;' >Reopen Ticket</span>
 	</script>
 	<script type="text/template" id="userPropertiesTemplate">	
 			<h3>Update security</h3>

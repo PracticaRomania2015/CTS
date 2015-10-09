@@ -128,7 +128,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 												success : function(model, response) {
 													if (response.type == "success"){
 														var selectedCategory = $('#ticketCategoryDropbox').val();
-														$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+														$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected value="0" style="display:none;">Select your subcategory</option>').val('');
 														if ($.isEmptyObject(response.data)) {
 															$('#ticketSubcategoryDropbox').attr("disabled", true);
 															$('#ticketSubcategoryDropbox').css("color", "#808080");
@@ -190,7 +190,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 								$('#ticketCommentsWrapper').append($("<div class='commentWrapper'>"+
 									"<div class='commentBlockLeft'>" + e.comment +
 									"<div class='commentDateLeft'>" + dateString +
-									"</div></div>"));
+									"</div></div></div>"));
 								lastRightCommentUserId=0;
 								
 							} else {
@@ -198,7 +198,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									"<div class='userNameLeft'>" + e.user.firstName + "</div>" +
 									"<div class='commentBlockLeft'>" + e.comment +
 									"<div class='commentDateLeft'>" + dateString +
-									"</div></div>"));
+									"</div></div></div>"));
 								lastLeftCommentUserId = loggedUserId;
 								lastRightCommentUserId =0;
 								
@@ -208,7 +208,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 								$('#ticketCommentsWrapper').append($("<div class='commentWrapper'>"+
 										"<div class='commentBlockRight'>" + e.comment +
 										"<div class='commentDateRight'>" + dateString +
-										"</div></div>"));
+										"</div></div></div>"));
 								lastLeftCommentUserId =0;
 							} else {
 								if(lastRightCommentUserId==0){
@@ -216,13 +216,13 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 										"<div class='userNameRight'>" + e.user.firstName + "</div>" +
 										"<div class='commentBlockRight'>" + e.comment +
 										"<div class='commentDateRight'>" + dateString +
-										"</div></div>"));
+										"</div></div></div>"));
 								} else {
 									$('#ticketCommentsWrapper').append($("<div class='commentWrapper'>"+
 											"<div class='secondUserNameRight'>" + e.user.firstName + "</div>" +
 											"<div class='commentBlockRight'>" + e.comment +
 											"<div class='commentDateRight'>" + dateString +
-											"</div></div>"));
+											"</div></div></div>"));
 								}
 									lastRightCommentUserId =e.user.userId;
 									lastLeftCommentUserId =0;
@@ -265,11 +265,13 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 									if (self.get("provenience") == "assignedTickets") {
 										$('#ticketAdminsDropBox').show();
 										$('#assignUserToTicketButton').show();
+										$('#ticketResponse').attr('rows',15);
 										
 									} else {
 										if (self.get("provenience") == "userTickets") {
 											$('#ticketAdminsDropBox').hide();
 											$('#assignUserToTicketButton').hide();
+											$('#ticketResponse').attr('rows',12);
 										} else {
 											console.log("Invalid Session Storage Data!");
 										}
@@ -392,7 +394,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 	
 	reassignCategory : function(){
 		var selectedCategoryId;
-		if( $('#ticketSubcategoryDropbox').is(':enabled') ){
+		if( $('#ticketSubcategoryDropbox').is(':enabled') && $('#ticketSubcategoryDropbox').val()!=0 ){
 			selectedCategoryId= $("#ticketSubcategoryDropbox  option:selected").val()
 		}
 		else{
@@ -409,7 +411,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			category : selectedCategory,
 			ticketId : this.model.get("ticketId")
 		});
-		
+		console.log(reassignCategoryToTicket.toJSON());
 		reassignCategoryToTicket.save({}, {
 			success : function(model, response) {
 				if (response.type == "success"){
@@ -439,7 +441,7 @@ var RespondToTicketPageView = GenericUserPanelPageView.extend({
 			success : function(model, response) {
 				if (response.type == "success"){
 					var selectedCategory = $('#ticketCategoryDropbox').val();
-					$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected style="display:none;">Select your subcategory</option>').val('');
+					$('#ticketSubcategoryDropbox').find('option').remove().end().append('<option selected value="0" style="display:none;">Select your subcategory</option>').val('');
 					if ($.isEmptyObject(response.data)) {
 						$('#ticketSubcategoryDropbox').attr("disabled", true);
 						$('#ticketSubcategoryDropbox').css("color", "#808080");

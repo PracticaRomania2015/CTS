@@ -182,7 +182,6 @@ orderBy : function(clicked){
 		if( typeof this.isAsc == 'undefined'){
 			this.isAsc = false;
 			this.lastSortType="";
-			console.log("Been here");
 		}
 	
 		
