@@ -32,7 +32,7 @@ public enum ResponseValues {
 	UPDATEUSERSUCCESS("success", ConfigReader.getInstance().getValueForKey("updateUserSuccess")),
 	UPDATEUSEREMPTYOLDPASSWORD("error", ConfigReader.getInstance().getValueForKey("updateUserEmptyOldPassword")),
 	UPDATEUSEREMPTYNEWPASSWORD("error", ConfigReader.getInstance().getValueForKey("updateUserEmptyNewPassword")),
-	UPDATEUSERPASSWORDSNOTMATCHING("error", ConfigReader.getInstance().getValueForKey("updateUserPasswordsNotMatching")),
+	UPDATEUSERINCORRECTOLDPASSWORD("error", ConfigReader.getInstance().getValueForKey("updateUserInvalidOldPassword")),
 	
 	CATEGORYEMPTYID("error", ConfigReader.getInstance().getValueForKey("categoryEmptyId")),
 	CATEGORYEMPTYNAME("error", ConfigReader.getInstance().getValueForKey("categoryEmptyName")),

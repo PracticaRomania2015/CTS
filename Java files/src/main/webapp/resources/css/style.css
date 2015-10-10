@@ -1,10 +1,22 @@
+/* Debugging purposes
+*{
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+*/
+
+/* Stop sidebar from moving page content */
+body {
+    width: calc(100vw - 34px);
+}
+
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
-#header{
+header {
 	width: 1245px;
 	margin: 0 auto;
-
 }
+
 #logoWrapper {
 	width: 250px;
 	margin: 0 auto;
@@ -24,14 +36,19 @@
 	margin-bottom: 5px;
 }
 
-#logo{
+#logo {
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
+}
 
+#loadingAnim {
+	margin: 0px 0px -10px -5px;
+}
 
-
-
+#loadingIconWrapper {
+	width: 40px;
+	display: inline-block;
 }
 
 /* =========================================================================================================================== */
@@ -40,7 +57,8 @@ select option[disabled] {
 	display: none;
 }
 
-.tooltip {
+
+#errorTooltip {
 	display: none;
 	position: absolute;
 	border: 1px solid #333;
@@ -68,11 +86,15 @@ textarea {
 
 td div.columnOverflow {
 	overflow: hidden;
+	display: inline-block;
+	width: 90%;
+	vertical-align: middle;
 }
 
 /* =========================================================================================================================== */
 /* The log in page design - all the good stuff */
-#logInWrapper {
+
+#mainMenuTemplate {
 	border-radius: 10px;
 	display: block;
 	width: 250px;
@@ -81,17 +103,44 @@ td div.columnOverflow {
 	padding: 1%;
 }
 
-#frontPageContainer {
+
+/*! templates */
+#loginTemplate, #registerTemplate, #recoveryTemplate {
 	position: relative;
 	display: block;
 	width: 250px;
 	margin: 40px auto 0px;
 }
 
-#toggle-login, #toggle-signup, #toggle-recovery, #logInButton,
-	#registerButton, #recoveryButton, 
-	#respondToTicketButton, #closeTheTicketButton, #assignUserToTicketButton,
-	#reassignPriorityToTicketButton,#reassignCategoryToTicketButton,#reopenTicketButton {
+
+
+/*! dropdown */
+#title {
+	width: 230px;
+	background: #f1f8ec;
+	margin: 8px 0px;
+	border: 1px solid #555;
+	padding: 5px 10px 5px 5px;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #555;
+}
+
+/*! fields */
+#email, #password, #firstName, #lastName, #email, #password,
+	#confirmPassword {
+	width: 208px;
+	background: #f1f8ec;
+	margin: 8px 0px;
+	border: 1px solid #555;
+	padding: 6px 10px 6px 10px;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #555;
+}
+
+/*! buttons */
+.mainMenuButton, .mainMenuPageButton, .ticketActionButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -104,7 +153,7 @@ td div.columnOverflow {
 	cursor: pointer;
 }
 
-#submitTicketButton{
+#submitTicketButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -120,7 +169,8 @@ td div.columnOverflow {
 	float: right;
 }
 
-#addCategoryButton,#addSubcategoryButton,#editSubcategoryButton,#removeSubcategoryButton,#removeCategoryButton, #editCategoryButton, #changePasswordButton{
+#addCategoryButton, #addSubcategoryButton, #editSubcategoryButton,
+	#removeSubcategoryButton, #removeCategoryButton, #editCategoryButton, #changePasswordButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -132,10 +182,10 @@ td div.columnOverflow {
 	color: #fff;
 	cursor: pointer;
 	width: 50%;
-	
+
 }
 
-#updateUserRoles{
+#updateUserRoles {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -150,6 +200,7 @@ td div.columnOverflow {
 	float: right;
 	margin-left: 15px;
 }
+
 h3 {
 	font-family: 'Arial';
 	font-size: 16px;
@@ -157,7 +208,8 @@ h3 {
 	color: #0d94d2;
 }
 
-h1.frontPage {
+
+h1.mainMenuPage {
 	border-radius: 5px 5px 0px 0px;
 	margin: -35px 0px 0px;
 	background: #0d94d2;
@@ -168,7 +220,8 @@ h1.frontPage {
 	color: #fff;
 }
 
-.frontPageForms {
+
+.mainMenuPageForm {
 	border-radius: 0px 0px 5px 5px;
 	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 	text-align: center;
@@ -186,27 +239,20 @@ h1.frontPage {
 	color: #555;
 }
 
-#logInMail, #logInPass, #recoveryMail, #regFirstName, #regLastName,
-	#regMail, #regPass, #regConfPass {
-	width: 208px;
-	background: #f1f8ec;
-	margin: 8px 0px;
-	border: 1px solid #555;
-	padding: 6px 10px 6px 10px;
-	font-family: 'Arial';
-	font-size: 14px;
-	color: #555;
-}
-
 /* =========================================================================================================================== */
 /* User page - designed the stuff */
 #mainContainer {
-	width: 1225px;
+
 	display: block;
 	margin: 0 auto;
 }
 
-#menuWrapper {
+
+.logged {
+	width: 1225px;
+}
+
+#userMenuTemplate {
 	float: left;
 	width: 15.5%;
 	overflow: hidden;
@@ -217,7 +263,8 @@ h1.frontPage {
 	padding: 1%;
 }
 
-#contextWrapper {
+
+.context {
 	float: left;
 	width: 80%;
 	overflow: hidden;
@@ -247,11 +294,7 @@ h1.frontPage {
 	border-color: transparent transparent transparent #7bc143;
 }
 
-.userPropertiesMenuButton {
-	margin-right: -3px;
-}
-
-#btn-mngTk, #btn-userTk, #btn-subTk, #btn-prop, #btn-logOut,#manageUsersButton,#manageCategoriesButton {
+.userMenuButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -264,7 +307,14 @@ h1.frontPage {
 	cursor: pointer;
 }
 
-#ticketSearchButton,#usersSearchButton {
+.userMenuProfileButton {
+	border: 3px solid #0d94d2;
+	background: #fff;
+	color: #0d94d2;
+	cursor: pointer;
+}
+
+#ticketSearchButton, #usersSearchButton {
 	width: 150px;
 	border-radius: 5px;
 	background: #0d94d2;
@@ -303,30 +353,18 @@ h2.userPage {
 	background: #f1f8ec;
 	margin: 10px 0px 0px 0px;
 	border: 1px solid #555;
-	padding: 5px;
+	padding: 10px;
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
 }
 
-.ticketCategories,.ticketPriorities {
-	border-radius: 5px;
-	width: 250px;
-	background: #f1f8ec;
-	margin: 10px 0px 0px 0px;
-	border: 1px solid #555;
-	padding: 4px;
-	font-family: 'Arial';
-	font-size: 14px;
-	color: #555;
-}
-
-#tkPerPgDiv,#usersPerPgDiv {
+#tkPerPgDiv, #usersPerPgDiv {
 	display: inline-block;
 	float: right;
 }
 
-#ticketsPerPage,#usersPerPage {
+#ticketsPerPage, #usersPerPage {
 	border-radius: 5px;
 	width: 50px;
 	background: #f1f8ec;
@@ -338,26 +376,28 @@ h2.userPage {
 	color: #555;
 }
 
-.searchTickets,.searchUsers {
+.searchTickets, .searchUsers, .searchCategories, .searchPriorities, .searchStatus {
 	border-radius: 5px;
 	border: 1px solid #555;
 	font-family: 'Arial';
 	font-size: 14px;
+	margin-top: 5px;
+	margin-right: 5px;
 	color: #555;
 	background: #f1f8ec;
 }
 
-#ticketSearchBox,#usersSearchBox {
-	width: 300px;
+#ticketSearchBox, #usersSearchBox {
+	width: 200px;
 	padding: 9px;
 }
 
-#ticketSearchDropBox,#usersSearchDropBox {
-	width: 150px;
+#ticketSearchDropBox, #usersSearchDropBox, #ticketSearchCategory, #ticketSearchPriority, #ticketSearchStatus {
+	width: 125px;
 	padding: 8px;
 }
 
-.ticketView,.usersView {
+.ticketView, .usersView {
 	table-layout: fixed;
 	width: 100%;
 	margin: 0px 0px 5px 0px;
@@ -365,73 +405,84 @@ h2.userPage {
 	border-collapse: collapse;
 }
 
-#manageUserContainer{
-	width: 50%;	
-	margin:0 auto;
+#manageUserContainer {
+
+	width: 50%;
+	margin: 0 auto;
 }
-.userRoles{
+
+.userRoles {
 	table-layout: fixed;
 	width: 100%;
 	margin: 5px 0px 5px 0px;
 	font-family: 'Arial';
 	border-collapse: collapse;
-	
+
 }
 
-#sysAdminDiv{
+#sysAdminDiv {
 	margin: 0 auto;
 	color: white;
 	font-family: arial
 }
 
-.sysAdminCheckbox{
+.sysAdminCheckbox {
 	margin-left: 10px;
 }
+
 .table-surf {
 	display: inline-block;
 	cursor: pointer;
 }
 
-.ticketView thead th.wide-col,.usersView thead th.wide-col,.userRoles thead th.wide-col{
+.ticketView thead th.wide-col, .usersView thead th.wide-col, .userRoles thead th.wide-col
+	{
 	width: 15%;
 }
 
-.ticketView thead th.slim-col,.usersView thead th.slim-col,.userRoles thead th.slim-col {
+.ticketView thead th.slim-col, .usersView thead th.slim-col, .userRoles thead th.slim-col
+	{
 	width: 12.4%;
 }
-.ticketView thead th.id-col,.usersView thead th.id-col,.userRoles thead th.id-col {
-	width: 8%;
 
+
+
+.ticketView thead th.id-col, .usersView thead th.id-col, .userRoles thead th.id-col
+	{
+	width: 8%;
 }
 
-.ticketView thead th.rounded-tl,.usersView thead th.rounded-tl,.userRoles thead th.rounded-tl  {
+.ticketView thead th.rounded-tl, .usersView thead th.rounded-tl,
+	.userRoles thead th.rounded-tl {
 	border-radius: 5px 0px 0px 0px;
 }
 
-.ticketView thead th.rounded-tr,.usersView thead th.rounded-tr,.userRoles thead th.rounded-tr  {
+.ticketView thead th.rounded-tr, .usersView thead th.rounded-tr,
+	.userRoles thead th.rounded-tr {
 	border-radius: 0px 5px 0px 0px;
 }
 
-.ticketView tfoot th#rounded-bot,.usersView  tfoot th#rounded-bot,.userRoles tfoot th#rounded-bot {
+.ticketView tfoot th#rounded-bot, .usersView  tfoot th#rounded-bot,
+	.userRoles tfoot th#rounded-bot {
 	border-radius: 0px 0px 5px 5px;
 }
 
-.ticketView tbody tr:hover td,.usersView tbody tr:hover td {
+.ticketView tbody tr:hover td, .usersView tbody tr:hover td {
 	color: #333;
 	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 }
 
-.ticketView tbody,.usersView tbody,.userRoles tbody  {
+.ticketView tbody, .usersView tbody, .userRoles tbody {
 	outline: 1px solid #0d94d2;
 	outline-offset: -1px;
 }
 
-.ticketView tbody tr,.usersView tbody tr,.userRoles tbody tr {
+.ticketView tbody tr, .usersView tbody tr, .userRoles tbody tr {
 	border-top: 1px solid #0d94d2;
 	cursor: pointer;
 }
 
-.ticketView th,.usersView th,.userRoles th {
+.ticketView th, .usersView th, .userRoles th {
 	font-size: 18px;
 	text-align: center;
 	padding: 10px;
@@ -440,7 +491,7 @@ h2.userPage {
 	color: #fff;
 }
 
-.ticketView td,.usersView td,.userRoles td {
+.ticketView td, .usersView td, .userRoles td {
 	font-size: 14px;
 	text-align: center;
 	padding: 5px;
@@ -448,7 +499,13 @@ h2.userPage {
 	color: #000;
 }
 
-.classActive{
+.statusColorWrapper{
+	display: inline-block;
+	vertical-align: middle;
+	width: 10%;
+}
+
+.classActive {
 	background: rgba(253, 185, 19, 0.80);
 	border-radius: 8px;
 	width: 16px;
@@ -457,7 +514,7 @@ h2.userPage {
 	margin: auto;
 }
 
-.classClosed{
+.classClosed {
 	background: rgba(124, 43, 131, 0.60);
 	border-radius: 8px;
 	width: 16px;
@@ -466,7 +523,7 @@ h2.userPage {
 	margin: auto;
 }
 
-.classAnswered{
+.classAnswered {
 	background: rgba(245, 128, 37, 0.80);
 	border-radius: 8px;
 	width: 16px;
@@ -515,7 +572,7 @@ h2.userPage {
 	margin-left: auto;
 	margin-top: 5px;
 	text-align: right;
-	color: #0D94D2 ;
+	color: #0D94D2;
 }
 
 .userNameRight {
@@ -561,63 +618,65 @@ h2.userPage {
 	margin-right: auto;
 	margin-top: 5px;
 	text-align: left;
-	color :#0D94D2;
+	color: #0D94D2;
 }
 
-#ticketResponseWrapper{
+#ticketResponseWrapper {
+	
 }
 
-#responseText{
+#responseText {
 	margin-left: 9px !important;
 	width: 50%;
 	float: left;
-	
 }
-#responseButtons{
+
+#responseButtons {
 	float: left;
-	width :47%;
+	width: 47%;
 	margin-top: 15px;
-	margin-left: 20px;
+	margin-left: 20px;	
 }
-#ticketAdminsDropBox{
+
+#ticketAdminsDropBox {
 	float: left;
 	width: 45%;
 	margin-left: 5px;
 }
 
-#ticketPrioritiesDropBox{
+#ticketPrioritiesDropBox {
 	float: left;
 	width: 45%;
 	margin-left: 5px;
 	margin-top: 7px;
 }
 
-#respondToTicketButton{
+#respondToTicketButton {
 	float: left;
 	margin-left: 5px;
-	width: 30%
+	width: 30%;
 }
 #reopenTicketButton{
-	display:inline;
+	display: inline;
 	margin-right: 11px;
-
 }
 
-#closeTheTicketButton{
-	float:left;
+#closeTheTicketButton {
+	float: left;
 	margin-left: 5px;
-	width: 30%
+	width: 30%;
 }
-.browseFile{
-	margin-top:15px;
+
+.browseFile {
+	margin-top: 15px;
 	float: right;
 	width: 20%;
 }
-#assignationLabel{
+
+#assignationLabel {
 	font-family: Arial;
 	color: #4bb8ef;
 }
-
 
 
 #reassignCategoryToTicketButton{
@@ -626,15 +685,14 @@ h2.userPage {
 	margin: 0 auto;
 	margin-top: 7px;
 	display: inline-block;
-
 }
-#assignUserToTicketButton{
+
+#assignUserToTicketButton {
 	background-color: #7BC143;
 	width: 41%;
 	float: left;
 	margin-left: 15px;
 	margin-top: 6px;
-
 }
 
 #reassignPriorityToTicketButton {
@@ -643,29 +701,31 @@ h2.userPage {
 	float: left;
 	margin-left: 15px;
 	margin-top: 6px;
-
 }
 
-#manageCategoriesContainer{
+#manageCategoriesContainer {
 	margin-top: 10px;
 	width: 100%;
 	display: inline-block;
 }
-#addCategoryContainer,#editCategoryContainer,#removeCategoryContainer, #removeSubcategoryContainer, #addSubcategoryContainer, #editSubcategoryContainer, #changePassswordContainer{
 
+
+#addCategoryContainer, #editCategoryContainer, #removeCategoryContainer,
+	#removeSubcategoryContainer, #addSubcategoryContainer,
+	#editSubcategoryContainer, #changePasswordContainer {
 	width: 30%;
-	display:inline-block;
+	display: inline-block;
 	vertical-align: top;
 }
 
 #gradient-verticalLine {
-    border: 0;
-    height: 100%;
-    width: 100%;
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(15, 150, 210, 1), rgba(0, 0, 0, 0));
+	border: 0;
+	height: 100%;
+	width: 100%;
+	background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(15, 150, 210, 1), rgba(0, 0, 0, 0));
 }
 
-#gradient-horizontalLine{
+#gradient-horizontalLine {
 	border: 0;
 	height: 100%;
 	width: 100%;
@@ -674,70 +734,83 @@ h2.userPage {
 
 .contentFormVerticalSeparator {
 
-    width: 2px;
-    height: 200px;
-    display:inline-block;
-} 
+	width: 2px;
+	height: 200px;
+	display: inline-block;
+}
 
-.contentFormHorizontalSeparator{
+.contentFormHorizontalSeparator {
 	width: 700px;
 	height: 2px;
 	display: block;
 	margin: auto;
 }
 
-.verticalSeparatorWrapper{
+.verticalSeparatorWrapper {
 
 	width: 2%;
-	display:inline-block;
+	display: inline-block;
 }
 
-.horizontalSeparatorWrapper{
+.horizontalSeparatorWrapper {
 	height: 2%;
 	display: block;
 
 }
 
-.categoryManagment, .savePassword {
-	padding:10px;
+.categoryManagement, .savePassword {
+	padding: 10px;
 	border-radius: 5px;
 	border: 1px solid #555;
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #555;
 	background: #f1f8ec;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
-.dropDownCateg{
-	width:232px;
+.ticketCategories, .ticketPriorities {
+	padding: 10px;
+	width: 232px;
+	border-radius: 5px;
+	border: 1px solid #555;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #555;
+	background: #f1f8ec;
+	margin: 5px 5px -5px 0px;
 }
 
-.fieldCateg, .fieldPass{
-	width:210px;
+.dropDownCateg {
+	width: 232px;
 }
 
-.arrowDesc{
+.fieldCateg, .fieldPass {
+	width: 210px;
+}
+
+.arrowDesc {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #ffffff;
+
+	float: right;
+	margin-top: -12px;
+}
+
+.arrowAsc {
 	width: 0; 
 	height: 0; 
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-bottom: 5px solid #7bc143;
+	border-top: 5px solid #ffffff;
     float: right;
     margin-top: -12px;
 }
 
-.arrowAsc{
-	width: 0; 
-	height: 0; 
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-top: 5px solid #7bc143;;
-    float: right;
-    margin-top: -12px;
-}
-
-.reassignTicketPriorities{
+.reassignTicketPriorities {
 	padding: 8px;
 	width: 25%;
 	float : left;
@@ -745,14 +818,14 @@ h2.userPage {
 	margin-top: 7px;
 }
 
-.reassignTicketCategory{
+.reassignTicketCategory {
 	padding: 10px;
 	width: 45%;
 	float : left;
 	margin-left: 5px;
 	margin-top: 7px;
 }
-.reassignTicketSubcategory{
+.reassignTicketSubcategory {
 	padding: 10px;
 	width: 45%;
 	float : left;
@@ -760,7 +833,7 @@ h2.userPage {
 	margin-top: 7px;
 }
 
-.reassignTicketAdmin{
+.reassignTicketAdmin {
 	padding: 8px;
 	width: 25%;
 	float : left;
@@ -768,44 +841,41 @@ h2.userPage {
 	margin-top: 7px;
 }
 
-.arrowDown{
+.arrowDown {
 	width: 0; 
 	height: 0; 
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-top: 5px solid #7bc143;;
+	border-top: 5px solid #ffffff;;
 	float: right;
 	margin-top: -8px;
 	vertical-align: middle;
-
-
 }
 
-.arrowUp{
-	width: 0; 
-	height: 0; 
+.arrowUp {
+	width: 0;
+	height: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-bottom: 5px solid #7bc143;
+	border-bottom: 5px solid #ffffff;
 	float: right;
 	margin-top: -18px;
 	vertical-align: middle;
-
 }
 
-.twoRowsArrUp{
+.twoRowsArrUp {
 	margin-top: -28px;
 }
 
-.twoRowsArrDown{
+.twoRowsArrDown {
 	margin-top: -18px;
 }
 
-.twoRowsArrAsc,.twoRowsArrDesc{
+.twoRowsArrAsc, .twoRowsArrDesc {
 	margin-top: -22px;
 }
 
-.notifications{
+.notifications {
 	display: none;
 	width: 150px;
 	border-radius: 5px;
@@ -819,14 +889,13 @@ h2.userPage {
 	cursor: pointer;
 }
 
-#notifications{
+#notifications {
 	position: absolute;
-	float: left;
+	top: 20px;
+	left: 20px;
 }
 
-#submitButtonsWrapper{
+#submitButtonsWrapper {
 	margin-left: 80px;
 	margin-top: 8px;
 }
-
-

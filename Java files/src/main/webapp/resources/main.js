@@ -1,18 +1,12 @@
-$(document).ready((function() {
-
-		if(typeof(Storage) !== "undefined") {
-			if(sessionStorage.loggedUserId) {
-				$('#mainContainer').replaceWith(_.template($('#userPanelPageTemplate').html()));
-				userPanelPageFunctionality();
-			}
-			else {
-				$('#mainContainer').replaceWith(_.template($('#frontPageTemplate').html()));
-				frontPageFunctionality();
-			}
-		}
-		else{
-			alert("To load this site you need a browser not a dumpster !")
-		}
-		$('#logoWrapper').append("<img id='logo' src='/cts/resources/img/logo.png' >");
-
-}));
+if (typeof(Storage) !== 'undefined') {
+	if(sessionStorage.loggedUserId) {
+		initUserMenu();
+		$('#mainContainer').append(userMenu.render().el,welcome.render().el);
+	} else {
+		initMainMenu();
+		$('#mainContainer').append(mainMenu.render().el);
+	}
+} else {
+	alert('To load this site you need a browser not a dumpster !');
+}
+$('#logoWrapper').append(createElem('img',{id:'logo',src:'/cts/resources/img/logo.png'}));
