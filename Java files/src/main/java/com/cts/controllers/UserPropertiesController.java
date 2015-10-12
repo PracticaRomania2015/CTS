@@ -19,9 +19,9 @@ import com.cts.utils.HashUtil;
  * Handles requests for the user properties page.
  */
 @Controller
-public class UserPersonalDataController {
+public class UserPropertiesController {
 
-	private static Logger logger = Logger.getLogger(UserPersonalDataController.class.getName());
+	private static Logger logger = Logger.getLogger(UserPropertiesController.class.getName());
 
 	/**
 	 * Load user details
@@ -30,8 +30,8 @@ public class UserPersonalDataController {
 	 *            User to which to load details
 	 * @return JSON with user or error response.
 	 */
-	@RequestMapping(value = "/loadUserPersonalData", method = RequestMethod.POST)
-	public @ResponseBody String loadUserPersonalData(@RequestBody User user) {
+	@RequestMapping(value = "/loadUserProperties", method = RequestMethod.POST)
+	public @ResponseBody String loadUserProperties(@RequestBody User user) {
 
 		logger.debug("Attempting to get user personal data.");
 		UserDAOInterface userDAO = new UserDAO();
@@ -53,8 +53,8 @@ public class UserPersonalDataController {
 	 *            User to which to update details
 	 * @return JSON with success/error response.
 	 */
-	@RequestMapping(value = "/updateUserPersonalData", method = RequestMethod.POST)
-	public @ResponseBody String updateUserPersonalData(@RequestBody UserForUpdate user) {
+	@RequestMapping(value = "/updateUserProperties", method = RequestMethod.POST)
+	public @ResponseBody String updateUserProperties(@RequestBody UserForUpdate user) {
 
 		logger.debug("Attempting to update a user's personal data.");
 

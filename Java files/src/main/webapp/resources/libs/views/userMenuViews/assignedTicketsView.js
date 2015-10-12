@@ -36,13 +36,14 @@ var AssignedTicketsView = Backbone.View.extend({
 		var firstOptionSearchParam = createElem('option',{selected:'',value:'TicketId'},'Ticket ID');
 		var secondOptionSearchParam = createElem('option',{value:'Subject'},'Subject');
 		var selectSearchParam = createElem('select',{id:'ticketSearchDropBox',class:'searchTickets'},[firstOptionSearchParam,secondOptionSearchParam]);
+		//TODO: needs implementation
 		//New category,priority,status select
-		var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
+		/*var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Category');
 		var searchCategorySelect = createElem('select',{id:'ticketSearchCategory',class:'searchCategories'},[searchCategoryDefaultOption]);
-		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
+		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'Priority');
 		var searchPrioritiesSelect = createElem('select',{id:'ticketSearchPriority',class:'searchPriorities'},[searchPrioritiesDefaultOption]);
-		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
-		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);	
+		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'Status');
+		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);*/
 		// Loading animation
 		var loading = createElem('img',{id:'loadingAnim',src:'/cts/resources/img/loadingAnim.gif'});
 		var loadingIconWrapper = createElem('div',{id:'loadingIconWrapper'},loading);
@@ -102,7 +103,7 @@ var AssignedTicketsView = Backbone.View.extend({
 		var ticketViewTable = createElem('table',{class:'ticketView'},[tableHead,tableFoot,tableBody]);
 		
 		this.$el.attr('id','assignedTicketsTemplate').attr('class','context');
-		this.$el.append(header,searchInput,selectSearchParam,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect,loadingIconWrapper,searchButton,ticketViewTable);
+		this.$el.append(header,searchInput,selectSearchParam/*,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect*/,loadingIconWrapper,searchButton,ticketViewTable);
 		this.setElement(this.$el);
 		this.viewData(1, this.searchText, this.searchType);
 		return this;
