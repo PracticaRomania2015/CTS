@@ -64,12 +64,12 @@ var RegisterView = Backbone.View.extend({
 	submit : function (e) {
 		if ( e.keyCode  === 13 || e.type =='click') {
 			var question_1 = new Backbone.Model({
-				questionId: $('#firstQuestionsDropbox').val(),
-				question: $('#firstQuestionsDropbox').text()
+				questionId: $('#firstQuestionsDropbox option:selected').val(),
+				question: $('#firstQuestionsDropbox option:selected').text()
 			});
 			var question_2 = new Backbone.Model({
-				questionId: $('#secondQuestionsDropbox').val(),
-				question: $('#secondQuestionsDropbox').text()
+				questionId: $('#secondQuestionsDropbox option:selected').val(),
+				question: $('#secondQuestionsDropbox option:selected').text()
 			});
 			var user = new RegisterModel({
 				title : $('#title').attr('selected', 'selected').val(),
