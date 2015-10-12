@@ -57,7 +57,7 @@ public class RecoveryController {
 		}
 
 		// User questions answers validation
-		if (user.getQuestionAnswer_1() == null || user.getQuestionAnswer_1().equals("")
+		if (user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")
 				|| user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")) {
 
 			logger.error("Questions answers are not set properly!");
