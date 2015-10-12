@@ -47,7 +47,7 @@ public class RecoveryController {
 			logger.error("Email is empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
-
+		
 		// User questions validation
 		if (user.getQuestion_1().getQuestion() == null || user.getQuestion_1().getQuestion().equals("")
 				|| user.getQuestion_2().getQuestion() == null || user.getQuestion_2().getQuestion().equals("")) {
@@ -57,7 +57,7 @@ public class RecoveryController {
 		}
 
 		// User questions answers validation
-		if (user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")
+		if (user.getQuestionAnswer_1() == null || user.getQuestionAnswer_1().equals("")
 				|| user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")) {
 
 			logger.error("Questions answers are not set properly!");
@@ -70,6 +70,8 @@ public class RecoveryController {
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
 		user.setPassword(HashUtil.getHash(newPassword));
+		user.setQuestionAnswer_1(HashUtil.getHash(user.getQuestionAnswer_1()));
+		user.setQuestionAnswer_2(HashUtil.getHash(user.getQuestionAnswer_2()));
 
 		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();
