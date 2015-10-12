@@ -115,7 +115,7 @@ td div.columnOverflow {
 
 
 /*! dropdown */
-#title {
+#title, #firstQuestionsDropbox, #secondQuestionsDropbox {
 	width: 230px;
 	background: #f1f8ec;
 	margin: 8px 0px;
@@ -128,7 +128,7 @@ td div.columnOverflow {
 
 /*! fields */
 #email, #password, #firstName, #lastName, #email, #password,
-	#confirmPassword {
+	#confirmPassword, #firstAnswer, #secondAnswer {
 	width: 208px;
 	background: #f1f8ec;
 	margin: 8px 0px;

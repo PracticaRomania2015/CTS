@@ -44,6 +44,7 @@ $(document).on('ready', function() {
 	require(resourcesLocation + 'libs/functionality.js');
 	
 	require(resourcesLocation + 'libs/models/mainMenuModels/loginModel.js');
+	require(resourcesLocation + 'libs/models/mainMenuModels/getQuestionsModel.js');
 	require(resourcesLocation + 'libs/models/mainMenuModels/registerModel.js');
 	require(resourcesLocation + 'libs/models/mainMenuModels/recoveryModel.js');
 	
