@@ -6,9 +6,9 @@
 */
 
 /* Stop sidebar from moving page content */
-body {
+/*body {
     width: calc(100vw - 34px);
-}
+}*/
 
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
@@ -16,7 +16,7 @@ header {
 	margin: 0 auto;
 }
 
-.headerlogged{
+.headerlogged {
 	width: 1245px;
 }
 
@@ -45,7 +45,7 @@ header {
 	margin: 0 auto;
 }
 
-#loadingAnim {
+#loadingAnimMy, #loadingAnimManage {
 	margin: 0px 0px -10px -5px;
 }
 
@@ -391,12 +391,12 @@ h2.userPage {
 }
 
 #ticketSearchBox, #usersSearchBox {
-	width: 200px;
+	width: 205px;
 	padding: 9px;
 }
 
 #ticketSearchDropBox, #usersSearchDropBox, #ticketSearchCategory, #ticketSearchPriority, #ticketSearchStatus {
-	width: 125px;
+	width: 130px;
 	padding: 8px;
 }
 
@@ -879,23 +879,23 @@ h2.userPage {
 }
 
 .notifications {
+	z-index: 999;
 	display: none;
-	width: 150px;
+	width: 250px;
 	border-radius: 5px;
 	background: #4bb8ef;
-	margin: 5px 0px 5px 0px;
+	margin: -100px 0px 0px -135px;
 	padding: 10px;
 	font-family: 'Arial';
 	text-align: center;
 	text-decoration: none;
 	color: #fff;
-	cursor: pointer;
 }
 
 #notifications {
 	position: absolute;
-	top: 20px;
-	left: 20px;
+	top: 50%;
+	left: 50%;
 }
 
 #submitButtonsWrapper {
