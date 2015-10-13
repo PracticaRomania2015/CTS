@@ -38,14 +38,18 @@ var AssignedTicketsView = Backbone.View.extend({
 		var selectSearchParam = createElem('select',{id:'ticketSearchDropBox',class:'searchTickets'},[firstOptionSearchParam,secondOptionSearchParam]);
 		//TODO: needs implementation
 		//New category,priority,status select
-		/*var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Category');
+		var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Category');
 		var searchCategorySelect = createElem('select',{id:'ticketSearchCategory',class:'searchCategories'},[searchCategoryDefaultOption]);
 		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'Priority');
 		var searchPrioritiesSelect = createElem('select',{id:'ticketSearchPriority',class:'searchPriorities'},[searchPrioritiesDefaultOption]);
 		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'Status');
-		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);*/
+		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);
+		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[createElem('option',{selected:'',value:'0'},'All status'), 
+		                                                                                             createElem('option',{value:'1'},'Active'), 
+		                                                                                             createElem('option',{value:'2'},'Answered'), 
+		                                                                                             createElem('option',{value:'3'},'Closed')]);
 		// Loading animation
-		var loading = createElem('img',{id:'loadingAnim',src:'/cts/resources/img/loadingAnim.gif'});
+		var loading = createElem('img',{id:'loadingAnimManage',src:'/cts/resources/img/loadingAnim.gif'});
 		var loadingIconWrapper = createElem('div',{id:'loadingIconWrapper'},loading);
 		// Search button
 		var searchButton = createElem('div',{id:'ticketSearchButton'},'Search');
@@ -103,10 +107,51 @@ var AssignedTicketsView = Backbone.View.extend({
 		var ticketViewTable = createElem('table',{class:'ticketView'},[tableHead,tableFoot,tableBody]);
 		
 		this.$el.attr('id','assignedTicketsTemplate').attr('class','context');
-		this.$el.append(header,searchInput,selectSearchParam/*,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect*/,loadingIconWrapper,searchButton,ticketViewTable);
+		this.$el.append(header,searchInput,selectSearchParam,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect,loadingIconWrapper,searchButton,ticketViewTable);
 		this.setElement(this.$el);
+		this.loadPageData();
 		this.viewData(1, this.searchText, this.searchType);
 		return this;
+	},
+	
+	loadPageData: function () {
+		// load categories
+		var categoriesDropdown = new GetCategoriesModel({ userId : sessionStorage.loggedUserId });
+		categoriesDropdown.save({}, {
+			success : function (model, response) {
+				if (response.type == 'success'){
+					_.each(response.data, function(e) {
+						$('#ticketSearchCategory').append(createElem('option',{value:e.categoryId}, e.categoryName));					
+					});
+				} else if (response.type == 'error'){
+					popNotification(response.description);
+				} else {
+					popNotification('Unknown error!');
+				};
+			},
+			error : function (model, response) {
+				console.log('Server error!');
+			}
+		});
+		
+		// load priorities
+		var prioritiesDropdown = new GetPrioritiesModel({ userId : sessionStorage.loggedUserId });
+		prioritiesDropdown.save({}, {
+			success : function (model, response) {
+				if (response.type == 'success'){
+					_.each(response.data, function(e) {
+						$('#ticketSearchPriority').append(createElem('option',{value:e.priorityId}, e.priorityName));					
+					});
+				} else if (response.type == 'error'){
+					popNotification(response.description);
+				} else {
+					popNotification('Unknown error!');
+				};
+			},
+			error : function (model, response) {
+				console.log('Server error!');
+			}
+		});
 	},
 	
 	ticketSearch: function () {
@@ -199,7 +244,7 @@ var AssignedTicketsView = Backbone.View.extend({
 		currentModel.set('selectedState', ticketState = new Backbone.Model({ stateId: this.$el.find('#ticketSearchStatus option:selected').val() }));
 		currentModel.set('isSearchASC', !this.isAsc);
 		currentModel.set('typeOfRequest', 1);
-		$('#loadingAnim').show();
+		$('#loadingAnimManage').show();
 		currentModel.save({}, {
 			async: true,
 			success : function(model, response) {
@@ -270,6 +315,6 @@ var AssignedTicketsView = Backbone.View.extend({
 					currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, e.state.stateName == 'Closed' ? '' : assignedToUser, answerDate, submitDate, e.priority.priorityName);
 				});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + '/' + totalPages);
-		$('#loadingAnim').hide();
+		$('#loadingAnimManage').hide();
 	}
 });

@@ -22,7 +22,7 @@ var UserTicketsView = Backbone.View.extend({
 		'click #nextPageReqBtn': 'nextPageRequest',
 		'change #ticketsPerPage': 'ticketsPerPage',
 		'click .openTicketComments': 'viewTicketComments',
-		'click #id-col,#subject-col,#category-col,#priority-col,#status-col,#lastComment-col,#submitDate-col': 'orderBy'
+		'click #id-col, #subject-col, #category-col, #priority-col, #status-col, #lastComment-col, #submitDate-col': 'orderBy'
 	},
 	
 	render: function () {
@@ -36,16 +36,18 @@ var UserTicketsView = Backbone.View.extend({
 		var firstOptionSearchParam = createElem('option',{selected:'',value:'Subject'},'Subject');
 		var secondOptionSearchParam = createElem('option',{value:'TicketId'},'Ticket ID');
 		var selectSearchParam = createElem('select',{id:'ticketSearchDropBox',class:'searchTickets'},[firstOptionSearchParam,secondOptionSearchParam]);
-		//TODO: needs implementation
 		//New category,priority,status select
-		/*var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
+		var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'All categories');
 		var searchCategorySelect = createElem('select',{id:'ticketSearchCategory',class:'searchCategories'},[searchCategoryDefaultOption]);
-		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
+		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'All priorities');
 		var searchPrioritiesSelect = createElem('select',{id:'ticketSearchPriority',class:'searchPriorities'},[searchPrioritiesDefaultOption]);
-		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'Stuff');
-		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);*/
+		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'All status');
+		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[createElem('option',{selected:'',value:'0'},'All status'), 
+		                                                                                             createElem('option',{value:'1'},'Active'), 
+		                                                                                             createElem('option',{value:'2'},'Answered'), 
+		                                                                                             createElem('option',{value:'3'},'Closed')]);
 		// Loading animation
-		var loading = createElem('img',{id:'loadingAnim',src:'/cts/resources/img/loadingAnim.gif'});
+		var loading = createElem('img',{id:'loadingAnimMy',src:'/cts/resources/img/loadingAnim.gif'});
 		var loadingIconWrapper = createElem('div',{id:'loadingIconWrapper'},loading);
 		// Search button
 		var searchButton = createElem('div',{id:'ticketSearchButton'},'Search');
@@ -103,8 +105,9 @@ var UserTicketsView = Backbone.View.extend({
 		var ticketViewTable = createElem('table',{class:'ticketView'},[tableHead,tableFoot,tableBody]);
 		
 		this.$el.attr('id','userTicketsTemplate').attr('class','context');
-		this.$el.append(header,searchInput,selectSearchParam/*,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect*/,loadingIconWrapper,searchButton,ticketViewTable);
+		this.$el.append(header,searchInput,selectSearchParam,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect,loadingIconWrapper,searchButton,ticketViewTable);
 		this.setElement(this.$el);
+		this.loadPageData();
 		this.viewData(1, this.searchText, this.searchType);
 		return this;
 	},
@@ -113,6 +116,46 @@ var UserTicketsView = Backbone.View.extend({
 		this.searchText = $('#ticketSearchBox').val();
 		this.searchType = $('#ticketSearchDropBox').val();
 		this.viewData(1, this.searchText, this.searchType);
+	},
+	
+	loadPageData: function () {
+		// load categories
+		var categoriesDropdown = new GetCategoriesModel({ userId : sessionStorage.loggedUserId });
+		categoriesDropdown.save({}, {
+			success : function (model, response) {
+				if (response.type == 'success'){
+					_.each(response.data, function(e) {
+						$('#ticketSearchCategory').append(createElem('option',{value:e.categoryId}, e.categoryName));					
+					});
+				} else if (response.type == 'error'){
+					popNotification(response.description);
+				} else {
+					popNotification('Unknown error!');
+				};
+			},
+			error : function (model, response) {
+				console.log('Server error!');
+			}
+		});
+		
+		// load priorities
+		var prioritiesDropdown = new GetPrioritiesModel({ userId : sessionStorage.loggedUserId });
+		prioritiesDropdown.save({}, {
+			success : function (model, response) {
+				if (response.type == 'success'){
+					_.each(response.data, function(e) {
+						$('#ticketSearchPriority').append(createElem('option',{value:e.priorityId}, e.priorityName));					
+					});
+				} else if (response.type == 'error'){
+					popNotification(response.description);
+				} else {
+					popNotification('Unknown error!');
+				};
+			},
+			error : function (model, response) {
+				console.log('Server error!');
+			}
+		});
 	},
 	
 	firstPageRequest: function () {
@@ -199,7 +242,7 @@ var UserTicketsView = Backbone.View.extend({
 		currentModel.set('selectedState', ticketState = new Backbone.Model({ stateId: this.$el.find('#ticketSearchStatus option:selected').val() }));
 		currentModel.set('isSearchASC', true);
 		currentModel.set('typeOfRequest', 0);
-		$('#loadingAnim').show();
+		$('#loadingAnimMy').show();
 		currentModel.save({}, {
 			async: true,
 			success : function(model, response) {
@@ -270,6 +313,6 @@ var UserTicketsView = Backbone.View.extend({
 					currentView.addTicket(e.ticketId, e.subject, e.category.categoryName, e.state.stateName, e.state.stateName == 'Closed' ? '' : assignedToUser, answerDate, submitDate, e.priority.priorityName);
 				});
 		this.$el.find('#ticketPagingNumbering').empty().append(currentPage + '/' + totalPages);
-		$('#loadingAnim').hide();
+		$('#loadingAnimMy').hide();
 	}
 });
