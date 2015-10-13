@@ -194,7 +194,7 @@ public class TicketsController {
 						logger.info("An email was sent to notify the ticket user that a new comment was added.");
 					} else {
 
-						logger.info("Failed to send an email to notify the ticket user that a new comment was added.");
+						logger.error("Failed to send an email to notify the ticket user that a new comment was added.");
 					}
 				} else {
 
@@ -202,7 +202,7 @@ public class TicketsController {
 				}
 			} else {
 
-				logger.info("Cannot retrive the user who submitted the ticket!");
+				logger.error("Cannot retrieve the user who submitted the ticket!");
 			}
 			logger.info("Comment submitted successfully!");
 			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
