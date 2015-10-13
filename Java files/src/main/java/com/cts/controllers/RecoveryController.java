@@ -70,8 +70,8 @@ public class RecoveryController {
 		String newPassword = randomPassword.nextString();
 		String msg = "Your new password is " + newPassword;
 		user.setPassword(HashUtil.getHash(newPassword));
-		user.setQuestionAnswer_1(HashUtil.getHash(user.getQuestionAnswer_1()));
-		user.setQuestionAnswer_2(HashUtil.getHash(user.getQuestionAnswer_2()));
+		user.setQuestionAnswer_1(HashUtil.getHash(user.getQuestionAnswer_1().toLowerCase()));
+		user.setQuestionAnswer_2(HashUtil.getHash(user.getQuestionAnswer_2().toLowerCase()));
 
 		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();

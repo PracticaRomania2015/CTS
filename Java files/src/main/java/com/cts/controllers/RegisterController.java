@@ -146,8 +146,8 @@ public class RegisterController {
 
 		// Account creation
 		user.setPassword(HashUtil.getHash(user.getPassword()));
-		user.setQuestionAnswer_1(HashUtil.getHash(user.getQuestionAnswer_1()));
-		user.setQuestionAnswer_2(HashUtil.getHash(user.getQuestionAnswer_2()));
+		user.setQuestionAnswer_1(HashUtil.getHash(user.getQuestionAnswer_1().toLowerCase()));
+		user.setQuestionAnswer_2(HashUtil.getHash(user.getQuestionAnswer_2().toLowerCase()));
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.createAccount(user)) {
 
