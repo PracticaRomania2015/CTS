@@ -18,7 +18,7 @@ public enum ResponseValues {
 	
 	LOGININVALIDCREDENTIALS("error", ConfigReader.getInstance().getValueForKey("loginInvalidCredentials")),
 	
-	REGISTERSUCCESS("error", ConfigReader.getInstance().getValueForKey("registerSuccess")),
+	REGISTERSUCCESS("success", ConfigReader.getInstance().getValueForKey("registerSuccess")),
 	REGISTEREXISTINGEMAIL("error", ConfigReader.getInstance().getValueForKey("registerExistingEmail")),
 	
 	RECOVERYSUCCESS("success", ConfigReader.getInstance().getValueForKey("recoverySuccess")),
