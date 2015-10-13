@@ -73,7 +73,7 @@ var RespondToTicketView = Backbone.View.extend({
 		ticket.save({}, {
 			success : function(model, response) {
 					if (response.type == 'success') {
-					$('#ticketCommentsWrapper').empty();
+					$('#ticketCommentsWrapper').remove().end();
 					_.each(response.data.comments, function(e) {
 						var ticketPriority = response.data.priority.priorityId;
 						var ticketCategory = response.data.category.categoryId;
@@ -225,7 +225,7 @@ var RespondToTicketView = Backbone.View.extend({
 						success : function (model, response) {
 							if (response.type == 'success'){
 								var assignedUserName;
-								$('#ticketAdminsDropBox').find('option').empty;
+								$('#ticketAdminsDropBox').find('option').remove().end();
 								_.each(response.data,function(e) {
 									if (assignedToId == e.userId) {
 										assignedUserName = e.firstName + ' ' + e.lastName;

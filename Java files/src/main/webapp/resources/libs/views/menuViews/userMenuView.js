@@ -41,6 +41,9 @@ var UserMenuView = Backbone.View.extend({
 		if (!$('#mainContainer').hasClass('logged')) {
 			$('#mainContainer').addClass('logged');
 		}
+		if (!$('header').hasClass('headerlogged')) {
+			$('header').addClass('headerlogged');
+		}
 		return this;
 	},
 	

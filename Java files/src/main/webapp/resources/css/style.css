@@ -13,8 +13,11 @@ body {
 /* =========================================================================================================================== */
 /* The logo - this centers it and resizez is */
 header {
-	width: 1245px;
 	margin: 0 auto;
+}
+
+.headerlogged{
+	width: 1245px;
 }
 
 #logoWrapper {
