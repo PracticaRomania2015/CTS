@@ -131,8 +131,6 @@ public class TicketsController {
 			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
 		
-		System.out.println(ticket.getComments().get(0).getDateTime() + " " + System.currentTimeMillis());
-
 		// Ticket creation.
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.createTicket(ticket)) {

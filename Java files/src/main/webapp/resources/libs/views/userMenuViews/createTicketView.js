@@ -171,6 +171,7 @@ var CreateTicketView = Backbone.View.extend({
 						popNotification('Ticket submitted!');
 						createTicket.close();
 						$('#mainContainer').append(userTickets.render().el);
+						userMenu.activateMenuArrow('#arrowManageTickets');
 					} else if (response.type == 'error') {
 						popNotification(response.description);
 					} else {
