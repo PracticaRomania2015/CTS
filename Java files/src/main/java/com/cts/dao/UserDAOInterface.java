@@ -5,6 +5,7 @@ import com.cts.entities.Category;
 import com.cts.entities.Ticket;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
+import com.cts.entities.UserNotificationsSettings;
 import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
@@ -29,4 +30,8 @@ public interface UserDAOInterface {
 	public User getTicketUser(Ticket ticket);
 
 	public boolean getUserData(User user);
+
+	public boolean getUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings);
+
+	public boolean updateUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings);
 }

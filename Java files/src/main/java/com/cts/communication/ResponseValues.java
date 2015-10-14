@@ -37,6 +37,8 @@ public enum ResponseValues {
 	CATEGORYEMPTYID("error", ConfigReader.getInstance().getValueForKey("categoryEmptyId")),
 	CATEGORYEMPTYNAME("error", ConfigReader.getInstance().getValueForKey("categoryEmptyName")),
 	
+	UPDATEUSERNOTIFICATIONSSETTINGSSUCCESS("success", ConfigReader.getInstance().getValueForKey("updateUserNotificationsSuccess")),
+	
 	ROOTMANAGEMENTEMPTYSYSADMIN("error", ConfigReader.getInstance().getValueForKey("rootManagementEmptySysAdmin"));
 	
 	private String type;

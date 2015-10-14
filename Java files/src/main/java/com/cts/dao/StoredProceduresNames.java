@@ -174,5 +174,17 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.GetQuestions";
 		}
+	},
+
+	GetUserNotificationsSettings {
+		public String toString() {
+			return "dbo.GetUserNotificationsSettings";
+		}
+	},
+
+	UpdateUserNotificationsSettings {
+		public String toString() {
+			return "dbo.UpdateUserNotificationsSettings";
+		}
 	}
 }

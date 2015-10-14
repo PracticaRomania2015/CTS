@@ -3,11 +3,14 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.cts.entities.Category;
+import com.cts.entities.CategoryNotificationsSetting;
 import com.cts.entities.Role;
 import com.cts.entities.Ticket;
 import com.cts.entities.User;
 import com.cts.entities.UserForUpdate;
+import com.cts.entities.UserNotificationsSettings;
 import com.cts.entities.UserStatus;
 import com.cts.entities.ViewUsersRequest;
 
@@ -342,5 +345,106 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			closeCallableStatement();
 		}
 		return true;
+	}
+
+	@Override
+	public boolean getUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings) {
+
+		try {
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userNotificationsSettings.getUser().getUserId(),
+					"UserId");
+			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(false,
+					"GetEmailForTicketResponse", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.GetUserNotificationsSettings, userIdParam,
+					getEmailForTicketResponseParam, errCodeParam);
+			ResultSet resultSet = execute(true);
+			if (errCodeParam.getParameter() == 0) {
+
+				userNotificationsSettings.setGetEmailForTicketResponse(getEmailForTicketResponseParam.getParameter());
+				setOutParametersAfterExecute();
+				ArrayList<CategoryNotificationsSetting> categoriesNotificationsSettings = new ArrayList<CategoryNotificationsSetting>();
+				while (resultSet.next()) {
+
+					CategoryNotificationsSetting categoryNotificationsSetting = new CategoryNotificationsSetting();
+					Category category = new Category();
+					category.setCategoryId(resultSet.getInt("CategoryId"));
+					category.setCategoryName(resultSet.getString("CategoryName"));
+					categoryNotificationsSetting.setCategory(category);
+					categoryNotificationsSetting.setGetEmailForNewTicket(resultSet.getBoolean("GetEmailForNewTicket"));
+					categoryNotificationsSetting
+							.setGetEmailForNewComment(resultSet.getBoolean("GetEmailForNewComment"));
+					categoriesNotificationsSettings.add(categoryNotificationsSetting);
+				}
+			}
+		} catch (SQLException e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings) {
+
+		try {
+
+			String categoryIdListForGetEmailForNewTicket = "";
+			String categoryIdListForGetEmailForNewComment = "";
+			for (int i = 0; i < userNotificationsSettings.getCategoriesNotificationsSettings().size(); i++) {
+
+				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewTicket())
+					categoryIdListForGetEmailForNewTicket += userNotificationsSettings
+							.getCategoriesNotificationsSettings().get(i).getCategory().getCategoryId() + ",";
+				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewComment())
+					categoryIdListForGetEmailForNewComment += userNotificationsSettings
+							.getCategoriesNotificationsSettings().get(i).getCategory().getCategoryId() + ",";
+			}
+
+			if (categoryIdListForGetEmailForNewTicket.length() > 0 && categoryIdListForGetEmailForNewTicket
+					.substring(categoryIdListForGetEmailForNewTicket.length() - 1).equals(",")) {
+
+				categoryIdListForGetEmailForNewTicket = categoryIdListForGetEmailForNewTicket.substring(0,
+						categoryIdListForGetEmailForNewTicket.length() - 1);
+			}
+
+			if (categoryIdListForGetEmailForNewComment.length() > 0 && categoryIdListForGetEmailForNewComment
+					.substring(categoryIdListForGetEmailForNewComment.length() - 1).equals(",")) {
+
+				categoryIdListForGetEmailForNewComment = categoryIdListForGetEmailForNewComment.substring(0,
+						categoryIdListForGetEmailForNewComment.length() - 1);
+			}
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userNotificationsSettings.getUser().getUserId(),
+					"UserId");
+			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(
+					userNotificationsSettings.isGetEmailForTicketResponse(), "GetEmailForTicketResponse");
+			InOutParam<String> categoryIdListForGetEmailForNewTicketParam = new InOutParam<String>(
+					categoryIdListForGetEmailForNewTicket, "CategoryIdListForGetEmailForNewTicket");
+			InOutParam<String> categoryIdListForGetEmailForNewCommentParam = new InOutParam<String>(
+					categoryIdListForGetEmailForNewComment, "CategoryIdListForGetEmailforNewComment");
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.UpdateUserNotificationsSettings, userIdParam,
+					getEmailForTicketResponseParam, categoryIdListForGetEmailForNewTicketParam,
+					categoryIdListForGetEmailForNewCommentParam, errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() == 0) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		} catch (Exception e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
 	}
 }
