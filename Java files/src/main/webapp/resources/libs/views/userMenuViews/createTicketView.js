@@ -147,7 +147,6 @@ var CreateTicketView = Backbone.View.extend({
 		// Comment
 		var ticketComment = new TicketComment({
 			user: currentUser,
-			dateTime: new Date().getTime(),
 			comment: $('#ticketContent').val()
 		});
 		var commentErrors = ticketComment.check();

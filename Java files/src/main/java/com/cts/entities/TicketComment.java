@@ -14,7 +14,7 @@ public class TicketComment {
 	public TicketComment() {
 		commentId = 0;
 		ticketId = 0;
-		dateTime = new Timestamp(0);
+		dateTime = new Timestamp(System.currentTimeMillis());
 		comment = "";
 		user = new User();
 		filePath = "";

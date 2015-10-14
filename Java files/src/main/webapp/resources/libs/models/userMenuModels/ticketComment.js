@@ -4,7 +4,7 @@ var TicketComment = Backbone.Model.extend({
 	
 	defaults: {
 		user: '',
-		dateTime: '',
+//		/dateTime: '',
 		comment: ''
 	},
 	

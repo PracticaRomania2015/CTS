@@ -130,6 +130,8 @@ public class TicketsController {
 			logger.error("Ticket description is empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
+		
+		System.out.println(ticket.getComments().get(0).getDateTime() + " " + System.currentTimeMillis());
 
 		// Ticket creation.
 		TicketDAOInterface ticketDAO = new TicketDAO();
