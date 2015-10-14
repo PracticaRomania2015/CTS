@@ -92,7 +92,7 @@ public class RootManagementController {
 		} else {
 
 			logger.warn("Category/Subcategory could not be removed!");
-			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
+			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 	}
 
