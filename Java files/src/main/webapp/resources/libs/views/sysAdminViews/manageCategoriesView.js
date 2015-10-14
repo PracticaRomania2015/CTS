@@ -167,7 +167,7 @@ var ManageCategoriesView = Backbone.View.extend({
 			success : function (model, response) {
 				if (response.type == 'success') {
 					var selectedCategory = $('#categoryListDropboxEditSubcategory').val();
-					$('#subcategoryListDropboxEditSubcategory').find('option').remove().end().append(createElem('option',{selected:'',value:'',style:'display: none;'}));
+					$('#subcategoryListDropboxEditSubcategory').find('option').remove().end().append(createElem('option',{selected:'',value:'',style:'display: none;'},'Select the subcategory...'));
 					if ($.isEmptyObject(response.data)) {
 						$('#subcategoryListDropboxEditSubcategory').attr("disabled", true);
 					} else {
