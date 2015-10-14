@@ -13,17 +13,17 @@ var ManageUserRoleView = Backbone.View.extend({
 		//TODO: no id for tableHeadElem2?
 		var header = createElem('h1',{class:'userPage'},'Manage User Roles for' + ' ' + this.model.get('name'));
 		this.model.unset('name');
-
-		var tableHeadElem1 = createElem('th',{class:'wide-col rounded-tl'},'Category ID');
-		var tableHeadElem2 = createElem('th',{class:'wide-col'},'Category Name');
-		var tableHeadElem3 = createElem('th',{id:'', class:'wide-col rounded-tr'},'Check');
-		var tableHeadRow = createElem('tr',{},[tableHeadElem1,tableHeadElem2,tableHeadElem3]);
+		
+		// Manage notifications
+		var tableHeadElem1 = createElem('th',{class:'wide-col rounded-tl'},'Category Name');
+		var tableHeadElem2 = createElem('th',{id:'', class:'wide-col rounded-tr'},'Check');
+		var tableHeadRow = createElem('tr',{},[tableHeadElem1,tableHeadElem2]);
 		var tableHeader = createElem('thead',{},[tableHeadRow]);
 
 		var tableBody = createElem('tbody',{id:'userRolesBody'});
 
 		var sysAdminDiv = createElem('div',{id:'sysAdminDiv'});
-		var tableFootColumn = createElem('th',{id:'rounded-bot',colspan:'3'},[sysAdminDiv]);
+		var tableFootColumn = createElem('th',{id:'rounded-bot',colspan:'2'},[sysAdminDiv]);
 		var tableFootRow = createElem('tr',{},[tableFootColumn]);
 		var tableFooter = createElem('tfoot',{},[tableFootRow]);
 
@@ -72,14 +72,12 @@ var ManageUserRoleView = Backbone.View.extend({
 	
 	addManagedCategory: function (adminStatus, categoryId, categoryName) {
 		var isChecked = adminStatus ? true : false;
-		var categoryIdElem = createElem('div',{class:'columnOverflow'},categoryId);
-		var tableCategoryId = createElem('td',{},[categoryIdElem]);
 		var categoryNameElem = createElem('div',{class:'columnOverflow'},categoryName);
 		var tableCategoryName = createElem('td',{},[categoryNameElem]);
 		var checkBox = createElem('input',{id:categoryId,class:'checkboxClassId',type:'checkbox',checked:isChecked,});
 		var checkBoxWrapper = createElem('div',{class:'columnOverflow'},checkBox);
 		var tableCheckbox = createElem('td',{},[checkBoxWrapper]);
-		var tableRow = createElem('tr',{},[tableCategoryId,tableCategoryName,tableCheckbox]);
+		var tableRow = createElem('tr',{},[tableCategoryName,tableCheckbox]);
 		$('#userRolesBody').append(tableRow);
 	},
 	

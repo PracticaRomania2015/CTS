@@ -41,8 +41,8 @@ var UserMenuView = Backbone.View.extend({
 		if (!$('#mainContainer').hasClass('logged')) {
 			$('#mainContainer').addClass('logged');
 		}
-		if (!$('header').hasClass('headerlogged')) {
-			$('header').addClass('headerlogged');
+		if (!$('header').hasClass('headerLogged')) {
+			$('header').addClass('headerLogged');
 		}
 		return this;
 	},
@@ -161,6 +161,7 @@ var UserMenuView = Backbone.View.extend({
 		clearUserMenu();
 		initMainMenu();
 		$('#mainContainer').removeClass('logged');
+		$('header').removeClass('headerLogged');
 		$('#mainContainer').append(mainMenu.render().el);
 	}
 });

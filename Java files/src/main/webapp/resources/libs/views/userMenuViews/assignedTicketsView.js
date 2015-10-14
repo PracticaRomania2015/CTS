@@ -38,16 +38,15 @@ var AssignedTicketsView = Backbone.View.extend({
 		var selectSearchParam = createElem('select',{id:'ticketSearchDropBox',class:'searchTickets'},[firstOptionSearchParam,secondOptionSearchParam]);
 		//TODO: needs implementation
 		//New category,priority,status select
-		var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'Category');
+		var searchCategoryDefaultOption = createElem('option',{selected:'',value:'0'},'All categories');
 		var searchCategorySelect = createElem('select',{id:'ticketSearchCategory',class:'searchCategories'},[searchCategoryDefaultOption]);
-		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'Priority');
+		var searchPrioritiesDefaultOption = createElem('option',{selected:'',value:'0'},'All priorities');
 		var searchPrioritiesSelect = createElem('select',{id:'ticketSearchPriority',class:'searchPriorities'},[searchPrioritiesDefaultOption]);
-		var searchStatusDefaultOption = createElem('option',{selected:'',value:'0'},'Status');
-		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusDefaultOption]);
-		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[createElem('option',{selected:'',value:'0'},'All status'), 
-		                                                                                             createElem('option',{value:'1'},'Active'), 
-		                                                                                             createElem('option',{value:'2'},'Answered'), 
-		                                                                                             createElem('option',{value:'3'},'Closed')]);
+		var searchStatusFirstOption = createElem('option',{selected:'',value:'0'},'All status');
+		var searchStatusSecondOption = createElem('option',{value:'1'},'Active');
+		var searchStatusThirdOption = createElem('option',{value:'2'},'Answered')
+		var searchStatusFourthOption = createElem('option',{value:'3'},'Closed')
+		var searchStatusSelect = createElem('select',{id:'ticketSearchStatus',class:'searchStatus'},[searchStatusFirstOption,searchStatusSecondOption,searchStatusThirdOption,searchStatusFourthOption]);
 		// Loading animation
 		var loading = createElem('img',{id:'loadingAnimManage',src:'/cts/resources/img/loadingAnim.gif'});
 		var loadingIconWrapper = createElem('div',{id:'loadingIconWrapper'},loading);
@@ -110,7 +109,7 @@ var AssignedTicketsView = Backbone.View.extend({
 		this.$el.append(header,searchInput,selectSearchParam,searchCategorySelect,searchPrioritiesSelect,searchStatusSelect,loadingIconWrapper,searchButton,ticketViewTable);
 		this.setElement(this.$el);
 		this.loadPageData();
-		this.viewData(1, this.searchText, this.searchType);
+		this.viewData(1, '', '');
 		return this;
 	},
 	

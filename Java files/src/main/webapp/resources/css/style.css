@@ -8,6 +8,7 @@
 /* Stop sidebar from moving page content */
 /*body {
     width: calc(100vw - 34px);
+
 }*/
 
 /* =========================================================================================================================== */
@@ -16,7 +17,7 @@ header {
 	margin: 0 auto;
 }
 
-.headerlogged {
+.headerLogged {
 	width: 1245px;
 }
 
@@ -44,6 +45,7 @@ header {
 	height: 100%;
 	margin: 0 auto;
 }
+
 
 #loadingAnimMy, #loadingAnimManage {
 	margin: 0px 0px -10px -5px;
@@ -420,7 +422,15 @@ h2.userPage {
 	margin: 5px 0px 5px 0px;
 	font-family: 'Arial';
 	border-collapse: collapse;
+}
 
+.userPropertiesNotifications {
+	table-layout: fixed;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-family: 'Arial';
+	border-collapse: collapse;
 }
 
 #sysAdminDiv {
@@ -438,54 +448,54 @@ h2.userPage {
 	cursor: pointer;
 }
 
-.ticketView thead th.wide-col, .usersView thead th.wide-col, .userRoles thead th.wide-col
+.ticketView thead th.wide-col, .usersView thead th.wide-col, .userRoles thead th.wide-col, .userPropertiesNotifications thead th.wide-col
 	{
 	width: 15%;
 }
 
-.ticketView thead th.slim-col, .usersView thead th.slim-col, .userRoles thead th.slim-col
+.ticketView thead th.slim-col, .usersView thead th.slim-col, .userRoles thead th.slim-col, .userPropertiesNotifications thead th.slim-col
 	{
 	width: 12.4%;
 }
 
 
 
-.ticketView thead th.id-col, .usersView thead th.id-col, .userRoles thead th.id-col
+.ticketView thead th.id-col, .usersView thead th.id-col, .userRoles thead th.id-col, .userPropertiesNotifications thead th.id-col 
 	{
 	width: 8%;
 }
 
 .ticketView thead th.rounded-tl, .usersView thead th.rounded-tl,
-	.userRoles thead th.rounded-tl {
+	.userRoles thead th.rounded-tl, .userPropertiesNotifications thead th.rounded-tl {
 	border-radius: 5px 0px 0px 0px;
 }
 
 .ticketView thead th.rounded-tr, .usersView thead th.rounded-tr,
-	.userRoles thead th.rounded-tr {
+	.userRoles thead th.rounded-tr, .userPropertiesNotifications thead th.rounded-tr {
 	border-radius: 0px 5px 0px 0px;
 }
 
 .ticketView tfoot th#rounded-bot, .usersView  tfoot th#rounded-bot,
-	.userRoles tfoot th#rounded-bot {
+	.userRoles tfoot th#rounded-bot, .userPropertiesNotifications tfoot th#rounded-bot {
 	border-radius: 0px 0px 5px 5px;
 }
 
-.ticketView tbody tr:hover td, .usersView tbody tr:hover td {
+.ticketView tbody tr:hover td, .usersView tbody tr:hover td, .userPropertiesNotifications tbody tr:hover td {
 	color: #333;
 	background: linear-gradient(to bottom, #7bc143 0%, #b6d81c 48%, #7bc143 100%);
 }
 
-.ticketView tbody, .usersView tbody, .userRoles tbody {
+.ticketView tbody, .usersView tbody, .userRoles tbody, .userPropertiesNotifications tbody {
 	outline: 1px solid #0d94d2;
 	outline-offset: -1px;
 }
 
-.ticketView tbody tr, .usersView tbody tr, .userRoles tbody tr {
+.ticketView tbody tr, .usersView tbody tr, .userRoles tbody tr, .userPropertiesNotifications tbody tr {
 	border-top: 1px solid #0d94d2;
 	cursor: pointer;
 }
 
-.ticketView th, .usersView th, .userRoles th {
+.ticketView th, .usersView th, .userRoles th, .userPropertiesNotifications th {
 	font-size: 18px;
 	text-align: center;
 	padding: 10px;
@@ -494,7 +504,7 @@ h2.userPage {
 	color: #fff;
 }
 
-.ticketView td, .usersView td, .userRoles td {
+.ticketView td, .usersView td, .userRoles td, .userPropertiesNotifications td {
 	font-size: 14px;
 	text-align: center;
 	padding: 5px;
@@ -890,6 +900,7 @@ h2.userPage {
 	text-align: center;
 	text-decoration: none;
 	color: #fff;
+
 }
 
 #notifications {
