@@ -671,6 +671,7 @@ h2.userPage {
 }
 #reopenTicketButton{
 	display: inline;
+	float: right;
 	margin-right: 11px;
 }
 

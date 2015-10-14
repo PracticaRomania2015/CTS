@@ -28,13 +28,13 @@ var ManageUserRoleView = Backbone.View.extend({
 		var tableFooter = createElem('tfoot',{},[tableFootRow]);
 
 		var table = createElem('table',{class:'userRoles'},[tableHeader,tableBody,tableFooter]);
-
-		var manageUserContainer = createElem('div',{id:'manageUserContainer'},table);
-
+		
 		var updateUserRolesButton = createElem('div',{id:'updateUserRoles'},'Submit');
 
+		var manageUserContainer = createElem('div',{id:'manageUserContainer'},[table,updateUserRolesButton]);
+
 		this.$el.attr('id','manageUserRoleTemplate').attr('class','context');
-		this.$el.append(header,manageUserContainer,updateUserRolesButton);
+		this.$el.append(header,manageUserContainer);
 		this.setElement(this.$el);
 		this.loadPageData();
 		return this;

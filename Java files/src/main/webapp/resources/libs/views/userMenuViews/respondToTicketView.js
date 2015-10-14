@@ -73,7 +73,7 @@ var RespondToTicketView = Backbone.View.extend({
 		ticket.save({}, {
 			success : function(model, response) {
 					if (response.type == 'success') {
-					$('#ticketCommentsWrapper').remove().end();
+					$('#ticketCommentsWrapper').empty();
 					_.each(response.data.comments, function(e) {
 						var ticketPriority = response.data.priority.priorityId;
 						var ticketCategory = response.data.category.categoryId;
