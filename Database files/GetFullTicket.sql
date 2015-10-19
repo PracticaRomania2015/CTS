@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/8/2015 1:19:21 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/19/2015 3:20:36 PM ******/
 DROP PROCEDURE [dbo].[GetFullTicket]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/8/2015 1:19:21 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetFullTicket]    Script Date: 10/19/2015 3:20:36 PM ******/
 SET ANSI_NULLS ON
 GO
 

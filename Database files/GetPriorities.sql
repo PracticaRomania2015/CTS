@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 10/8/2015 1:19:52 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 10/19/2015 3:20:55 PM ******/
 DROP PROCEDURE [dbo].[GetPriorities]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 10/8/2015 1:19:52 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetPriorities]    Script Date: 10/19/2015 3:20:55 PM ******/
 SET ANSI_NULLS ON
 GO
 

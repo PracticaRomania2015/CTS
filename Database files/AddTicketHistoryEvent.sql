@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 10/8/2015 1:17:31 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 10/19/2015 3:18:19 PM ******/
 DROP PROCEDURE [dbo].[AddTicketHistoryEvent]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 10/8/2015 1:17:31 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddTicketHistoryEvent]    Script Date: 10/19/2015 3:18:19 PM ******/
 SET ANSI_NULLS ON
 GO
 

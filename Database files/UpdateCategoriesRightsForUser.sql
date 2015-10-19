@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/8/2015 1:21:17 PM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/19/2015 3:22:33 PM ******/
 DROP PROCEDURE [dbo].[UpdateCategoriesRightsForUser]
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/8/2015 1:21:17 PM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoriesRightsForUser]    Script Date: 10/19/2015 3:22:33 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -56,8 +56,8 @@ BEGIN
 			SELECT TOP 1 @CategoryId = CategoryId FROM Category WHERE CategoryId IN (' + @CategoryIdList + ') AND CategoryId NOT IN (SELECT CategoryId FROM UserCategory WHERE UserId = ' + CONVERT(varchar(10), @UserId) + ')
 			
 			IF (@CategoryId <> 0)
-				INSERT INTO UserCategory
-				VALUES (' + CONVERT(varchar(10), @UserId) + ', @CategoryId)
+				INSERT INTO UserCategory(UserId, CategoryId, GetEmailForNewTicket, GetEmailForNewComment)
+				VALUES (' + CONVERT(varchar(10), @UserId) + ', @CategoryId, 0, 0)
 		END'
 		EXEC(@SQL)
 	END

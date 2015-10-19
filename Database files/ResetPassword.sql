@@ -1,11 +1,11 @@
 USE [CTS]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/8/2015 1:21:11 PM ******/
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/19/2015 3:22:22 PM ******/
 DROP PROCEDURE [dbo].[ResetPassword]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/8/2015 1:21:11 PM ******/
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 10/19/2015 3:22:22 PM ******/
 SET ANSI_NULLS ON
 GO
 
