@@ -175,7 +175,7 @@ td div.columnOverflow {
 }
 
 #addCategoryButton, #addSubcategoryButton, #editSubcategoryButton,
-	#removeSubcategoryButton, #removeCategoryButton, #editCategoryButton, #changePasswordButton {
+	#removeSubcategoryButton, #removeCategoryButton, #editCategoryButton, #changePasswordButton, #updateUserNotificationsButton {
 	border-radius: 5px;
 	background: #0d94d2;
 	display: block;
@@ -446,6 +446,16 @@ h2.userPage {
 .table-surf {
 	display: inline-block;
 	cursor: pointer;
+}
+
+#getEmailForTicketResponseDiv {
+	margin: 0 auto;
+	color: white;
+	font-family: arial
+}
+
+.getEmailForTicketResponseCheckBox {
+	margin-left: 10px;
 }
 
 .ticketView thead th.wide-col, .usersView thead th.wide-col, .userRoles thead th.wide-col, .userPropertiesNotifications thead th.wide-col

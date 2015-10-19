@@ -74,6 +74,8 @@ $(document).on('ready', function() {
 	require(resourcesLocation + 'libs/models/userMenuModels/respondToTicketModel.js');
 	require(resourcesLocation + 'libs/models/userMenuModels/ticketComment.js');
 	require(resourcesLocation + 'libs/models/userMenuModels/userPropertiesModel.js');
+	require(resourcesLocation + 'libs/models/userMenuModels/loadUserNotificationsSettings.js');
+	require(resourcesLocation + 'libs/models/userMenuModels/userNotificationsSettingsModel.js');
 	
 	require(resourcesLocation + 'libs/views/mainMenuViews/loginView.js');
 	require(resourcesLocation + 'libs/views/mainMenuViews/registerView.js');

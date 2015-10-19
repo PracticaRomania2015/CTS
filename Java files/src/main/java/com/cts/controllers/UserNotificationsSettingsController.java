@@ -28,7 +28,7 @@ public class UserNotificationsSettingsController {
 
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.getUserNotificationsSettings(userNotificationsSettings)) {
-
+			
 			logger.info("User notifications settings retrieved successfully");
 			return new ResponseMessage(userNotificationsSettings).getMessageJSON(ResponseValues.SUCCESS);
 		} else {

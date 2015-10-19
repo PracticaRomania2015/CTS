@@ -360,26 +360,27 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			prepareExecution(StoredProceduresNames.GetUserNotificationsSettings, userIdParam,
 					getEmailForTicketResponseParam, errCodeParam);
 			ResultSet resultSet = execute(true);
-			if (errCodeParam.getParameter() == 0) {
-
-				userNotificationsSettings.setGetEmailForTicketResponse(getEmailForTicketResponseParam.getParameter());
-				setOutParametersAfterExecute();
-				ArrayList<CategoryNotificationsSetting> categoriesNotificationsSettings = new ArrayList<CategoryNotificationsSetting>();
-				while (resultSet.next()) {
-
-					CategoryNotificationsSetting categoryNotificationsSetting = new CategoryNotificationsSetting();
-					Category category = new Category();
-					category.setCategoryId(resultSet.getInt("CategoryId"));
-					category.setCategoryName(resultSet.getString("CategoryName"));
-					categoryNotificationsSetting.setCategory(category);
-					categoryNotificationsSetting.setGetEmailForNewTicket(resultSet.getBoolean("GetEmailForNewTicket"));
-					categoryNotificationsSetting
-							.setGetEmailForNewComment(resultSet.getBoolean("GetEmailForNewComment"));
-					categoriesNotificationsSettings.add(categoryNotificationsSetting);
-				}
+			ArrayList<CategoryNotificationsSetting> categoriesNotificationsSettings = new ArrayList<CategoryNotificationsSetting>();
+			while (resultSet.next()) {
+				
+				CategoryNotificationsSetting categoryNotificationsSetting = new CategoryNotificationsSetting();
+				Category category = new Category();
+				category.setCategoryId(resultSet.getInt("CategoryId"));
+				category.setCategoryName(resultSet.getString("CategoryName"));
+				categoryNotificationsSetting.setCategory(category);
+				categoryNotificationsSetting.setGetEmailForNewTicket(resultSet.getBoolean("GetEmailForNewTicket"));
+				categoryNotificationsSetting.setGetEmailForNewComment(resultSet.getBoolean("GetEmailForNewComment"));
+				categoriesNotificationsSettings.add(categoryNotificationsSetting);
 			}
-		} catch (SQLException e) {
+			userNotificationsSettings.setCategoriesNotificationsSettings(categoriesNotificationsSettings);
+			setOutParametersAfterExecute();
+			if (errCodeParam.getParameter() != 0) {
 
+				return false;
+			}
+			userNotificationsSettings.setGetEmailForTicketResponse(getEmailForTicketResponseParam.getParameter());
+		} catch (SQLException e) {
+			
 			return false;
 		} finally {
 
