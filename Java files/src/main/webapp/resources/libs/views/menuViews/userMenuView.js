@@ -34,9 +34,12 @@ var UserMenuView = Backbone.View.extend({
 		this.$el.attr('id', 'userMenuTemplate');
 		if (sessionStorage.loggedUserRights == "SysAdmin") {
 			this.$el.append(toggleUserProperties,toggleManageTickets,toggleUserTickets,toggleSubmitTicket,toggleManageCategories,toggleManageUsers,buttonLogout);
-		} else {
+		} else if (sessionStorage.loggedUserRights == "Admin"){
 			this.$el.append(toggleUserProperties,toggleManageTickets,toggleUserTickets,toggleSubmitTicket,buttonLogout);
+		} else{
+			this.$el.append(toggleUserProperties,toggleUserTickets,toggleSubmitTicket,buttonLogout);
 		}
+		
 		this.setElement(this.$el);
 		if (!$('#mainContainer').hasClass('logged')) {
 			$('#mainContainer').addClass('logged');
