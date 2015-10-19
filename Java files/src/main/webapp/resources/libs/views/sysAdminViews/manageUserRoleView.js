@@ -42,14 +42,15 @@ var ManageUserRoleView = Backbone.View.extend({
 	
 	loadPageData: function(){
 		var currentView = this;
-		this.model.save({},{
+		var currentModel = this.model;
+		currentModel.save({},{
 			async: true,
 			success: function (model, response) {
 				if(response.type == 'success') {
 					var checked = response.data.sysAdmin ? "checked" : "";
 					$('#sysAdminDiv').empty().append("<input type='checkbox' id='sysAdminCheckbox' value='sysAdmin' " + checked + ">System Administrator Rights</input>");
 					$('#sysAdminCheckbox').click(function(){
-						currentView.model.attributes.data.sysAdmin = !currentView.model.attributes.data.sysAdmin;
+						currentModel.attributes.data.sysAdmin = !currentModel.attributes.data.sysAdmin;
 					});
 					$('#userRolesBody').empty();
 					_.each(response.data.categoryAdminRights, function (e) {

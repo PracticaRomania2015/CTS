@@ -46,21 +46,20 @@ var UserPropertiesView = Backbone.View.extend({
 		return this;
 	},
 	
-	loadPageData: function () {		
+	loadPageData: function () {
 		var currentView = this;
 		var user = new Backbone.Model({
 			userId : sessionStorage.loggedUserId
 		});
-		var loadUserNotificationsSettingsModel = new LoadUserNotificationsSettings ({ user : user });
+		loadUserNotificationsSettingsModel = new LoadUserNotificationsSettings ({ user : user });
 		loadUserNotificationsSettingsModel.save({},{
 			async: true,
 			success: function (model, response) {
-				if(response.type == 'success') {
-					console.log(response.data);
+				if (response.type == 'success') {
 					var checked = response.data.getEmailForTicketResponse ? "checked" : "";
 					$('#getEmailForTicketResponseDiv').empty().append("<input type='checkbox' id='getEmailForTicketResponseCheckBox' value='getEmailForTicketResponse' " + checked + ">Get email for ticket response</input>");
 					$('#getEmailForTicketResponseCheckBox').click(function(){
-						currentView.model.attributes.data.getEmailForTicketResponse = !currentView.model.attributes.data.getEmailForTicketResponse;
+						loadUserNotificationsSettingsModel.attributes.data.getEmailForTicketResponse = !loadUserNotificationsSettingsModel.attributes.data.getEmailForTicketResponse;
 					});
 					
 					$('#userNotificationsTableBody').empty();
@@ -143,8 +142,8 @@ var UserPropertiesView = Backbone.View.extend({
 		});
 		var userNotificationsSettings = new UserNotificationsSettingsModel ({
 			user : user,
-			getEmailForTicketResponse : currentModel.get("data").getEmailForTicketResponse,
-			categoriesNotificationsSettings : currentModel.get("data").categoriesNotificationsSettings
+			getEmailForTicketResponse : loadUserNotificationsSettingsModel.get("data").getEmailForTicketResponse,
+			categoriesNotificationsSettings : loadUserNotificationsSettingsModel.get("data").categoriesNotificationsSettings
 		});
 		userNotificationsSettings.save({},{
 			success: function (model,response) {

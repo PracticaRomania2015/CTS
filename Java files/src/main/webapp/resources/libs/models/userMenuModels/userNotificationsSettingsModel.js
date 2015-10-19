@@ -3,7 +3,7 @@ var UserNotificationsSettingsModel = Backbone.Model.extend({
 	urlRoot: 'updateUserNotificationsSettings/',
 	
 	defaults: {
-		userId: '',
+		user: new Backbone.Model,
 		getEmailForTicketResponse: '',
 		categoriesNotificationsSettings: ''
 	}

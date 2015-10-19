@@ -2,7 +2,7 @@
 
 // Global Variables
 var mainMenu, login, register, recovery;
-var userMenu, welcome, userProperties, manageTickets, userTickets, createTicket, manageCategories, manageUsers, respondToTicket, manageUserRoleView;
+var userMenu, welcome, userProperties, manageTickets, userTickets, createTicket, manageCategories, manageUsers, respondToTicket, manageUserRoleView, loadUserNotificationsSettingsModel;
 
 // @Override - Backbone close function
 Backbone.View.prototype.close = function () {
