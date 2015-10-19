@@ -34,4 +34,10 @@ public interface UserDAOInterface {
 	public boolean getUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings);
 
 	public boolean updateUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings);
+
+	public boolean getUserOptionForNotifications(User user);
+	
+	public User getTicketAdmin(Ticket ticket);
+	
+	public ArrayList<User> getAdminsForCategoryWhoWantToReceiveNotifications(Category category);
 }

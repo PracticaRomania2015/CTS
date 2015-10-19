@@ -130,12 +130,31 @@ public class TicketsController {
 			logger.error("Ticket description is empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.TICKETEMPTYDESCRIPTION);
 		}
-		
+
 		// Ticket creation.
 		TicketDAOInterface ticketDAO = new TicketDAO();
 		if (ticketDAO.createTicket(ticket)) {
 
 			logger.info("Ticket submitted succesfully!");
+
+			String subject = "CTS - Notification Manager";
+			String msg;
+			UserDAOInterface userDAO = new UserDAO();
+			ArrayList<User> admins = userDAO.getAdminsForCategoryWhoWantToReceiveNotifications(ticket.getCategory());
+			for (User admin : admins) {
+
+				msg = "Hello " + admin.getFirstName() + " " + admin.getLastName()
+						+ ",\n\nA new ticket was submitted on the category " + ticket.getCategory().getCategoryName()
+						+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
+				if (SendEmail.sendEmail(admin.getEmail(), subject, msg)) {
+
+					logger.info("An email was sent to notify the admin that a new ticket was submitted.");
+				} else {
+
+					logger.error("Failed to send an email to notify the admin that a new ticket was submitted.");
+				}
+			}
+
 			return new ResponseMessage(ticket).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
 
@@ -184,21 +203,48 @@ public class TicketsController {
 				if (user.getUserId() != ticket.getComments().get(ticket.getComments().size() - 1).getUser()
 						.getUserId()) {
 
-					String subject = "CTS - Notification Manager";
-					String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
-							+ ",\n\nAn admin has responded to your ticket #" + ticket.getTicketId()
-							+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
+					if (userDAO.getUserOptionForNotifications(user)) {
 
-					if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
+						String subject = "CTS - Notification Manager";
+						String msg = "Hello " + user.getFirstName() + " " + user.getLastName()
+								+ ",\n\nAn admin has responded to your ticket #" + ticket.getTicketId()
+								+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
 
-						logger.info("An email was sent to notify the ticket user that a new comment was added.");
-					} else {
+						if (SendEmail.sendEmail(user.getEmail(), subject, msg)) {
 
-						logger.error("Failed to send an email to notify the ticket user that a new comment was added.");
+							logger.info("An email was sent to notify the ticket user that a new comment was added.");
+						} else {
+
+							logger.error(
+									"Failed to send an email to notify the ticket user that a new comment was added.");
+						}
 					}
 				} else {
 
-					logger.info("The comment was posted by the user who created the ticket. No email will be sent!");
+					logger.info("The comment was posted by the user who created the ticket.");
+
+					User admin = userDAO.getTicketAdmin(ticket);
+					if (admin != null) {
+
+						String subject = "CTS - Notification Manager";
+						String msg = "Hello " + admin.getFirstName() + " " + admin.getLastName()
+								+ ",\n\nThe user has posted a new comment to the ticket #" + ticket.getTicketId()
+								+ ".\n\nRegards,\nCTS team\n\n*** Please do not respond to this e-mail as it is an automated message. Replies will not be received.***";
+
+						if (SendEmail.sendEmail(admin.getEmail(), subject, msg)) {
+
+							logger.info(
+									"An email was sent to notify the ticket assigned admin that a new comment was added by the ticket user.");
+						} else {
+
+							logger.error(
+									"Failed to send an email to notify the ticket assigned admin that a new comment was added.");
+						}
+					} else {
+
+						logger.info(
+								"The ticket is unassigned or the admin doesn't want to receive email on the ticket category! No email will be sent!");
+					}
 				}
 			} else {
 

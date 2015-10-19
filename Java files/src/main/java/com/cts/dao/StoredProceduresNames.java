@@ -186,5 +186,23 @@ public enum StoredProceduresNames {
 		public String toString() {
 			return "dbo.UpdateUserNotificationsSettings";
 		}
+	},
+
+	GetUserOptionForNotifications {
+		public String toString() {
+			return "dbo.GetUserOptionForNotifications";
+		}
+	},
+
+	GetTicketAdmin {
+		public String toString() {
+			return "dbo.GetTicketAdmin";
+		}
+	},
+
+	GetAdminsForCategoryWhoWantToReceiveNotifications {
+		public String toString() {
+			return "dbo.GetAdminsForCategoryWhoWantToReceiveNotifications";
+		}
 	}
 }

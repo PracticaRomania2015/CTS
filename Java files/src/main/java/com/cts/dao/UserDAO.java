@@ -362,7 +362,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			ResultSet resultSet = execute(true);
 			ArrayList<CategoryNotificationsSetting> categoriesNotificationsSettings = new ArrayList<CategoryNotificationsSetting>();
 			while (resultSet.next()) {
-				
+
 				CategoryNotificationsSetting categoryNotificationsSetting = new CategoryNotificationsSetting();
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt("CategoryId"));
@@ -380,7 +380,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			}
 			userNotificationsSettings.setGetEmailForTicketResponse(getEmailForTicketResponseParam.getParameter());
 		} catch (SQLException e) {
-			
+
 			return false;
 		} finally {
 
@@ -447,5 +447,83 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 			closeCallableStatement();
 		}
+	}
+
+	@Override
+	public boolean getUserOptionForNotifications(User user) {
+
+		try {
+
+			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
+			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(false,
+					"GetEmailForTicketResponse", true);
+			prepareExecution(StoredProceduresNames.GetUserOptionForNotifications, userIdParam,
+					getEmailForTicketResponseParam);
+			return getEmailForTicketResponseParam.getParameter();
+		} catch (Exception e) {
+
+			return false;
+		} finally {
+
+			closeCallableStatement();
+		}
+	}
+
+	@Override
+	public User getTicketAdmin(Ticket ticket) {
+
+		User admin = null;
+		try {
+
+			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
+			InOutParam<Integer> adminIdParam = new InOutParam<Integer>(0, "AdminId", true);
+			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
+			InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
+			InOutParam<String> emailParam = new InOutParam<String>("", "Email", true);
+			InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
+			prepareExecution(StoredProceduresNames.GetTicketAdmin, ticketIdParam, adminIdParam, firstNameParam,
+					lastNameParam, emailParam, errCodeParam);
+			execute();
+			if (errCodeParam.getParameter() == 0) {
+
+				admin = new User();
+				admin.setUserId(adminIdParam.getParameter());
+				admin.setFirstName(firstNameParam.getParameter());
+				admin.setLastName(lastNameParam.getParameter());
+				admin.setEmail(emailParam.getParameter());
+			}
+		} catch (SQLException e) {
+
+			return admin;
+		} finally {
+
+			closeCallableStatement();
+		}
+		return admin;
+	}
+
+	@Override
+	public ArrayList<User> getAdminsForCategoryWhoWantToReceiveNotifications(Category category) {
+
+		ArrayList<User> admins = new ArrayList<User>();
+		try {
+
+			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
+			prepareExecution(StoredProceduresNames.GetAdminsForCategoryWhoWantToReceiveNotifications, categoryIdParam);
+			ResultSet resultSet = execute();
+			while (resultSet.next()) {
+
+				User admin = new User();
+				admin.setFirstName(resultSet.getString("FirstName"));
+				admin.setLastName(resultSet.getString("LastName"));
+				admin.setEmail(resultSet.getString("Email"));
+				admins.add(admin);
+			}
+		} catch (SQLException e) {
+		} finally {
+
+			closeCallableStatement();
+		}
+		return admins;
 	}
 }
