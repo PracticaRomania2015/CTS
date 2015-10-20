@@ -459,6 +459,7 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					"GetEmailForTicketResponse", true);
 			prepareExecution(StoredProceduresNames.GetUserOptionForNotifications, userIdParam,
 					getEmailForTicketResponseParam);
+			execute();
 			return getEmailForTicketResponseParam.getParameter();
 		} catch (Exception e) {
 
