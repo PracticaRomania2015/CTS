@@ -20,6 +20,13 @@ public class UserNotificationsSettingsController {
 
 	private static Logger logger = Logger.getLogger(UserNotificationsSettingsController.class.getName());
 
+	/**
+	 * Load user notifications settings.
+	 * 
+	 * @param userNotificationsSettings
+	 *            containing the user with the user id.
+	 * @return full user notifications settings.
+	 */
 	@RequestMapping(value = "/loadUserNotificationsSettings", method = RequestMethod.POST)
 	public @ResponseBody String loadUserNotificationsSettings(
 			@RequestBody UserNotificationsSettings userNotificationsSettings) {
@@ -28,16 +35,20 @@ public class UserNotificationsSettingsController {
 
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.getUserNotificationsSettings(userNotificationsSettings)) {
-
 			logger.info("User notifications settings retrieved successfully");
 			return new ResponseMessage(userNotificationsSettings).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.error("Failed to retrive user notifications settings.");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
+	/**
+	 * Update user notifications settings.
+	 * 
+	 * @param userNotificationsSettings.
+	 * @return success or error.
+	 */
 	@RequestMapping(value = "/updateUserNotificationsSettings", method = RequestMethod.POST)
 	public @ResponseBody String updateUserNotificationsSettings(
 			@RequestBody UserNotificationsSettings userNotificationsSettings) {
@@ -46,11 +57,9 @@ public class UserNotificationsSettingsController {
 
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.updateUserNotificationsSettings(userNotificationsSettings)) {
-
 			logger.info("User notifications settings updated successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.UPDATEUSERNOTIFICATIONSSETTINGSSUCCESS);
 		} else {
-
 			logger.error("User notifications settings could not be updated!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}

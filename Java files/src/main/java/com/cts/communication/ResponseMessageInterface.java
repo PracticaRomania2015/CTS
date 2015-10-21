@@ -7,5 +7,4 @@ public interface ResponseMessageInterface {
 	public ObjectMapper objectMapper = new ObjectMapper();
 
 	public String getMessageJSON(ResponseValues responseValue);
-
 }

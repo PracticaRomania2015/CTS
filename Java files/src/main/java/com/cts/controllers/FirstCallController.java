@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the index page.
  */
 @Controller
-public class FirstCallController{
+public class FirstCallController {
 
 	/**
 	 * Index controller
@@ -17,7 +17,6 @@ public class FirstCallController{
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String firstThingCalled() {
-
 		return "index";
 	}
 }

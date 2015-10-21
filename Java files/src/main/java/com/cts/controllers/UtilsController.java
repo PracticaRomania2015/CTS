@@ -43,7 +43,6 @@ public class UtilsController {
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> categories = categoryDAO.getCategories();
-
 		logger.info("Categories received successfully!");
 		return new ResponseMessage(categories).getMessageJSON(ResponseValues.SUCCESS);
 	}
@@ -63,17 +62,13 @@ public class UtilsController {
 
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		ArrayList<Category> subcategories = categoryDAO.getSubcategories(category);
-
 		if (subcategories != null) {
-
 			logger.info("Subcategories received successfully!");
 			return new ResponseMessage(subcategories).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.info("Subcategories could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
-
 	}
 
 	/**
@@ -91,18 +86,18 @@ public class UtilsController {
 
 		UserDAOInterface userDAO = new UserDAO();
 		ArrayList<User> admins = userDAO.getAdminsForCategory(category);
-
 		if (admins != null) {
-
 			logger.info("Admins for the provided category received successfully!");
 			return new ResponseMessage(admins).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.info("Admins for the provided category could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
+	/**
+	 * @return all priorities.
+	 */
 	@RequestMapping(value = "/getPriorities", method = RequestMethod.POST)
 	public @ResponseBody String getPriorities() {
 
@@ -110,18 +105,18 @@ public class UtilsController {
 
 		PriorityDAOInterface priorityDAO = new PriorityDAO();
 		ArrayList<Priority> priorities = priorityDAO.getPriorities();
-
 		if (priorities != null) {
-
 			logger.info("Priorities received successfully!");
 			return new ResponseMessage(priorities).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.info("Priorities could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
 	}
 
+	/**
+	 * @return all questions.
+	 */
 	@RequestMapping(value = "/getQuestions", method = RequestMethod.POST)
 	public @ResponseBody String getQuestions() {
 
@@ -129,13 +124,10 @@ public class UtilsController {
 
 		QuestionDAOInterface questionDAO = new QuestionDAO();
 		ArrayList<Question> questions = questionDAO.getQuestions();
-
 		if (questions != null) {
-
 			logger.info("Questions received successfully!");
 			return new ResponseMessage(questions).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.info("Questions could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}

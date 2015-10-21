@@ -5,6 +5,8 @@ import java.util.Random;
 public class GenerateRandomPassword {
 
 	private static final char[] symbols;
+	private final Random random = new Random();
+	private final char[] buf;
 
 	static {
 		StringBuilder tmp = new StringBuilder();
@@ -15,12 +17,7 @@ public class GenerateRandomPassword {
 		symbols = tmp.toString().toCharArray();
 	}
 
-	private final Random random = new Random();
-
-	private final char[] buf;
-
 	public GenerateRandomPassword(int length) {
-
 		buf = new char[length];
 	}
 

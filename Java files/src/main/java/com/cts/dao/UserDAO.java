@@ -3,7 +3,6 @@ package com.cts.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import com.cts.entities.Category;
 import com.cts.entities.CategoryNotificationsSetting;
 import com.cts.entities.Role;
@@ -29,13 +28,10 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		InOutParam<String> roleNameParam = new InOutParam<String>("", "RoleName", true);
 		InOutParam<Integer> errCodeParam = new InOutParam<Integer>(0, "ErrCode", true);
 		try {
-
 			prepareExecution(StoredProceduresNames.ValidateLogin, userIdParam, firstNameParam, lastNameParam,
 					titleParam, emailParam, passwordParam, roleIdParam, roleNameParam, errCodeParam);
 			execute();
-
 			if (errCodeParam.getParameter() == 0 && userIdParam.getParameter() != 0) {
-
 				user.setUserId(userIdParam.getParameter());
 				user.setFirstName(firstNameParam.getParameter());
 				user.setLastName(lastNameParam.getParameter());
@@ -44,14 +40,11 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				user.getRole().setRoleName(roleNameParam.getParameter());
 				return true;
 			} else {
-
 				return false;
 			}
 		} catch (SQLException e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -60,7 +53,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean createAccount(User user) {
 
 		try {
-
 			InOutParam<String> firstNameParam = new InOutParam<String>(user.getFirstName(), "FirstName");
 			InOutParam<String> lastNameParam = new InOutParam<String>(user.getLastName(), "LastName");
 			InOutParam<String> titleParam = new InOutParam<String>(user.getTitle(), "Title");
@@ -79,7 +71,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					passwordParam, question_1_IdParam, question_1_AnswerParam, question_2_IdParam,
 					question_2_AnswerParam, errCodeParam);
 			execute();
-
 			if (errCodeParam.getParameter() == 0) {
 				return true;
 			} else {
@@ -88,7 +79,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 		} catch (SQLException e) {
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -97,15 +87,12 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean deleteAccount(User user) {
 
 		try {
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
 			prepareExecution(StoredProceduresNames.DeleteUser, userIdParam);
 			execute();
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 		return true;
@@ -115,7 +102,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean resetPassword(User user) {
 
 		try {
-
 			InOutParam<String> emailParam = new InOutParam<String>(user.getEmail(), "Email");
 			InOutParam<String> passwordParam = new InOutParam<String>(user.getPassword(), "Password");
 			InOutParam<Integer> question_1_IdParam = new InOutParam<Integer>(user.getQuestion_1().getQuestionId(),
@@ -131,17 +117,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					question_1_AnswerParam, question_2_IdParam, question_2_AnswerParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				return true;
 			} else {
-
 				return false;
 			}
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -150,7 +132,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean updateUserPersonalData(UserForUpdate user) {
 
 		try {
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
 			InOutParam<String> firstNameParam = new InOutParam<String>(user.getFirstName(), "FirstName");
 			InOutParam<String> lastNameParam = new InOutParam<String>(user.getLastName(), "LastName");
@@ -162,17 +143,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					newPasswordParam, oldPasswordParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				return true;
 			} else {
-
 				return false;
 			}
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -182,12 +159,10 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		ArrayList<User> admins = new ArrayList<User>();
 		try {
-
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
 			prepareExecution(StoredProceduresNames.GetAdminsForCategory, categoryIdParam);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-
 				User admin = new User();
 				admin.setUserId(resultSet.getInt("UserId"));
 				admin.setFirstName(resultSet.getString("FirstName"));
@@ -196,7 +171,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			}
 		} catch (SQLException e) {
 		} finally {
-
 			closeCallableStatement();
 		}
 		return admins;
@@ -206,19 +180,15 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean updateUserStatus(UserStatus userStatus) {
 
 		try {
-
 			String categoryIdList = "";
 			for (int i = 0; i < userStatus.getCategoryAdminRights().size(); i++) {
-
-				if (userStatus.getCategoryAdminRights().get(i).isAdminStatus())
+				if (userStatus.getCategoryAdminRights().get(i).isAdminStatus()) {
 					categoryIdList += userStatus.getCategoryAdminRights().get(i).getCategory().getCategoryId() + ",";
+				}
 			}
-
 			if (categoryIdList.length() > 0 && categoryIdList.substring(categoryIdList.length() - 1).equals(",")) {
-
 				categoryIdList = categoryIdList.substring(0, categoryIdList.length() - 1);
 			}
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userStatus.getUserId(), "UserId");
 			InOutParam<Boolean> isSysAdminParam = new InOutParam<Boolean>(userStatus.isSysAdmin(), "IsSysAdmin");
 			InOutParam<String> categoryIdListParam = new InOutParam<String>(categoryIdList, "CategoryIdList");
@@ -227,17 +197,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					categoryIdListParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				return true;
 			} else {
-
 				return false;
 			}
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -247,7 +213,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		ArrayList<User> users = new ArrayList<User>();
 		try {
-
 			InOutParam<Integer> requestedPageNumberParam = new InOutParam<Integer>(
 					viewUsersRequest.getRequestedPageNumber(), "RequestedPageNumber");
 			InOutParam<Integer> usersPerPageParam = new InOutParam<Integer>(viewUsersRequest.getUsersPerPage(),
@@ -263,7 +228,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					textToSearchParam, searchTypeParam, sortTypeParam, isSearchASCParam, totalNumberOfPagesParam);
 			ResultSet resultSet = execute(true);
 			while (resultSet.next()) {
-
 				User user = new User();
 				user.setUserId(resultSet.getInt("UserId"));
 				user.setFirstName(resultSet.getString("FirstName"));
@@ -278,7 +242,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			totalNumberOfPages.append(totalNumberOfPagesParam.getParameter());
 		} catch (SQLException e) {
 		} finally {
-
 			closeCallableStatement();
 		}
 		return users;
@@ -289,7 +252,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		User user = null;
 		try {
-
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(0, "UserId", true);
 			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
@@ -300,7 +262,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					lastNameParam, emailParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				user = new User();
 				user.setUserId(userIdParam.getParameter());
 				user.setFirstName(firstNameParam.getParameter());
@@ -308,10 +269,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				user.setEmail(emailParam.getParameter());
 			}
 		} catch (SQLException e) {
-
 			return user;
 		} finally {
-
 			closeCallableStatement();
 		}
 		return user;
@@ -321,7 +280,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean getUserData(User user) {
 
 		try {
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
 			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
 			InOutParam<String> lastNameParam = new InOutParam<String>("", "LastName", true);
@@ -331,17 +289,14 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				user.setUserId(user.getUserId());
 				user.setFirstName(firstNameParam.getParameter());
 				user.setLastName(lastNameParam.getParameter());
 				user.setTitle(titleParam.getParameter());
 			}
 		} catch (SQLException e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 		return true;
@@ -351,7 +306,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean getUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings) {
 
 		try {
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userNotificationsSettings.getUser().getUserId(),
 					"UserId");
 			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(false,
@@ -362,7 +316,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			ResultSet resultSet = execute(true);
 			ArrayList<CategoryNotificationsSetting> categoriesNotificationsSettings = new ArrayList<CategoryNotificationsSetting>();
 			while (resultSet.next()) {
-
 				CategoryNotificationsSetting categoryNotificationsSetting = new CategoryNotificationsSetting();
 				Category category = new Category();
 				category.setCategoryId(resultSet.getInt("CategoryId"));
@@ -375,15 +328,12 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			userNotificationsSettings.setCategoriesNotificationsSettings(categoriesNotificationsSettings);
 			setOutParametersAfterExecute();
 			if (errCodeParam.getParameter() != 0) {
-
 				return false;
 			}
 			userNotificationsSettings.setGetEmailForTicketResponse(getEmailForTicketResponseParam.getParameter());
 		} catch (SQLException e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 		return true;
@@ -393,33 +343,28 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean updateUserNotificationsSettings(UserNotificationsSettings userNotificationsSettings) {
 
 		try {
-
 			String categoryIdListForGetEmailForNewTicket = "";
 			String categoryIdListForGetEmailForNewComment = "";
 			for (int i = 0; i < userNotificationsSettings.getCategoriesNotificationsSettings().size(); i++) {
-
-				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewTicket())
+				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewTicket()) {
 					categoryIdListForGetEmailForNewTicket += userNotificationsSettings
 							.getCategoriesNotificationsSettings().get(i).getCategory().getCategoryId() + ",";
-				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewComment())
+				}
+				if (userNotificationsSettings.getCategoriesNotificationsSettings().get(i).isGetEmailForNewComment()) {
 					categoryIdListForGetEmailForNewComment += userNotificationsSettings
 							.getCategoriesNotificationsSettings().get(i).getCategory().getCategoryId() + ",";
+				}
 			}
-
 			if (categoryIdListForGetEmailForNewTicket.length() > 0 && categoryIdListForGetEmailForNewTicket
 					.substring(categoryIdListForGetEmailForNewTicket.length() - 1).equals(",")) {
-
 				categoryIdListForGetEmailForNewTicket = categoryIdListForGetEmailForNewTicket.substring(0,
 						categoryIdListForGetEmailForNewTicket.length() - 1);
 			}
-
 			if (categoryIdListForGetEmailForNewComment.length() > 0 && categoryIdListForGetEmailForNewComment
 					.substring(categoryIdListForGetEmailForNewComment.length() - 1).equals(",")) {
-
 				categoryIdListForGetEmailForNewComment = categoryIdListForGetEmailForNewComment.substring(0,
 						categoryIdListForGetEmailForNewComment.length() - 1);
 			}
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(userNotificationsSettings.getUser().getUserId(),
 					"UserId");
 			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(
@@ -434,17 +379,13 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					categoryIdListForGetEmailForNewCommentParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				return true;
 			} else {
-
 				return false;
 			}
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -453,7 +394,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 	public boolean getUserOptionForNotifications(User user) {
 
 		try {
-
 			InOutParam<Integer> userIdParam = new InOutParam<Integer>(user.getUserId(), "UserId");
 			InOutParam<Boolean> getEmailForTicketResponseParam = new InOutParam<Boolean>(false,
 					"GetEmailForTicketResponse", true);
@@ -462,10 +402,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			execute();
 			return getEmailForTicketResponseParam.getParameter();
 		} catch (Exception e) {
-
 			return false;
 		} finally {
-
 			closeCallableStatement();
 		}
 	}
@@ -475,7 +413,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		User admin = null;
 		try {
-
 			InOutParam<Integer> ticketIdParam = new InOutParam<Integer>(ticket.getTicketId(), "TicketId");
 			InOutParam<Integer> adminIdParam = new InOutParam<Integer>(0, "AdminId", true);
 			InOutParam<String> firstNameParam = new InOutParam<String>("", "FirstName", true);
@@ -486,7 +423,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 					lastNameParam, emailParam, errCodeParam);
 			execute();
 			if (errCodeParam.getParameter() == 0) {
-
 				admin = new User();
 				admin.setUserId(adminIdParam.getParameter());
 				admin.setFirstName(firstNameParam.getParameter());
@@ -494,10 +430,8 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 				admin.setEmail(emailParam.getParameter());
 			}
 		} catch (SQLException e) {
-
 			return admin;
 		} finally {
-
 			closeCallableStatement();
 		}
 		return admin;
@@ -508,12 +442,10 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 
 		ArrayList<User> admins = new ArrayList<User>();
 		try {
-
 			InOutParam<Integer> categoryIdParam = new InOutParam<Integer>(category.getCategoryId(), "CategoryId");
 			prepareExecution(StoredProceduresNames.GetAdminsForCategoryWhoWantToReceiveNotifications, categoryIdParam);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-
 				User admin = new User();
 				admin.setFirstName(resultSet.getString("FirstName"));
 				admin.setLastName(resultSet.getString("LastName"));
@@ -522,7 +454,6 @@ public class UserDAO extends BaseDAO implements UserDAOInterface {
 			}
 		} catch (SQLException e) {
 		} finally {
-
 			closeCallableStatement();
 		}
 		return admins;

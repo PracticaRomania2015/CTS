@@ -1,14 +1,12 @@
 package com.cts.controllers;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.CategoryDAO;
@@ -41,25 +39,17 @@ public class RootManagementController {
 		logger.debug("Attempting to add a category/subcategory.");
 
 		// Category name validation
-		if (category.getCategoryName() == null) {
-
-			logger.error("Category/Subcategory name is null.");
-			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
-		}
-		if (category.getCategoryName().equals("")) {
-
-			logger.error("Category/Subcategory name is empty.");
+		if (category.getCategoryName() == null || category.getCategoryName().equals("")) {
+			logger.error("Category/Subcategory name is null or empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 
 		// Adding category
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.addCategory(category)) {
-
 			logger.info("Category/Subcategory added successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.warn("Category/Subcategory could not be added!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN);
 		}
@@ -78,7 +68,6 @@ public class RootManagementController {
 		logger.debug("Attempting to delete a category/subcategory.");
 
 		if (Integer.valueOf(category.getCategoryId()).equals("")) {
-
 			logger.error("Category/Subcategory ID is empty.");
 			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYID);
 		}
@@ -86,11 +75,9 @@ public class RootManagementController {
 		// Removing category
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.deleteCategory(category)) {
-
 			logger.info("Category/Subcategory removed successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.warn("Category/Subcategory could not be removed!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
@@ -109,25 +96,17 @@ public class RootManagementController {
 		logger.debug("Attempting to edit a category/subcategory.");
 
 		// Category name validation
-		if (category.getCategoryName() == null) {
-
-			logger.error("Category/Subcategory name is null.");
-			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
-		}
-		if (category.getCategoryName().equals("")) {
-
-			logger.error("Category/Subcategory name is empty.");
+		if (category.getCategoryName() == null || category.getCategoryName().equals("")) {
+			logger.error("Category/Subcategory name is null or empty!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.CATEGORYEMPTYNAME);
 		}
 
 		// Editing category
 		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		if (categoryDAO.editCategory(category)) {
-
 			logger.info("Category/Subcategory edited successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.warn("Category/Subcategory could not be edited!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.UNKNOWN);
 		}
@@ -148,12 +127,9 @@ public class RootManagementController {
 		UserDAOInterface userDAO = new UserDAO();
 		StringBuilder totalNumberOfPages = new StringBuilder();
 		ArrayList<User> users = userDAO.getUsers(viewUserRequest, totalNumberOfPages);
-
 		if (totalNumberOfPages.toString().equals("")) {
-
 			totalNumberOfPages.append("1");
 		}
-
 		ArrayList<Object> output = new ArrayList<Object>();
 		output.add(totalNumberOfPages);
 		output.add(users);
@@ -175,7 +151,6 @@ public class RootManagementController {
 
 		// Is Sys Admin validation
 		if (userStatus.isSysAdmin() != (true && false)) {
-
 			logger.error("isSysAdmin is not set!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.ROOTMANAGEMENTEMPTYSYSADMIN);
 		}
@@ -183,11 +158,9 @@ public class RootManagementController {
 		// Getting user's rights
 		CategoryDAOInterface userCategRightsDAO = new CategoryDAO();
 		if (userCategRightsDAO.viewCategoriesRightsForUser(userStatus)) {
-
 			logger.info("User's rights received successfully!");
 			return new ResponseMessage(userStatus).getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.error("User's rights could not be retrieved!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}
@@ -207,11 +180,9 @@ public class RootManagementController {
 
 		UserDAOInterface userCategRightsDAO = new UserDAO();
 		if (userCategRightsDAO.updateUserStatus(userStatus)) {
-
 			logger.info("User's rights updated successfully!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.SUCCESS);
 		} else {
-
 			logger.error("User's rights could not be updated!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.DBERROR);
 		}

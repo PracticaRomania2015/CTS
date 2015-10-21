@@ -12,11 +12,9 @@ public class QuestionDAO extends BaseDAO implements QuestionDAOInterface {
 
 		ArrayList<Question> questions = new ArrayList<Question>();
 		try {
-
 			prepareExecution(StoredProceduresNames.GetQuestions);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-
 				Question question = new Question();
 				question.setQuestionId(resultSet.getInt("QuestionId"));
 				question.setQuestion(resultSet.getString("Question"));
@@ -24,7 +22,6 @@ public class QuestionDAO extends BaseDAO implements QuestionDAOInterface {
 			}
 		} catch (SQLException e) {
 		} finally {
-
 			closeCallableStatement();
 		}
 		return questions;

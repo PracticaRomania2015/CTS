@@ -13,8 +13,8 @@ public interface CategoryDAOInterface {
 	public boolean addCategory(Category category);
 
 	public boolean deleteCategory(Category category);
-	
+
 	public boolean viewCategoriesRightsForUser(UserStatus userStatus);
-	
+
 	public boolean editCategory(Category category);
 }

@@ -12,11 +12,9 @@ public class PriorityDAO extends BaseDAO implements PriorityDAOInterface {
 
 		ArrayList<Priority> priorities = new ArrayList<Priority>();
 		try {
-
 			prepareExecution(StoredProceduresNames.GetPriorities);
 			ResultSet resultSet = execute();
 			while (resultSet.next()) {
-
 				Priority priority = new Priority();
 				priority.setPriorityId(resultSet.getInt("PriorityId"));
 				priority.setPriorityName(resultSet.getString("PriorityName"));
@@ -24,7 +22,6 @@ public class PriorityDAO extends BaseDAO implements PriorityDAOInterface {
 			}
 		} catch (SQLException e) {
 		} finally {
-
 			closeCallableStatement();
 		}
 		return priorities;

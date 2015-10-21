@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cts.communication.ResponseMessage;
 import com.cts.communication.ResponseValues;
 import com.cts.dao.UserDAO;
@@ -37,21 +36,14 @@ public class RecoveryController {
 		logger.debug("Attempting to reset the password for an account.");
 
 		// Email validation
-		if (user.getEmail() == null) {
-
+		if (user.getEmail() == null || user.getEmail().equals("")) {
 			logger.error("Email is null!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
 		}
-		if (user.getEmail().equals("")) {
 
-			logger.error("Email is empty!");
-			return new ResponseMessage().getMessageJSON(ResponseValues.EMPTYEMAIL);
-		}
-		
 		// User questions validation
 		if (user.getQuestion_1().getQuestion() == null || user.getQuestion_1().getQuestion().equals("")
 				|| user.getQuestion_2().getQuestion() == null || user.getQuestion_2().getQuestion().equals("")) {
-
 			logger.error("Questions are not set properly!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.QUESTIONSERROR);
 		}
@@ -59,7 +51,6 @@ public class RecoveryController {
 		// User questions answers validation
 		if (user.getQuestionAnswer_1() == null || user.getQuestionAnswer_1().equals("")
 				|| user.getQuestionAnswer_2() == null || user.getQuestionAnswer_2().equals("")) {
-
 			logger.error("Questions answers are not set properly!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.QUESTIONSANSWERSERROR);
 		}
@@ -76,11 +67,9 @@ public class RecoveryController {
 		// Send the password to the specified email
 		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.resetPassword(user) && SendEmail.sendEmail(user.getEmail(), subject, msg)) {
-
 			logger.info("The password was changed and was sent via email!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYSUCCESS);
 		} else {
-
 			logger.warn(
 					"No account with the provided email was found or the specified questions and answers are incorrect!");
 			return new ResponseMessage().getMessageJSON(ResponseValues.RECOVERYINCORRECTEMAIL);

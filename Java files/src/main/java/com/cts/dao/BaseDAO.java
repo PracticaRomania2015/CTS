@@ -16,7 +16,6 @@ public abstract class BaseDAO {
 	private CallableStatement callableStatement;
 	private static Connection connection;
 	private List<InOutParam<?>> inOutParams = new ArrayList<InOutParam<?>>();
-
 	private static SingleConnectionDataSource singleConnectionDataSource;
 
 	static {
@@ -29,11 +28,8 @@ public abstract class BaseDAO {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("servlet-context.xml");
 		singleConnectionDataSource = (SingleConnectionDataSource) applicationContext.getBean("dataSource",
 				SingleConnectionDataSource.class);
-
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(singleConnectionDataSource);
-
 		try {
-
 			connection = jdbcTemplate.getDataSource().getConnection();
 		} catch (SQLException e) {
 		}
@@ -44,14 +40,11 @@ public abstract class BaseDAO {
 
 		// if the connection is not valid then remake the connection
 		if (!connection.isValid(0)) {
-
 			makeConnection();
 		}
 		inOutParams.clear();
 		if (parameters != null) {
-
 			for (int i = 0; i < parameters.length; i++) {
-
 				inOutParams.add(parameters[i]);
 			}
 		}
@@ -67,7 +60,7 @@ public abstract class BaseDAO {
 	}
 
 	protected ResultSet execute(boolean bothOutputParamsAndResultSet) throws SQLException {
-		
+
 		ResultSet rs;
 		callableStatement.execute();
 		rs = callableStatement.getResultSet();
@@ -77,14 +70,10 @@ public abstract class BaseDAO {
 	private void setParameters() throws SQLException {
 
 		if (inOutParams.size() != 0) {
-
 			for (int i = 0; i < inOutParams.size(); i++) {
-
 				if (inOutParams.get(i).isOutPutParam()) {
-
 					callableStatement.registerOutParameter(inOutParams.get(i).getName(), inOutParams.get(i).getType());
 				} else {
-
 					callableStatement.setObject(inOutParams.get(i).getName(), inOutParams.get(i).getParameter());
 				}
 			}
@@ -92,27 +81,20 @@ public abstract class BaseDAO {
 	}
 
 	private String createSqlCall(StoredProceduresNames storedProcedureName) {
+
 		StringBuffer sqlCall;
-
 		if (inOutParams.size() == 0) {
-
 			sqlCall = new StringBuffer("{call " + storedProcedureName + "}");
 		} else {
-
 			sqlCall = new StringBuffer("{call " + storedProcedureName + "(");
 			for (int i = 0; i < inOutParams.size(); i++) {
-
 				if (inOutParams.size() == 1) {
-
 					sqlCall.append("?)}");
 				} else if (i == 0) {
-
 					sqlCall.append("?");
 				} else if (i == inOutParams.size() - 1) {
-
 					sqlCall.append(", ?)}");
 				} else {
-
 					sqlCall.append(", ?");
 				}
 			}
@@ -124,9 +106,7 @@ public abstract class BaseDAO {
 	protected void setOutParametersAfterExecute() throws SQLException {
 
 		for (int i = 0; i < inOutParams.size(); i++) {
-
 			if (inOutParams.get(i).isOutPutParam()) {
-
 				InOutParam<Object> tempParam = (InOutParam<Object>) inOutParams.get(i);
 				tempParam.setParameter(callableStatement.getObject(inOutParams.get(i).getName()));
 			}
@@ -136,7 +116,6 @@ public abstract class BaseDAO {
 	protected void closeCallableStatement() {
 
 		try {
-
 			callableStatement.close();
 		} catch (SQLException e) {
 		}

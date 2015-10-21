@@ -33,13 +33,10 @@ public class SendEmail {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
 			message.setSubject(subject);
 			message.setText(msg);
-
 			// send the message
 			Transport.send(message);
 			return true;
-
 		} catch (MessagingException e) {
-
 			return false;
 		}
 	}
