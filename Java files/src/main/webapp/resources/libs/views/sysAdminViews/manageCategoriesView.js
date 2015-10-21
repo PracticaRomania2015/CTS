@@ -287,27 +287,32 @@ var ManageCategoriesView = Backbone.View.extend({
 	},
 	
 	removeSubcategory: function () {
-		var category = new RemoveCategoryModel({
-			categoryName : $('#subcategoryListDropboxRemoveSubcategory option:selected').text(),
-			categoryId : $('#subcategoryListDropboxRemoveSubcategory option:selected').val()
-		});
-		category.save({},{
-			async: false,
-			success: function (model,response) {
-				if (response.type == 'success') {
-					popNotification('Successfully removed!');
-				}else if (response.type == 'error') {
-					popNotification(response.description);
-					$('#subcategoryListDropboxRemoveSubcategory').get(0).selectedIndex = 0;
-				} else {
-					popNotification('Unknown error!');
-				};
-			},
-			error: function (model,response) {
-				console.log('Server error!');
-			}
-		});
-		this.loadPageData();
+		if ($('#subcategoryListDropboxRemoveSubcategory option:selected').text() == 'Select the subcategory...'){
+			popNotification('Select a subcategory!');
+		}
+		else{
+			var category = new RemoveCategoryModel({
+				categoryName : $('#subcategoryListDropboxRemoveSubcategory option:selected').text(),
+				categoryId : $('#subcategoryListDropboxRemoveSubcategory option:selected').val()
+			});
+			category.save({},{
+				async: false,
+				success: function (model,response) {
+					if (response.type == 'success') {
+						popNotification('Successfully removed!');
+					}else if (response.type == 'error') {
+						popNotification(response.description);
+						$('#subcategoryListDropboxRemoveSubcategory').get(0).selectedIndex = 0;
+					} else {
+						popNotification('Unknown error!');
+					};
+				},
+				error: function (model,response) {
+					console.log('Server error!');
+				}
+			});
+			this.loadPageData();
+		}
 	},
 	
 	removeCategory: function () {
