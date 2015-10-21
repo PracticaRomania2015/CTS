@@ -4,6 +4,7 @@
 var mainMenu, login, register, recovery;
 var userMenu, welcome, userProperties, manageTickets, userTickets, createTicket, manageCategories, manageUsers, respondToTicket, manageUserRoleView, loadUserNotificationsSettingsModel;
 
+
 // @Override - Backbone close function
 Backbone.View.prototype.close = function () {
 	this.$el.remove();
@@ -71,4 +72,16 @@ function popNotification (notification) {
 			$(this).delay(4000).fadeOut("slow");
 		}
 	);*/
+	if(true){
+		$(document).mouseup(function (e)
+				{
+					console.log("How we dong ?");
+				    var container = $("#notifications");
+
+				    if (!container.is(e.target)) 
+				    {
+				    	container.hide();
+				    }
+				});
+	}
 }

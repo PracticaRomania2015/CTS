@@ -241,7 +241,7 @@ var AssignedTicketsView = Backbone.View.extend({
 		currentModel.set('selectedCategory', new Backbone.Model({ categoryId: this.$el.find('#ticketSearchCategory option:selected').val() }));
 		currentModel.set('selectedPriority', new Backbone.Model({ priorityId: this.$el.find('#ticketSearchPriority option:selected').val() }));
 		currentModel.set('selectedState', ticketState = new Backbone.Model({ stateId: this.$el.find('#ticketSearchStatus option:selected').val() }));
-		currentModel.set('isSearchASC', !this.isAsc);
+		currentModel.set('isSearchASC', this.isAsc);
 		currentModel.set('typeOfRequest', 1);
 		$('#loadingAnimManage').show();
 		currentModel.save({}, {
