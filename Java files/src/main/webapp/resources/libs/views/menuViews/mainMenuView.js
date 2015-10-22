@@ -11,6 +11,7 @@ var MainMenuView = Backbone.View.extend({
 	tagName: 'nav',
 
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var toggleLogin = createElem('div',{id:'toggleLogin',class:'mainMenuButton'},'Log In');
 		var toggleRegister = createElem('div',{id:'toggleRegister',class:'mainMenuButton'},'Register');

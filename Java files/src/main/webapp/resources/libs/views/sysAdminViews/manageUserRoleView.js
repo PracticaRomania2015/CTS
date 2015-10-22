@@ -5,10 +5,12 @@ var ManageUserRoleView = Backbone.View.extend({
 	viewState: false,
 	
 	events: {
-		'click #updateUserRoles': 'submit'
+		'click #updateUserRoles': 'submit',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		//TODO: no id for tableHeadElem2?
 		var header = createElem('h1',{class:'userPage'},'Manage User Roles for' + ' ' + this.model.get('name'));

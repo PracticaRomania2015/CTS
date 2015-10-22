@@ -6,10 +6,12 @@ var RegisterView = Backbone.View.extend({
 	
 	events: {
 		'click #register': 'submit',
-		'keydown input': 'submit'
+		'keydown input': 'submit',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var header = createElem('h1',{class:'mainMenuPage'},'Register');
 		var firstOption = createElem('option',{selected:'',value:'Mr'},'Mr.');

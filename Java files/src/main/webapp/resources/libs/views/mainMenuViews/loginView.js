@@ -6,10 +6,12 @@ var LoginView = Backbone.View.extend({
 	
 	events: {
 		'click #login': 'submit',
-		'keydown input': 'submit'
+		'keydown input': 'submit',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var header = createElem('h1',{class:'mainMenuPage'},'Log In');
 		var inputEmail = createElem('input',{id:'email',class:'validationTooltip',type:'text',placeholder:'E-mail'});

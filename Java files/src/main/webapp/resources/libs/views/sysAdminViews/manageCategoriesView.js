@@ -10,10 +10,12 @@ var ManageCategoriesView = Backbone.View.extend({
 		'click #editCategoryButton': 'editCategory',
 		'click #editSubcategoryButton': 'editSubcategory',
 		'change #categoryListDropboxRemoveSubcategory': 'populateSubcategoriesForRemoveSubcategory',
-		'change #categoryListDropboxEditSubcategory': 'populateSubcategoriesForEdit'
+		'change #categoryListDropboxEditSubcategory': 'populateSubcategoriesForEdit',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		// Header
 		var header = createElem('h1',{class:'userPage'},'Manage Categories');

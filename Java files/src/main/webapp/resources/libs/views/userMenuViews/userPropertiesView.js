@@ -6,10 +6,12 @@ var UserPropertiesView = Backbone.View.extend({
 	
 	events:{
 		'click #changePasswordButton' : 'submitNewPassword',
-		'click #updateUserNotificationsButton' : 'submitUserNotificationsSettings'
+		'click #updateUserNotificationsButton' : 'submitUserNotificationsSettings',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var header = createElem('h1',{class:'userPage'},sessionStorage.loggedUserName + ' properties page');
 		

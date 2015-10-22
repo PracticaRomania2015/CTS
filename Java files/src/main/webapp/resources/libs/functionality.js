@@ -3,7 +3,7 @@
 // Global Variables
 var mainMenu, login, register, recovery;
 var userMenu, welcome, userProperties, manageTickets, userTickets, createTicket, manageCategories, manageUsers, respondToTicket, manageUserRoleView, loadUserNotificationsSettingsModel;
-
+var timeout;
 
 // @Override - Backbone close function
 Backbone.View.prototype.close = function () {
@@ -61,7 +61,8 @@ function addZero(i) {
 function popNotification (notification) {
 	$('#notifications').empty();
 	$('#notifications').append(notification);
-	$('#notifications').fadeIn("fast").delay(4000).fadeOut("slow");
+	$('#notifications').fadeIn("fast");
+	timeout = setTimeout(function(){$('#notifications').fadeOut("slow")},4000);
 	// Stop animation on hover and restart on exit
 	/*$("#notifications").hover(
 		function() {
@@ -72,16 +73,22 @@ function popNotification (notification) {
 			$(this).delay(4000).fadeOut("slow");
 		}
 	);*/
-	if(true){
-		$(document).mouseup(function (e)
-				{
-					console.log("How we dong ?");
-				    var container = $("#notifications");
+	
+}
 
-				    if (!container.is(e.target)) 
-				    {
-				    	container.hide();
-				    }
-				});
+function   hideNotification(e){
+	if(! $('#notifications').is(':empty')){
+		{console.log("How we dong ?");
+	    if (!$("#notifications").is(e.target)) 
+	    {
+	    	$("#notifications").empty().hide();
+	    	clearTimeout(timeout);
+	    }
 	}
+	}
+}
+
+function preloadView(){
+	$("#notifications").empty().hide();
+	clearTimeout(timeout);
 }

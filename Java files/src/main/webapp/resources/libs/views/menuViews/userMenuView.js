@@ -17,6 +17,7 @@ var UserMenuView = Backbone.View.extend({
 	tagName: 'nav',
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var arrowUserProperties = createElem('div',{id:'arrowUserProperties',class:'menuRightArrow'});
 		var toggleUserProperties = createElem('div',{id:'toggleUserProperties',class:'userMenuButton userMenuProfileButton'},[sessionStorage.loggedUserName,arrowUserProperties]);

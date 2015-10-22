@@ -11,10 +11,12 @@ var RespondToTicketView = Backbone.View.extend({
 		'click #reassignPriorityToTicketButton': 'reassignPriority',
 		'click #reassignCategoryToTicketButton' : 'reassignCategory',
 		'change #ticketCategoryDropbox' : 'populateSubcategories',
-		'click #reopenTicketButton' : 'reopenTicket'
+		'click #reopenTicketButton' : 'reopenTicket',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 
 	render: function() {
+		preloadView();
 		this.$el.empty();
 		/* Ticket Title */
 		var ticketName = createElem('div',{id:'ticketName'});

@@ -6,10 +6,12 @@ var CreateTicketView = Backbone.View.extend({
 	
 	events: {
 		'click #submitTicketButton': 'submit',
-		'change #ticketCategoryDropbox': 'populateSubcategories'
+		'change #ticketCategoryDropbox': 'populateSubcategories',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		var header = createElem('h1',{class:'userPage'},'Create a new ticket');
 

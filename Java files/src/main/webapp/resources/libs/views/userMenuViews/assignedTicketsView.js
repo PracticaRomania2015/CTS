@@ -22,10 +22,12 @@ var AssignedTicketsView = Backbone.View.extend({
 		'click #nextPageReqBtn': 'nextPageRequest',
 		'change #ticketsPerPage': 'ticketsPerPage',
 		'click .openTicketComments': 'viewTicketComments',
-		'click #id-col,#subject-col,#category-col,#priority-col,#status-col,#lastComment-col,#submitDate-col': 'orderBy'
+		'click #id-col,#subject-col,#category-col,#priority-col,#status-col,#lastComment-col,#submitDate-col': 'orderBy',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		/* Header */
 		var header = createElem('h1',{class:'userPage'},'Tickets managed by me');

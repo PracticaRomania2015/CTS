@@ -17,10 +17,12 @@ var ManageUsersView = Backbone.View.extend({
 		'click #prevPageReqBtn': 'nextPageRequest',
 		'click #nextPageReqBtn': 'previousPageRequest',
 		'change #usersPerPage': 'usersPerPage',
-		'click .openUser': 'manageUser'
+		'click .openUser': 'manageUser',
+		'mouseup ' : function(e){hideNotification(e)}
 	},
 	
 	render: function () {
+		preloadView();
 		this.$el.empty();
 		
 		var header = createElem('h1',{class:'userPage'},'Manage Users');
